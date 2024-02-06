@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "vector3.h"
 #include "vector4.h"
 
 #define EPSILON 0.01f
@@ -15,6 +16,13 @@ TEST(TestCaseName, TestName)
 #pragma endregion Vector2
 
 #pragma region Vector3
+
+TEST(Vector3, Constructor) {
+	Vector3 v(1.f, 2.f, 3.f);
+	EXPECT_NEAR(v.x, 1.f, EPSILON);
+	EXPECT_NEAR(v.y, 2.f, EPSILON);
+	EXPECT_NEAR(v.z, 3.f, EPSILON);
+}
 
 #pragma endregion Vector3
 

@@ -132,11 +132,11 @@ Matrix4 Matrix4::Projection(float _fov, float _aspectRatio, float _zNear, float 
 
 Matrix4 Matrix4::LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up)
 {
-	Vector3 Up = _up.normalize();
+	Vector3 Up = _up.Normalize();
 
-	Vector3 Z = (_cameraPos - _targetPos).normalize();
-	Vector3 X = Vector3::cross(Up, Z).normalize();
-	Vector3 Y = Vector3::cross(Z, X);
+	Vector3 Z = (_cameraPos - _targetPos).Normalize();
+	Vector3 X = Vector3::Cross(Up, Z).Normalize();
+	Vector3 Y = Vector3::Cross(Z, X);
 
 	Matrix4 temp(
 		X.x, X.y, X.z, 0,
