@@ -29,8 +29,6 @@ public:
 	Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale);
 	static Matrix4 Projection(float _fov, float _aspectRatio, float _zNear, float _zFar);
 	static Matrix4 LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up);
-
-	static void Test();
 };
 
 Matrix4 operator+(Matrix4 _A, float _n);
@@ -43,8 +41,6 @@ Matrix4 operator*(Matrix4 _A, Matrix4 _B);
 
 bool operator==(Matrix4 _A, Matrix4 _B);
 bool operator!=(Matrix4 _A, Matrix4 _B);
-
-
 
 std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4);
 

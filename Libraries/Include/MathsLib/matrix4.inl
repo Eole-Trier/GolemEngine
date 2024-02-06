@@ -94,7 +94,7 @@ Matrix4 Matrix4::Rotate(Vector3 _XYZrad)
 		0, 0, 1, 0,
 		0, 0, 0, 1
 	);
-	Matrix4 rotate = rotateX * rotateY * rotateZ;
+	Matrix4 rotate = rotateZ * rotateY * rotateX;
 	return (*this) * rotate;
 }
 
@@ -111,7 +111,17 @@ Matrix4 Matrix4::Scale(Vector3 _s)
 
 Matrix4 Matrix4::TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale)
 {
-	return Translate(_translate) * Rotate(_rotate) * Scale(_scale);
+	Matrix4 result = Matrix4::Identity();
+
+	result.data[0][3] = _translate.x;
+	result.data[1][3] = _translate.y;
+	result.data[2][3] = _translate.z;
+
+	result = result.Rotate(_rotate);
+
+	result = result.Scale(_scale);
+
+	return result;
 }
 
 Matrix4 Matrix4::Projection(float _fov, float _aspectRatio, float _zNear, float _zFar)
@@ -124,8 +134,8 @@ Matrix4 Matrix4::Projection(float _fov, float _aspectRatio, float _zNear, float 
 	Matrix4 temp(
 		matData00, 0, 0, 0,
 		0, 1 / f, 0, 0,
-		0, 0, matData22, matData23,
-		0, 0, 1, 0
+		0, 0, -matData22, matData23,
+		0, 0, -1, 0
 	);
 	return temp;
 }
@@ -147,31 +157,7 @@ Matrix4 Matrix4::LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up)
 	temp = temp.Translate(_cameraPos * -1);
 
 	return temp;
-
-
-	return temp;
 }
-
-void Matrix4::Test()
-{
-	Matrix4 test = Matrix4::Identity();
-	Matrix4 passTest = Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-	if (test != passTest)
-		printf("Error in Identity function\n");
-
-	test = Matrix4(2, 6, 7, 3, 2, 0, 4, 0, 9, 2, 43, 2, 7, 1, 3, 98);
-	test = test.Transpose();
-	passTest = Matrix4(2, 2, 9, 7, 6, 0, 2, 1, 7, 4, 43, 3, 3, 0, 2, 98);
-	if (test != passTest)
-		printf("Error in Transpose function\n");
-	
-	test = test.Translate(Vector3(2, 3, 4));
-	passTest = Matrix4(2, 2, 9, 9, 6, 0, 2, 4, 7, 4, 43, 7, 3, 0, 2, 98);
-	if (test != passTest)
-		printf("Error in Translate function\n");
-
-}
-
 
 #pragma region Operators
 
@@ -237,18 +223,14 @@ bool operator==(Matrix4 _A, Matrix4 _B)
 {
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
-			if (_A.data[i][j] != _B.data[i][j])
+			if (fabs(_A.data[i][j] - _B.data[i][j]) > 10e-5f)
 				return false;
 	return true;
 }
 
 bool operator!=(Matrix4 _A, Matrix4 _B)
 {
-	for (int i = 0; i < 4; i++)
-		for (int j = 0; j < 4; j++)
-			if (_A.data[i][j] != _B.data[i][j])
-				return true;
-	return false;
+	return !(_A == _B);
 }
 
 

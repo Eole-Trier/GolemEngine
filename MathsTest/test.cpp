@@ -152,7 +152,7 @@ TEST(Matrix4, Constructor)
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			EXPECT_EQ(test.data[i][j], 1);
-	test = Matrix4(0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5, 3, 4, 5, 6);
+	test = Matrix4(0.f, 1.f, 2.f, 3.f, 1.f, 2.f, 3.f, 4.f, 2.f, 3.f, 4.f, 5.f, 3.f, 4.f, 5.f, 6.f);
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			EXPECT_EQ(test.data[i][j], i + j);
@@ -160,38 +160,54 @@ TEST(Matrix4, Constructor)
 
 TEST(Matrix4, Identity)
 {
-	EXPECT_EQ(Matrix4::Identity(), Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1));
+	EXPECT_EQ(Matrix4::Identity(), Matrix4(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f));
 }
 
 TEST(Matrix4, Transpose)
 {
-	Matrix4 test = Matrix4(2, 6, 7, 3, 2, 0, 4, 0, 9, 2, 43, 2, 7, 1, 3, 98);
+	Matrix4 test = Matrix4(-2.f, 6.f, 7.f, 3.f, 2.f, 0.f, 4.f, 0.f, 9.f, 2.f, 43.f, 2.f, 7.f, 1.f, 3.f, 98.2f);
 	test = test.Transpose();
-	EXPECT_EQ(test, Matrix4(2, 2, 9, 7, 6, 0, 2, 1, 7, 4, 43, 3, 3, 0, 2, 98));
+	EXPECT_EQ(test, Matrix4(-2.f, 2.f, 9.f, 7.f, 6.f, 0.f, 2.f, 1.f, 7.f, 4.f, 43.f, 3.f, 3.f, 0.f, 2.f, 98.2f));
 }
 
 TEST(Matrix4, Translate)
 {
+	Matrix4 test = Matrix4(-2.f, 6.f, 7.f, 3.f, 2.f, 0.f, 4.f, 0.f, 9.f, 2.f, 43.f, 2.f, 7.f, 1.f, 3.f, 98.2f);
+	test = test.Translate(Vector3(10.f, -5.f, 3.1f));
+	EXPECT_EQ(test, Matrix4(-2.f, 6.f, 7.f, -25.3000011f, 2.f, 0.f, 4.f, 32.4000015f, 9.f, 2.f, 43.f, 215.300003f, 7.f, 1.f, 3.f, 172.5f)); //precision float 
 }
 
 TEST(Matrix4, Rotate)
 {
+	Matrix4 test = Matrix4(-2.f, 6.f, 7.f, 3.f, 2.f, 0.f, 4.f, 0.f, 9.f, 2.f, 43.f, 2.f, 7.f, 1.f, 3.f, 98.2f);
+	test = test.Rotate(Vector3(3.14f, 3.14f/2.f, -3.14f / 2.f));
+	EXPECT_EQ(test, Matrix4(-7.00478f, 1.98567f, 5.99919f, 3, -4, -1.99999f, -0.00796273f, 0, -43.0016f, -9.0047f, 1.94425f, 2, -3.00079f, -7.00237f, 0.980886f, 98.2f)); //precision float 
 }
 
 TEST(Matrix4, Scale)
 {
+	Matrix4 test = Matrix4(-2, 5, 3, 2, 10, 5.5f, 6, 1, 1, 2, 1, 3, 2, 46, 20, 5);
+	test = test.Scale(Vector3(2, -4, 1.5f));
+	EXPECT_EQ(test, Matrix4(-4, -20, 4.5f, 2, 20, -22, 9, 1, 2, -8, 1.5f, 3, 4, -184, 30, 5));
 }
 
 TEST(Matrix4, TRS)
 {
+	Matrix4 test = Matrix4::Identity();
+	test = test.TRS(Vector3(10.f, -5.f, 3.5f), Vector3(3.14f, 3.14f / 2.f, -3.14f / 2.f), Vector3(2, -4, 1.5f));
+	EXPECT_EQ(test, Matrix4(0.0000012681f, 3.99998879f, -0.00358323079f, 10, -0.00159254810f, 0.00955528114f, 1.49999535f, -5, -1.99999940f, -0.00000507242, -0.00119440991f, 3.5f, 0, 0, 0, 1));
 }
 
 TEST(Matrix4, Projection)
 {
+	Matrix4 test = Matrix4::Projection(1.57079637f, 800.f / 600.f, 0.100000001f, 100);
+	EXPECT_EQ(test, Matrix4(0.75f, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.00200200, -0.200200200, 0, 0, -1, 0));
 }
 
 TEST(Matrix4, LookAt)
 {
+	Matrix4 test = Matrix4::LookAt(Vector3(0, 0, 5), Vector3(0, 0, -1), Vector3(0, 1, 0));
+	EXPECT_EQ(test, Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -5, 0, 0, 0, 1));
 }
 
 #pragma endregion Matrix4
