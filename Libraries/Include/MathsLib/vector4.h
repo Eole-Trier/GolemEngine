@@ -16,7 +16,7 @@ public:
 	Vector4(float _x, float _y, float _z, float _w);
 	
 	float Length() const;
-	/* Used for comparing purpose only because doesn't sqrt to make less operations. */
+	// Used for comparing purpose only because doesn't sqrt to make less operations.
 	float LengthSq() const;
 	Vector4 Normalize() const;
 };

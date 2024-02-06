@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "vector3.h"
 #include "vector4.h"
+#include "utils.h"
 
 #define EPSILON 0.01f
 
@@ -146,3 +147,11 @@ TEST(Vector4, Operator_NotEqual_Vector4)
 #pragma region Matrix4
 
 #pragma endregion Matrix4
+
+int main()
+{
+	float a = 90.f;
+	float b = 1.5708f;
+	std::cout << DegToRad(a) << std::endl;
+	std::cout << RadToDeg(b) << std::endl;
+}
