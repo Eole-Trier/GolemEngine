@@ -9,6 +9,14 @@ TEST(TestCaseName, TestName) {
 }
 
 
+#pragma region Vector2
+
+#pragma endregion Vector2
+
+#pragma region Vector3
+
+#pragma endregion Vector3
+
 #pragma region Vector4
 
 TEST(Vector4, Constructor) {
@@ -41,3 +49,7 @@ TEST(Vector4, Normalize)
 }
 
 #pragma endregion Vector4
+
+#pragma region Matrix4
+
+#pragma endregion Matrix4
