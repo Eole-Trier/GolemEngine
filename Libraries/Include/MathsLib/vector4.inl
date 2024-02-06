@@ -65,11 +65,6 @@ Vector4 operator-(Vector4 _a, Vector4 _b)
 	return { _a.x - _b.x, _a.y - _b.y, _a.z - _b.z, _a.w - _b.w };
 }
 
-Vector4 operator*(Vector4 _a, Vector4 _b)
-{
-	return { _a.x * _b.x, _a.y * _b.y, _a.z * _b.z, _a.w * _b.w };
-}
-
 bool operator==(Vector4 _a, Vector4 _b)
 {
 	if (_a.x == _b.x && _a.y == _b.y && _a.z == _b.z && _a.w == _b.w)
