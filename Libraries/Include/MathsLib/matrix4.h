@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "vector3.hpp"
+#include "vector3.h"
 
 
 class Matrix4

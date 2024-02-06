@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 
-#include "vector3.hpp"
-#include "vectorX.hpp"
+#include "vector3.h"
+#include "vectorX.h"
 
 class matrixX
 {
