@@ -237,7 +237,7 @@ bool operator==(Matrix4 _A, Matrix4 _B)
 {
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
-			if (_A.data[i][j] != _A.data[i][j])
+			if (_A.data[i][j] != _B.data[i][j])
 				return false;
 	return true;
 }
