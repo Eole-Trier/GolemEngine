@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "vector3.h"
 #include "vector4.h"
+#include "matrix4.h"
 #include "utils.h"
 
 #define EPSILON 0.01f
@@ -146,12 +147,52 @@ TEST(Vector4, Operator_NotEqual_Vector4)
 
 #pragma region Matrix4
 
-#pragma endregion Matrix4
-
-int main()
+TEST(Matrix4, Constructor)
 {
-	float a = 90.f;
-	float b = 1.5708f;
-	std::cout << DegToRad(a) << std::endl;
-	std::cout << RadToDeg(b) << std::endl;
+	Matrix4 test = Matrix4(1);
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			EXPECT_EQ(test.data[i][j], 1);
+	test = Matrix4(0, 1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5, 3, 4, 5, 6);
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			EXPECT_EQ(test.data[i][j], i + j);
 }
+
+TEST(Matrix4, Identity)
+{
+	EXPECT_EQ(Matrix4::Identity(), Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1));
+}
+
+TEST(Matrix4, Transpose)
+{
+	Matrix4 test = Matrix4(2, 6, 7, 3, 2, 0, 4, 0, 9, 2, 43, 2, 7, 1, 3, 98);
+	test = test.Transpose();
+	EXPECT_EQ(test, Matrix4(2, 2, 9, 7, 6, 0, 2, 1, 7, 4, 43, 3, 3, 0, 2, 98));
+}
+
+TEST(Matrix4, Translate)
+{
+}
+
+TEST(Matrix4, Rotate)
+{
+}
+
+TEST(Matrix4, Scale)
+{
+}
+
+TEST(Matrix4, TRS)
+{
+}
+
+TEST(Matrix4, Projection)
+{
+}
+
+TEST(Matrix4, LookAt)
+{
+}
+
+#pragma endregion Matrix4
