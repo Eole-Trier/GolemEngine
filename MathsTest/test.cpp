@@ -3,7 +3,8 @@
 
 #define EPSILON 0.01f
 
-TEST(TestCaseName, TestName) {
+TEST(TestCaseName, TestName)
+{
   EXPECT_EQ(1, 1);
   EXPECT_TRUE(true);
 }
@@ -19,7 +20,8 @@ TEST(TestCaseName, TestName) {
 
 #pragma region Vector4
 
-TEST(Vector4, Constructor) {
+TEST(Vector4, Constructor)
+{
 	Vector4 v(1.f, 2.f, 3.f, 4.f);
 	EXPECT_NEAR(v.x, 1.f, EPSILON);
 	EXPECT_NEAR(v.y, 2.f, EPSILON);
