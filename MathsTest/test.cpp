@@ -13,7 +13,6 @@ TEST(TestCaseName, TestName)
   EXPECT_TRUE(true);
 }
 
-
 #pragma region Vector2
 
 #pragma endregion Vector2
