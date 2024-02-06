@@ -11,10 +11,10 @@ public:
 	~Vector3();
 	Vector3(float _x, float _y, float _z);
 
-	Vector3 Normalize() const;
 	float Length() const;
-	/* only used to compare for optimization */
-	float LengthSq() const;	
+	/* Used for comparing purpose only because doesn't sqrt to make less operations. */
+	float LengthSq() const;
+	Vector3 Normalize() const;
 	static float Dot(Vector3 _a, Vector3 _b);
 	static Vector3 Cross(Vector3 _a, Vector3 _b);
 };

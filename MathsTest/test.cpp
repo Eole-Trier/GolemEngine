@@ -4,6 +4,7 @@
 
 #define EPSILON 0.01f
 
+
 TEST(TestCaseName, TestName)
 {
   EXPECT_EQ(1, 1);
@@ -120,17 +121,21 @@ TEST(Vector4, Operator_Substract_Vector4)
 
 TEST(Vector4, Operator_Equal_Vector4)
 {
-	Vector4 a(1.f, 2.f, 3.f, -4.9f);
-	Vector4 b(1.f, 2.5f, 3.f, -4.98f);
+	Vector4 a(1.f, -0.f, 3.f, -4.9f);
+	Vector4 b(1.f, -0.f, 3.f, -4.9f);
 	EXPECT_EQ(a.x, b.x);
+	EXPECT_EQ(a.y, b.y);
+	EXPECT_EQ(a.z, b.z);
 	EXPECT_EQ(a.z, b.z);
 }
 
 TEST(Vector4, Operator_NotEqual_Vector4)
 {
 	Vector4 a(1.f, 2.f, 3.f, -4.9f);
-	Vector4 b(1.f, 2.5f, 3.f, -4.98f);
+	Vector4 b(-0.f, 1.f, -4.9f, 2.5f);
+	EXPECT_NE(a.x, b.x);
 	EXPECT_NE(a.y, b.y);
+	EXPECT_NE(a.z, b.z);
 	EXPECT_NE(a.w, b.w);
 }
 

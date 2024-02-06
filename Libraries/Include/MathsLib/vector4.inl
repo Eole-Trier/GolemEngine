@@ -67,15 +67,7 @@ Vector4 operator-(Vector4 _a, Vector4 _b)
 
 bool operator==(Vector4 _a, Vector4 _b)
 {
-	if (_a.x == _b.x && _a.y == _b.y && _a.z == _b.z && _a.w == _b.w)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-
+	return (_a.x == _b.x && _a.y == _b.y && _a.z == _b.z && _a.w == _b.w) ? true : false;
 }
 
 Vector4 operator*(Matrix4 _a, Vector4 _b)
