@@ -137,6 +137,17 @@ Vector2 operator*(Matrix2 _a, Vector2 _b)
 	};
 }
 
+bool operator==(Vector2 _a, Vector2 _b)
+{
+	if (_a.x == _b.x && _a.y == _b.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 std::ostream& operator<<(std::ostream& _os, const Vector2& _f)
 {
