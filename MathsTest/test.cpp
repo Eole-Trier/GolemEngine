@@ -240,16 +240,38 @@ TEST(Matrix4, FloatOperatorDivide)
 
 TEST(Matrix4, MatOperatorAdd)
 {
-
+	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	Matrix4 test2 = Matrix4(-1.f, -2.f, -4.f, 4.f, -5.f, -3.f, -6.f, -8.f, -10.f, -12.f, -16.f, -20.f, -24.f, -28.f, -32.f, -36.f);
+	test1 = test1 + test2;
+	EXPECT_EQ(test1, Matrix4(0));
 }
 
 TEST(Matrix4, MatOperatorSubstract)
 {
-
+	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	test = test - test;
+	EXPECT_EQ(test, Matrix4(0));
 }
 
 TEST(Matrix4, MatOperatorMultiply)
 {
-
+	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	test = test * test;
+	EXPECT_EQ(test, Matrix4(-45, -56, -48, -52, 272, 315, 390, 412, 710, 808, 1008, 1096, 1348, 1524, 1928, 2064));
 }
+
+TEST(Matrix4, MatOperatorEqual)
+{
+	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	Matrix4 test2 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	EXPECT_EQ(test1, test2);
+}
+
+TEST(Matrix4, MatOperatorNotEqual)
+{
+	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	Matrix4 test2 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 0.f, 36.f);
+	EXPECT_NE(test1, test2);
+}
+
 #pragma endregion Matrix4
