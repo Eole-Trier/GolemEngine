@@ -210,4 +210,46 @@ TEST(Matrix4, LookAt)
 	EXPECT_EQ(test, Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -5, 0, 0, 0, 1));
 }
 
+TEST(Matrix4, FloatOperatorAdd)
+{
+	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
+	test = test + 5;
+	EXPECT_EQ(test, Matrix4(6.f, 7.f, 8.f, 1.f, 10.f, 7.5f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f, 17.f, 18.f, 19.f, 20.f));
+}
+
+TEST(Matrix4, FloatOperatorSubstract)
+{
+	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
+	test = test - 5;
+	EXPECT_EQ(test, Matrix4(-4.f, -3.f, -2.f, -9.f, 0.f, -2.5f, 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f));
+}
+
+TEST(Matrix4, FloatOperatorMultiply)
+{
+	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
+	test = test * 3;
+	EXPECT_EQ(test, Matrix4(3.f, 6.f, 9.f, -12.f, 15.f, 7.5f, 18.f, 21.f, 24.f, 27.f, 30.f, 33.f, 36.f, 39.f, 42.f, 45.f));
+}
+
+TEST(Matrix4, FloatOperatorDivide)
+{
+	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
+	test = test / 4;
+	EXPECT_EQ(test, Matrix4(0.25f, 0.5f, 1.f, -1.f, 1.25f, 0.75f, 1.5f, 2.f, 2.5f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+}
+
+TEST(Matrix4, MatOperatorAdd)
+{
+
+}
+
+TEST(Matrix4, MatOperatorSubstract)
+{
+
+}
+
+TEST(Matrix4, MatOperatorMultiply)
+{
+
+}
 #pragma endregion Matrix4
