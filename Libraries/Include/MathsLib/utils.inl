@@ -3,14 +3,25 @@
 #include <bit>
 
 
-float DegToRad(float _deg) { return (_deg * M_PI / 180.f); }
+float DegToRad(float _deg) 
+{ 
+	return (_deg * M_PI / 180.f); 
+}
 
-float RadToDeg(float _rad) {	return (_rad * 180.0f / M_PI); }
+float RadToDeg(float _rad) 
+{	
+	return (_rad * 180.0f / M_PI); 
+}
 
+float Lerp(float _a, float _b, float _t) 
+{	
+	return (1.0f - _t) * _a + _b * _t; 
+}
 
-float Lerp(float _a, float _b, float _t) {	return (1.0f - _t) * _a + _b * _t; }
-
-float InvLerp(float _a, float _b, float _v) { return (_v - _a) / (_b - _a); }
+float InvLerp(float _a, float _b, float _v) 
+{ 
+	return (_v - _a) / (_b - _a); 
+}
 
 float Remap(float _iMin, float _iMax, float _oMin, float _oMax, float _value)
 {
@@ -19,6 +30,13 @@ float Remap(float _iMin, float _iMax, float _oMin, float _oMax, float _value)
 	return ov;
 }
 
+float Q_rsqrt(float _number) noexcept
+{
+	static_assert(std::numeric_limits<float>::is_iec559);			// (enable only on IEEE 754)
+
+	float const y = std::bit_cast<float>(0x5f3759df - (std::bit_cast<std::uint32_t>(_number) >> 1));
+	return y * (1.5f - (_number * 0.5f * y * y));
+}
 
 float Q_rsqrt0(float _number, int _mode)
 {
@@ -36,12 +54,4 @@ float Q_rsqrt0(float _number, int _mode)
 		y = y * (threehalfs - (x2 * y * y));		// 2nd iteration, can be removed
 
 	return y;
-}
-
-float Q_rsqrt(float _number) noexcept
-{
-	static_assert(std::numeric_limits<float>::is_iec559);			// (enable only on IEEE 754)
-
-	float const y = std::bit_cast<float>(0x5f3759df - (std::bit_cast<std::uint32_t>(_number) >> 1));
-	return y * (1.5f - (_number * 0.5f * y * y));
 }
