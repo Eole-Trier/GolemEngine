@@ -14,10 +14,10 @@ public:
 	Matrix4();
 	~Matrix4();
 	Matrix4(
-		float a, float b, float c, float d,
-		float e, float f, float g, float h,
-		float i, float j, float k, float l,
-		float m, float n, float o, float p
+		float _a, float _b, float _c, float _d,
+		float _e, float _f, float _g, float _h,
+		float _i, float _j, float _k, float _l,
+		float _m, float _n, float _o, float _p
 	);
 	Matrix4(float _number);
 

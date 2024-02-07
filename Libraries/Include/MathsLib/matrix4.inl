@@ -1,12 +1,7 @@
 #include <iomanip>
 
 
-Matrix4::Matrix4()
-{
-	for (int i = 0; i < 4; i++)
-		for (int j = 0; j < 4; j++)
-			data[i][j] = 0;
-}
+Matrix4::Matrix4() { }
 
 Matrix4::~Matrix4() { }
 
@@ -71,7 +66,7 @@ Matrix4 Matrix4::Translate(Vector3 _t)
 		0, 0, 1, _t.z,
 		0, 0, 0, 1
 	);
-	return (*this) * translate;
+	return *this * translate;
 }
 
 Matrix4 Matrix4::Rotate(Vector3 _XYZrad)
@@ -98,12 +93,12 @@ Matrix4 Matrix4::Rotate(Vector3 _XYZrad)
 	return (*this) * rotate;
 }
 
-Matrix4 Matrix4::Scale(Vector3 _s)
+Matrix4 Matrix4::Scale(Vector3 _scale)
 {
 	Matrix4 scale(
-		_s.x, 0, 0, 0,
-		0, _s.y, 0, 0,
-		0, 0, _s.z, 0,
+		_scale.x, 0, 0, 0,
+		0, _scale.y, 0, 0,
+		0, 0, _scale.z, 0,
 		0, 0, 0, 1
 	);
 	return (*this) * scale;
@@ -192,7 +187,7 @@ Matrix4 operator/(Matrix4 _A, float _s)
 
 Matrix4 operator+(Matrix4 _A, Matrix4 _B)
 {
-	Matrix4 temp;
+	Matrix4 temp(0);
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			temp.data[i][j] = _A.data[i][j] + _B.data[i][j];
@@ -201,7 +196,7 @@ Matrix4 operator+(Matrix4 _A, Matrix4 _B)
 
 Matrix4 operator-(Matrix4 _A, Matrix4 _B)
 {
-	Matrix4 temp;
+	Matrix4 temp(0);
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			temp.data[i][j] = _A.data[i][j] - _B.data[i][j];
@@ -210,7 +205,7 @@ Matrix4 operator-(Matrix4 _A, Matrix4 _B)
 
 Matrix4 operator*(Matrix4 _A, Matrix4 _B)
 {
-	Matrix4 temp;
+	Matrix4 temp(0);
 
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
