@@ -18,13 +18,56 @@ TEST(TestCaseName, TestName)
 
 #pragma region Vector3
 
-TEST(Vector3, Constructor) {
+TEST(Vector3, Constructor) 
+{
 	Vector3 v(1.f, 2.f, 3.f);
 	EXPECT_NEAR(v.x, 1.f, EPSILON);
 	EXPECT_NEAR(v.y, 2.f, EPSILON);
 	EXPECT_NEAR(v.z, 3.f, EPSILON);
 }
 
+TEST(Vector3, Length) 
+{
+	Vector3 v(1.f, 2.f, 3.f);
+	EXPECT_NEAR(v.Length(), 3.74166f, EPSILON);
+}
+
+TEST(Vector3, LengthSq) 
+{
+	Vector3 v(1.f, 2.f, 3.f);
+	EXPECT_NEAR(v.LengthSq(), 14.0f, EPSILON);
+}
+
+TEST(Vector3, Normalize) {
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	EXPECT_NEAR(a.Normalize().x, 0.27f, EPSILON);
+	EXPECT_NEAR(a.Normalize().y, 0.53f, EPSILON);
+	EXPECT_NEAR(a.Normalize().z, 0.80f, EPSILON);
+}
+
+TEST(Vector3, Dot) {
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	Vector3 b(3.0f, 2.0f, 1.0f);
+	EXPECT_EQ(Vector3::Dot(a, b), 10.0f);
+}
+
+TEST(Vector3, Cross) {
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	Vector3 b(3.0f, 2.0f, 1.0f);
+	Vector3 c(-4.0f, 8.0f, -4.0f);
+	EXPECT_NEAR(Vector3::Cross(a, b).x, c.x, EPSILON);
+	EXPECT_NEAR(Vector3::Cross(a, b).y, c.y, EPSILON);
+	EXPECT_NEAR(Vector3::Cross(a, b).z, c.z, EPSILON);
+}
+
+TEST(Vector3, Operator_NotEqual_Vector3)
+{
+	Vector3 a(1.f, 2.f, 3.f);
+	Vector3 b(-0.f, 1.f, -4.9f);
+	EXPECT_NE(a.x, b.x);
+	EXPECT_NE(a.y, b.y);
+	EXPECT_NE(a.z, b.z);
+}
 #pragma endregion Vector3
 
 #pragma region Vector4
