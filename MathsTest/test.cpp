@@ -140,7 +140,15 @@ TEST(Vector4, Operator_NotEqual_Vector4)
 	EXPECT_NE(a.w, b.w);
 }
 
-// TODO: Operator_Multiply_Matrix4_Vector4
+TEST(Vector4, Operator_Multiply_Matrix_Vector)
+{
+	Vector4 a(1.f, 2.f, 3.f, -4.9f);
+	Matrix4 b(2.9f, 1, -2, -3.5f, 0, 0.5f, -0.78f, 2.3f, 4, 6, 3, 75, 1, -67, 4, 32);
+	EXPECT_NEAR((b * a).x, 16.05f, EPSILON);
+	EXPECT_NEAR((b * a).y, -12.61f, EPSILON);
+	EXPECT_NEAR((b * a).z, -342.5f, EPSILON);
+	EXPECT_NEAR((b * a).w, -277.8f, EPSILON);
+}
 
 #pragma endregion Vector4
 
