@@ -40,7 +40,6 @@ Matrix4 operator-(Matrix4 _A, Matrix4 _B);
 Matrix4 operator*(Matrix4 _A, Matrix4 _B);
 
 bool operator==(Matrix4 _A, Matrix4 _B);
-bool operator!=(Matrix4 _A, Matrix4 _B);
 
 std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4);
 

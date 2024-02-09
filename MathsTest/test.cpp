@@ -18,15 +18,19 @@ TEST(TestCaseName, TestName)
 
 namespace testVec2
 {
+	Vector2 zero(0, 0);
 	Vector2 vec1(1, 1);
 	Vector2 vec2(2, 2);
+	Vector2 vec3(2, 2);
 	float sx = 2.f;
 	float sy = 2.f;
 
 	TEST(Vector2, Normalize)
 	{
-		EXPECT_NEAR(vec1.Normalize().x, 0.707107, EPSILON);
-		EXPECT_NEAR(vec1.Normalize().y, 0.707107, EPSILON);
+		EXPECT_NEAR(vec1.Normalize().x, 0.707107f, EPSILON);
+		EXPECT_NEAR(vec1.Normalize().y, 0.707107f, EPSILON);
+		EXPECT_EQ(zero.Normalize().x, 0.0f, EPSILON);
+		EXPECT_EQ(zero.Normalize().y, 0.0f, EPSILON);
 	}
 
 	TEST(Vector2, Length)
@@ -48,11 +52,12 @@ namespace testVec2
 	{		
 		EXPECT_EQ(vec1 + vec2, Vector2(3, 3));
 		EXPECT_EQ(vec1 - vec2, Vector2(-1, -1));
-		EXPECT_EQ(vec1 * vec2, Vector2(2, 2));
-		EXPECT_EQ(vec1 / sx, Vector2(0.5, 0.5));
+		EXPECT_EQ(vec1 / sx, Vector2(0.5f, 0.5f));
+		EXPECT_EQ(vec1 / 0.0f, Vector2(0.0f, 0.0f));
 		EXPECT_EQ(vec1 * sx, Vector2(2, 2));
 		EXPECT_EQ(vec1 + sx, Vector2(3, 3));
 		EXPECT_EQ(vec1 - sx, Vector2(-1, -1));
+     	EXPECT_EQ(vec2, vec3);
 	}
 }
 
@@ -82,9 +87,11 @@ TEST(Vector3, LengthSq)
 
 TEST(Vector3, Normalize) {
 	Vector3 a(1.0f, 2.0f, 3.0f);
+	Vector3 zero(0.0f, 0.0f, 0.0f);
 	EXPECT_NEAR(a.Normalize().x, 0.27f, EPSILON);
 	EXPECT_NEAR(a.Normalize().y, 0.53f, EPSILON);
 	EXPECT_NEAR(a.Normalize().z, 0.80f, EPSILON);
+	EXPECT_EQ(zero.Normalize(), zero, EPSILON);
 }
 
 TEST(Vector3, Dot) {
@@ -102,6 +109,58 @@ TEST(Vector3, Cross) {
 	EXPECT_NEAR(Vector3::Cross(a, b).z, c.z, EPSILON);
 }
 
+TEST(Vector3, Operators_Add_Float)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	EXPECT_EQ((a + 9.3f), Vector3(10.3f, 11.3f, 12.3f));
+}
+
+TEST(Vector3, Operators_Substract_Float)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	EXPECT_EQ((a - 9.3f), Vector3(-8.3f, -7.3f, -6.3f));
+}
+
+TEST(Vector3, Operators_Multiply_Float)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	EXPECT_NEAR((a * 9.3f).x, 9.3f, EPSILON);
+	EXPECT_NEAR((a * 9.3f).y, 18.6f, EPSILON);
+	EXPECT_NEAR((a * 9.3f).z, 27.9f, EPSILON);
+}
+
+TEST(Vector3, Operators_Divide_Float)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	EXPECT_NEAR((a / 9.3f).x, 0.107f, EPSILON);
+	EXPECT_NEAR((a / 9.3f).y, 0.215f, EPSILON);
+	EXPECT_NEAR((a / 9.3f).z, 0.322f, EPSILON);
+	EXPECT_EQ((a / 0.0f), Vector3(0.0f, 0.0f, 0.0f));
+}
+
+TEST(Vector3, Operators_Add_Vector3)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	Vector3 b(-1.3f, 2.0f, 57.4f);
+	EXPECT_NEAR((a + b).x, -0.3f, EPSILON);
+	EXPECT_NEAR((a + b).y, 4.0f, EPSILON);
+	EXPECT_NEAR((a + b).z, 60.4f, EPSILON);
+}
+
+TEST(Vector3, Operators_Substract_Vector3)
+{
+	Vector3 a(1.0f, 2.0f, 3.0f);
+	Vector3 b(-1.3f, 2.0f, 57.4f);
+	EXPECT_EQ((a - b), Vector3(2.3f, 0.0f, -54.4f));
+}
+
+TEST(Vector3, Operator_Equal_Vector3)
+{
+	Vector3 a(1.f, 2.f, 3.f);
+	Vector3 b(1.f, 2.f, 3.f);
+	EXPECT_EQ(a, b);
+}
+
 TEST(Vector3, Operator_NotEqual_Vector3)
 {
 	Vector3 a(1.f, 2.f, 3.f);
@@ -110,6 +169,7 @@ TEST(Vector3, Operator_NotEqual_Vector3)
 	EXPECT_NE(a.y, b.y);
 	EXPECT_NE(a.z, b.z);
 }
+
 #pragma endregion Vector3
 
 #pragma region Vector4
@@ -138,10 +198,12 @@ TEST(Vector4, LenghtSq)
 TEST(Vector4, Normalize)
 {
 	Vector4 v(1.f, 2.f, 3.f, 4.f);
+	Vector4 zero(0.0f, 0.0f, 0.0f, 0.0f);
 	EXPECT_NEAR(v.Normalize().x, 0.18f, EPSILON);
 	EXPECT_NEAR(v.Normalize().y, 0.36f, EPSILON);
 	EXPECT_NEAR(v.Normalize().z, 0.54f, EPSILON);
 	EXPECT_NEAR(v.Normalize().w, 0.73f, EPSILON);
+	EXPECT_EQ(zero.Normalize(), zero);
 }
 
 TEST(Vector4, Operator_Add_Float)
@@ -182,6 +244,7 @@ TEST(Vector4, Operator_Divide_Float)
 	EXPECT_NEAR(b.y, 0.52f, EPSILON);
 	EXPECT_NEAR(b.z, 0.79f, EPSILON);
 	EXPECT_NEAR(b.w, 1.05f, EPSILON);
+	EXPECT_EQ(a / 0.0f, Vector4(0.0f, 0.0f, 0.0f, 0.0f));
 }
 
 TEST(Vector4, Operator_Add_Vector4)
@@ -302,35 +365,36 @@ TEST(Matrix4, LookAt)
 	EXPECT_EQ(test, Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -5, 0, 0, 0, 1));
 }
 
-TEST(Matrix4, FloatOperatorAdd)
+TEST(Matrix4, Operator_Add_Float)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
 	test = test + 5;
 	EXPECT_EQ(test, Matrix4(6.f, 7.f, 8.f, 1.f, 10.f, 7.5f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f, 17.f, 18.f, 19.f, 20.f));
 }
 
-TEST(Matrix4, FloatOperatorSubstract)
+TEST(Matrix4, Operator_Substract_Float)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
 	test = test - 5;
 	EXPECT_EQ(test, Matrix4(-4.f, -3.f, -2.f, -9.f, 0.f, -2.5f, 1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f));
 }
 
-TEST(Matrix4, FloatOperatorMultiply)
+TEST(Matrix4, Operator_Multiply_Float)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 3.f, -4.f, 5.f, 2.5f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f);
 	test = test * 3;
 	EXPECT_EQ(test, Matrix4(3.f, 6.f, 9.f, -12.f, 15.f, 7.5f, 18.f, 21.f, 24.f, 27.f, 30.f, 33.f, 36.f, 39.f, 42.f, 45.f));
 }
 
-TEST(Matrix4, FloatOperatorDivide)
+TEST(Matrix4, Operator_Divide_Float)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	test = test / 4;
 	EXPECT_EQ(test, Matrix4(0.25f, 0.5f, 1.f, -1.f, 1.25f, 0.75f, 1.5f, 2.f, 2.5f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f));
+	EXPECT_EQ(test / 0.0f, Matrix4(0));
 }
 
-TEST(Matrix4, MatOperatorAdd)
+TEST(Matrix4, Operator_Add_Matrix4)
 {
 	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	Matrix4 test2 = Matrix4(-1.f, -2.f, -4.f, 4.f, -5.f, -3.f, -6.f, -8.f, -10.f, -12.f, -16.f, -20.f, -24.f, -28.f, -32.f, -36.f);
@@ -338,28 +402,28 @@ TEST(Matrix4, MatOperatorAdd)
 	EXPECT_EQ(test1, Matrix4(0));
 }
 
-TEST(Matrix4, MatOperatorSubstract)
+TEST(Matrix4, Operator_Substract_Matrix4)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	test = test - test;
 	EXPECT_EQ(test, Matrix4(0));
 }
 
-TEST(Matrix4, MatOperatorMultiply)
+TEST(Matrix4, Operator_Multiply_Matrix4)
 {
 	Matrix4 test = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	test = test * test;
 	EXPECT_EQ(test, Matrix4(-45, -56, -48, -52, 272, 315, 390, 412, 710, 808, 1008, 1096, 1348, 1524, 1928, 2064));
 }
 
-TEST(Matrix4, MatOperatorEqual)
+TEST(Matrix4, Operator_Equal_Matrix4)
 {
 	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	Matrix4 test2 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	EXPECT_EQ(test1, test2);
 }
 
-TEST(Matrix4, MatOperatorNotEqual)
+TEST(Matrix4, Operator_Not_Equal_Matrix4)
 {
 	Matrix4 test1 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 32.f, 36.f);
 	Matrix4 test2 = Matrix4(1.f, 2.f, 4.f, -4.f, 5.f, 3.f, 6.f, 8.f, 10.f, 12.f, 16.f, 20.f, 24.f, 28.f, 0.f, 36.f);

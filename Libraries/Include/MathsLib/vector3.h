@@ -25,10 +25,8 @@ Vector3 operator*(Vector3 _a, float b);
 Vector3 operator/(Vector3 _a, float b);
 Vector3 operator+(Vector3 _a, Vector3 _b);
 Vector3 operator-(Vector3 _a, Vector3 _b);
-Vector3 operator*(Vector3 _a, Vector3 _b);
-Vector3 operator/(Vector3 _a, Vector3 _b);
-
 bool operator==(Vector3 _a, Vector3 _b);
+
 std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);
 
 #include "vector3.inl"

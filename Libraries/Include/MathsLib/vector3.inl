@@ -25,6 +25,7 @@ Vector3 Vector3::Normalize() const
     }
     else
     {
+        std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
         return Vector3(0, 0, 0);
     }
 }
@@ -64,6 +65,11 @@ Vector3 operator*(Vector3 _a, float _s)
 
 Vector3 operator/(Vector3 _a, float _s)
 {
+    if (_s == 0.0f)
+    {
+        std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
+        return { 0.0f, 0.0f, 0.0f };
+    }
     return { _a.x / _s, _a.y / _s, _a.z / _s };
 }
 
@@ -75,10 +81,6 @@ Vector3 operator+(Vector3 _a, Vector3 _b)
 Vector3 operator-(Vector3 _a, Vector3 _b)
 {
     return { _a.x - _b.x, _a.y - _b.y, _a.z - _b.z };
-}
-Vector3 operator*(Vector3 _a, Vector3 _b)
-{
-    return { _a.x * _b.x, _a.y * _b.y, _a.z * _b.z };
 }
 
 bool operator==(Vector3 _a, Vector3 _b)

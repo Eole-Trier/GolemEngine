@@ -1,6 +1,4 @@
-Vector2::Vector2()
-{
-}
+Vector2::Vector2() { }
 
 Vector2::~Vector2() { }
 
@@ -13,9 +11,16 @@ Vector2::Vector2(float _x, float _y)
 
 Vector2 Vector2::Normalize() const
 {
-	Vector2 temp = { x, y };
-	float l = temp.Length();
-	return Vector2(x / l, y / l);	// temp / l
+	float l = Length();
+	if (l != 0)
+	{
+		return Vector2(x / l, y / l);
+	}
+	else
+	{
+		return Vector2(0, 0);
+		std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
+	}
 }
 
 float Vector2::Length() const
@@ -53,6 +58,11 @@ Vector2 operator*(Vector2 _a, float _s)
 
 Vector2 operator/(Vector2 _a, float _s)
 {
+	if (_s == 0.0f)
+	{
+		std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
+		return { 0.0f, 0.0f };
+	}
 	return { _a.x / _s, _a.y / _s };
 }
 
@@ -64,11 +74,6 @@ Vector2 operator+(Vector2 _a, Vector2 _b)
 Vector2 operator-(Vector2 _a, Vector2 _b)
 {
 	return { _a.x - _b.x, _a.y - _b.y };
-}
-
-Vector2 operator*(Vector2 _a, Vector2 _b)
-{
-	return { _a.x * _b.x, _a.y * _b.y };
 }
 
 bool operator==(Vector2 _a, Vector2 _b)

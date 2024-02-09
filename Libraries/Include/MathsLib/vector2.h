@@ -16,7 +16,8 @@ public:
 
 	Vector2 Normalize() const;
 	float Length() const;
-	float LengthSq() const;			// only used to compare for optimization
+	// only used to compare for optimization
+	float LengthSq() const;			
 	static float Dot(Vector2 _a, Vector2 _b);
 };
 
@@ -26,7 +27,6 @@ Vector2 operator*(Vector2 _a, float _b);
 Vector2 operator/(Vector2 _a, float _b);
 Vector2 operator+(Vector2 _a, Vector2 _b);
 Vector2 operator-(Vector2 _a, Vector2 _b);
-Vector2 operator*(Matrix2 _a, Vector2 _b);
 bool operator==(Vector2 _a, Vector2 _b);
 
 std::ostream& operator<<(std::ostream& _os, const Vector2& _vector2);

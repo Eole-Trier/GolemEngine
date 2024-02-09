@@ -182,6 +182,11 @@ Matrix4 operator*(Matrix4 _A, float _n)
 
 Matrix4 operator/(Matrix4 _A, float _s)
 {
+	if (_s == 0.0f)
+	{
+		std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
+		return Matrix4(0);
+	}
 	return _A * (1.0f / _s);
 }
 
@@ -222,12 +227,6 @@ bool operator==(Matrix4 _A, Matrix4 _B)
 				return false;
 	return true;
 }
-
-bool operator!=(Matrix4 _A, Matrix4 _B)
-{
-	return !(_A == _B);
-}
-
 
 std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4)
 {

@@ -52,6 +52,11 @@ Vector4 operator*(Vector4 _a, float _s)
 
 Vector4 operator/(Vector4 _a, float _s)
 {
+	if (_s == 0)
+	{
+		std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
+		return { 0.0f, 0.0f, 0.0f, 0.0f };
+	}
 	return { _a.x / _s, _a.y / _s, _a.z / _s, _a.w / _s };
 }
 
