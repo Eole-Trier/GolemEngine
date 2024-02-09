@@ -25,7 +25,7 @@ public:
 	Matrix4 Transpose();
 	Matrix4 Translate(Vector3 _t);
 	Matrix4 Rotate(Vector3 _XYZrad);
-	Matrix4 Scale(Vector3 _s);
+	Matrix4 Scale(Vector3 _scale);
 	Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale);
 	static Matrix4 Projection(float _fov, float _aspectRatio, float _zNear, float _zFar);
 	static Matrix4 LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up);

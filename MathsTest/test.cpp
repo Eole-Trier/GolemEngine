@@ -22,8 +22,7 @@ TEST(Vector2, Normalize)
 	Vector2 zero(0, 0);
 	EXPECT_NEAR(vec1.Normalize().x, 0.707107f, EPSILON);
 	EXPECT_NEAR(vec1.Normalize().y, 0.707107f, EPSILON);
-	EXPECT_EQ(zero.Normalize().x, 0.0f, EPSILON);
-	EXPECT_EQ(zero.Normalize().y, 0.0f, EPSILON);
+	EXPECT_EQ(zero.Normalize(), zero);
 }
 
 TEST(Vector2, Length)
@@ -35,7 +34,7 @@ TEST(Vector2, Length)
 TEST(Vector2, LengthSquare)
 {
 	Vector2 vec1(1, 1);
-	EXPECT_NEAR(vec1.LengthSq(), 2, EPSILON);
+	EXPECT_NEAR(vec1.LengthSq(), 2.0f, EPSILON);
 }
 
 TEST(Vector2, DotProduct)
