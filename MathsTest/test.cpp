@@ -16,49 +16,90 @@ TEST(TestCaseName, TestName)
 
 #pragma region Vector2
 
-namespace testVec2
+TEST(Vector2, Normalize)
 {
+	Vector2 vec1(1, 1);
 	Vector2 zero(0, 0);
+	EXPECT_NEAR(vec1.Normalize().x, 0.707107f, EPSILON);
+	EXPECT_NEAR(vec1.Normalize().y, 0.707107f, EPSILON);
+	EXPECT_EQ(zero.Normalize().x, 0.0f, EPSILON);
+	EXPECT_EQ(zero.Normalize().y, 0.0f, EPSILON);
+}
+
+TEST(Vector2, Length)
+{
+	Vector2 vec1(1, 1);
+	EXPECT_NEAR(vec1.Length(), 1.41421, EPSILON);
+}
+
+TEST(Vector2, LengthSquare)
+{
+	Vector2 vec1(1, 1);
+	EXPECT_NEAR(vec1.LengthSq(), 2, EPSILON);
+}
+
+TEST(Vector2, DotProduct)
+{
 	Vector2 vec1(1, 1);
 	Vector2 vec2(2, 2);
-	Vector2 vec3(2, 2);
-	float sx = 2.f;
-	float sy = 2.f;
+	EXPECT_EQ(vec1.Dot(vec1, vec2), 4);
+}
 
-	TEST(Vector2, Normalize)
-	{
-		EXPECT_NEAR(vec1.Normalize().x, 0.707107f, EPSILON);
-		EXPECT_NEAR(vec1.Normalize().y, 0.707107f, EPSILON);
-		EXPECT_EQ(zero.Normalize().x, 0.0f, EPSILON);
-		EXPECT_EQ(zero.Normalize().y, 0.0f, EPSILON);
-	}
+TEST(Vector2, Operators_Add_Float)
+{
+	Vector2 a(1.0f, 2.0f);
+	EXPECT_EQ((a + 9.3f), Vector2(10.3f, 11.3f));
+}
 
-	TEST(Vector2, Length)
-	{
-		EXPECT_NEAR(vec1.Length(), 1.41421, EPSILON);
-	}
+TEST(Vector2, Operators_Substract_Float)
+{
+	Vector2 a(1.0f, 2.0f);
+	EXPECT_EQ((a - 9.3f), Vector2(-8.3f, -7.3f));
+}
 
-	TEST(Vector2, LengthSquare)
-	{
-		EXPECT_NEAR(vec1.LengthSq(), 2, EPSILON);
-	}
+TEST(Vector2, Operators_Multiply_Float)
+{
+	Vector2 a(1.0f, 2.0f);
+	EXPECT_NEAR((a * 9.3f).x, 9.3f, EPSILON);
+	EXPECT_NEAR((a * 9.3f).y, 18.6f, EPSILON);
+}
 
-	TEST(Vector2, DotProduct)
-	{
-		EXPECT_EQ(vec1.Dot(vec1, vec2), 4);
-	}
+TEST(Vector2, Operators_Divide_Float)
+{
+	Vector2 a(1.0f, 2.0f);
+	EXPECT_NEAR((a / 9.3f).x, 0.107f, EPSILON);
+	EXPECT_NEAR((a / 9.3f).y, 0.215f, EPSILON);
+	EXPECT_EQ((a / 0.0f), Vector2(0.0f, 0.0f));
+}
 
-	TEST(Vector2, Operators)
-	{		
-		EXPECT_EQ(vec1 + vec2, Vector2(3, 3));
-		EXPECT_EQ(vec1 - vec2, Vector2(-1, -1));
-		EXPECT_EQ(vec1 / sx, Vector2(0.5f, 0.5f));
-		EXPECT_EQ(vec1 / 0.0f, Vector2(0.0f, 0.0f));
-		EXPECT_EQ(vec1 * sx, Vector2(2, 2));
-		EXPECT_EQ(vec1 + sx, Vector2(3, 3));
-		EXPECT_EQ(vec1 - sx, Vector2(-1, -1));
-     	EXPECT_EQ(vec2, vec3);
-	}
+TEST(Vector2, Operators_Add_Vector2)
+{
+	Vector2 a(1.0f, 2.0f);
+	Vector2 b(-1.3f, 2.0f);
+	EXPECT_NEAR((a + b).x, -0.3f, EPSILON);
+	EXPECT_NEAR((a + b).y, 4.0f, EPSILON);
+}
+
+TEST(Vector2, Operators_Substract_Vector2)
+{
+	Vector2 a(1.0f, 2.0f);
+	Vector2 b(-1.3f, 2.0f);
+	EXPECT_EQ((a - b), Vector2(2.3f, 0.0f));
+}
+
+TEST(Vector2, Operator_Equal_Vector2)
+{
+	Vector2 a(1.f, 2.f);
+	Vector2 b(1.f, 2.f);
+	EXPECT_EQ(a, b);
+}
+
+TEST(Vector2, Operator_NotEqual_Vector2)
+{
+	Vector2 a(1.f, 2.f);
+	Vector2 b(-0.f, 1.f);
+	EXPECT_NE(a.x, b.x);
+	EXPECT_NE(a.y, b.y);
 }
 
 #pragma endregion Vector2
