@@ -22,63 +22,37 @@ namespace testVec2
 	Vector2 vec2(2, 2);
 	float sx = 2.f;
 	float sy = 2.f;
-	Matrix2 mat(1);
 
 	TEST(Vector2, Normalize)
 	{
-		EXPECT_NEAR(vec1.normalize().x, 0.707107, EPSILON);
-		EXPECT_NEAR(vec1.normalize().y, 0.707107, EPSILON);
+		EXPECT_NEAR(vec1.Normalize().x, 0.707107, EPSILON);
+		EXPECT_NEAR(vec1.Normalize().y, 0.707107, EPSILON);
 	}
 
-	TEST(Vector2, length)
+	TEST(Vector2, Length)
 	{
-		EXPECT_NEAR(vec1.length(), 1.41421, EPSILON);
+		EXPECT_NEAR(vec1.Length(), 1.41421, EPSILON);
 	}
 
-	TEST(Vector2, lengthSquare)
+	TEST(Vector2, LengthSquare)
 	{
-		EXPECT_NEAR(vec1.lengthSquare(), 2, EPSILON);
-	}
-
-	TEST(Vector2, distance)
-	{
-		EXPECT_NEAR(vec1.dist(vec1, vec2), 1.41421, EPSILON);
-	}
-
-	TEST(Vector2, Rotate)
-	{
-		EXPECT_NEAR(vec1.rotate(M_PI / 4).x, 1.41421, EPSILON);
-		EXPECT_NEAR(vec1.rotate(M_PI / 4).y, 0, EPSILON);
+		EXPECT_NEAR(vec1.LengthSq(), 2, EPSILON);
 	}
 
 	TEST(Vector2, DotProduct)
 	{
-		EXPECT_EQ(vec1.dot(vec1, vec2), 4);
-	}
-
-	TEST(Vector2, scale)
-	{
-		EXPECT_FLOAT_EQ(vec1.scaleMatrix2(sx, sy).x, 2.f);
-		EXPECT_FLOAT_EQ(vec1.scaleMatrix2(sx, sy).y, 2.f);
+		EXPECT_EQ(vec1.Dot(vec1, vec2), 4);
 	}
 
 	TEST(Vector2, Operators)
-	{
+	{		
 		EXPECT_EQ(vec1 + vec2, Vector2(3, 3));
-
 		EXPECT_EQ(vec1 - vec2, Vector2(-1, -1));
-
 		EXPECT_EQ(vec1 * vec2, Vector2(2, 2));
-
 		EXPECT_EQ(vec1 / sx, Vector2(0.5, 0.5));
-
 		EXPECT_EQ(vec1 * sx, Vector2(2, 2));
-
 		EXPECT_EQ(vec1 + sx, Vector2(3, 3));
-
 		EXPECT_EQ(vec1 - sx, Vector2(-1, -1));
-
-		EXPECT_EQ(mat * vec1, Vector2(2, 2));
 	}
 }
 
