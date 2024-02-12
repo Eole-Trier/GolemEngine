@@ -14,6 +14,49 @@ TEST(TestCaseName, TestName)
   EXPECT_TRUE(true);
 }
 
+#pragma region Utils
+
+TEST(Utils, DegToRad)
+{
+	EXPECT_NEAR(DegToRad(157), 2.74017f, EPSILON);
+}
+
+TEST(Utils, RadToDeg)
+{
+	EXPECT_NEAR(RadToDeg(0.74f), 42.39888f, EPSILON);
+}
+
+TEST(Utils, Lerp)
+{
+	EXPECT_EQ(Lerp(2, 7, 0.3f), 3.5f);
+}
+
+TEST(Utils, InvLerp)
+{
+	EXPECT_EQ(InvLerp(2, 7, 3.5f), 0.3f);
+}
+
+TEST(Utils, Remap)
+{
+	EXPECT_EQ(Remap(0, 10, 2, 5, 2.75f), 2.825f);
+}
+
+TEST(Utils, Q_rsqrt)
+{
+	EXPECT_NEAR(Q_rsqrt(2), 0.707, EPSILON);
+	EXPECT_NEAR(Q_rsqrt(4), 0.5, EPSILON);
+}
+
+TEST(Utils, Q_rsqrt0)
+{
+	EXPECT_NEAR(Q_rsqrt0(2, 0), 0.707, EPSILON);
+	EXPECT_NEAR(Q_rsqrt0(4, 0), 0.5, EPSILON);
+	EXPECT_NEAR(Q_rsqrt0(2, 1), 0.707, 0.001f);
+	EXPECT_NEAR(Q_rsqrt0(4, 1), 0.499, 0.001f);
+}
+
+#pragma endregion Utils
+
 #pragma region Vector2
 
 TEST(Vector2, Normalize)
