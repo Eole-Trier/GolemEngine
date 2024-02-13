@@ -21,8 +21,11 @@
   <ItemGroup>
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\test.h" />
+    <ClInclude Include="Include\Viewport\window.h" />
+    <ClInclude Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\test.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -81,21 +84,25 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,6 +116,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;$(SolutionDir)Libraries\Libs\opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,6 +135,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;$(SolutionDir)Libraries\Libs\opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,6 +150,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,6 +169,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
