@@ -23,4 +23,6 @@ public:
 	void Init();
 	void Render();
 	void Close();
+
+	void ProcessInput();
 };

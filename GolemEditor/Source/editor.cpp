@@ -1,6 +1,11 @@
 #include "editor.h"
 
-Editor::Editor() {}
+#include <GLFW/glfw3.h>
+
+Editor::Editor() 
+{
+	m_viewport = new Window("Viewport", 800, 600);
+}
 
 Editor::~Editor() {}
 

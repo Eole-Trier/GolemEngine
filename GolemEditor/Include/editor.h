@@ -5,7 +5,7 @@
 class Editor
 {
 private:
-	Window* m_viewport = new Window("Viewport", 800, 600);
+	Window* m_viewport = nullptr;
 
 public:
 	Editor();
