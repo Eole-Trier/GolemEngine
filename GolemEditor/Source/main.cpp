@@ -4,7 +4,7 @@
 
 int main()
 {
-	Editor editor;
-	editor.Run();
+	Editor* editor = new Editor();
+	editor->Run();
 	return 0;
 }
