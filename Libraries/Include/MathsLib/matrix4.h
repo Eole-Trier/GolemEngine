@@ -22,11 +22,11 @@ public:
 	Matrix4(float _number);
 
 	static Matrix4 Identity();
-	Matrix4 Transpose();
-	Matrix4 Translate(Vector3 _t);
-	Matrix4 Rotate(Vector3 _XYZrad);
-	Matrix4 Scale(Vector3 _scale);
-	Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale);
+	Matrix4 Transpose() const;
+	Matrix4 Translate(Vector3 _t) const;
+	Matrix4 Rotate(Vector3 _XYZrad) const;
+	Matrix4 Scale(Vector3 _scale) const;
+	Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale) const;
 	static Matrix4 Projection(float _fov, float _aspectRatio, float _zNear, float _zFar);
 	static Matrix4 LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up);
 };

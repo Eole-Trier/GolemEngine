@@ -40,7 +40,7 @@ Matrix4 Matrix4::Identity()
 	return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
-Matrix4 Matrix4::Transpose()
+Matrix4 Matrix4::Transpose() const
 {
 	Matrix4 Transpose;
 
@@ -58,7 +58,7 @@ Matrix4 Matrix4::Transpose()
 	return Transpose;
 }
 
-Matrix4 Matrix4::Translate(Vector3 _t)
+Matrix4 Matrix4::Translate(Vector3 _t) const
 {
 	Matrix4 translate(
 		1, 0, 0, _t.x,
@@ -69,7 +69,7 @@ Matrix4 Matrix4::Translate(Vector3 _t)
 	return *this * translate;
 }
 
-Matrix4 Matrix4::Rotate(Vector3 _XYZrad)
+Matrix4 Matrix4::Rotate(Vector3 _XYZrad) const
 {
 	Matrix4 rotateX(
 		1, 0, 0, 0,
@@ -93,7 +93,7 @@ Matrix4 Matrix4::Rotate(Vector3 _XYZrad)
 	return (*this) * rotate;
 }
 
-Matrix4 Matrix4::Scale(Vector3 _scale)
+Matrix4 Matrix4::Scale(Vector3 _scale) const
 {
 	Matrix4 scale(
 		_scale.x, 0, 0, 0,
@@ -104,15 +104,15 @@ Matrix4 Matrix4::Scale(Vector3 _scale)
 	return (*this) * scale;
 }
 
-Matrix4 Matrix4::TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale)
+Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale) const
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.data[0][3] = _translate.x;
-	result.data[1][3] = _translate.y;
-	result.data[2][3] = _translate.z;
+	result.data[0][3] = _t.x;
+	result.data[1][3] = _t.y;
+	result.data[2][3] = _t.z;
 
-	result = result.Rotate(_rotate);
+	result = result.Rotate(_XYZrad);
 
 	result = result.Scale(_scale);
 
