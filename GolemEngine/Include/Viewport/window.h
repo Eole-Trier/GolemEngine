@@ -1,5 +1,4 @@
 #pragma once
-
 #include "dll.h"
 
 #include <string>
@@ -20,7 +19,6 @@ public:
 	Window();
 	~Window();
 	Window(std::string _name, unsigned int _width, unsigned int _height);
-
 
 	void Init();
 	void Render();

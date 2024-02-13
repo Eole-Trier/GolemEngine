@@ -11,6 +11,9 @@ void Editor::Init()
 
 void Editor::Run()
 {
+	Init();
+	MainLoop();
+	Cleanup();
 }
 
 void Editor::MainLoop()

@@ -22,11 +22,12 @@
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\test.h" />
     <ClInclude Include="Include\Viewport\window.h" />
-    <ClInclude Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="glad.c" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\test.cpp" />
+    <ClCompile Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
