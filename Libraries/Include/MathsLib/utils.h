@@ -16,5 +16,3 @@ float Q_rsqrt(float _number) noexcept;
 // Quick inverse square root function for faster inverse square root calculations. If _mode set to 1, the inverse
 // square root will show more precision in exchange for slightly longer calculations. 
 float Q_rsqrt0(float _number, int _mode = 0);
-
-#include "utils.inl"

@@ -1,5 +1,8 @@
+#include "matrix4.h"
+
 #include <iomanip>
 
+#include "vector3.h"
 
 Matrix4::Matrix4() { }
 

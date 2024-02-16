@@ -31,4 +31,3 @@ bool operator==(Vector4 _a, Vector4 _b);
 Vector4 operator*(Matrix4 _a, Vector4 _b);
 std::ostream& operator<<(std::ostream& _os, const Vector4& _Vector4);
 
-#include "vector4.inl"

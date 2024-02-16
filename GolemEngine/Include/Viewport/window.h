@@ -18,7 +18,7 @@ public:
 public:
 	Window();
 	~Window();
-	Window(std::string _name, unsigned int _width, unsigned int _height);
+	Window(const char* _name, unsigned int _width, unsigned int _height);
 
 	GLFWwindow* GetWindow();
 

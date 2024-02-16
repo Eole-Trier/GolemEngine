@@ -6,14 +6,13 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-
 #include <iostream>
 
 Window::Window() {}
 
 Window::~Window() {}
 
-Window::Window(std::string _name, unsigned int _width, unsigned int _height) 
+Window::Window(const char* _name, unsigned int _width, unsigned int _height) 
     : m_name(_name), width(_width), height(_height) {}
 
 GLFWwindow* Window::GetWindow()
