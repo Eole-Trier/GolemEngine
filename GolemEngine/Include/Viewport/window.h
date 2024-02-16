@@ -20,9 +20,15 @@ public:
 	~Window();
 	Window(const char* _name, unsigned int _width, unsigned int _height);
 
+	GLFWwindow* GetWindow();
+
 	void Init();
 	void Render();
 	void Close();
+
+	void ImGuiInit();
+	void ImGuiLoop();
+	void ImGuiClean();
 
 	void ProcessInput();
 };

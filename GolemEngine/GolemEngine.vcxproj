@@ -19,6 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\imgui_demo.cpp" />
+    <ClCompile Include="External\imgui\imgui_draw.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External\imgui\imgui_tables.cpp" />
+    <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
@@ -36,6 +43,18 @@
     <ClInclude Include="Include\Resources\resourceManager.h" />
     <ClInclude Include="Include\Resources\shader.h" />
     <ClInclude Include="Include\Resources\texture.h" />
+    <ClInclude Include="External\imgui\imconfig.h" />
+    <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="External\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="External\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="External\imgui\imgui_internal.h" />
+    <ClInclude Include="External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="External\imgui\imstb_textedit.h" />
+    <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Include\dll.h" />
+    <ClInclude Include="Include\Resource\iResource.h" />
+    <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -121,7 +140,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,7 +157,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +174,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -172,7 +192,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

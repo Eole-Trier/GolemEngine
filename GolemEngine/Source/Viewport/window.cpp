@@ -2,6 +2,9 @@
 #include <GLFW/glfw3.h>
 
 #include "Viewport\window.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 #include <iostream>
 
@@ -11,6 +14,11 @@ Window::~Window() {}
 
 Window::Window(const char* _name, unsigned int _width, unsigned int _height)
     : m_name(_name), width(_width), height(_height) {}
+
+GLFWwindow* Window::GetWindow()
+{
+    return m_window;
+}
 
 void Window::Init()
 {
@@ -37,6 +45,7 @@ void Window::Init()
     }
 
     glEnable(GL_DEPTH_TEST);
+    ImGuiInit();
 }
 
 void Window::Render()
@@ -47,6 +56,8 @@ void Window::Render()
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        ImGuiLoop();
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();
@@ -64,4 +75,28 @@ void Window::ProcessInput()
     {
         glfwSetWindowShouldClose(m_window, true);
     }
+}
+
+void Window::ImGuiInit()
+{
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(GetWindow(), true);
+    ImGui_ImplOpenGL3_Init("#version 460");
+}
+
+void Window::ImGuiLoop()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    ImGui::Begin("Hello, Golem!");
+    ImGui::End();
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Window::ImGuiClean()
+{
 }
