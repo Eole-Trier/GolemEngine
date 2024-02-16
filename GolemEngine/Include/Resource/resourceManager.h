@@ -1,33 +1,40 @@
 #pragma once
 #include "Resource/iResource.h"
+
 #include <map>
 #include <string>
 #include <filesystem>
 
-class ResourcesManager
+class ResourceManager
 {
+private:
+	std::map<std::string, IResource*> resources;
+
 public:
 
-	ResourcesManager() {}
-	~ResourcesManager() {}
+	ResourceManager() {}
+	~ResourceManager() {}
+
 	template<class T>
 	T* Create(std::string _filename);
 
-	void Delete(std::string _filename);
-	std::filesystem::path findPath(std::string _filename)
+	void Delete(std::string* _filename);
+
+	std::filesystem::path FindPath(std::string _filename)
 	{
 		for (std::filesystem::path file : std::filesystem::recursive_directory_iterator(std::filesystem::current_path()))
+		{
 			if (file.filename().string().find(_filename) != std::string::npos)
+			{
 				return file;
+			}
+		}
 		return std::filesystem::path();
 	}
-
-private:
-	std::map<std::string, IResource*> resources;
 };
 
 template<class T>
-T* ResourcesManager::Create(std::string _filename)
+T* ResourceManager::Create(std::string _filename)
 {
 	if (resources[_filename])
 	{
@@ -36,11 +43,11 @@ T* ResourcesManager::Create(std::string _filename)
 		return (T*)resources[_filename];
 	}
 
-	std::filesystem::path pathFile = findPath(_filename);
+	std::filesystem::path pathFile = FindPath(_filename);
 
 	if (pathFile == "")
 	{
-		DEBUG_LOG("File not found : %s", _filename.c_str());
+		std::cout << "File not found : " << _filename << std::endl;
 		return nullptr;
 	}
 	resources[_filename] = new T();
@@ -49,7 +56,9 @@ T* ResourcesManager::Create(std::string _filename)
 	return(T*)resources[_filename];
 }
 
-void ResourcesManager::Delete(std::string filename)
+void ResourceManager::Delete(std::string* _filename)
 {
-
+	// TO CHECK
+	_filename = nullptr;
+	delete _filename;
 }
