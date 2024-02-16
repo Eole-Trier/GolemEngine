@@ -21,12 +21,10 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\mainDll.cpp" />
-    <ClCompile Include="Source\test.cpp" />
     <ClCompile Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\dll.h" />
-    <ClInclude Include="Include\test.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

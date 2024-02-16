@@ -20,20 +20,18 @@ void Window::Init()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
     m_window = glfwCreateWindow(width, height, m_name.c_str(), NULL, NULL);
-    if (m_window == NULL) {
-        std::cout << "Failed to create GLFW window" << std::endl;
+    if (m_window == NULL) 
+    {
+        std::cout << "Failed to create GLFW window : " << m_name << std::endl;
         glfwTerminate();
     }
 
     glfwMakeContextCurrent(m_window);
     //glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
+    {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
