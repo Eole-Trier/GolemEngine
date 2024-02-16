@@ -3,15 +3,10 @@
 #include "dll.h"
 #include "resource.h"
 
-#include <MathsLib/vector2.h>
-#include <MathsLib/vector3.h>
+#include "vector2.h"
+#include "vector3.h"
+#include "vertex.h"
 
-struct GOLEM_ENGINE_API Vertex
-{
-	Vector3 Position;
-	Vector3 Normal;
-	Vector2 TextureUV;
-};
 
 class GOLEM_ENGINE_API Model : public Resource
 {

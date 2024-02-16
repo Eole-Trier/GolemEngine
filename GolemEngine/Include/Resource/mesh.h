@@ -3,24 +3,13 @@
 #include <string>
 #include <vector>
 
-#include "iResource.h"
+#include "resource.h"
 #include "vector3.h"
+#include "shader.h"
+#include "texture.h"
+#include "vertex.h"
 
-struct Vertex
-{
-	Vector3 Position;
-	Vector3 Normal;
-	Vector3 TextureCoords;
-};
-
-struct Texture
-{
-	unsigned int id;
-	std::string path;
-};
-
-
-class Mesh : IResource
+class GOLEM_ENGINE_API Mesh : public Resource
 {
 private:
 	std::vector<Vertex> m_vertices;
@@ -38,5 +27,5 @@ public:
 	~Mesh();
 	Mesh(std::vector<Vertex> _vertices, std::vector<unsigned int> _indices, std::vector<Texture> _textures);
 	
-	void Draw();
+	void Draw(Shader& _shader);
 };

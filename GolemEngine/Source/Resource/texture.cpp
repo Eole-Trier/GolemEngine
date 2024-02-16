@@ -3,7 +3,7 @@
 #include "Image/stb_image.h"
 #include "glad/glad.h"
 
-#include "Resources/texture.h"
+#include "Resource/texture.h"
 #include "Debug/log.h"
 
 Texture::Texture()

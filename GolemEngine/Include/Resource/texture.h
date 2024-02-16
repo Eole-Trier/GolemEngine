@@ -1,15 +1,20 @@
 #pragma once
 
 #include <filesystem>
-#include "dll.h"
+#include <string>
 
-#include "Resources/resource.h"
+#include "dll.h"
+#include "resource.h"
 
 class GOLEM_ENGINE_API Texture : public Resource
 {
+public:
+	unsigned int id = 0;
+	std::string name;
+	std::string path;
+
 public :
 	Texture();
-	unsigned int id = 0;
 
 	void Load(const char* filename);
 };

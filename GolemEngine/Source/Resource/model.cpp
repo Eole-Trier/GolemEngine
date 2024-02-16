@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-#include "Resources/model.h"
+#include "Resource/model.h"
 #include "Debug/log.h"
 
 Model::Model()
@@ -61,13 +61,13 @@ void Model::Load(const char* modelPath, const char* texturePath)
             int i3[3];
             sscanf_s(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &i1[0], &i1[1], &i1[2], &i2[0], &i2[1], &i2[2], &i3[0], &i3[1], &i3[2]);
             v1.Position = positions[i1[0]-1];
-            v1.TextureUV = textureUVs[i1[1]-1];
+            v1.TextureCoords = textureUVs[i1[1]-1];
             v1.Normal = normals[i1[2]-1];
             v2.Position = positions[i2[0]-1];
-            v2.TextureUV = textureUVs[i2[1]-1];
+            v2.TextureCoords = textureUVs[i2[1]-1];
             v2.Normal = normals[i2[2]-1];
             v3.Position = positions[i3[0]-1];
-            v3.TextureUV = textureUVs[i3[1]-1];
+            v3.TextureCoords = textureUVs[i3[1]-1];
             v3.Normal = normals[i3[2]-1];
             vertices.push_back(v1);
             vertices.push_back(v2);
