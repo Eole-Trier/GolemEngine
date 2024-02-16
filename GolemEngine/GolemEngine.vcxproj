@@ -27,7 +27,12 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
+    <ClCompile Include="Source\Resources\model.cpp" />
+    <ClCompile Include="Source\Resources\shader.cpp" />
+    <ClCompile Include="Source\Resources\texture.cpp" />
+    <ClCompile Include="Source\Resource\mesh.cpp" />
     <ClCompile Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,8 +45,16 @@
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Include\Debug\assertion.h" />
+    <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
+    <ClInclude Include="Include\Resources\model.h" />
+    <ClInclude Include="Include\Resources\resource.h" />
+    <ClInclude Include="Include\Resources\resourceManager.h" />
+    <ClInclude Include="Include\Resources\shader.h" />
+    <ClInclude Include="Include\Resources\texture.h" />
     <ClInclude Include="Include\Resource\iResource.h" />
+    <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
