@@ -1,8 +1,9 @@
+#include "Resource/model.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 
-#include "Resource/model.h"
 #include "Debug/log.h"
 
 Model::Model()

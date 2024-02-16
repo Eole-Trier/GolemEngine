@@ -1,3 +1,5 @@
+#include "Resource/shader.h"
+
 #include <iostream>
 #include <glad/glad.h>
 #include <fstream>
@@ -5,7 +7,6 @@
 #include <iostream>
 
 #include "Debug/log.h"
-#include "Resource/shader.h"
 
 Shader::Shader() {}
 

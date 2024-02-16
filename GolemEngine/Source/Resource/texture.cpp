@@ -1,9 +1,8 @@
+#include "Resource/texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION 
 #include "Image/stb_image.h"
 #include "glad/glad.h"
-
-#include "Resource/texture.h"
 #include "Debug/log.h"
 
 Texture::Texture()
