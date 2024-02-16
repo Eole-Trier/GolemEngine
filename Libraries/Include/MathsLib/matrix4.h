@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-#include "vector3.h"
-
+class Vector3;
 
 class Matrix4
 {
@@ -43,4 +42,3 @@ bool operator==(Matrix4 _A, Matrix4 _B);
 
 std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4);
 
-#include "matrix4.inl"

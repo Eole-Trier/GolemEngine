@@ -20,13 +20,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
-    <ClCompile Include="Source\test.cpp" />
+    <ClCompile Include="Source\Resources\model.cpp" />
+    <ClCompile Include="Source\Resources\shader.cpp" />
+    <ClCompile Include="Source\Resources\texture.cpp" />
     <ClCompile Include="Source\Viewport\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Debug\assertion.h" />
+    <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
-    <ClInclude Include="Include\test.h" />
+    <ClInclude Include="Include\Resources\model.h" />
+    <ClInclude Include="Include\Resources\resource.h" />
+    <ClInclude Include="Include\Resources\resourceManager.h" />
+    <ClInclude Include="Include\Resources\shader.h" />
+    <ClInclude Include="Include\Resources\texture.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -146,7 +155,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,7 +172,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

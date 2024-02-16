@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-class Matrix2;
-
 class Vector2
 {
 public:
@@ -31,4 +29,3 @@ bool operator==(Vector2 _a, Vector2 _b);
 
 std::ostream& operator<<(std::ostream& _os, const Vector2& _vector2);
 
-#include "vector2.inl"
