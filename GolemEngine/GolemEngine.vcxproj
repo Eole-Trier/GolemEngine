@@ -25,6 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\dll.h" />
+    <ClInclude Include="Include\Resource\iResource.h" />
+    <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
