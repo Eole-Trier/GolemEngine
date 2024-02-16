@@ -9,7 +9,7 @@ Window::Window() {}
 
 Window::~Window() {}
 
-Window::Window(const char* _name, unsigned int _width, unsigned int _height) 
+Window::Window(const char* _name, unsigned int _width, unsigned int _height)
     : m_name(_name), width(_width), height(_height) {}
 
 void Window::Init()
