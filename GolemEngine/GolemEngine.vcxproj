@@ -112,25 +112,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
@@ -141,7 +141,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,7 +158,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,7 +175,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -192,7 +192,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

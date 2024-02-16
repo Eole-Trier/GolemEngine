@@ -1,7 +1,10 @@
 #pragma once
+
 #include <iostream>
 
-class Vector3
+#include "dll.h"
+
+class GOLEM_ENGINE_API Vector3
 {
 public:
 	float x, y, z;
@@ -17,15 +20,16 @@ public:
 	Vector3 Normalize() const;
 	static float Dot(Vector3 _a, Vector3 _b);
 	static Vector3 Cross(Vector3 _a, Vector3 _b);
+
+	GOLEM_ENGINE_API friend Vector3 operator+(Vector3 _a, float b);
+	GOLEM_ENGINE_API friend Vector3 operator-(Vector3 _a, float b);
+	GOLEM_ENGINE_API friend Vector3 operator*(Vector3 _a, float b);
+	GOLEM_ENGINE_API friend Vector3 operator/(Vector3 _a, float b);
+	GOLEM_ENGINE_API friend Vector3 operator+(Vector3 _a, Vector3 _b);
+	GOLEM_ENGINE_API friend Vector3 operator-(Vector3 _a, Vector3 _b);
+	GOLEM_ENGINE_API friend bool operator == (Vector3 _a, Vector3 _b);
+	
+	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);
 };
 
-Vector3 operator+(Vector3 _a, float b);
-Vector3 operator-(Vector3 _a, float b);
-Vector3 operator*(Vector3 _a, float b);
-Vector3 operator/(Vector3 _a, float b);
-Vector3 operator+(Vector3 _a, Vector3 _b);
-Vector3 operator-(Vector3 _a, Vector3 _b);
-bool operator==(Vector3 _a, Vector3 _b);
-
-std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);
 

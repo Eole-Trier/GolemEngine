@@ -2,9 +2,11 @@
 
 #include <iostream>
 
+#include "dll.h"
+
 class Vector3;
 
-class Matrix4
+class GOLEM_ENGINE_API Matrix4
 {
 public:
 	float data[4][4];
@@ -28,17 +30,17 @@ public:
 	Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale) const;
 	static Matrix4 Projection(float _fov, float _aspectRatio, float _zNear, float _zFar);
 	static Matrix4 LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up);
+	
+	GOLEM_ENGINE_API friend Matrix4 operator+(Matrix4 _A, float _n);
+	GOLEM_ENGINE_API friend Matrix4 operator-(Matrix4 _A, float _n);
+	GOLEM_ENGINE_API friend Matrix4 operator*(Matrix4 _A, float _s);
+	GOLEM_ENGINE_API friend Matrix4 operator/(Matrix4 _A, float _s);
+	GOLEM_ENGINE_API friend Matrix4 operator+(Matrix4 _A, Matrix4 _B);
+	GOLEM_ENGINE_API friend Matrix4 operator-(Matrix4 _A, Matrix4 _B);
+	GOLEM_ENGINE_API friend Matrix4 operator*(Matrix4 _A, Matrix4 _B);
+	GOLEM_ENGINE_API friend bool operator==(Matrix4 _A, Matrix4 _B);
+	
+	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4);
 };
 
-Matrix4 operator+(Matrix4 _A, float _n);
-Matrix4 operator-(Matrix4 _A, float _n);
-Matrix4 operator*(Matrix4 _A, float _s);
-Matrix4 operator/(Matrix4 _A, float _s);
-Matrix4 operator+(Matrix4 _A, Matrix4 _B);
-Matrix4 operator-(Matrix4 _A, Matrix4 _B);
-Matrix4 operator*(Matrix4 _A, Matrix4 _B);
-
-bool operator==(Matrix4 _A, Matrix4 _B);
-
-std::ostream& operator<<(std::ostream& _os, const Matrix4& _matrix4);
 

@@ -1,13 +1,13 @@
 #include "editor.h"
-//#include <MathsLib/mathslib.h>
 #include <iostream>
-#include "vector3.h"
+#include "mathslib.h"
 
 int main()
 {
 	Editor* editor = new Editor();
-	Vector3 vec3(2, 2, 2);
-	std::cout << vec3 << std::endl;
+	Matrix4 a(1);
+	Matrix4 b(2);
+	std::cout << a + b<< std::endl;
 	editor->Run();
 	return 0;
 }

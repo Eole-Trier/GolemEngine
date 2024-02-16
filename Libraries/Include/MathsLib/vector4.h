@@ -2,10 +2,11 @@
 
 #include <iostream>
 
+#include "dll.h"
 
 class Matrix4;
 
-class Vector4
+class GOLEM_ENGINE_API Vector4
 {
 public:
 	float x, y, z, w;
@@ -19,15 +20,17 @@ public:
 	// Used for comparing purpose only because doesn't sqrt to make less operations.
 	float LengthSq() const;
 	Vector4 Normalize() const;
+	
+	GOLEM_ENGINE_API friend Vector4 operator+(Vector4 _a, float _b);
+	GOLEM_ENGINE_API friend Vector4 operator-(Vector4 _a, float _b);
+	GOLEM_ENGINE_API friend Vector4 operator*(Vector4 _a, float _b);
+	GOLEM_ENGINE_API friend Vector4 operator/(Vector4 _a, float _b);
+	GOLEM_ENGINE_API friend Vector4 operator+(Vector4 _a, Vector4 _b);
+	GOLEM_ENGINE_API friend Vector4 operator-(Vector4 _a, Vector4 _b);
+	GOLEM_ENGINE_API friend bool operator==(Vector4 _a, Vector4 _b);
+	GOLEM_ENGINE_API friend Vector4 operator*(Matrix4 _a, Vector4 _b);
+
+	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& _os, const Vector4& _Vector4);
 };
 
-Vector4 operator+(Vector4 _a, float _b);
-Vector4 operator-(Vector4 _a, float _b);
-Vector4 operator*(Vector4 _a, float _b);
-Vector4 operator/(Vector4 _a, float _b);
-Vector4 operator+(Vector4 _a, Vector4 _b);
-Vector4 operator-(Vector4 _a, Vector4 _b);
-bool operator==(Vector4 _a, Vector4 _b);
-Vector4 operator*(Matrix4 _a, Vector4 _b);
-std::ostream& operator<<(std::ostream& _os, const Vector4& _Vector4);
 

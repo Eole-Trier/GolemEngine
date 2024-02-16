@@ -51,7 +51,6 @@ void Window::Render()
     while (!glfwWindowShouldClose(m_window))
     {
         ProcessInput();
-
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGuiLoop();

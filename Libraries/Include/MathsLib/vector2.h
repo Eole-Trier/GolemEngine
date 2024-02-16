@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-class Vector2
+#include "dll.h"
+
+class GOLEM_ENGINE_API Vector2
 {
 public:
 	float x, y;
@@ -17,15 +19,16 @@ public:
 	// only used to compare for optimization
 	float LengthSq() const;			
 	static float Dot(Vector2 _a, Vector2 _b);
+	
+	GOLEM_ENGINE_API friend Vector2 operator+(Vector2 _a, float _b);
+	GOLEM_ENGINE_API friend Vector2 operator-(Vector2 _a, float _b);
+	GOLEM_ENGINE_API friend Vector2 operator*(Vector2 _a, float _b);
+	GOLEM_ENGINE_API friend Vector2 operator/(Vector2 _a, float _b);
+	GOLEM_ENGINE_API friend Vector2 operator+(Vector2 _a, Vector2 _b);
+	GOLEM_ENGINE_API friend Vector2 operator-(Vector2 _a, Vector2 _b);
+	GOLEM_ENGINE_API friend bool operator==(Vector2 _a, Vector2 _b);
+
+	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& _os, const Vector2& _vector2);
 };
 
-Vector2 operator+(Vector2 _a, float _b);
-Vector2 operator-(Vector2 _a, float _b);
-Vector2 operator*(Vector2 _a, float _b);
-Vector2 operator/(Vector2 _a, float _b);
-Vector2 operator+(Vector2 _a, Vector2 _b);
-Vector2 operator-(Vector2 _a, Vector2 _b);
-bool operator==(Vector2 _a, Vector2 _b);
-
-std::ostream& operator<<(std::ostream& _os, const Vector2& _vector2);
 
