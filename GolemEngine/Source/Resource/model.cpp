@@ -12,9 +12,7 @@ Model::Model()
     VAO = 0;
 }
 
-Model::~Model()
-{
-}
+Model::~Model() {}
 
 void Model::Load(const char* modelPath, const char* texturePath)
 {

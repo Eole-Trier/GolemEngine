@@ -27,6 +27,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\Resource\model.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Include\Resource\texture.h" />
     <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
+    <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
