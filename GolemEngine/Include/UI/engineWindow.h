@@ -4,11 +4,13 @@
 #include <string>
 
 struct GLFWwindow;
+struct GLFWmonitor;
 
 class GOLEM_ENGINE_API EngineWindow
 {
 private:
 	GLFWwindow* m_window = nullptr;
+	GLFWmonitor* m_monitor= nullptr;
 	std::string m_name;
 
 public:

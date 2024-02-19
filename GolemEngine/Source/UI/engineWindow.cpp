@@ -16,6 +16,7 @@ EngineWindow::~EngineWindow() {}
 EngineWindow::EngineWindow(const char* _name) 
     : m_name(_name)
 {
+    // Get screen dimensions
     RECT desktop;
     const HWND hDesktop = GetDesktopWindow();
     GetWindowRect(hDesktop, &desktop);
@@ -44,6 +45,11 @@ void EngineWindow::Init()
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
         glfwTerminate();
     }
+    
+    // Set fullscreen
+    //m_monitor = glfwGetPrimaryMonitor();
+    //const GLFWvidmode* mode = glfwGetVideoMode(m_monitor);
+    //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
     glfwMakeContextCurrent(m_window);
     //glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
