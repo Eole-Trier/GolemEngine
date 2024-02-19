@@ -26,8 +26,8 @@ private:
 public:
 	Mesh();
 	~Mesh();
-	Mesh(Model* _model, Texture* _texture, Shader* _shader);
 
+	void Init(Model* _model, Texture* _texture, Shader* _shader);
 
-	void Draw(Window& _window, Camera& _cam, const Matrix4& _localModel);
+	void Draw(float _width, float height, Camera& _cam, const Matrix4& _localModel);
 };

@@ -12,11 +12,11 @@
 
 class GOLEM_ENGINE_API Shader : public Resource
 {
-public:
-    unsigned int m_id;
-
 private:
     void CheckCompileErrors(unsigned int shader, std::string type);
+
+public:
+    unsigned int Id;
 
 public:
     Shader();

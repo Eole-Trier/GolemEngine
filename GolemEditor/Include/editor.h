@@ -5,7 +5,8 @@
 class Editor
 {
 private:
-	Window* m_viewport = nullptr;
+	Window* m_window = nullptr;
+	Scene* m_scene = nullptr;
 
 public:
 	Editor();

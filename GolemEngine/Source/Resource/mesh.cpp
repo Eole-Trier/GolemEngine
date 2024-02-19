@@ -25,7 +25,6 @@ void Mesh::SetupMesh()
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
-
 }
 
 Mesh::Mesh() {}
@@ -36,13 +35,15 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &m_model->VBO);
 }
 
-Mesh::Mesh(Model* _model, Texture* _texture, Shader* _shader)
-	: m_model(_model), m_texture(_texture), m_shader(_shader)
+void Mesh::Init(Model* _model, Texture* _texture, Shader* _shader) 
 {
-	SetupMesh();
+    m_model = _model;
+    m_texture = _texture;
+    m_shader = _shader;
+    SetupMesh();
 }
 
-void Mesh::Draw(Window& _window, Camera& _cam, const Matrix4& _localModel)
+void Mesh::Draw(float _width, float _height, Camera& _cam, const Matrix4& _localModel)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_texture->id);
@@ -51,7 +52,7 @@ void Mesh::Draw(Window& _window, Camera& _cam, const Matrix4& _localModel)
 
     Matrix4 model = _localModel;
     Matrix4 view = _cam.GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam.Zoom),  _window.width / _window.height, _cam.Near, _cam.Far);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_cam.Zoom), _width / _height, _cam.Near, _cam.Far);
 
     m_shader->SetMat4("model", model);
     m_shader->SetMat4("view", view);

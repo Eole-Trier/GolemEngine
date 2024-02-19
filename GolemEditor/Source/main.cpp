@@ -1,6 +1,6 @@
 #include "editor.h"
 #include <iostream>
-#include "mathslib.h"
+//#include "mathslib.h"
 
 int main()
 {

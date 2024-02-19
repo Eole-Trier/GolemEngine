@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Viewport/scene.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -47,13 +49,14 @@ void Window::Init()
     ImGuiInit();
 }
 
-void Window::Render()
+void Window::Render(Scene* _scene)
 {
+    _scene->Init();
     while (!glfwWindowShouldClose(m_window))
     {
         ProcessInput();
         glClear(GL_COLOR_BUFFER_BIT);
-
+        _scene->Update(this->width, this->height);
         ImGuiLoop();
 
         glfwSwapBuffers(m_window);

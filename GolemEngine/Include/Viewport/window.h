@@ -1,9 +1,8 @@
 #pragma once
 
 #include <string>
-
 #include "dll.h"
-
+class Scene;
 struct GLFWwindow;
 
 class GOLEM_ENGINE_API Window
@@ -13,8 +12,8 @@ private:
 	std::string m_name;
 
 public:
-	unsigned int width = 1800;
-	unsigned int height = 1600;
+	unsigned int width = 800;
+	unsigned int height = 600;
 
 public:
 	Window();
@@ -24,7 +23,7 @@ public:
 	GLFWwindow* GetWindow();
 
 	void Init();
-	void Render();
+	void Render(Scene* _scene);
 	void Close();
 
 	void ImGuiInit();

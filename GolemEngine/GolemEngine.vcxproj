@@ -27,6 +27,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
+    <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -176,7 +178,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -193,7 +195,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
