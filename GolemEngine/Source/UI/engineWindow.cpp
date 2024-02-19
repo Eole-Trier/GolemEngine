@@ -7,13 +7,24 @@
 #include "imgui_impl_opengl3.h"
 
 #include <iostream>
+#include <wtypes.h>
 
 EngineWindow::EngineWindow() {}
 
 EngineWindow::~EngineWindow() {}
 
+EngineWindow::EngineWindow(const char* _name) 
+    : m_name(_name)
+{
+    RECT desktop;
+    const HWND hDesktop = GetDesktopWindow();
+    GetWindowRect(hDesktop, &desktop);
+    screenWidth = desktop.right;
+    screenHeight = desktop.bottom;
+}
+
 EngineWindow::EngineWindow(const char* _name, unsigned int _width, unsigned int _height) 
-    : m_name(_name), width(_width), height(_height) {}
+    : m_name(_name), screenWidth(_width), screenHeight(_height) {}
 
 GLFWwindow* EngineWindow::GetWindow()
 {
@@ -27,7 +38,7 @@ void EngineWindow::Init()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(width, height, m_name.c_str(), NULL, NULL);
+    m_window = glfwCreateWindow(screenWidth, screenHeight, m_name.c_str(), NULL, NULL);
     if (m_window == NULL) 
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;

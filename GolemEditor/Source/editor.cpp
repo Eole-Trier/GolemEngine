@@ -4,7 +4,7 @@
 
 Editor::Editor() 
 {
-	m_viewport = new EngineWindow("Golem Engine", 800, 600);
+	m_viewport = new EngineWindow("Golem Engine");
 }
 
 Editor::~Editor() {}

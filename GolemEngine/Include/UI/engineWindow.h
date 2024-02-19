@@ -12,12 +12,13 @@ private:
 	std::string m_name;
 
 public:
-	unsigned int width = 1800;
-	unsigned int height = 1600;
+	int screenWidth = 1800;
+	int screenHeight = 1600;
 
 public:
 	EngineWindow();
 	~EngineWindow();
+	EngineWindow(const char* _name);
 	EngineWindow(const char* _name, unsigned int _width, unsigned int _height);
 
 	GLFWwindow* GetWindow();
