@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "Viewport/scene.h"
 #include "Resource/mesh.h"
+#include "Resource/Light/point.h"
 
 Scene::Scene() 
 {
@@ -11,6 +12,7 @@ Scene::Scene()
 
 void Scene::Init()
 {
+
     Texture* text = m_resourceManager.Create<Texture>("viking_texture");
     text->Load("Assets/One_For_All/Textures/viking_room.jpg");
 
@@ -30,8 +32,11 @@ void Scene::Update(float _width, float _height)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     Shader* viking = m_resourceManager.Get<Shader>("viking_shader");
+    PointLight point1(Vector3(0.8f, 0.8f, 0.8f), Vector3(0.05f, 0.05f, 0.05f), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, 0);
+    point1.SetPointLight(viking);
     viking->Use();
     viking->SetViewPos(m_camera.Position);
+
 
     Matrix4 projection = Matrix4::Projection(DegToRad(m_camera.Zoom), _width / _height, 0.1f, 1000.f);
     Matrix4 view = m_camera.GetViewMatrix();
