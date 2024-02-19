@@ -5,7 +5,7 @@
 
 struct GLFWwindow;
 
-class GOLEM_ENGINE_API Window
+class GOLEM_ENGINE_API EngineWindow
 {
 private:
 	GLFWwindow* m_window = nullptr;
@@ -16,9 +16,9 @@ public:
 	unsigned int height = 1600;
 
 public:
-	Window();
-	~Window();
-	Window(const char* _name, unsigned int _width, unsigned int _height);
+	EngineWindow();
+	~EngineWindow();
+	EngineWindow(const char* _name, unsigned int _width, unsigned int _height);
 
 	GLFWwindow* GetWindow();
 

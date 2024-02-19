@@ -1,26 +1,26 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Viewport\window.h"
+#include "UI\engineWindow.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
 #include <iostream>
 
-Window::Window() {}
+EngineWindow::EngineWindow() {}
 
-Window::~Window() {}
+EngineWindow::~EngineWindow() {}
 
-Window::Window(const char* _name, unsigned int _width, unsigned int _height) 
+EngineWindow::EngineWindow(const char* _name, unsigned int _width, unsigned int _height) 
     : m_name(_name), width(_width), height(_height) {}
 
-GLFWwindow* Window::GetWindow()
+GLFWwindow* EngineWindow::GetWindow()
 {
     return m_window;
 }
 
-void Window::Init()
+void EngineWindow::Init()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -46,7 +46,7 @@ void Window::Init()
     ImGuiInit();
 }
 
-void Window::Render()
+void EngineWindow::Render()
 {
     while (!glfwWindowShouldClose(m_window))
     {
@@ -60,12 +60,12 @@ void Window::Render()
     }
 }
 
-void Window::Close()
+void EngineWindow::Close()
 {
     glfwTerminate();
 }
 
-void Window::ProcessInput()
+void EngineWindow::ProcessInput()
 {
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
@@ -73,7 +73,7 @@ void Window::ProcessInput()
     }
 }
 
-void Window::ImGuiInit()
+void EngineWindow::ImGuiInit()
 {
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -82,7 +82,7 @@ void Window::ImGuiInit()
     ImGui_ImplOpenGL3_Init("#version 460");
 }
 
-void Window::ImGuiLoop()
+void EngineWindow::ImGuiLoop()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -93,6 +93,6 @@ void Window::ImGuiLoop()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void Window::ImGuiClean()
+void EngineWindow::ImGuiClean()
 {
 }

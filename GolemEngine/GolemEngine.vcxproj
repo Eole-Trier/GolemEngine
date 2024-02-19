@@ -33,7 +33,7 @@
     <ClCompile Include="Source\Resource\shader.cpp" />
     <ClCompile Include="Source\Resource\texture.cpp" />
     <ClCompile Include="Source\Resource\mesh.cpp" />
-    <ClCompile Include="Source\Viewport\window.cpp" />
+    <ClCompile Include="Source\UI\engineWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -55,7 +55,7 @@
     <ClInclude Include="Include\Resource\texture.h" />
     <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
-    <ClInclude Include="Include\Viewport\window.h" />
+    <ClInclude Include="Include\UI\engineWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

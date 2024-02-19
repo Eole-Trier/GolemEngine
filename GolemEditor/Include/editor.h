@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Viewport/window.h"
+#include "UI/engineWindow.h"
 
 class Editor
 {
 private:
-	Window* m_viewport = nullptr;
+	EngineWindow* m_viewport = nullptr;
 
 public:
 	Editor();
