@@ -5,7 +5,7 @@
 class Editor
 {
 private:
-	EngineWindow* m_viewport = nullptr;
+	EngineWindow* m_engineWindow = nullptr;
 
 public:
 	Editor();

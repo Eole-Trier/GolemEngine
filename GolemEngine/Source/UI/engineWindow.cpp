@@ -110,6 +110,4 @@ void EngineWindow::ImGuiLoop()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void EngineWindow::ImGuiClean()
-{
-}
+void EngineWindow::ImGuiClean() {}
