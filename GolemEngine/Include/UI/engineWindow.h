@@ -38,6 +38,8 @@ public:
 
 	void Init();
 	void Render();
+	void BeginDockSpace();
+	void EndDockSpace();
 	void Close();
 
 	void ImGuiLoop();

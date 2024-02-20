@@ -7,6 +7,4 @@ public:
 	~Viewport();
 
 	void Render();
-
-	void BeginDockSpace() const;
 };
