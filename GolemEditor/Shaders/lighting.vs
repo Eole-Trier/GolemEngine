@@ -1,21 +1,21 @@
-#version 460 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec2 aTexCoords;
+#version 330 core
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec3 aNormal;
+layout(location = 2) in vec2 aUV;
 
-out vec3 FragPos;
+out vec3 Position;
 out vec3 Normal;
-out vec2 TexCoords;
+out vec2 UV;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 M;
+uniform mat4 V;
+uniform mat4 P;
 
 void main()
 {
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * aNormal;  
-    TexCoords = vec2(aTexCoords.x, aTexCoords.y); 
-    
-    gl_Position = projection * view * vec4(FragPos, 1.0);
+    mat4 PVM = P * V * M; 
+    UV = aUV;
+    Normal = aNormal;
+    Position = aPos;
+    gl_Position = PVM*vec4(aPos, 1.0);
 }

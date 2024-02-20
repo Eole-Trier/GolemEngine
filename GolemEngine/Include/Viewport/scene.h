@@ -14,4 +14,5 @@ public:
 
 	void Init();
 	void Update(float _width, float _height);
+
 };
