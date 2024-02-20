@@ -1,10 +1,11 @@
 #include "editor.h"
+#include "UI/engineWindow.h"
 #include "Viewport/scene.h"
 #include <GLFW/glfw3.h>
 
-Editor::Editor() 
+Editor::Editor()
 {
-	m_window = new Window("Viewport", 800, 600);
+	m_engineWindow = new EngineWindow("Golem Engine");
 	m_scene = new Scene();
 }
 
@@ -12,7 +13,7 @@ Editor::~Editor() {}
 
 void Editor::Init()
 {
-	m_window->Init();
+	m_engineWindow->Init();
 }
 
 void Editor::Run()
@@ -24,12 +25,12 @@ void Editor::Run()
 
 void Editor::MainLoop()
 {
-	m_window->Render(m_scene);
+	m_engineWindow->Render();
 }
 
 void Editor::Cleanup()
 {
-	m_window->Close();
-	delete m_window;
+	m_engineWindow->Close();
+	delete m_engineWindow;
 	delete m_scene;
 }

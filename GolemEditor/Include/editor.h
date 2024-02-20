@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Viewport/window.h"
+class EngineWindow;
+class Scene;
 
 class Editor
 {
 private:
-	Window* m_window = nullptr;
+	EngineWindow* m_engineWindow = nullptr;
 	Scene* m_scene = nullptr;
 
 public:

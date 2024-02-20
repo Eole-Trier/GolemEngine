@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Viewport\window.cpp">
+    <ClCompile Include="Source\UI\engineWindow.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\mainDll.cpp">
@@ -31,12 +31,6 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_draw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_impl_glfw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_impl_opengl3.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_tables.cpp">
@@ -60,6 +54,22 @@
     <ClCompile Include="Source\Debug\log.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI\basicActors.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\fileBrowser.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\viewport.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\worldActors.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp">
     <ClCompile Include="Source\Viewport\camera.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -77,7 +87,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Viewport\window.h">
+    <ClInclude Include="Include\UI\engineWindow.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Include\dll.h">
@@ -87,15 +97,6 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imgui_impl_glfw.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imgui_impl_opengl3.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imgui_internal.h">
@@ -137,6 +138,16 @@
     <ClInclude Include="Include\Resource\vertex.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Include\UI\fileBrowser.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\UI\viewport.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\UI\worldActors.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\UI\basicActors.h">
     <ClInclude Include="Include\Viewport\camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

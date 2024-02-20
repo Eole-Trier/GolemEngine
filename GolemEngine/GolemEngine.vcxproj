@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
-    <ClCompile Include="External\imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="External\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
@@ -38,14 +38,15 @@
     <ClCompile Include="Source\Resource\shader.cpp" />
     <ClCompile Include="Source\Resource\texture.cpp" />
     <ClCompile Include="Source\Resource\mesh.cpp" />
-    <ClCompile Include="Source\Viewport\window.cpp" />
+    <ClCompile Include="Source\UI\basicActors.cpp" />
+    <ClCompile Include="Source\UI\engineWindow.cpp" />
+    <ClCompile Include="Source\UI\fileBrowser.cpp" />
+    <ClCompile Include="Source\UI\viewport.cpp" />
+    <ClCompile Include="Source\UI\worldActors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
-    <ClInclude Include="External\imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="External\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="External\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="External\imgui\imgui_internal.h" />
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
@@ -64,9 +65,13 @@
     <ClInclude Include="Include\Resource\texture.h" />
     <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
+    <ClInclude Include="Include\UI\basicActors.h" />
+    <ClInclude Include="Include\UI\engineWindow.h" />
+    <ClInclude Include="Include\UI\fileBrowser.h" />
+    <ClInclude Include="Include\UI\viewport.h" />
+    <ClInclude Include="Include\UI\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
-    <ClInclude Include="Include\Viewport\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -151,7 +156,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,7 +173,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -185,7 +190,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -202,7 +207,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
