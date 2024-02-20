@@ -398,4 +398,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-!GolemEditor/Assets/*.obj
+!GolemEditor/Assets/Basics/*.obj
+!GolemEditor/Assets/One_For_All/*.obj
