@@ -7,12 +7,14 @@ class GOLEM_ENGINE_API Scene
 {
 private:
 	ResourceManager m_resourceManager;
-	Camera m_camera;
+
+public:
+	Camera Camera;
 
 public:
 	Scene();
 
 	void Init();
-	void Update(float _width, float _height);
+	void Update(float _width, float _height, GLFWwindow* _window, float _deltaTime);
 
 };

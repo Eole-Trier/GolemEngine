@@ -5,11 +5,17 @@
 #include <iostream>
 
 #include "Viewport/scene.h"
+#include "Viewport/camera.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+float Window::m_lastX = 400;
+float Window::m_lastY = 300;
+float Window::m_yaw = 0;
+float Window::m_pitch = 0;
+bool Window::m_firstMouse = true;
 
 Window::Window() {}
 
@@ -38,7 +44,9 @@ void Window::Init()
     }
 
     glfwMakeContextCurrent(m_window);
-    //glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(m_window, ResizeCallback);
+    glfwSetCursorPosCallback(m_window, MouseCallback);
+    glfwSetScrollCallback(m_window, ScrollCallback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
     {
@@ -54,9 +62,10 @@ void Window::Render(Scene* _scene)
     _scene->Init();
     while (!glfwWindowShouldClose(m_window))
     {
-        ProcessInput();
+        UpdateDeltaTime();
+        ProcessInput(_scene->Camera);
         glClear(GL_COLOR_BUFFER_BIT);
-        _scene->Update(this->width, this->height);
+        _scene->Update(this->width, this->height, m_window, DeltaTime);
         ImGuiLoop();
 
         glfwSwapBuffers(m_window);
@@ -69,12 +78,21 @@ void Window::Close()
     glfwTerminate();
 }
 
-void Window::ProcessInput()
+void Window::UpdateDeltaTime()
+{
+    float currentFrame = static_cast<float>(glfwGetTime());
+    DeltaTime = currentFrame - m_lastFrame;
+    m_lastFrame = currentFrame;
+}
+
+
+void Window::ProcessInput(Camera& _camera)
 {
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(m_window, true);
     }
+    _camera.ProcessInput(m_window, DeltaTime);
 }
 
 void Window::ImGuiInit()
@@ -99,4 +117,38 @@ void Window::ImGuiLoop()
 
 void Window::ImGuiClean()
 {
+}
+
+void Window::ResizeCallback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void Window::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+{
+    float xpos = static_cast<float>(xposIn);
+    float ypos = static_cast<float>(yposIn);
+
+    if (m_firstMouse)
+    {
+        m_lastX = xpos;
+        m_lastY = ypos;
+        m_firstMouse = false;
+    }
+
+    float xoffset = xpos - m_lastX;
+    float yoffset = m_lastY - ypos;
+
+    m_lastX = xpos;
+    m_lastY = ypos;
+
+    Camera* const cam = Camera::Instance;
+    cam->ProcessMouseMovement(xoffset, yoffset);
+}
+
+void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    Camera* const cam = Camera::Instance;
+    cam->ProcessMouseScroll(yoffset);
+
 }

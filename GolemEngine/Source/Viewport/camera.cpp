@@ -2,6 +2,7 @@
 #include "Viewport/camera.h"
 
 
+Camera* Camera::Instance;
 
 Camera::Camera(Vector3 position, Vector3 up, float yaw, float pitch)
     : Front(Vector3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -11,6 +12,8 @@ Camera::Camera(Vector3 position, Vector3 up, float yaw, float pitch)
     Yaw = yaw;
     Pitch = pitch;
     UpdateCameraVectors();
+    if (Instance == nullptr)
+        Instance = this;
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
@@ -21,6 +24,8 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
     Yaw = yaw;
     Pitch = pitch;
     UpdateCameraVectors();
+    if (Instance == nullptr)
+        Instance = this;
 }
 
 
@@ -29,9 +34,9 @@ Matrix4 Camera::GetViewMatrix()
     return Matrix4::LookAt(Position, Position + Front, Up);
 }
 
-void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
+void Camera::ProcessKeyboard(CameraMovement direction, float _deltaTime)
 {
-    float velocity = MovementSpeed * deltaTime;
+    float velocity = MovementSpeed * _deltaTime;
     if (direction == FORWARD)
         Position = Position + Front * velocity;
     if (direction == BACKWARD)
@@ -40,6 +45,10 @@ void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
         Position = Position - Right * velocity;
     if (direction == RIGHT)
         Position = Position + Right * velocity;
+    if (direction == UP)
+        Position = Position + Up * velocity;
+    if (direction == DOWN)
+        Position = Position - Up * velocity;
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
@@ -69,6 +78,23 @@ void Camera::ProcessMouseScroll(float yoffset)
     if (Zoom > 45.0f)
         Zoom = 45.0f;
 }
+
+void Camera::ProcessInput(GLFWwindow* window, float deltaTime)
+{
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        ProcessKeyboard(CameraMovement::DOWN, deltaTime);
+}
+
 
 void Camera::UpdateCameraVectors()
 {

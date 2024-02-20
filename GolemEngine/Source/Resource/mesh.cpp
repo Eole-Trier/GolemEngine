@@ -54,9 +54,9 @@ void Mesh::Draw(float _width, float _height, Camera& _cam, const Matrix4& _local
     Matrix4 model = _localModel;
     Matrix4 view = _cam.GetViewMatrix();
     Matrix4 projection = Matrix4::Projection(DegToRad(_cam.Zoom), _width / _height, _cam.Near, _cam.Far);
-    m_shader->SetMat4("V", view);
-    m_shader->SetMat4("P", projection);
-    m_shader->SetMat4("M", model);
+    m_shader->SetMat4("view", view);
+    m_shader->SetMat4("projection", projection);
+    m_shader->SetMat4("model", model);
 
     glBindVertexArray(m_model->VAO);
     glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());
