@@ -80,7 +80,7 @@ void main()
         light += ProcessSpotLight(spotLights[i], normal, fragPos, viewDir);
     */
     //outColor = light * texture(ourTexture, texCoords);
-    FragColor = light * texture(ourTexture, TexCoord);
+    FragColor =  texture(ourTexture, TexCoord);
 }
 
 vec4 ProcessDirLight(DirLight light, vec3 normal, vec3 viewDir)
