@@ -12,6 +12,7 @@ Scene::Scene()
 
 void Scene::Init()
 {
+    #pragma region VikingRoom
     Texture* text = m_resourceManager.Create<Texture>("viking_texture");
     text->Load("Assets/One_For_All/Textures/viking_room.jpg");
     
@@ -28,11 +29,23 @@ void Scene::Init()
 
     Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
+    #pragma endregion VikingRoom
+
+    Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
+    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+
+    Model* sphere = m_resourceManager.Create<Model>("model_sphere");
+    sphere->Load("Assets/Basics/sphere.obj", "Assets/One_For_All/Textures/all_bald.jpg");
+
+    Shader* sphere_shad = m_resourceManager.Create<Shader>("viking_shader");
+    sphere_shad->SetVertexAndFragmentShader("Shaders/default.vert", "Shaders/default.frag");
+
+    Mesh* cube = m_resourceManager.Create<Mesh>("Lighting_Cube");
+    cube->Init(sphere, sphere_texture, sphere_shad);
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, float _deltaTime)
 {
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -46,9 +59,14 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
     viking->SetMat4("view", view);
 
     Matrix4 model = Matrix4::Identity(); 
+    Matrix4 spherePos = Matrix4(1, 0, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+
     viking->SetMat4("model", model);
 
     Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
+    Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
     mesh->Draw(_width, _height, Camera, model);
+
+    light->Draw(_width, _height, Camera, spherePos);
 }
 
