@@ -98,6 +98,9 @@ void EngineWindow::Render()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        viewport->BeginDockSpace();
+        ImGui::End();
+        // end
 
         ProcessInput();
         glClear(GL_COLOR_BUFFER_BIT);

@@ -3,6 +3,7 @@
 #include "dll.h"
 #include "basicActors.h"
 #include "fileBrowser.h"
+#include "viewport.h"
 
 #include <string>
 
@@ -10,7 +11,6 @@ struct GLFWwindow;
 struct GLFWmonitor;
 
 //class FileBrowser;
-//class Viewport;
 //class WorldActors;
 
 class GOLEM_ENGINE_API EngineWindow
@@ -22,6 +22,7 @@ private:
 
 	BasicActors* basicActors = new BasicActors();
 	FileBrowser* fileBrowser = new FileBrowser();
+	Viewport* viewport = new Viewport();
 
 public:
 	int screenWidth = 1800;
