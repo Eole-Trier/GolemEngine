@@ -399,4 +399,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 !GolemEditor/Assets/Basics/*.obj
-!GolemEditor/Assets/One_For_All/*.obj
+!GolemEditor/Assets/One_For_All/Meshes/*.obj
