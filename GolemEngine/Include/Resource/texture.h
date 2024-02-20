@@ -15,6 +15,8 @@ public:
 
 public :
 	Texture();
+	~Texture();
 
 	void Load(const char* filename);
+	void Use();
 };

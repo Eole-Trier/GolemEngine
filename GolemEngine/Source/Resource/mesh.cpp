@@ -46,7 +46,7 @@ void Mesh::Init(Model* _model, Texture* _texture, Shader* _shader)
 void Mesh::Draw(float _width, float _height, Camera& _cam, const Matrix4& _localModel)
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_texture->id);
+    m_texture->Use();
     m_shader->Use();
 
     Matrix4 model = _localModel;

@@ -16,6 +16,6 @@ public:
 	Model();
 	~Model();
 	std::vector<Vertex> vertices;
-    void Load(const char* modelPath, const char* texturePath);
+    void Load(const char* modelPath);
 };
 

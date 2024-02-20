@@ -17,12 +17,12 @@ void Scene::Init()
     text->Load("Assets/One_For_All/Textures/viking_room.jpg");
     
     Model* viking = m_resourceManager.Create<Model>("model_viking");
-    viking->Load("Assets/One_For_All/Meshes/viking_room.obj", "Assets/One_For_All/Textures/viking_room.jpg");
+    viking->Load("Assets/One_For_All/Meshes/viking_room.obj");
 
     PointLight point1(Vector3(0.8f, 0.8f, 0.8f), Vector3(1.f, 1.f, 1.f), Vector3(1.0f, 1.0f, 1.0f), Vector3(1, 0, 0), 1.0f, 0.09f, 0.032f, 0);
 
     Shader* shad = m_resourceManager.Create<Shader>("viking_shader");
-    shad->SetVertexAndFragmentShader("Shaders/default.vert", "Shaders/default.frag");
+    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
     point1.SetPointLight(shad);
 
     shad->Use();
@@ -35,10 +35,10 @@ void Scene::Init()
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
 
     Model* sphere = m_resourceManager.Create<Model>("model_sphere");
-    sphere->Load("Assets/Basics/sphere.obj", "Assets/One_For_All/Textures/all_bald.jpg");
+    sphere->Load("Assets/Basics/sphere.obj");
 
     Shader* sphere_shad = m_resourceManager.Create<Shader>("viking_shader");
-    sphere_shad->SetVertexAndFragmentShader("Shaders/default.vert", "Shaders/default.frag");
+    sphere_shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
 
     Mesh* cube = m_resourceManager.Create<Mesh>("Lighting_Cube");
     cube->Init(sphere, sphere_texture, sphere_shad);

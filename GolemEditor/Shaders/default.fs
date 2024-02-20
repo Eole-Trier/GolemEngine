@@ -2,10 +2,12 @@
 
 out vec4 outColor;
   
-in vec2 texCoords;
-in vec3 normal;
-in vec3 fragPos;
+out vec4 FragColor;
 
+in vec3 ourColor;
+in vec2 TexCoord;
+
+// texture samplers
 uniform sampler2D ourTexture;
 
 struct PointLight
@@ -64,7 +66,7 @@ vec4 ProcessSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {
     // Get view direction
-    vec3 viewDir = normalize(viewPos - fragPos);
+    /*vec3 viewDir = normalize(viewPos - fragPos);
 
     vec4 light = vec4(0);
 
@@ -76,8 +78,9 @@ void main()
 
     for (int i = 0; i < nbrSpotLights; i++)
         light += ProcessSpotLight(spotLights[i], normal, fragPos, viewDir);
-
-    outColor = 1 * texture(ourTexture, texCoords);
+    */
+    //outColor = light * texture(ourTexture, texCoords);
+    FragColor = light * texture(ourTexture, TexCoord);
 }
 
 vec4 ProcessDirLight(DirLight light, vec3 normal, vec3 viewDir)

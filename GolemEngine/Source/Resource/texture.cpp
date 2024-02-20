@@ -9,6 +9,11 @@ Texture::Texture()
 {
 }
 
+Texture::~Texture()
+{
+    glDeleteTextures(1, &id);
+}
+
 void Texture::Load(const char* filename)
 {
     glGenTextures(1, &id);
@@ -32,5 +37,10 @@ void Texture::Load(const char* filename)
         Log::Print("Failed to load texture %s", filename);
     }
     stbi_image_free(data);
+}
+
+void Texture::Use()
+{
+    glBindTexture(GL_TEXTURE_2D, id);
 }
 

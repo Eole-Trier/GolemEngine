@@ -14,7 +14,7 @@ Model::Model()
 
 Model::~Model() {}
 
-void Model::Load(const char* modelPath, const char* texturePath)
+void Model::Load(const char* modelPath)
 {
     std::ifstream file;
     file.open(modelPath);
