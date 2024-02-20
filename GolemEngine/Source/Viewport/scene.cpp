@@ -59,7 +59,10 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
     viking->SetMat4("view", view);
 
     Matrix4 model = Matrix4::Identity(); 
-    Matrix4 spherePos = Matrix4(1, 0, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    Matrix4 spherePos = Matrix4(1, 0, 0, 3,
+                                0, 1, 0, 0, 
+                                0, 0, 1, 0, 
+                                0, 0, 0, 1);
 
     viking->SetMat4("model", model);
 
@@ -67,6 +70,8 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
     Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
     mesh->Draw(_width, _height, Camera, model);
 
+
+    spherePos = spherePos.Rotate(Vector3(0, sin(glfwGetTime()), 0));
     light->Draw(_width, _height, Camera, spherePos);
 }
 
