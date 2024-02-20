@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-Editor::Editor() 
+Editor::Editor()
 {
 	m_engineWindow = new EngineWindow("Golem Engine");
 }

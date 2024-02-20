@@ -13,7 +13,7 @@ EngineWindow::EngineWindow() {}
 
 EngineWindow::~EngineWindow() {}
 
-EngineWindow::EngineWindow(const char* _name) 
+EngineWindow::EngineWindow(const char* _name)
     : m_name(_name)
 {
     // Get screen dimensions
@@ -24,7 +24,7 @@ EngineWindow::EngineWindow(const char* _name)
     screenHeight = desktop.bottom;
 }
 
-EngineWindow::EngineWindow(const char* _name, unsigned int _width, unsigned int _height) 
+EngineWindow::EngineWindow(const char* _name, unsigned int _width, unsigned int _height)
     : m_name(_name), screenWidth(_width), screenHeight(_height) {}
 
 GLFWwindow* EngineWindow::GetWindow()
@@ -36,16 +36,17 @@ void EngineWindow::Init()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);    // 3.2+ only
 
+    // Create window
     m_window = glfwCreateWindow(screenWidth, screenHeight, m_name.c_str(), NULL, NULL);
-    if (m_window == NULL) 
+    if (m_window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
         glfwTerminate();
     }
-    
+
     // Set fullscreen
     //m_monitor = glfwGetPrimaryMonitor();
     //const GLFWvidmode* mode = glfwGetVideoMode(m_monitor);
@@ -53,27 +54,68 @@ void EngineWindow::Init()
 
     glfwMakeContextCurrent(m_window);
     //glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+    glfwSwapInterval(1);    // Enable vsync
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
-    glEnable(GL_DEPTH_TEST);
-    ImGuiInit();
+    //glEnable(GL_DEPTH_TEST);  //
+
+    // Setup Imgui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    // Setup style
+    ImGui::StyleColorsDark();
+
+    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+
+    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
+    ImGui_ImplOpenGL3_Init("#version 460");
 }
 
 void EngineWindow::Render()
 {
+    ImGuiIO& io = ImGui::GetIO();
+
     while (!glfwWindowShouldClose(m_window))
     {
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+
         ProcessInput();
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGuiLoop();
 
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
         glfwSwapBuffers(m_window);
-        glfwPollEvents();
+
     }
 }
 
@@ -90,24 +132,10 @@ void EngineWindow::ProcessInput()
     }
 }
 
-void EngineWindow::ImGuiInit()
-{
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(GetWindow(), true);
-    ImGui_ImplOpenGL3_Init("#version 460");
-}
-
 void EngineWindow::ImGuiLoop()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    ImGui::Begin("Hello, Golem!");
-    ImGui::End();
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    basicActors->Render();
+    fileBrowser->Render();
 }
 
 void EngineWindow::ImGuiClean() {}
