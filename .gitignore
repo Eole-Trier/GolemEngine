@@ -19,6 +19,7 @@ imgui.ini
 mono_crash.*
 
 # Build results
+[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -400,3 +401,5 @@ FodyWeavers.xsd
 
 !GolemEditor/Assets/Basics/*.obj
 !GolemEditor/Assets/One_For_All/Meshes/*.obj
+!GolemEngine/Source/Debug
+!GolemEngine/Include/Debug
