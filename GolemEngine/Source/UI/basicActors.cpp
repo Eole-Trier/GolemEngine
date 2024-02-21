@@ -13,6 +13,6 @@ BasicActors::~BasicActors() {}
 
 void BasicActors::Render()
 {
-	ImGui::Begin("Basic Actors");
+	ImGui::Begin("Basic_Actors");
 	ImGui::End();
 }

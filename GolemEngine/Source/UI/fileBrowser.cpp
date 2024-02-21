@@ -13,6 +13,6 @@ FileBrowser::~FileBrowser() {}
 
 void FileBrowser::Render()
 {
-	ImGui::Begin("File Browser");
+	ImGui::Begin("File_Browser");
 	ImGui::End();
 }

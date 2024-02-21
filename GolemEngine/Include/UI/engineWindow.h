@@ -19,6 +19,9 @@ private:
 	GLFWmonitor* m_monitor = nullptr;
 	std::string m_name;
 	int m_lastFrame = 0;
+	BasicActors* basicActors = nullptr;
+	FileBrowser* fileBrowser = nullptr;
+	Viewport* viewport = nullptr;
 
 public:
 	int screenWidth = 1800;

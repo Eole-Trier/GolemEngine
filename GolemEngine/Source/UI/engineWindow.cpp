@@ -10,8 +10,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
-EngineWindow::~EngineWindow() {}
-
 EngineWindow::EngineWindow(const char* _name)
     : m_name(_name)
 {
@@ -25,7 +23,12 @@ EngineWindow::EngineWindow(const char* _name)
     scene = new Scene();
     scene->width = screenWidth;
     scene->height = screenHeight;
+    basicActors = new BasicActors();
+    fileBrowser = new FileBrowser();
+    viewport = new Viewport();
 }
+
+EngineWindow::~EngineWindow() {}
 
 GLFWwindow* EngineWindow::GetWindow()
 {
@@ -145,9 +148,9 @@ void EngineWindow::BeginDockSpace()
         ImGuiID dock_id_topLeft, dock_id_bottomLeft;
         ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.5f, &dock_id_topLeft, &dock_id_bottomLeft);
 
-        ImGui::DockBuilderDockWindow("Window_1", dock_id_topLeft);
-        ImGui::DockBuilderDockWindow("Window_2", dock_id_topRight);
-        ImGui::DockBuilderDockWindow("Window 3", dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("File_Browser", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Viewport", dock_id_bottomRight);
         ImGui::DockBuilderDockWindow("Window 4", dock_id_bottomLeft);
 
         ImGui::DockBuilderFinish(dockspace_id);
@@ -156,15 +159,9 @@ void EngineWindow::BeginDockSpace()
     if (optFullscreen)
         ImGui::PopStyleVar(3);
 
-    ImGui::Begin("Window_1");
-    ImGui::End();
-
-    ImGui::Begin("Window_2");
-    ImGui::End();
-
-
-    ImGui::Begin("Window 3");
-    ImGui::End();
+    basicActors->Render();
+    fileBrowser->Render();
+    viewport->Render(scene);
 
     ImGui::Begin("Window 4");
     ImGui::End();
@@ -199,7 +196,7 @@ void EngineWindow::Render()
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
-        ImGuiLoop();
+        //ImGuiLoop();
         
 
 
