@@ -13,26 +13,26 @@
 class GOLEM_ENGINE_API Shader : public Resource
 {
 private:
-    void CheckCompileErrors(unsigned int shader, std::string type);
+    void CheckCompileErrors(unsigned int _shader, std::string _type);
 
 public:
     unsigned int Id;
 
 public:
     Shader();
-    void SetVertexAndFragmentShader(const char* vertexPath, const char* fragmentPath);
-    void SetViewPos(Vector3& viewPos);
+    void SetVertexAndFragmentShader(const char* _vertexPath, const char* _fragmentPath);
+    void SetViewPos(Vector3& _viewPos);
 
     void Use();
-    void SetBool(const std::string& name, bool value) const;
-    void SetInt(const std::string& name, int value) const;
-    void SetFloat(const std::string& name, float value) const;
-    void SetVec2(const std::string& name, const Vector2& value) const;
-    void SetVec2(const std::string& name, float x, float y) const;
-    void SetVec3(const std::string& name, const Vector3& value) const;
-    void SetVec3(const std::string& name, float x, float y, float z) const;
-    void SetVec4(const std::string& name, const Vector4& value) const;
-    void SetVec4(const std::string& name, float x, float y, float z, float w) const;
-    void SetMat4(const std::string& name, const Matrix4& mat) const;
+    void SetBool(const std::string& _name, bool _value) const;
+    void SetInt(const std::string& _name, int _value) const;
+    void SetFloat(const std::string& _name, float _value) const;
+    void SetVec2(const std::string& _name, const Vector2& _value) const;
+    void SetVec2(const std::string& _name, float _x, float _y) const;
+    void SetVec3(const std::string& _name, const Vector3& _value) const;
+    void SetVec3(const std::string& _name, float _x, float _y, float _z) const;
+    void SetVec4(const std::string& _name, const Vector4& _value) const;
+    void SetVec4(const std::string& _name, float _x, float _y, float _z, float _w) const;
+    void SetMat4(const std::string& _name, const Matrix4& _mat) const;
 };
 

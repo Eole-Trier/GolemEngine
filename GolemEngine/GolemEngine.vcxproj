@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Resource\Light\directional.cpp" />
     <ClCompile Include="Source\Resource\Light\point.cpp" />
     <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\UI\engineWindow.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="Source\Resource\texture.cpp" />
     <ClCompile Include="Source\Resource\mesh.cpp" />
     <ClCompile Include="Source\UI\basicActors.cpp" />
-    <ClCompile Include="Source\UI\engineWindow.cpp" />
     <ClCompile Include="Source\UI\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\viewport.cpp" />
     <ClCompile Include="Source\UI\worldActors.cpp" />

@@ -2,13 +2,10 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <MathsLib/Vector3.h>
 #include <MathsLib/matrix4.h>
 
 #include "dll.h"
-
-
 
 enum GOLEM_ENGINE_API CameraMovement
 {

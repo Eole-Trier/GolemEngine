@@ -5,6 +5,7 @@
 #include "fileBrowser.h"
 #include "engineWindow.h"
 #include "viewport.h"
+#include "Viewport/scene.h"
 
 #include <string>
 
@@ -21,10 +22,15 @@ private:
 	BasicActors* basicActors = new BasicActors();
 	FileBrowser* fileBrowser = new FileBrowser();
 	Viewport* viewport = new Viewport();
+	
+	float m_lastFrame = 0;
 
 public:
 	int screenWidth = 1800;
 	int screenHeight = 1600;
+
+	Scene* scene;
+	float deltaTime;
 
 public:
 	EngineWindow();
@@ -35,6 +41,7 @@ public:
 	GLFWwindow* GetWindow();
 
 	void Init();
+	void UpdateDeltaTime();
 	void Render();
 	void BeginDockSpace();
 	void EndDockSpace();

@@ -12,7 +12,29 @@ Scene::Scene()
 
 void Scene::Init()
 {
-    #pragma region VikingRoom
+    // Initialize framebuffer
+    glGenFramebuffers(1, &m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+
+    // Creat the texture to render the scene into
+    glGenTextures(1, &m_sceneTexture);
+    glBindTexture(GL_TEXTURE_2D, m_sceneTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Attach the texture to the framebuffer
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_sceneTexture, 0);
+
+    // Check if framebuffer is complete
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        std::cout << "ERROR: framebuffer is incomplete." << std::endl;
+    }
+}
+
+void Scene::InitObjects()
+{
+#pragma region VikingRoom
     Texture* text = m_resourceManager.Create<Texture>("viking_texture");
     text->Load("Assets/One_For_All/Textures/viking_room.jpg");
     
@@ -29,7 +51,7 @@ void Scene::Init()
 
     Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
-    #pragma endregion VikingRoom
+#pragma endregion VikingRoom
 
     Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
@@ -66,7 +88,6 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
     Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
     Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
     mesh->Draw(_width, _height, Camera, model);
-
     light->Draw(_width, _height, Camera, spherePos);
 }
 
