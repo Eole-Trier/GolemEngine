@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathsTest", "MathsTest\MathsTest.vcxproj", "{31036DD9-3309-4CE8-83CE-497A47D628D1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GolemEditor", "GolemEditor\GolemEditor.vcxproj", "{8987C6AA-F313-4D4D-AE58-B43133051844}"
+	ProjectSection(ProjectDependencies) = postProject
+		{94205CB5-79C6-4EAA-8784-F0EBF0004960} = {94205CB5-79C6-4EAA-8784-F0EBF0004960}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

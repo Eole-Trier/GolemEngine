@@ -12,3 +12,9 @@ Viewport::Viewport() {}
 
 Viewport::~Viewport() {}
 
+void Viewport::Render(Scene* _scene)
+{
+    ImGui::Begin("Viewport");
+    ImGui::Image((ImTextureID)_scene->textureId, ImGui::GetContentRegionAvail());
+    ImGui::End();
+}

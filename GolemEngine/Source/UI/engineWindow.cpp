@@ -162,19 +162,8 @@ void EngineWindow::Render()
         scene->RescaleFramebuffer(window_width, window_height);
         glViewport(0, 0, window_width, window_height);
         ImVec2 pos = ImGui::GetCursorScreenPos();
-        //ImGui::GetWindowDrawList()->AddImage(
-        //    (void*)scene->textureId,
-        //    ImVec2(pos.x, pos.y),
-        //    ImVec2(pos.x + window_width, pos.y + window_height),
-        //    ImVec2(0, 1),
-        //    ImVec2(1, 0)
-        //);
-        
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-        ImGui::Begin("scene");
-        ImGui::Image((ImTextureID)scene->textureId, ImGui::GetContentRegionAvail());
-        //scene->Render(scene->width, scene->height, 1);
-        ImGui::End();
+
         ImGuiLoop();
         
 
@@ -225,6 +214,7 @@ void EngineWindow::ImGuiLoop()
 {
     basicActors->Render();
     fileBrowser->Render();
+    viewport->Render(scene);
 }
 
 void EngineWindow::ImGuiClean() {}
