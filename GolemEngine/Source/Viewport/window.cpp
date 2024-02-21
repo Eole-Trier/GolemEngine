@@ -48,12 +48,13 @@ void Window::Init()
     glfwSetCursorPosCallback(m_window, MouseCallback);
     glfwSetScrollCallback(m_window, ScrollCallback);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
+    if (!gladLoadGL())
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
     glEnable(GL_DEPTH_TEST);
+
     ImGuiInit();
 }
 
@@ -64,9 +65,8 @@ void Window::Render(Scene* _scene)
     {
         UpdateDeltaTime();
         ProcessInput(_scene->Camera);
-        glClear(GL_COLOR_BUFFER_BIT);
         _scene->Update(this->width, this->height, m_window, DeltaTime);
-        ImGuiLoop();
+        //ImGuiLoop();
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();

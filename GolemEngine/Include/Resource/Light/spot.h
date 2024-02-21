@@ -17,7 +17,7 @@ public:
     float cutOff;
     float outerCutOff;
 
-    SpotLight(const Vector3& diffuse, const Vector3& ambient, const Vector3& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
+    SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
         const float quadratic, const float cutOff, const float outerCutOff, int id);
     void SetSpotLight(Shader* shader);
 };
