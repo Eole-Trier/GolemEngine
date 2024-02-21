@@ -18,6 +18,7 @@ private:
 	GLFWwindow* m_window = nullptr;
 	GLFWmonitor* m_monitor = nullptr;
 	std::string m_name;
+	int m_lastFrame = 0;
 
 public:
 	int screenWidth = 1800;
