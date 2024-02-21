@@ -53,7 +53,7 @@ uniform int nbrDirLights;
 uniform int nbrPointLights;
 uniform int nbrSpotLights;
 
-uniform DirLight dirLights[3];
+uniform DirLight dirLights[1];
 uniform PointLight pointLights[10];
 uniform SpotLight spotLights[10];
 
