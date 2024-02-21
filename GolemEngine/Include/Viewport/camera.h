@@ -43,7 +43,6 @@ public:
     float Zoom;
     float Near = 0.1f;
     float Far = 1000.f;
-
     
 
     Camera(Vector3 position = Vector3(0.0f, 0.0f, 3.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);

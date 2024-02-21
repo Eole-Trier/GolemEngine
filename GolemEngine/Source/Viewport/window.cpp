@@ -143,12 +143,14 @@ void Window::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
     m_lastY = ypos;
 
     Camera* const cam = Camera::Instance;
-    cam->ProcessMouseMovement(xoffset, yoffset);
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        cam->ProcessMouseMovement(xoffset, yoffset);
+    }
 }
 
 void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     Camera* const cam = Camera::Instance;
     cam->ProcessMouseScroll(yoffset);
-
 }
