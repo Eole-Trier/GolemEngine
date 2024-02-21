@@ -6,5 +6,6 @@ int main()
 {
 	Editor* editor = new Editor();
 	editor->Run();
+	std::cout << "Project Closed" << std::endl;
 	return 0;
 }
