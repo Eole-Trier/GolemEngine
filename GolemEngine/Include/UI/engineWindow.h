@@ -19,9 +19,9 @@ private:
 	GLFWmonitor* m_monitor = nullptr;
 	std::string m_name;
 
-	BasicActors* basicActors = new BasicActors();
-	FileBrowser* fileBrowser = new FileBrowser();
-	Viewport* viewport = new Viewport();
+	BasicActors* basicActors = nullptr;
+	FileBrowser* fileBrowser = nullptr;
+	Viewport* viewport = nullptr;
 	
 	float m_lastFrame = 0;
 
@@ -29,14 +29,12 @@ public:
 	int screenWidth = 1800;
 	int screenHeight = 1600;
 
-	Scene* scene;
+	Scene* scene = nullptr;
 	float deltaTime;
 
 public:
-	EngineWindow();
-	~EngineWindow();
 	EngineWindow(const char* _name);
-	EngineWindow(const char* _name, unsigned int _width, unsigned int _height);
+	~EngineWindow();
 
 	GLFWwindow* GetWindow();
 

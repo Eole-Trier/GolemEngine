@@ -8,8 +8,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-
-EngineWindow::EngineWindow() {}
+#include "imgui_internal.h"
 
 EngineWindow::~EngineWindow() {}
 
@@ -22,10 +21,14 @@ EngineWindow::EngineWindow(const char* _name)
     GetWindowRect(hDesktop, &desktop);
     screenWidth = desktop.right;
     screenHeight = desktop.bottom;
-}
 
-EngineWindow::EngineWindow(const char* _name, unsigned int _width, unsigned int _height)
-    : m_name(_name), screenWidth(_width), screenHeight(_height) {}
+    scene = new Scene();
+    scene->width = screenWidth;
+    scene->height = screenHeight;
+    basicActors = new BasicActors();
+    fileBrowser = new FileBrowser();
+    viewport = new Viewport();
+}
 
 GLFWwindow* EngineWindow::GetWindow()
 {
@@ -84,6 +87,10 @@ void EngineWindow::Init()
 
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
     ImGui_ImplOpenGL3_Init("#version 460");
+
+    // Init scene and scene framebuffer to pass it to the viewport later
+    scene->Init();
+    scene->CreateFramebuffer();
 }
 
 void EngineWindow::UpdateDeltaTime()
@@ -136,13 +143,11 @@ void EngineWindow::EndDockSpace()
 void EngineWindow::Render()
 {
     ImGuiIO& io = ImGui::GetIO();
-    scene->width = screenWidth;
-    scene->height = screenHeight;
-    scene->Init();
-    scene->InitObjects();
+    glViewport(0, 0, screenWidth, screenHeight);
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();
+
         UpdateDeltaTime();
 
         ImGui_ImplOpenGL3_NewFrame();
@@ -150,21 +155,41 @@ void EngineWindow::Render()
         ImGui::NewFrame();
 
         BeginDockSpace();
-        glBindFramebuffer(GL_FRAMEBUFFER, scene->m_fbo);
-        ImGui::Begin("g");
-        // render scene here
-        // ImGui::image();
-        scene->Update(screenWidth, screenHeight, m_window, deltaTime);
+        ProcessInput();
 
+        const float window_width = ImGui::GetContentRegionAvail().x;
+        const float window_height = ImGui::GetContentRegionAvail().y;
+        scene->RescaleFramebuffer(window_width, window_height);
+        glViewport(0, 0, window_width, window_height);
+        ImVec2 pos = ImGui::GetCursorScreenPos();
+        //ImGui::GetWindowDrawList()->AddImage(
+        //    (void*)scene->textureId,
+        //    ImVec2(pos.x, pos.y),
+        //    ImVec2(pos.x + window_width, pos.y + window_height),
+        //    ImVec2(0, 1),
+        //    ImVec2(1, 0)
+        //);
+        
+        glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+        ImGui::Begin("scene");
+        ImGui::Image((ImTextureID)scene->textureId, ImGui::GetContentRegionAvail());
+        //scene->Render(scene->width, scene->height, 1);
         ImGui::End();
         ImGuiLoop();
+        
+
+
+
+        scene->BindFramebuffer();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        scene->Render(screenWidth, screenHeight, deltaTime);
+        scene->UnbindFramebuffer();
+
+
+
         EndDockSpace();
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        ProcessInput();
-        glClear(GL_COLOR_BUFFER_BIT);
-
         ImGui::Render();
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -174,9 +199,13 @@ void EngineWindow::Render()
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_context);
         }
-        glfwSwapBuffers(m_window);
 
+        glfwSwapBuffers(m_window);
     }
+
+    glDeleteFramebuffers(1, &scene->fbo);
+    glDeleteTextures(1, &scene->textureId);
+    glDeleteRenderbuffers(1, &scene->rbo);
 }
 
 void EngineWindow::Close()
@@ -196,7 +225,6 @@ void EngineWindow::ImGuiLoop()
 {
     basicActors->Render();
     fileBrowser->Render();
-    viewport->Render();
 }
 
 void EngineWindow::ImGuiClean() {}

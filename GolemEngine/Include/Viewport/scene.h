@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Resource/resourceManager.h"
+#include "Resource/shader.h"
 #include "dll.h"
 #include "Viewport/camera.h"
 
@@ -11,8 +12,11 @@ private:
 	unsigned int m_sceneTexture;
 
 public:
-	unsigned int m_fbo;
-	Camera Camera;
+	unsigned int vao, vbo, rbo;
+	unsigned int fbo;
+	unsigned int textureId;
+	Camera camera;
+	Shader* shad;
 	int width, height;
 
 public:
@@ -20,8 +24,10 @@ public:
 
 	// This function is used to create and bind the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
+	void CreateFramebuffer();
+	void RescaleFramebuffer(float width, float height);
 	void Init();
-	void InitObjects();
-	void Update(float _width, float _height, GLFWwindow* _window, float _deltaTime);
-
+	void BindFramebuffer();
+	void UnbindFramebuffer();
+	void Render(float _width, float _height, float _deltaTime);
 };

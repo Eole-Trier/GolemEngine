@@ -6,5 +6,6 @@ int main()
 {
 	Editor* editor = new Editor();
 	editor->Run();
+	delete editor;
 	return 0;
 }
