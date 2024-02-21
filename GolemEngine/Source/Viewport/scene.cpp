@@ -4,6 +4,7 @@
 #include "Viewport/scene.h"
 #include "Resource/mesh.h"
 #include "Resource/Light/point.h"
+#include "Resource/tools.h"
 
 Scene::Scene() 
 {
@@ -14,10 +15,11 @@ void Scene::Init()
 {
     #pragma region VikingRoom
     Texture* text = m_resourceManager.Create<Texture>("viking_texture");
-    text->Load("Assets/One_For_All/Textures/viking_room.jpg");
+    //text->Load("Assets/One_For_All/Textures/viking_room.jpg");
+    text->Load(FindFile("viking_room.jpg").c_str());
     
     Model* viking = m_resourceManager.Create<Model>("model_viking");
-    viking->Load("Assets/One_For_All/Meshes/viking_room.obj");
+    viking->Load(FindFile("viking_room.obj").c_str());
 
     PointLight point1(Vector3(0.8f, 0.8f, 0.8f), Vector3(1.f, 1.f, 1.f), Vector3(1.0f, 1.0f, 1.0f), Vector3(1, 0, 0), 1.0f, 0.09f, 0.032f, 0);
 
