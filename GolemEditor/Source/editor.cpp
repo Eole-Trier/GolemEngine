@@ -1,12 +1,12 @@
 #include "editor.h"
-#include "UI/engineWindow.h"
-#include "Viewport/scene.h"
+
 #include <GLFW/glfw3.h>
 
 Editor::Editor()
 {
-	m_engineWindow = new EngineWindow("Golem Engine");
 	m_scene = new Scene();
+	m_engineWindow = new EngineWindow("Golem Engine");
+	m_engineWindow->scene = m_scene;
 }
 
 Editor::~Editor() {}

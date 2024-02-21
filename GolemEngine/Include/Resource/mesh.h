@@ -17,7 +17,6 @@ private:
 	Model* m_model;
 	Texture* m_texture;
 	Shader* m_shader;
-	
 
 private:
 	void SetupMesh();
@@ -27,6 +26,5 @@ public:
 	~Mesh();
 
 	void Init(Model* _model, Texture* _texture, Shader* _shader);
-
-	void Draw(float _width, float height, Camera& _cam, const Matrix4& _localModel);
+	void Draw(float _width, float _height, Camera& _cam, const Matrix4& _localModel);
 };

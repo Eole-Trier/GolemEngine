@@ -5,6 +5,7 @@
 #include "fileBrowser.h"
 #include "engineWindow.h"
 #include "viewport.h"
+#include "Viewport/scene.h"
 
 #include <string>
 
@@ -22,6 +23,9 @@ public:
 	int screenWidth = 1800;
 	int screenHeight = 1600;
 
+	Scene* scene;
+	float deltaTime;
+
 public:
 	EngineWindow();
 	~EngineWindow();
@@ -31,6 +35,7 @@ public:
 	GLFWwindow* GetWindow();
 
 	void Init();
+	void UpdateDeltaTime();
 	void Render();
 	void BeginDockSpace();
 	void EndDockSpace();

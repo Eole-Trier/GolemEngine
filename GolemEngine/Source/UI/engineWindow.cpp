@@ -1,14 +1,14 @@
+#include "UI\engineWindow.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
+#include <wtypes.h>
 
-#include "UI\engineWindow.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-
-#include <iostream>
-#include <wtypes.h>
 
 EngineWindow::EngineWindow() {}
 
@@ -85,6 +85,14 @@ void EngineWindow::Init()
 
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
     ImGui_ImplOpenGL3_Init("#version 460");
+}
+
+void EngineWindow::UpdateDeltaTime()
+{
+    float currentFrame = static_cast<float>(glfwGetTime());
+    deltaTime = currentFrame - m_lastFrame;
+    m_lastFrame = currentFrame;
+
 }
 
 void EngineWindow::BeginDockSpace()
@@ -167,18 +175,30 @@ void EngineWindow::EndDockSpace()
 void EngineWindow::Render()
 {
     ImGuiIO& io = ImGui::GetIO();
-
+    scene->width = screenWidth;
+    scene->height = screenHeight;
+    scene->Init();
+    scene->InitObjects();
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();
+        UpdateDeltaTime();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
         BeginDockSpace();
+        glBindFramebuffer(GL_FRAMEBUFFER, scene->m_fbo);
+        ImGui::Begin("g");
+        // render scene here
+        // ImGui::image();
+        scene->Update(screenWidth, screenHeight, m_window, deltaTime);
+
+        ImGui::End();
         ImGuiLoop();
         EndDockSpace();
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         ProcessInput();
         glClear(GL_COLOR_BUFFER_BIT);

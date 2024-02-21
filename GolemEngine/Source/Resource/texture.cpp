@@ -5,9 +5,7 @@
 #include "glad/glad.h"
 #include "Debug/log.h"
 
-Texture::Texture()
-{
-}
+Texture::Texture() {}
 
 Texture::~Texture()
 {

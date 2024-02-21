@@ -1,7 +1,7 @@
 #pragma once
 
-class EngineWindow;
-class Scene;
+#include "UI/engineWindow.h"
+#include "Viewport/scene.h"
 
 class Editor
 {
