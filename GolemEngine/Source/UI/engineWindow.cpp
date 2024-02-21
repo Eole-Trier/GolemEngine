@@ -25,9 +25,6 @@ EngineWindow::EngineWindow(const char* _name)
     scene = new Scene();
     scene->width = screenWidth;
     scene->height = screenHeight;
-    basicActors = new BasicActors();
-    fileBrowser = new FileBrowser();
-    viewport = new Viewport();
 }
 
 GLFWwindow* EngineWindow::GetWindow()
@@ -126,13 +123,51 @@ void EngineWindow::BeginDockSpace()
         windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
     }
 
-    // Begin docking layout
     ImGui::Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
+
+    ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
+
+    static bool init = true;
+    ImGuiID dock_id_left, dock_id_right;
+    if (init) 
+    {
+        init = false;
+        ImGui::DockBuilderRemoveNode(dockspace_id);
+        ImGui::DockBuilderAddNode(dockspace_id);
+        ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.5f, &dock_id_left, &dock_id_right);
+
+        ImGuiID dock_id_topRight, dock_id_bottomRight;
+        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.5f, &dock_id_topRight, &dock_id_bottomRight);
+
+        ImGuiID dock_id_topLeft, dock_id_bottomLeft;
+        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.5f, &dock_id_topLeft, &dock_id_bottomLeft);
+
+        ImGui::DockBuilderDockWindow("Window_1", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("Window_2", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Window 3", dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow("Window 4", dock_id_bottomLeft);
+
+        ImGui::DockBuilderFinish(dockspace_id);
+    }
+
     if (optFullscreen)
         ImGui::PopStyleVar(3);
 
-    ImGuiID dockspaceID = ImGui::GetID("DockSpace");
-    ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags);
+    ImGui::Begin("Window_1");
+    ImGui::End();
+
+    ImGui::Begin("Window_2");
+    ImGui::End();
+
+
+    ImGui::Begin("Window 3");
+    ImGui::End();
+
+    ImGui::Begin("Window 4");
+    ImGui::End();
 }
 
 void EngineWindow::EndDockSpace()
