@@ -23,36 +23,35 @@ const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
+
 class GOLEM_ENGINE_API Camera
 {
 public:
-    static Camera* Instance;
+    static Camera* instance;
 
-    Vector3 Position;
-    Vector3 Front;
-    Vector3 Up;
-    Vector3 Right;
-    Vector3 WorldUp;
-    float Yaw;
-    float Pitch;
-    float MovementSpeed;
-    float MouseSensitivity;
-    float Zoom;
-    float Near = 0.1f;
-    float Far = 1000.f;
-
-    
-
-    Camera(Vector3 position = Vector3(0.0f, 0.0f, 3.0f), Vector3 up = Vector3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
-
-    Matrix4 GetViewMatrix();
-
-    void ProcessKeyboard(CameraMovement direction, float _deltaTime);
-    void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
-    void ProcessMouseScroll(float yoffset);
-    void ProcessInput(GLFWwindow* window, float deltaTime);
+    Vector3 position;
+    Vector3 front;
+    Vector3 up;
+    Vector3 right;
+    Vector3 worldUp;
+    float yaw;
+    float pitch;
+    float movementSpeed;
+    float mouseSensitivity;
+    float zoom;
+    float near = 0.1f;
+    float far = 1000.f;
 
 private:
     void UpdateCameraVectors();
+
+public:
+    Camera(Vector3 _position = Vector3(0.0f, 0.0f, 3.0f), Vector3 _up = Vector3(0.0f, 1.0f, 0.0f), float _yaw = YAW, float _pitch = PITCH);
+    Camera(float _posX, float _posY, float _posZ, float _upX, float _upY, float _upZ, float _yaw, float _pitch);
+
+    Matrix4 GetViewMatrix();
+    void ProcessKeyboard(CameraMovement _direction, float _deltaTime);
+    void ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _constrainPitch = true);
+    void ProcessMouseScroll(float _yoffset);
+    void ProcessInput(GLFWwindow* _window, float _deltaTime);
 };

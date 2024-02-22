@@ -98,9 +98,9 @@ void Scene::Render(float _width, float _height, float _deltaTime)
 
     Shader* viking = m_resourceManager.Get<Shader>("viking_shader");
 
-    viking->SetViewPos(camera.Position);
+    viking->SetViewPos(camera.position);
 
-    Matrix4 projection = Matrix4::Projection(DegToRad(camera.Zoom), _width / _height, 0.1f, 1000.f);
+    Matrix4 projection = Matrix4::Projection(DegToRad(camera.zoom), _width / _height, 0.1f, 1000.f);
     Matrix4 view = camera.GetViewMatrix();
     viking->SetMat4("projection", projection);
     viking->SetMat4("view", view);
