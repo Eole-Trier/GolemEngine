@@ -23,24 +23,18 @@ EngineWindow::EngineWindow(const char* _name)
     scene = new Scene();
     scene->width = screenWidth;
     scene->height = screenHeight;
-    basicActors = new BasicActors();
-    fileBrowser = new FileBrowser();
-    viewport = new Viewport();
+    m_viewport = new Viewport();
+    m_basicActors = new BasicActors();
+    m_fileBrowser = new FileBrowser();
 }
 
 EngineWindow::~EngineWindow() {}
-
-GLFWwindow* EngineWindow::GetWindow()
-{
-    return m_window;
-}
 
 void EngineWindow::Init()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);    // 3.2+ only
 
     // Create window
     m_window = glfwCreateWindow(screenWidth, screenHeight, m_name.c_str(), NULL, NULL);
@@ -95,10 +89,28 @@ void EngineWindow::Init()
 
 void EngineWindow::UpdateDeltaTime()
 {
+    static float lastDeltaTime = 0.0f;
     float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - m_lastFrame;
     m_lastFrame = currentFrame;
+    
+    // Make engine timer
+    if (deltaTime > lastDeltaTime)      // may not be the best way to calculate time
+    {
+        time += deltaTime - lastDeltaTime;
+    }
+    else
+    {
+        time += (1.0f - lastDeltaTime) + deltaTime;
+    }
+    lastDeltaTime = deltaTime;
+}
 
+void EngineWindow::ImGuiLoop()
+{
+    m_basicActors->Render();
+    m_fileBrowser->Render();
+    m_viewport->Render(scene);
 }
 
 void EngineWindow::BeginDockSpace()
@@ -109,7 +121,9 @@ void EngineWindow::BeginDockSpace()
 
     ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
     if (optFullscreen)
+    {
         dockspaceFlags |= ImGuiDockNodeFlags_PassthruCentralNode;
+    }
 
     ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     if (optFullscreen)
@@ -151,25 +165,35 @@ void EngineWindow::BeginDockSpace()
         ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topLeft);
         ImGui::DockBuilderDockWindow("File_Browser", dock_id_topRight);
         ImGui::DockBuilderDockWindow("Viewport", dock_id_bottomRight);
-        ImGui::DockBuilderDockWindow("Window 4", dock_id_bottomLeft);
+        ImGui::DockBuilderDockWindow("Debug", dock_id_bottomLeft);
 
         ImGui::DockBuilderFinish(dockspace_id);
     }
 
     if (optFullscreen)
+    {
         ImGui::PopStyleVar(3);
+    }
 
-    basicActors->Render();
-    fileBrowser->Render();
-    viewport->Render(scene);
+    ImGuiLoop();
 
-    ImGui::Begin("Window 4");
+    ImGui::Begin("Debug");
+    ImGui::Text("deltaTime: %f", deltaTime);
+    ImGui::Text("time: %f", time);
     ImGui::End();
 }
 
 void EngineWindow::EndDockSpace()
 {
     ImGui::End();
+}
+
+void EngineWindow::ProcessInput()
+{
+    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(m_window, true);
+    }
 }
 
 void EngineWindow::Render()
@@ -186,30 +210,34 @@ void EngineWindow::Render()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+#pragma region Dockspace
         BeginDockSpace();
+
         ProcessInput();
 
-        const float window_width = ImGui::GetContentRegionAvail().x;
-        const float window_height = ImGui::GetContentRegionAvail().y;
-        scene->RescaleFramebuffer(window_width, window_height);
-        glViewport(0, 0, window_width, window_height);
+        // SHOULD KEEP ?
+        //const float window_width = ImGui::GetContentRegionAvail().x;
+        //const float window_height = ImGui::GetContentRegionAvail().y;
+        //scene->RescaleFramebuffer(window_width, window_height);
+        //glViewport(0, 0, window_width, window_height);
+
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
-        //ImGuiLoop();
-        
-
-
-
+        // Bind next framebuffer to the scene buffer
         scene->BindFramebuffer();
+        // Clear previous scene buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // Render the scene to the framebuffer
         scene->Render(screenWidth, screenHeight, deltaTime);
+        // Go back to original framebuffer
         scene->UnbindFramebuffer();
 
-
-
         EndDockSpace();
+#pragma endregion Dockspace
+
         ImGui::Render();
+
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -227,26 +255,13 @@ void EngineWindow::Render()
     glDeleteFramebuffers(1, &scene->fbo);
     glDeleteTextures(1, &scene->textureId);
     glDeleteRenderbuffers(1, &scene->rbo);
+
+    Close();
 }
 
 void EngineWindow::Close()
 {
     glfwTerminate();
-}
-
-void EngineWindow::ProcessInput()
-{
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(m_window, true);
-    }
-}
-
-void EngineWindow::ImGuiLoop()
-{
-    basicActors->Render();
-    fileBrowser->Render();
-    viewport->Render(scene);
 }
 
 void EngineWindow::ImGuiClean() {}

@@ -19,32 +19,33 @@ private:
 	GLFWmonitor* m_monitor = nullptr;
 	std::string m_name;
 	int m_lastFrame = 0;
-	BasicActors* basicActors = nullptr;
-	FileBrowser* fileBrowser = nullptr;
-	Viewport* viewport = nullptr;
+	BasicActors* m_basicActors = nullptr;
+	FileBrowser* m_fileBrowser = nullptr;
+	Viewport* m_viewport = nullptr;
 
 public:
 	int screenWidth = 1800;
 	int screenHeight = 1600;
 
 	Scene* scene = nullptr;
-	float deltaTime;
+	float time = 0.0f, deltaTime = 0.0f;
 
 public:
 	EngineWindow(const char* _name);
 	~EngineWindow();
 
-	GLFWwindow* GetWindow();
-
+	// Init engine main window.
 	void Init();
 	void UpdateDeltaTime();
-	void Render();
+	// Update all ImGUI windows
+	void ImGuiLoop();
+	// Setup the dock space for our different ImGui windows
 	void BeginDockSpace();
 	void EndDockSpace();
-	void Close();
-
-	void ImGuiLoop();
-	void ImGuiClean();
-
+	// Process user inputs
 	void ProcessInput();
+	// Render all ImGUI windows
+	void Render();
+	void Close();
+	void ImGuiClean();
 };
