@@ -25,6 +25,7 @@
     <ClCompile Include="Source\UI\viewport.cpp" />
     <ClCompile Include="Source\UI\worldActors.cpp" />
     <ClCompile Include="Source\UI\engineWindow.cpp" />
+    <ClCompile Include="Source\UI\debugWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -54,5 +55,6 @@
     <ClInclude Include="Include\UI\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\UI\debugWindow.h" />
   </ItemGroup>
 </Project>

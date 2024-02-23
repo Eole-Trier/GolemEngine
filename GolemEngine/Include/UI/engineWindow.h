@@ -5,6 +5,7 @@
 #include "fileBrowser.h"
 #include "engineWindow.h"
 #include "viewport.h"
+#include "debugWindow.h"
 #include "Viewport/scene.h"
 
 #include <string>
@@ -22,6 +23,7 @@ private:
 	BasicActors* m_basicActors = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
 	Viewport* m_viewport = nullptr;
+	DebugWindow* m_debugWindow = nullptr;
 
 public:
 	int screenWidth = 1800;

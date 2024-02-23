@@ -26,6 +26,7 @@ EngineWindow::EngineWindow(const char* _name)
     m_viewport = new Viewport();
     m_basicActors = new BasicActors();
     m_fileBrowser = new FileBrowser();
+    m_debugWindow = new DebugWindow();
 }
 
 EngineWindow::~EngineWindow() {}
@@ -90,20 +91,9 @@ void EngineWindow::Init()
 void EngineWindow::UpdateDeltaTime()
 {
     static float lastDeltaTime = 0.0f;
-    float currentFrame = static_cast<float>(glfwGetTime());
-    deltaTime = currentFrame - m_lastFrame;
-    m_lastFrame = currentFrame;
-    
-    // Make engine timer
-    if (deltaTime > lastDeltaTime)      // may not be the best way to calculate time
-    {
-        time += deltaTime - lastDeltaTime;
-    }
-    else
-    {
-        time += (1.0f - lastDeltaTime) + deltaTime;
-    }
-    lastDeltaTime = deltaTime;
+    time = static_cast<float>(glfwGetTime());
+    deltaTime = time - m_lastFrame;
+    m_lastFrame = time;
 }
 
 void EngineWindow::ImGuiLoop()
@@ -111,6 +101,7 @@ void EngineWindow::ImGuiLoop()
     m_basicActors->Render();
     m_fileBrowser->Render();
     m_viewport->Render(scene);
+    m_debugWindow->Render(this);
 }
 
 void EngineWindow::BeginDockSpace()
@@ -176,11 +167,6 @@ void EngineWindow::BeginDockSpace()
     }
 
     ImGuiLoop();
-
-    ImGui::Begin("Debug");
-    ImGui::Text("deltaTime: %f", deltaTime);
-    ImGui::Text("time: %f", time);
-    ImGui::End();
 }
 
 void EngineWindow::EndDockSpace()
@@ -214,12 +200,6 @@ void EngineWindow::Render()
         BeginDockSpace();
 
         ProcessInput();
-
-        // SHOULD KEEP ?
-        //const float window_width = ImGui::GetContentRegionAvail().x;
-        //const float window_height = ImGui::GetContentRegionAvail().y;
-        //scene->RescaleFramebuffer(window_width, window_height);
-        //glViewport(0, 0, window_width, window_height);
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
