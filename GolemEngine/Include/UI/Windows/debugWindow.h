@@ -1,7 +1,7 @@
 #pragma once
 
 struct GLFWwindow;
-class EngineWindow;
+class GolemEngine;
 
 class DebugWindow
 {
@@ -12,5 +12,5 @@ public:
 	DebugWindow();
 	~DebugWindow();
 
-	void Render(EngineWindow* _engineWindow);
+	void Update(GolemEngine* _golemEngine);
 };

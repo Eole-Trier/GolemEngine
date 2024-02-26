@@ -1,8 +1,8 @@
 #pragma once
 
+#include "dll.h"
 #include "Resource/resourceManager.h"
 #include "Resource/shader.h"
-#include "dll.h"
 #include "Viewport/camera.h"
 
 class GOLEM_ENGINE_API Scene
@@ -25,7 +25,7 @@ public:
 	// This function is used to create and bind the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
 	void CreateFramebuffer();
-	void RescaleFramebuffer(float width, float height);
+	void RescaleFramebuffer(float _width, float _height);
 	void Init();
 	void BindFramebuffer();
 	void UnbindFramebuffer();

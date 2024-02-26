@@ -11,5 +11,5 @@ public:
 	FileBrowser();
 	~FileBrowser();
 
-	void Render();
+	void Update();
 };

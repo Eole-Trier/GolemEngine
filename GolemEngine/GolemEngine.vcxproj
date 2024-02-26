@@ -27,11 +27,12 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Resource\Light\directional.cpp" />
     <ClCompile Include="Source\Resource\Light\point.cpp" />
     <ClCompile Include="Source\Resource\Light\spot.cpp" />
-    <ClCompile Include="Source\UI\debugWindow.cpp" />
-    <ClCompile Include="Source\UI\engineWindow.cpp" />
+    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
+    <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -40,10 +41,10 @@
     <ClCompile Include="Source\Resource\shader.cpp" />
     <ClCompile Include="Source\Resource\texture.cpp" />
     <ClCompile Include="Source\Resource\mesh.cpp" />
-    <ClCompile Include="Source\UI\basicActors.cpp" />
-    <ClCompile Include="Source\UI\fileBrowser.cpp" />
-    <ClCompile Include="Source\UI\viewport.cpp" />
-    <ClCompile Include="Source\UI\worldActors.cpp" />
+    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
+    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
+    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
+    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
+    <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\Resource\Light\directional.h" />
     <ClInclude Include="Include\Resource\Light\light.h" />
     <ClInclude Include="Include\Resource\Light\point.h" />
@@ -66,12 +68,12 @@
     <ClInclude Include="Include\Resource\texture.h" />
     <ClInclude Include="Include\Resource\mesh.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
-    <ClInclude Include="Include\UI\basicActors.h" />
-    <ClInclude Include="Include\UI\debugWindow.h" />
-    <ClInclude Include="Include\UI\engineWindow.h" />
-    <ClInclude Include="Include\UI\fileBrowser.h" />
-    <ClInclude Include="Include\UI\viewport.h" />
-    <ClInclude Include="Include\UI\worldActors.h" />
+    <ClInclude Include="Include\UI\Windows\basicActors.h" />
+    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
+    <ClInclude Include="Include\UI\engineUi.h" />
+    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
+    <ClInclude Include="Include\UI\Windows\viewport.h" />
+    <ClInclude Include="Include\UI\Windows\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
   </ItemGroup>

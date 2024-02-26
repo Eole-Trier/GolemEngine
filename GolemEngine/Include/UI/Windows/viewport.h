@@ -9,5 +9,5 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Render(Scene* _scene);
+	void Update(Scene* _scene);
 };

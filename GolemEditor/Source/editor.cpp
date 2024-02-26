@@ -4,16 +4,14 @@
 
 Editor::Editor()
 {
-	m_scene = new Scene();
-	m_engineWindow = new EngineWindow("Golem Engine");
-	m_engineWindow->scene = m_scene;
+	m_golemEngine = new GolemEngine();
 }
 
 Editor::~Editor() {}
 
 void Editor::Init()
 {
-	m_engineWindow->Init();
+	m_golemEngine->Init();
 }
 
 void Editor::Run()
@@ -25,12 +23,12 @@ void Editor::Run()
 
 void Editor::MainLoop()
 {
-	m_engineWindow->Render();
+	m_golemEngine->Render();
 }
 
 void Editor::Cleanup()
 {
-	m_engineWindow->Close();
-	delete m_engineWindow;
-	delete m_scene;
+	m_golemEngine->Close();
+	delete m_golemEngine->GetScene();
+	delete m_golemEngine;
 }

@@ -1,7 +1,4 @@
-#include "UI/fileBrowser.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "UI/Windows/fileBrowser.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -11,7 +8,7 @@ FileBrowser::FileBrowser() {}
 
 FileBrowser::~FileBrowser() {}
 
-void FileBrowser::Render()
+void FileBrowser::Update()
 {
 	ImGui::Begin("File_Browser");
 	ImGui::End();
