@@ -1,4 +1,4 @@
-#include "Resource/model.h"
+#include "Resource/Rendering/model.h"
 
 #include <iostream>
 #include <fstream>

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "resource.h"
+#include "Resource/resource.h"
 #include "vector3.h"
 #include "shader.h"
 #include "texture.h"

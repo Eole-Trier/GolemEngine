@@ -2,7 +2,6 @@
 
 #include "Viewport/scene.h"
 
-
 class GolemEngine;
 
 class Editor

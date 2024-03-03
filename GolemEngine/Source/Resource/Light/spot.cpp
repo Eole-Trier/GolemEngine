@@ -1,6 +1,6 @@
 
 #include <MathsLib/utils.h>
-#include "Resource/shader.h"
+#include "Resource/Rendering/shader.h"
 #include "Resource/Light/Spot.h"
 
 

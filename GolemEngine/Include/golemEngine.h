@@ -18,9 +18,7 @@ private:
 	Scene* m_scene = nullptr;
 	EngineUi* m_engineUi = nullptr;
 
-	float m_lastFrame = 0;
 	float m_deltaTime;
-	float m_time;
 
 public:
 	GolemEngine();
@@ -35,6 +33,6 @@ public:
 	float GetDeltaTime();
 	float GetTime();
 	void ProcessInput();
-	void Render();
+	void Update();
 	void Close();
 };

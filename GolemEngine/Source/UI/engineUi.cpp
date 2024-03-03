@@ -10,6 +10,7 @@
 #include "UI/Windows/worldActors.h"
 #include "UI/Windows/debugWindow.h"
 #include "golemEngine.h"
+#include <iostream>
 
 EngineUi::EngineUi(GolemEngine* _golemEngine) 
     : 

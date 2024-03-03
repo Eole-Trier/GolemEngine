@@ -107,10 +107,9 @@ GLFWwindow* GolemEngine::GetGLFWWindow()
 
 void GolemEngine::UpdateDeltaTime()
 {
-    static float lastDeltaTime = 0.0f;
-    m_time = static_cast<float>(glfwGetTime());
-    m_deltaTime = m_time - m_lastFrame;
-    m_lastFrame = m_time;
+    static float lastFrame = 0;
+    m_deltaTime = static_cast<float>(glfwGetTime()) - lastFrame;
+    lastFrame = static_cast<float>(glfwGetTime());
 }
 
 float GolemEngine::GetDeltaTime()
@@ -120,7 +119,7 @@ float GolemEngine::GetDeltaTime()
 
 float GolemEngine::GetTime()
 {
-    return m_time;
+    return static_cast<float>(glfwGetTime());
 }
 
 void GolemEngine::ProcessInput()
@@ -131,7 +130,7 @@ void GolemEngine::ProcessInput()
     }
 }
 
-void GolemEngine::Render()
+void GolemEngine::Update()
 {
     ImGuiIO& io = ImGui::GetIO();
     glViewport(0, 0, m_screenWidth, m_screenHeight);
@@ -144,7 +143,6 @@ void GolemEngine::Render()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
 
 #pragma region DockSpace;
         m_engineUi->BeginDockSpace();

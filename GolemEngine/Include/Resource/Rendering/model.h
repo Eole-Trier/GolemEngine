@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "dll.h"
-#include "resource.h"
+#include "Resource/resource.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vertex.h"

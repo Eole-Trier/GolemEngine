@@ -2,12 +2,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Viewport/scene.h"
-#include "Resource/mesh.h"
+#include "Resource/Rendering/mesh.h"
 #include "Resource/tools.h"
 #include "Resource/Light/point.h"
 #include "Resource/Light/directional.h"
 #include "Resource/Light/spot.h"
-#include "Resource/shader.h"
+#include "Resource/Rendering/shader.h"
 
 Scene::Scene() 
 {
@@ -57,10 +57,10 @@ void Scene::Init()
     #pragma region VikingRoom
 
     Texture* text = m_resourceManager.Create<Texture>("viking_texture");
-    text->Load(FindFile("viking_room.jpg").c_str());
+    text->Load(Tools::FindFile("viking_room.jpg").c_str());
     
     Model* viking = m_resourceManager.Create<Model>("model_viking");
-    viking->Load(FindFile("viking_room.obj").c_str());
+    viking->Load(Tools::FindFile("viking_room.obj").c_str());
 
     Shader* shad = m_resourceManager.Create<Shader>("viking_shader");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");

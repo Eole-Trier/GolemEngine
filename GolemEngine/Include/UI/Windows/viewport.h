@@ -10,5 +10,5 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Update(GolemEngine* golemEngine);
+	void Update(GolemEngine* _golemEngine);
 };
