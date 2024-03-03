@@ -1,176 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\imgui_demo.cpp" />
+    <ClCompile Include="External\imgui\imgui_draw.cpp" />
+    <ClCompile Include="External\imgui\imgui_tables.cpp" />
+    <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Resource\Light\directional.cpp" />
+    <ClCompile Include="Source\Resource\Light\point.cpp" />
+    <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\Viewport\scene.cpp" />
+    <ClCompile Include="Source\Viewport\camera.cpp" />
+    <ClCompile Include="Source\Debug\log.cpp" />
+    <ClCompile Include="Source\mainDll.cpp" />
+    <ClCompile Include="Source\Resource\model.cpp" />
+    <ClCompile Include="Source\Resource\shader.cpp" />
+    <ClCompile Include="Source\Resource\texture.cpp" />
+    <ClCompile Include="Source\Resource\mesh.cpp" />
+    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
+    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
+    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
+    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
+    <ClCompile Include="Source\golemEngine.cpp" />
+    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
+    <ClCompile Include="Source\UI\engineUi.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\UI\engineWindow.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\mainDll.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_demo.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_draw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_tables.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\imgui_widgets.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\mesh.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\model.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\shader.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\texture.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Debug\log.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UI\basicActors.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UI\fileBrowser.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UI\viewport.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UI\worldActors.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp">
-    <ClCompile Include="Source\Viewport\camera.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Viewport\scene.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\Light\spot.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\Light\directional.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\Light\point.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource\tools.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Include\UI\engineWindow.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\dll.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imconfig.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imgui.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imgui_internal.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imstb_rectpack.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imstb_textedit.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External\imgui\imstb_truetype.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\mesh.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\model.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\resource.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\resourceManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\shader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\texture.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Debug\assertion.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Debug\log.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\vertex.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\fileBrowser.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\viewport.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\worldActors.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\basicActors.h">
-    <ClInclude Include="Include\Viewport\camera.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Viewport\scene.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\Light\spot.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\Light\directional.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\Light\light.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\Light\point.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource\tools.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
+    <ClInclude Include="External\imgui\imconfig.h" />
+    <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\imgui_internal.h" />
+    <ClInclude Include="External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="External\imgui\imstb_textedit.h" />
+    <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Include\Debug\assertion.h" />
+    <ClInclude Include="Include\Debug\log.h" />
+    <ClInclude Include="Include\dll.h" />
+    <ClInclude Include="Include\Resource\Light\directional.h" />
+    <ClInclude Include="Include\Resource\Light\light.h" />
+    <ClInclude Include="Include\Resource\Light\point.h" />
+    <ClInclude Include="Include\Resource\Light\spot.h" />
+    <ClInclude Include="Include\Resource\model.h" />
+    <ClInclude Include="Include\Resource\resource.h" />
+    <ClInclude Include="Include\Resource\resourceManager.h" />
+    <ClInclude Include="Include\Resource\shader.h" />
+    <ClInclude Include="Include\Resource\texture.h" />
+    <ClInclude Include="Include\Resource\mesh.h" />
+    <ClInclude Include="Include\Resource\vertex.h" />
+    <ClInclude Include="Include\UI\Windows\basicActors.h" />
+    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
+    <ClInclude Include="Include\UI\Windows\viewport.h" />
+    <ClInclude Include="Include\UI\Windows\worldActors.h" />
+    <ClInclude Include="Include\Viewport\camera.h" />
+    <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\golemEngine.h" />
+    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
+    <ClInclude Include="Include\UI\engineUi.h" />
   </ItemGroup>
 </Project>

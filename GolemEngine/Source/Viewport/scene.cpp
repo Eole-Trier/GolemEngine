@@ -11,7 +11,45 @@
 
 Scene::Scene() 
 {
-    Camera = Vector3(0.0f, 0.0f, 3.0f);
+    camera = Vector3(0.0f, 0.0f, 3.0f);
+}
+
+void Scene::CreateFramebuffer()
+{
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1920, 1080);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::cout << "ERROR: Framebuffer is not complete." << std::endl;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
+void Scene::RescaleFramebuffer(float _width, float _height)
+{
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 }
 
 void Scene::Init()
@@ -31,7 +69,7 @@ void Scene::Init()
 
     Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
-    #pragma endregion VikingRoom
+#pragma endregion VikingRoom
 
     Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
@@ -41,7 +79,16 @@ void Scene::Init()
 
     Mesh* cube = m_resourceManager.Create<Mesh>("Lighting_Cube");
     cube->Init(sphere, sphere_texture, shad);
+}
 
+void Scene::BindFramebuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+}
+
+void Scene::UnbindFramebuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, float _deltaTime)
@@ -54,7 +101,7 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
 
     viking->Use();
 
-    viking->SetViewPos(Camera.Position);
+    viking->SetViewPos(camera.position);
 
     UpdateLights(viking);
 
@@ -68,8 +115,8 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
 
     Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
     Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
-    mesh->Draw(_width, _height, Camera, model);
-    light->Draw(_width, _height, Camera, spherePos);
+    mesh->Draw(_width, _height, camera, model);
+    light->Draw(_width, _height, camera, spherePos);
 }
 
 void Scene::InitLights(Shader* shader)

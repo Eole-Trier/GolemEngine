@@ -1,7 +1,4 @@
-#include "UI/basicActors.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "UI/Windows/basicActors.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -11,8 +8,8 @@ BasicActors::BasicActors() {}
 
 BasicActors::~BasicActors() {}
 
-void BasicActors::Render()
+void BasicActors::Update()
 {
-	ImGui::Begin("Basic Actors");
+	ImGui::Begin("Basic_Actors");
 	ImGui::End();
 }

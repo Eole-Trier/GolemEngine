@@ -1,13 +1,14 @@
 #pragma once
 
-class EngineWindow;
-class Scene;
+#include "Viewport/scene.h"
+
+
+class GolemEngine;
 
 class Editor
 {
 private:
-	EngineWindow* m_engineWindow = nullptr;
-	Scene* m_scene = nullptr;
+	GolemEngine* m_golemEngine = nullptr;
 
 public:
 	Editor();

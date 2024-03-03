@@ -12,10 +12,13 @@ class GOLEM_ENGINE_API Model : public Resource
 {
 public:
 	unsigned int VAO, VBO;
+	std::vector<Vertex> vertices;
+
+public:
 
 	Model();
 	~Model();
-	std::vector<Vertex> vertices;
-    void Load(const char* modelPath);
+
+    void Load(const char* _modelPath);
 };
 

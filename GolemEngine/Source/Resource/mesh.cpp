@@ -24,7 +24,7 @@ void Mesh::SetupMesh()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TextureCoords));
     glEnableVertexAttribArray(2);
 
-    glBindVertexArray(0);
+    glBindVertexArray(0);  
 }
 
 Mesh::Mesh() {}
@@ -50,7 +50,7 @@ void Mesh::Draw(float _width, float _height, Camera& _cam, const Matrix4& _local
     m_shader->Use();
 
     Matrix4 view = _cam.GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam.Zoom), _width / _height, _cam.Near, _cam.Far);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_cam.zoom), _width / _height, _cam.near, _cam.far);
     m_shader->SetMat4("view", view);
     m_shader->SetMat4("projection", projection);
     m_shader->SetMat4("model", _localModel);

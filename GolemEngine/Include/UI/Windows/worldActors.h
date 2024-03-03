@@ -2,14 +2,14 @@
 
 struct GLFWwindow;
 
-class BasicActors
+class WorldActors
 {
 public:
 	GLFWwindow* window;
 
 public:
-	BasicActors();
-	~BasicActors();
+	WorldActors();
+	~WorldActors();
 
-	void Render();
+	void Update();
 };
