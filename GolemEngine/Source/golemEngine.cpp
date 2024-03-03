@@ -100,6 +100,11 @@ Scene* GolemEngine::GetScene()
     return m_scene;
 }
 
+GLFWwindow* GolemEngine::GetGLFWWindow()
+{
+    return m_window;
+}
+
 void GolemEngine::UpdateDeltaTime()
 {
     static float lastDeltaTime = 0.0f;

@@ -18,7 +18,7 @@ private:
 	Scene* m_scene = nullptr;
 	EngineUi* m_engineUi = nullptr;
 
-	int m_lastFrame = 0;
+	float m_lastFrame = 0;
 	float m_deltaTime;
 	float m_time;
 
@@ -30,6 +30,7 @@ public:
 	void InitScene();
 	void Init();
 	Scene* GetScene();
+	GLFWwindow* GetGLFWWindow();
 	void UpdateDeltaTime();
 	float GetDeltaTime();
 	float GetTime();

@@ -2,6 +2,7 @@
 
 #include "Viewport/scene.h"
 
+class GolemEngine;
 
 class Viewport
 {
@@ -9,5 +10,5 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Update(Scene* _scene);
+	void Update(GolemEngine* golemEngine);
 };

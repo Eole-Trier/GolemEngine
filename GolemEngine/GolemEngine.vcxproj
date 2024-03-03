@@ -31,6 +31,7 @@
     <ClCompile Include="Source\Resource\Light\directional.cpp" />
     <ClCompile Include="Source\Resource\Light\point.cpp" />
     <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />

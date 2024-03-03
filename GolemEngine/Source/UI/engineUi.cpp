@@ -96,9 +96,10 @@ void EngineUi::EndDockSpace()
 
 void EngineUi::UpdateLoop()
 {
+    
     m_basicActors->Update();
     m_fileBrowser->Update();
-    m_viewport->Update(m_golemEngine->GetScene());
+    m_viewport->Update(m_golemEngine);
     m_worldActors->Update();
     m_debugWindow->Update(m_golemEngine);
 }

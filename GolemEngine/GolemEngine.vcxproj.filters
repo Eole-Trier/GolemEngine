@@ -27,6 +27,7 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\engineUi.cpp" />
+    <ClCompile Include="Source\Resource\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -58,5 +59,6 @@
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\engineUi.h" />
+    <ClInclude Include="Include\Resource\tools.h" />
   </ItemGroup>
 </Project>
