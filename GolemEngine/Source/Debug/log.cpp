@@ -1,39 +1,40 @@
 #include "Debug/log.h"
+
 #include <iostream>
 #include <cstdarg>
 
-std::fstream Log::mFile;
+std::fstream Log::m_file;
 
 Log::~Log()
 {
-    mFile.close();
+    m_file.close();
 }
 
-void Log::OpenFile(std::filesystem::path const& filename)
+void Log::OpenFile(std::filesystem::path const& _filename)
 {
-    mFile.open(filename, std::fstream::out);
+    m_file.open(_filename, std::fstream::out);
 
-    if (mFile.is_open())
+    if (m_file.is_open())
     {
-        std::cout << "Open file: " << filename << std::endl;
+        std::cout << "Open file: " << _filename << std::endl;
     }
     else 
-        std::cout << "Cannot open the file: " << filename << std::endl;
+        std::cout << "Cannot open the file: " << _filename << std::endl;
 }
 
-void Log::Print(const char* format, ...)
+void Log::Print(const char* _format, ...)
 {
     char buffer[1024];
     va_list args;
-    va_start(args, format);
+    va_start(args, _format);
         
-    vsprintf_s(buffer, sizeof(buffer), format, args);
+    vsprintf_s(buffer, sizeof(buffer), _format, args);
     std::cout << buffer << std::endl;
 
-    if (mFile.is_open())
+    if (m_file.is_open())
     {
-        mFile << buffer << std::endl;
-        mFile.flush();
+        m_file << buffer << std::endl;
+        m_file.flush();
     }
     
     va_end(args);

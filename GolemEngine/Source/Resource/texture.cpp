@@ -1,16 +1,18 @@
+#include "Resource/texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION 
 #include "Image/stb_image.h"
 #include "glad/glad.h"
-
-#include "Resource/texture.h"
 #include "Debug/log.h"
 
-Texture::Texture()
+Texture::Texture() {}
+
+Texture::~Texture()
 {
+    glDeleteTextures(1, &id);
 }
 
-void Texture::Load(const char* filename)
+void Texture::Load(const char* _filename)
 {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -21,17 +23,22 @@ void Texture::Load(const char* filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(_filename, &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-        Log::Print("Succeed to load texture %s", filename);
+        Log::Print("Succeed to load texture %s", _filename);
     }
     else
     {
-        Log::Print("Failed to load texture %s", filename);
+        Log::Print("Failed to load texture %s", _filename);
     }
     stbi_image_free(data);
+}
+
+void Texture::Use()
+{
+    glBindTexture(GL_TEXTURE_2D, id);
 }
 

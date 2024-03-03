@@ -1,83 +1,60 @@
 #include "Resource/mesh.h"
 
+#include <MathsLib/utils.h>
+
 #include "../../Libraries/Include/glad/glad.h"
 
 void Mesh::SetupMesh()
 {
-	glGenVertexArrays(1, &m_vao);
-	glGenBuffers(1, &m_vbo);
-	glGenBuffers(1, &m_ebo);
+    glGenVertexArrays(1, &m_model->VAO);
 
-	glBindVertexArray(m_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &m_model->VBO);
+    glBindVertexArray(m_model->VAO);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), &m_indices[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_model->VBO);
 
-	// set the vertex attribute pointers
-	// vertex Positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	// vertex normals
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-	// vertex texture coords
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TextureCoords));
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_model->vertices.size(), m_model->vertices.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TextureCoords));
+    glEnableVertexAttribArray(2);
+
+    glBindVertexArray(0);  
 }
 
 Mesh::Mesh() {}
 
-Mesh::~Mesh() {}
-
-Mesh::Mesh(std::vector<Vertex> _vertices, std::vector<unsigned int> _indices, std::vector<Texture> _textures)
-	: m_vertices(_vertices), m_indices(_indices), m_textures(_textures)
+Mesh::~Mesh() 
 {
-	SetupMesh();
+    glDeleteVertexArrays(1, &m_model->VAO);
+    glDeleteBuffers(1, &m_model->VBO);
 }
 
-void Mesh::Draw(Shader& _shader)
+void Mesh::Init(Model* _model, Texture* _texture, Shader* _shader) 
 {
-    // bind appropriate textures
-    unsigned int diffuseNr = 1;
-    unsigned int specularNr = 1;
-    unsigned int normalNr = 1;
-    unsigned int heightNr = 1;
-    for (unsigned int i = 0; i < m_textures.size(); i++)
-    {
-        glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
-        // retrieve texture number (the N in diffuse_textureN)
-        std::string number;
-        std::string name = m_textures[i].name;
-        if (name == "texture_diffuse")
-        {
-            number = std::to_string(diffuseNr++);
-        }
-        else if (name == "texture_specular")
-        {
-            number = std::to_string(specularNr++); // transfer unsigned int to string
-        }
-        else if (name == "texture_normal")
-        {
-            number = std::to_string(normalNr++); // transfer unsigned int to string
-        }
-        else if (name == "texture_height")
-        {
-            number = std::to_string(heightNr++); // transfer unsigned int to string
-        }
+    m_model = _model;
+    m_texture = _texture;
+    m_shader = _shader;
+    SetupMesh();
+}
 
-        // now set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(_shader.m_id, (name + number).c_str()), i);
-        // and finally bind the texture
-        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
-    }
-
-    // draw mesh
-    glBindVertexArray(m_vao);
-    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
-
-    // always good practice to set everything back to defaults once configured.
+void Mesh::Draw(float _width, float _height, Camera& _cam, const Matrix4& _localModel)
+{
     glActiveTexture(GL_TEXTURE0);
+    m_texture->Use();
+    m_shader->Use();
+
+    Matrix4 view = _cam.GetViewMatrix();
+    Matrix4 projection = Matrix4::Projection(DegToRad(_cam.zoom), _width / _height, _cam.near, _cam.far);
+    m_shader->SetMat4("view", view);
+    m_shader->SetMat4("projection", projection);
+    m_shader->SetMat4("model", _localModel);
+
+    glBindVertexArray(m_model->VAO);
+    glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());
 }

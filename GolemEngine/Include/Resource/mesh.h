@@ -8,16 +8,15 @@
 #include "shader.h"
 #include "texture.h"
 #include "vertex.h"
+#include "model.h"
+#include "Viewport/camera.h"
 
 class GOLEM_ENGINE_API Mesh : public Resource
 {
 private:
-	std::vector<Vertex> m_vertices;
-	std::vector<unsigned int> m_indices;
-	std::vector<Texture> m_textures;
-	unsigned int m_vao;
-	unsigned int m_vbo;
-	unsigned int m_ebo;
+	Model* m_model;
+	Texture* m_texture;
+	Shader* m_shader;
 
 private:
 	void SetupMesh();
@@ -25,7 +24,7 @@ private:
 public:
 	Mesh();
 	~Mesh();
-	Mesh(std::vector<Vertex> _vertices, std::vector<unsigned int> _indices, std::vector<Texture> _textures);
-	
-	void Draw(Shader& _shader);
+
+	void Init(Model* _model, Texture* _texture, Shader* _shader);
+	void Draw(float _width, float _height, Camera& _cam, const Matrix4& _localModel);
 };

@@ -2,16 +2,18 @@
 
 #include <GLFW/glfw3.h>
 
-Editor::Editor() 
+#include "golemEngine.h"
+
+Editor::Editor()
 {
-	m_viewport = new EngineWindow("Golem Engine", 800, 600);
+	m_golemEngine = new GolemEngine();
 }
 
 Editor::~Editor() {}
 
 void Editor::Init()
 {
-	m_viewport->Init();
+	m_golemEngine->Init();
 }
 
 void Editor::Run()
@@ -23,11 +25,12 @@ void Editor::Run()
 
 void Editor::MainLoop()
 {
-	m_viewport->Render();
+	m_golemEngine->Render();
 }
 
 void Editor::Cleanup()
 {
-	m_viewport->Close();
-	delete m_viewport;
+	m_golemEngine->Close();
+	delete m_golemEngine->GetScene();
+	delete m_golemEngine;
 }

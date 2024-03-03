@@ -1,10 +1,12 @@
 #pragma once
 
-#include "Resource.h"
 #include <unordered_map>
 #include <string>
+#include "dll.h"
+#include "Resource.h"
+#include "Debug/log.h"
 
-class ResourceManager
+class GOLEM_ENGINE_API ResourceManager
 {
 private:
 	std::unordered_map<std::string, Resource*> m_resources;
@@ -33,6 +35,8 @@ inline T* ResourceManager::Create(std::string _name)
 template<class T>
 inline T* ResourceManager::Get(std::string _name)
 {
+	if (m_resources[_name] == nullptr)
+		Log::Print("No resource of this name exists");
 	return dynamic_cast<T*>(m_resources[_name]);
 }
 

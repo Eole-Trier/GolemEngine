@@ -1,8 +1,9 @@
+#include "Resource/model.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 
-#include "Resource/model.h"
 #include "Debug/log.h"
 
 Model::Model()
@@ -11,14 +12,12 @@ Model::Model()
     VAO = 0;
 }
 
-Model::~Model()
-{
-}
+Model::~Model() {}
 
-void Model::Load(const char* modelPath, const char* texturePath)
+void Model::Load(const char* _modelPath)
 {
     std::ifstream file;
-    file.open(modelPath);
+    file.open(_modelPath);
     std::string line;
     std::vector<Vector3> positions;
     std::vector<Vector3> normals;
@@ -26,7 +25,7 @@ void Model::Load(const char* modelPath, const char* texturePath)
 
     if (!file.is_open())
     {
-        Log::Print("Cannot open the file: %s", modelPath);
+        Log::Print("Cannot open the file: %s", _modelPath);
         return;
     }
 
@@ -74,7 +73,7 @@ void Model::Load(const char* modelPath, const char* texturePath)
             vertices.push_back(v3);
         }
     }
-    Log::Print("Succeed to load model: %s", modelPath);
+    Log::Print("Succeed to load model: %s", _modelPath);
 }
 
 
