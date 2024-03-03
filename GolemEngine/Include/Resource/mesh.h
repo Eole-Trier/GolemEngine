@@ -10,7 +10,8 @@
 #include "vertex.h"
 #include "model.h"
 #include "Viewport/camera.h"
-#include "Viewport/window.h"
+#include "UI/engineWindow.h"
+//#include "Viewport/window.h"
 
 class GOLEM_ENGINE_API Mesh : public Resource
 {

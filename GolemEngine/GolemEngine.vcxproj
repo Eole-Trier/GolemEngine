@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Resource\Light\directional.cpp" />
     <ClCompile Include="Source\Resource\Light\point.cpp" />
     <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="Include\Resource\shader.h" />
     <ClInclude Include="Include\Resource\texture.h" />
     <ClInclude Include="Include\Resource\mesh.h" />
+    <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Resource\vertex.h" />
     <ClInclude Include="Include\UI\basicActors.h" />
     <ClInclude Include="Include\UI\engineWindow.h" />

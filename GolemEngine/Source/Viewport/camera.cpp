@@ -75,8 +75,8 @@ void Camera::ProcessMouseScroll(float yoffset)
     Zoom -= (float)yoffset;
     if (Zoom < 1.0f)
         Zoom = 1.0f;
-    if (Zoom > 45.0f)
-        Zoom = 45.0f;
+    if (Zoom > 89.1f)
+        Zoom = 89.1f;
 }
 
 void Camera::ProcessInput(GLFWwindow* window, float deltaTime)
