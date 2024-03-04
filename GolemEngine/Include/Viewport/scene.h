@@ -24,7 +24,6 @@ public:
 	unsigned int textureId;
 	Camera camera;
 	Shader* shad;
-	int width, height;
 
 public:
 	Scene();

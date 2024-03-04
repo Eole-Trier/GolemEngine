@@ -9,7 +9,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "UI/engineUi.h"
-
+#include "UI/Windows/viewport.h"
 
 
 GolemEngine::GolemEngine()
@@ -25,8 +25,7 @@ GolemEngine::GolemEngine()
     m_screenWidth = desktop.right;
     m_screenHeight = desktop.bottom;
 
-    m_scene->width = m_screenWidth;
-    m_scene->height = m_screenHeight;
+    m_engineUi->SetViewport(m_screenWidth, m_screenHeight);
 }
 
 GolemEngine::~GolemEngine() {}
@@ -52,7 +51,9 @@ void GolemEngine::InitWindow()
    //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
     glfwMakeContextCurrent(m_window);
-
+    glfwSetFramebufferSizeCallback(m_window, m_engineUi->GetViewport()->ResizeCallback);
+    glfwSetCursorPosCallback(m_window, m_engineUi->GetViewport()->MouseCallback);
+    glfwSetScrollCallback(m_window, m_engineUi->GetViewport()->ScrollCallback);
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {

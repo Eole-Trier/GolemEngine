@@ -26,4 +26,7 @@ public:
 	void BeginDockSpace();
 	void EndDockSpace();
 	void UpdateLoop();
+
+	void SetViewport(int _width, int _height);
+	Viewport* GetViewport();
 };
