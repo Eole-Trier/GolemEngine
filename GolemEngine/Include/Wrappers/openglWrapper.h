@@ -11,6 +11,7 @@ public:
 	OpenglWrapper();
 	~OpenglWrapper();
 	
+	GLuint CreateFramebuffer(int _width, int _height);
 	void BindFramebuffer(GLuint& _framebuffer);
 	void UnbindFramebuffer();
 };
