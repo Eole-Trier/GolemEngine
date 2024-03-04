@@ -69,7 +69,7 @@ void Scene::Init()
 
     Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
-#pragma endregion VikingRoom
+    #pragma endregion VikingRoom
 
     Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
