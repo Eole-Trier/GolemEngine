@@ -1,7 +1,9 @@
+#include "Viewport/scene.h"
+
 #include <MathsLib/utils.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Viewport/scene.h"
+
 #include "Resource/Rendering/mesh.h"
 #include "Resource/tools.h"
 #include "Resource/Light/point.h"

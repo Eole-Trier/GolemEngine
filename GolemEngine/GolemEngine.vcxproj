@@ -46,6 +46,7 @@
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\Windows\viewport.cpp" />
     <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
+    <ClCompile Include="Source\Wrappers\openglWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -78,6 +79,7 @@
     <ClInclude Include="Include\UI\Windows\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\Wrappers\openglWrapper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
