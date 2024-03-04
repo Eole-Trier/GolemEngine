@@ -4,6 +4,7 @@
 
 #include "dll.h"
 #include "Viewport/scene.h"
+#include "UI/Windows/viewport.h"
 
 struct GLFWwindow;
 class EngineUi;

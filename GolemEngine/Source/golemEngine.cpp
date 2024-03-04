@@ -7,7 +7,6 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
 #include "UI/engineUi.h"
 
 
@@ -147,7 +146,7 @@ void GolemEngine::Update()
 #pragma region DockSpace;
         m_engineUi->BeginDockSpace();
         
-        ProcessInput();
+         ProcessInput();
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

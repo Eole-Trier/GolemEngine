@@ -4,9 +4,11 @@
 
 class GolemEngine;
 
+
 class Viewport
 {
 public:
+
 	Viewport();
 	~Viewport();
 

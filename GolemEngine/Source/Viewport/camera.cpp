@@ -1,5 +1,9 @@
 #include <MathsLib/utils.h>
 #include "Viewport/camera.h"
+#include "UI/engineUi.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 
 Camera* Camera::instance;
@@ -81,18 +85,21 @@ void Camera::ProcessMouseScroll(float _yoffset)
 
 void Camera::ProcessInput(GLFWwindow* window, float _deltaTime)
 {
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::UP, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
+    if (ImGui::IsWindowFocused())
+    {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::UP, _deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+            ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
+    }
 }
 
 void Camera::UpdateCameraVectors()
