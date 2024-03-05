@@ -8,7 +8,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "UI/engineUi.h"
-
+#include "UI/Windows/viewport.h"
 
 
 GolemEngine::GolemEngine()
@@ -24,8 +24,7 @@ GolemEngine::GolemEngine()
     m_screenWidth = desktop.right;
     m_screenHeight = desktop.bottom;
 
-    m_scene->width = m_screenWidth;
-    m_scene->height = m_screenHeight;
+    m_engineUi->SetViewport(m_screenWidth, m_screenHeight);
 }
 
 GolemEngine::~GolemEngine() {}
@@ -51,7 +50,7 @@ void GolemEngine::InitWindow()
    //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
     glfwMakeContextCurrent(m_window);
-
+   
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -156,7 +155,7 @@ void GolemEngine::Update()
         // Clear previous scene buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // Render the scene to the framebuffer
-        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_deltaTime);
+        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
         // Go back to original framebuffer
         m_scene->UnbindFramebuffer();
         

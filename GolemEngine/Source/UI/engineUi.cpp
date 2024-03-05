@@ -97,10 +97,20 @@ void EngineUi::EndDockSpace()
 
 void EngineUi::UpdateLoop()
 {
-    
     m_basicActors->Update();
     m_fileBrowser->Update();
     m_viewport->Update(m_golemEngine);
     m_worldActors->Update();
     m_debugWindow->Update(m_golemEngine);
+}
+
+void EngineUi::SetViewport(int _width, int _height)
+{
+    m_viewport->width = _width;
+    m_viewport->height = _height;
+}
+
+Viewport* EngineUi::GetViewport()
+{
+    return m_viewport;
 }
