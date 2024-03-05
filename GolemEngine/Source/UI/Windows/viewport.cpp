@@ -9,16 +9,15 @@
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 
-float Viewport::m_lastX = 400;
-float Viewport::m_lastY = 300;
-float Viewport::m_yaw = 0;
-float Viewport::m_pitch = 0;
-bool Viewport::m_firstMouse = true;
 
-
-Viewport::Viewport(GolemEngine* _golemEngine)
+Viewport::Viewport()
 {
-   
+    m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
+    m_lastX = 0;
+    m_lastY = 0;
+    m_yaw = 0;
+    m_pitch = 0;
+    m_firstMouse = true;
 }
 
 Viewport::~Viewport() {}
@@ -29,21 +28,32 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Begin("Viewport");
     ImGui::Image((ImTextureID)_golemEngine->GetScene()->textureId, ImGui::GetContentRegionAvail());
-    _golemEngine->GetScene()->camera.ProcessInput(_golemEngine->GetGLFWWindow(), _golemEngine->GetDeltaTime());
-    MouseCallback(_golemEngine->GetGLFWWindow(), ImGui::GetCursorPosX(), ImGui::GetCursorPosX());
+
+    // Keyboard input
+    m_camera->ProcessInput(_golemEngine->GetGLFWWindow(), _golemEngine->GetDeltaTime());
+
+    // Mouse scroll
+
+
+    // Mouse movement
+    glfwGetCursorPos(_golemEngine->GetGLFWWindow(), &m_cursorX, &m_cursorY);
+    if (glfwGetKey(_golemEngine->GetGLFWWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        glfwSetInputMode(_golemEngine->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        MouseCallback(_golemEngine, m_cursorX, -m_cursorY);
+    }
+    else
+    {
+        m_firstMouse = true;
+        glfwSetInputMode(_golemEngine->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
     ImGui::End();
 }
 
-void Viewport::ResizeCallback(GLFWwindow* window, int _width, int _height)
+void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)
 {
-    glViewport(0, 0, _width, _height);
-}
-
-
-void Viewport::MouseCallback(GLFWwindow* _window, double _xposIn, double _yposIn)
-{
-    float xpos = static_cast<float>(_xposIn);
-    float ypos = static_cast<float>(_yposIn);
+    float xpos = (float)(_xposIn);
+    float ypos = (float)(_yposIn);
 
     if (m_firstMouse)
     {
@@ -58,15 +68,15 @@ void Viewport::MouseCallback(GLFWwindow* _window, double _xposIn, double _yposIn
     m_lastX = xpos;
     m_lastY = ypos;
 
-    Camera* const cam = Camera::instance;
-    if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS)
-    {
-        cam->ProcessMouseMovement(xoffset, yoffset);
-    }
+    m_camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
 void Viewport::ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset)
 {
-    Camera* const cam = Camera::instance;
-    cam->ProcessMouseScroll(_yoffset);
+    m_camera->ProcessMouseScroll(_yoffset);
+}
+
+Camera* Viewport::GetCamera()
+{
+    return m_camera;
 }

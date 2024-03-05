@@ -97,7 +97,6 @@ void Camera::ProcessInput(GLFWwindow* window, float _deltaTime)
 
 void Camera::UpdateCameraVectors()
 {
-    Vector3 front;
     front.x = cos(DegToRad(yaw)) * cos(DegToRad(pitch));
     front.y = sin(DegToRad(pitch));
     front.z = sin(DegToRad(yaw)) * cos(DegToRad(pitch));

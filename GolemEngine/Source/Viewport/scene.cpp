@@ -11,7 +11,6 @@
 
 Scene::Scene() 
 {
-    camera = Vector3(0.0f, 0.0f, 3.0f);
 }
 
 void Scene::CreateFramebuffer()
@@ -91,7 +90,7 @@ void Scene::UnbindFramebuffer()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Scene::Update(float _width, float _height, GLFWwindow* _window, float _deltaTime)
+void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime)
 {
   
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -101,7 +100,7 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
 
     viking->Use();
 
-    viking->SetViewPos(camera.position);
+    viking->SetViewPos(_camera->position);
 
     UpdateLights(viking);
 
@@ -115,8 +114,8 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, float _delt
 
     Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
     Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
-    mesh->Draw(_width, _height, camera, model);
-    light->Draw(_width, _height, camera, spherePos);
+    mesh->Draw(_width, _height, _camera, model);
+    light->Draw(_width, _height, _camera, spherePos);
 }
 
 void Scene::InitLights(Shader* shader)

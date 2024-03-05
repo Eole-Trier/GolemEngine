@@ -51,9 +51,7 @@ void GolemEngine::InitWindow()
    //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
     glfwMakeContextCurrent(m_window);
-    glfwSetFramebufferSizeCallback(m_window, m_engineUi->GetViewport()->ResizeCallback);
-    glfwSetCursorPosCallback(m_window, m_engineUi->GetViewport()->MouseCallback);
-    glfwSetScrollCallback(m_window, m_engineUi->GetViewport()->ScrollCallback);
+   
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -158,7 +156,7 @@ void GolemEngine::Update()
         // Clear previous scene buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // Render the scene to the framebuffer
-        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_deltaTime);
+        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
         // Go back to original framebuffer
         m_scene->UnbindFramebuffer();
         

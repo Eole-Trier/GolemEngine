@@ -16,7 +16,7 @@ EngineUi::EngineUi(GolemEngine* _golemEngine)
     : 
     m_golemEngine(_golemEngine),
 	m_basicActors(new BasicActors()),
-	m_viewport(new Viewport(_golemEngine)),
+	m_viewport(new Viewport()),
 	m_fileBrowser(new FileBrowser()),
 	m_worldActors(new WorldActors()),
 	m_debugWindow(new DebugWindow()) 
