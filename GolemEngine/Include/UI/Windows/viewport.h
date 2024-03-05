@@ -4,33 +4,28 @@
 
 struct GLFWindow;
 class GolemEngine;
-class Camera;
 
 class Viewport
 {
 private:
-	Camera* m_camera;
-	double m_cursorX;
-	double m_cursorY;
-	float m_lastX;
-	float m_lastY;
-	float m_yaw;
-	float m_pitch;
-	bool m_firstMouse;
+	static float m_lastX;
+	static float m_lastY;
+	static float m_yaw;
+	static float m_pitch;
+	static bool m_firstMouse;
 
 public:
 	int width, height;
 
 public:
-	Viewport();
+	Viewport(GolemEngine* _golemEngine);
 	~Viewport();
 
 	void Init();
 	void Update(GolemEngine* _golemEngine);
 
-	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
-	void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
-
-	Camera* GetCamera();
+	static void ResizeCallback(GLFWwindow* window, int _width, int _height);
+	static void MouseCallback(GLFWwindow* _window, double _xposIn, double _yposIn);
+	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
 
 };

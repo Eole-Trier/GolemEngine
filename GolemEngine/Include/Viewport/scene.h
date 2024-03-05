@@ -22,6 +22,7 @@ public:
 	unsigned int vao, vbo, rbo;
 	unsigned int fbo;
 	unsigned int textureId;
+	Camera camera;
 	Shader* shad;
 
 public:
@@ -32,7 +33,7 @@ public:
 	void CreateFramebuffer();
 	void RescaleFramebuffer(float _width, float _height);
 	void Init();
-	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime);
+	void Update(float _width, float _height, GLFWwindow* _window, float _deltaTime);
 
 	void InitLights(Shader* shader);
 	void UpdateLights(Shader* shader);
