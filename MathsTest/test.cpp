@@ -1,18 +1,14 @@
 #include "pch.h"
+#include "mathslib.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
+#include "quaternion.h"
 #include "utils.h"
 
+
 #define EPSILON 0.01f
-
-
-TEST(TestCaseName, TestName)
-{
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
 
 #pragma region Utils
 
@@ -514,3 +510,50 @@ TEST(Matrix4, Operator_Not_Equal_Matrix4)
 }
 
 #pragma endregion Matrix4
+
+#pragma region Quaternion
+
+TEST(Quaternion, Constructor)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(1.0f, test1.r);
+	EXPECT_EQ(Vector3(1.0f, 2.0f, 3.0f), test1.i);
+}
+
+TEST(Quaternion, Norm)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_NEAR(3.87f, test1.Norm(), EPSILON);
+}
+
+TEST(Quaternion, Conjugate)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(Quaternion(1.0f, Vector3(-1.0f, -2.0f, -3.0f)), test1.Conjugate());
+}
+
+TEST(Quaternion, Inverse)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	test1 = test1.Inverse();
+	Quaternion result = Quaternion(0.067f, Vector3(-0.067f, -0.133f, -0.2f));
+	EXPECT_NEAR(test1.r, result.r, EPSILON);
+	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
+	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
+	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+}
+
+TEST(Quaternion, Operator_Equal_Quaternion)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(test1, test1);
+}
+
+TEST(Quaternion, Operator_Not_Equal_Quaternion)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	Quaternion test2 = Quaternion(2.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_NE(test1, test2);
+}
+#pragma endregion Quaternion
+
