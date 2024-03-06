@@ -9,12 +9,10 @@
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 
-
-
+Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
 Viewport::Viewport()
 {
-    m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
     m_lastX = 0;
     m_lastY = 0;
     m_yaw = 0;
@@ -36,6 +34,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
     {
         m_camera->ProcessInput(_golemEngine->GetGLFWWindow(), _golemEngine->GetDeltaTime());
         MouseMovement(_golemEngine);
+        glfwSetScrollCallback(_golemEngine->GetGLFWWindow(), ScrollCallback);
     }
 
     ImGui::End();

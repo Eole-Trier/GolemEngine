@@ -38,6 +38,8 @@ public:
     float yaw;
     float pitch;
     float movementSpeed;
+    float minSpeed;
+    float maxSpeed;
     float mouseSensitivity;
     float zoom;
     float zNear;

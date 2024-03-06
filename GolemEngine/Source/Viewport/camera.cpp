@@ -14,6 +14,8 @@ Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
 {
     zNear = 0.1f;
     zFar = 1000.f;
+    minSpeed = 1.0f;
+    maxSpeed = 100.0f;
     position = _position;
     worldUp = _up;
     yaw = _yaw;
@@ -81,11 +83,9 @@ void Camera::ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _con
 
 void Camera::ProcessMouseScroll(float _yoffset)
 {
-    zoom -= (float)_yoffset;
-    if (zoom < 1.0f)
-        zoom = 1.0f;
-    if (zoom > 89.1f)
-        zoom = 89.1f;
+    if (movementSpeed + _yoffset > maxSpeed || movementSpeed + _yoffset < minSpeed)
+        return;
+    movementSpeed += (float)_yoffset;
 }
 
 void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
