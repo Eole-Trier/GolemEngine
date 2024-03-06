@@ -14,6 +14,11 @@ GraphicWrapper* GraphicWrapper::GetInstance()
     return m_instancePtr;
 }
 
+void GraphicWrapper::EnableDepth()
+{
+    glEnable(GL_DEPTH_TEST);
+}
+
 void GraphicWrapper::CreateFramebuffer(int _width, int _height)
 {
     // Create framebuffer

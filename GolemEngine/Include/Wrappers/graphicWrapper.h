@@ -22,6 +22,8 @@ private:
 	GraphicWrapper() {}
 
 public:
+	// Enable a feature of OpenGl
+	void EnableDepth();
 	// Returns instance of the class
 	static GraphicWrapper* GetInstance();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 

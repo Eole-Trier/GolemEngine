@@ -25,7 +25,7 @@ Viewport::~Viewport() {}
 
 void Viewport::Update(GolemEngine* _golemEngine)
 {
-    glEnable(GL_DEPTH_TEST);
+    GraphicWrapper::GetInstance()->EnableDepth();
 
     ImGui::Begin("Viewport");
 
