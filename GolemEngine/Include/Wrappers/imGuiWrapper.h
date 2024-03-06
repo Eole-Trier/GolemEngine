@@ -13,11 +13,10 @@ public:
 	void NewFrameImGui();
 
 public:
-	void EditorStyle();
-	void CustomRendrering();
-
+	void Dock();
 	void LoopImGui();
-	
+	void EditorStyle();
+
 private:
 	ImGuiWrapper();
 	~ImGuiWrapper();

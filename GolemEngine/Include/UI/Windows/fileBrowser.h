@@ -1,12 +1,9 @@
 #pragma once
-
+#include "UI/engineUi.h"
 struct GLFWwindow;
 
-class FileBrowser
+class FileBrowser : Window
 {
-public:
-	GLFWwindow* window;
-
 public:
 	FileBrowser();
 	~FileBrowser();

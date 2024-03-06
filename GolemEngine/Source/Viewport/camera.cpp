@@ -81,17 +81,17 @@ void Camera::ProcessMouseScroll(float _yoffset)
 
 void Camera::ProcessInput(GLFWwindow* window, float _deltaTime)
 {
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::UP, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS && isMoved)
         ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
 }
 

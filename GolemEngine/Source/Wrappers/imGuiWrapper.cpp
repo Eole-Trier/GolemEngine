@@ -60,103 +60,88 @@ void ImGuiWrapper::EditorStyle()
     style.ScrollbarRounding = 0;
 }
 
-void ImGuiWrapper::CustomRendrering()
+void ImGuiWrapper::Dock()
 {
-    if (ImGui::BeginTabBar("##TabBar"))
+    static bool dockspaceOpen = true;
+    static bool optFullscreenPersistant = true;
+    const bool optFullscreen = optFullscreenPersistant;
+
+    ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
+    if (optFullscreen)
     {
-        if (ImGui::BeginTabItem("Canvas"))
-        {
-            static ImVector<ImVec2> points;
-            static ImVec2 scrolling(0.0f, 0.0f);
-            static bool opt_enable_grid = true;
-            static bool opt_enable_context_menu = true;
-            static bool adding_line = false;
+        dockspaceFlags |= ImGuiDockNodeFlags_PassthruCentralNode;
+    }
 
-            ImGui::Checkbox("Enable grid", &opt_enable_grid);
-            ImGui::Checkbox("Enable context menu", &opt_enable_context_menu);
-            ImGui::Text("Mouse Left: drag to add lines,\nMouse Right: drag to scroll, click for context menu.");
+    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    if (optFullscreen)
+    {
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        ImGui::SetNextWindowSize(viewport->WorkSize);
+        ImGui::SetNextWindowViewport(viewport->ID);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
 
-            ImVec2 canvas_p0 = ImGui::GetCursorScreenPos();     
-            ImVec2 canvas_sz = ImGui::GetContentRegionAvail();   
-            if (canvas_sz.x < 50.0f) canvas_sz.x = 50.0f;
-            if (canvas_sz.y < 50.0f) canvas_sz.y = 50.0f;
-            ImVec2 canvas_p1 = ImVec2(canvas_p0.x + canvas_sz.x, canvas_p0.y + canvas_sz.y);
+        windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+        windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
+    }
 
-            // Draw border and background color
-            ImGuiIO& io = ImGui::GetIO();
-            ImDrawList* draw_list = ImGui::GetWindowDrawList();
-            draw_list->AddRectFilled(canvas_p0, canvas_p1, IM_COL32(50, 50, 50, 255));
-            draw_list->AddRect(canvas_p0, canvas_p1, IM_COL32(255, 255, 255, 255));
+    ImGui::Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
 
-            // This will catch our interactions
-            ImGui::InvisibleButton("canvas", canvas_sz, ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight);
-            const bool is_hovered = ImGui::IsItemHovered(); // Hovered
-            const bool is_active = ImGui::IsItemActive();   // Held
-            const ImVec2 origin(canvas_p0.x + scrolling.x, canvas_p0.y + scrolling.y); // Lock scrolled origin
-            const ImVec2 mouse_pos_in_canvas(io.MousePos.x - origin.x, io.MousePos.y - origin.y);
+    ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
-            // Add first and second point
-            if (is_hovered && !adding_line && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-            {
-                points.push_back(mouse_pos_in_canvas);
-                points.push_back(mouse_pos_in_canvas);
-                adding_line = true;
-            }
-            if (adding_line)
-            {
-                points.back() = mouse_pos_in_canvas;
-                if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
-                    adding_line = false;
-            }
+    static bool init = true;
+    if (init)
+    {
+        ImGuiID dock_id_left, dock_id_right;
+        init = false;
+        ImGui::DockBuilderRemoveNode(dockspace_id);
+        ImGui::DockBuilderAddNode(dockspace_id);
+        ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-            const float mouse_threshold_for_pan = opt_enable_context_menu ? -1.0f : 0.0f;
-            if (is_active && ImGui::IsMouseDragging(ImGuiMouseButton_Right, mouse_threshold_for_pan))
-            {
-                scrolling.x += io.MouseDelta.x;
-                scrolling.y += io.MouseDelta.y;
-            }
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
-            ImVec2 drag_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
-            if (opt_enable_context_menu && drag_delta.x == 0.0f && drag_delta.y == 0.0f)
-                ImGui::OpenPopupOnItemClick("context", ImGuiPopupFlags_MouseButtonRight);
-            if (ImGui::BeginPopup("context"))
-            {
-                if (adding_line)
-                    points.resize(points.size() - 2);
-                adding_line = false;
-                if (ImGui::MenuItem("Remove one", NULL, false, points.Size > 0)) { points.resize(points.size() - 2); }
-                if (ImGui::MenuItem("Remove all", NULL, false, points.Size > 0)) { points.clear(); }
-                ImGui::EndPopup();
-            }
+        ImGuiID dock_id_topRight, dock_id_bottomRight;
+        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
 
-            // Draw grid + all lines in the canvas
-            draw_list->PushClipRect(canvas_p0, canvas_p1, true);
-            if (opt_enable_grid)
-            {
-                const float GRID_STEP = 64.0f;
-                for (float x = fmodf(scrolling.x, GRID_STEP); x < canvas_sz.x; x += GRID_STEP)
-                    draw_list->AddLine(ImVec2(canvas_p0.x + x, canvas_p0.y), ImVec2(canvas_p0.x + x, canvas_p1.y), IM_COL32(200, 200, 200, 40));
-                for (float y = fmodf(scrolling.y, GRID_STEP); y < canvas_sz.y; y += GRID_STEP)
-                    draw_list->AddLine(ImVec2(canvas_p0.x, canvas_p0.y + y), ImVec2(canvas_p1.x, canvas_p0.y + y), IM_COL32(200, 200, 200, 40));
-            }
-            for (int n = 0; n < points.Size; n += 2)
-                draw_list->AddLine(ImVec2(origin.x + points[n].x, origin.y + points[n].y), ImVec2(origin.x + points[n + 1].x, origin.y + points[n + 1].y), IM_COL32(255, 255, 0, 255), 2.0f);
-            draw_list->PopClipRect();
+        ImGuiID dock_id_topLeft, dock_id_bottomLeft;
+        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
-            ImGui::EndTabItem();
-        }
+        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
+        ImGui::DockBuilderDockWindow("Viewport", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("World_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Debug", dock_id_bottomRight);
 
-        ImGui::EndTabBar();
+        ImGui::DockBuilderFinish(dockspace_id);
+    }
+
+    if (optFullscreen)
+    {
+        ImGui::PopStyleVar(3);
     }
 }
 
 void ImGuiWrapper::LoopImGui()
 {
+    ImGuiIO& io = ImGui::GetIO();
     Camera* camera = Camera::instance;
     ImGui::Begin("Camera");
     ImGui::SliderFloat("Camera Move Speed : ",  &camera->movementSpeed, 0, 30.0f, 0);
     ImGui::SliderFloat("Camera Move Sensitivity : ", &camera->mouseSensitivity, 0, 2.0f, 0);
-    CustomRendrering();
     ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup_current_context);
+    }
 }
 

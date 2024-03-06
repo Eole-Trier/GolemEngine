@@ -1,6 +1,9 @@
 #pragma once
 
 #include "dll.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "Wrappers/imGuiWrapper.h"
 
 class BasicActors;
 class Viewport;
@@ -8,6 +11,12 @@ class FileBrowser;
 class WorldActors;
 class DebugWindow;
 class GolemEngine;
+
+class GOLEM_ENGINE_API Window
+{
+public:
+	GLFWwindow* window;
+};
 
 class GOLEM_ENGINE_API EngineUi
 {
@@ -19,6 +28,7 @@ private:
 	DebugWindow* m_debugWindow = nullptr;
 	BasicActors* m_basicActors = nullptr;
 
+	ImGuiWrapper* m_imGuiWrapper = &ImGuiWrapper::GetInstance();
 public:
 	EngineUi(GolemEngine* _golemEngine);
 	~EngineUi();

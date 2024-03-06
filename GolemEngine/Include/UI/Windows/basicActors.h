@@ -1,11 +1,10 @@
 #pragma once
-
+#include "UI/engineUi.h"
 struct GLFWwindow;
 
-class BasicActors
+class BasicActors : Window
 {
 public:
-	GLFWwindow* window;
 	int a = 1;
 
 public:

@@ -43,6 +43,7 @@ public:
     float near = 0.1f;
     float far = 1000.f;
 
+    bool isMoved = false;
 private:
     void UpdateCameraVectors();
 

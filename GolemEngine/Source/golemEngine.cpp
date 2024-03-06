@@ -114,13 +114,12 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    ImGuiIO& io = ImGui::GetIO();
     glViewport(0, 0, m_screenWidth, m_screenHeight);
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();
-
         UpdateDeltaTime();
+        ProcessInput();
 
         m_imGuiWrapper->NewFrameImGui();
         m_imGuiWrapper->EditorStyle();
@@ -129,7 +128,6 @@ void GolemEngine::Update()
 
         m_engineUi->BeginDockSpace();
         
-        ProcessInput();
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -143,25 +141,12 @@ void GolemEngine::Update()
         // Go back to original framebuffer
         m_scene->UnbindFramebuffer();
 
-
         m_engineUi->EndDockSpace();
 
-        #pragma enderegion DockSpace
+        #pragma endregion DockSpace
 
         m_imGuiWrapper->LoopImGui();
-
-        ImGui::Render();
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
-
+        
         glfwSwapBuffers(m_window);
     }
 }

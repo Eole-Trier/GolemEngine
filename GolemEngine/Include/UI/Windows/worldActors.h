@@ -1,12 +1,9 @@
 #pragma once
-
+#include "UI/engineUi.h"
 struct GLFWwindow;
 
-class WorldActors
+class WorldActors : Window
 {
-public:
-	GLFWwindow* window;
-
 public:
 	WorldActors();
 	~WorldActors();
