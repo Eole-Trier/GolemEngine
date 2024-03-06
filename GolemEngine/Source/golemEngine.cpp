@@ -124,6 +124,7 @@ void GolemEngine::Update()
 
         m_imGuiWrapper->NewFrameImGui();
         m_imGuiWrapper->EditorStyle();
+
         #pragma region DockSpace;
 
         m_engineUi->BeginDockSpace();
@@ -142,9 +143,12 @@ void GolemEngine::Update()
         // Go back to original framebuffer
         m_scene->UnbindFramebuffer();
 
+
         m_engineUi->EndDockSpace();
 
         #pragma enderegion DockSpace
+
+        m_imGuiWrapper->LoopImGui();
 
         ImGui::Render();
 

@@ -34,6 +34,7 @@ public:
     Vector3 up;
     Vector3 right;
     Vector3 worldUp;
+
     float yaw;
     float pitch;
     float movementSpeed;

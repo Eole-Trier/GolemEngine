@@ -57,27 +57,27 @@ void EngineUi::BeginDockSpace()
     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
     static bool init = true;
-    ImGuiID dock_id_left, dock_id_right;
     if (init)
     {
+        ImGuiID dock_id_left, dock_id_right;
         init = false;
         ImGui::DockBuilderRemoveNode(dockspace_id);
         ImGui::DockBuilderAddNode(dockspace_id);
         ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.5f, &dock_id_left, &dock_id_right);
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
         ImGuiID dock_id_topRight, dock_id_bottomRight;
-        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.5f, &dock_id_topRight, &dock_id_bottomRight);
+        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
 
         ImGuiID dock_id_topLeft, dock_id_bottomLeft;
-        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.5f, &dock_id_topLeft, &dock_id_bottomLeft);
+        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
-        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topLeft);
-        ImGui::DockBuilderDockWindow("File_Browser", dock_id_topRight);
-        ImGui::DockBuilderDockWindow("Viewport", dock_id_bottomRight);
-        ImGui::DockBuilderDockWindow("World_Actors", dock_id_bottomLeft);
-        ImGui::DockBuilderDockWindow("Debug", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
+        ImGui::DockBuilderDockWindow("Viewport", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("World_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Debug", dock_id_bottomRight);
 
         ImGui::DockBuilderFinish(dockspace_id);
     }

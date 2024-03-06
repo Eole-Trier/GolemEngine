@@ -14,6 +14,7 @@ public:
 
 public:
 	void EditorStyle();
+	void CustomRendrering();
 
 	void LoopImGui();
 	
