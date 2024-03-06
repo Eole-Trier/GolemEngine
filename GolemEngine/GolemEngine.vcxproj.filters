@@ -28,7 +28,7 @@
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
-    <ClCompile Include="Source\Wrappers\imGuiWrapper.cpp" />
+    <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +62,7 @@
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\engineUi.h" />
     <ClInclude Include="Include\Resource\tools.h" />
-    <ClInclude Include="Include\Wrappers\imGuiWrapper.h" />
+    <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />

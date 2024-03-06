@@ -1,9 +1,6 @@
 #include "UI/engineUi.h"
 
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
 #include "UI/Windows/basicActors.h"
 #include "UI/Windows/viewport.h"
 #include "UI/Windows/fileBrowser.h"
@@ -11,6 +8,8 @@
 #include "UI/Windows/debugWindow.h"
 #include "golemEngine.h"
 #include <iostream>
+#include "Wrappers/interfaceWrapper.h"
+
 
 EngineUi::EngineUi(GolemEngine* _golemEngine) 
     : 
@@ -26,7 +25,7 @@ EngineUi::~EngineUi() {}
 
 void EngineUi::BeginDockSpace()
 {
-    m_imGuiWrapper->Dock();
+    InterfaceWrapper::GetInstance()->Dock();
 
     UpdateLoop();
 }
@@ -40,7 +39,7 @@ void EngineUi::UpdateLoop()
 {
     m_basicActors->Update();
     m_fileBrowser->Update();
-    m_viewport->Update(m_golemEngine);
     m_worldActors->Update();
+    m_viewport->Update(m_golemEngine);
     m_debugWindow->Update(m_golemEngine);
 }

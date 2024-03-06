@@ -9,15 +9,14 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "UI/engineUi.h"
+#include "Wrappers/interfaceWrapper.h"
 
 
 GolemEngine::GolemEngine()
 	: 
     m_name("Golem Engine"),
     m_scene(new Scene()),
-    m_engineUi(new EngineUi(this)),
-    m_imGuiWrapper(&ImGuiWrapper::GetInstance())
-
+    m_engineUi(new EngineUi(this))
 {
     // Get screen dimensions
     RECT desktop;
@@ -60,7 +59,7 @@ void GolemEngine::InitWindow()
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
-    m_imGuiWrapper->InitImGui(m_window);
+    InterfaceWrapper::GetInstance()->InitImGui(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -121,15 +120,14 @@ void GolemEngine::Update()
         UpdateDeltaTime();
         ProcessInput();
 
-        m_imGuiWrapper->NewFrameImGui();
-        m_imGuiWrapper->EditorStyle();
+        InterfaceWrapper::GetInstance()->NewFrameImGui();
+        InterfaceWrapper::GetInstance()->EditorStyle();
 
-        #pragma region DockSpace;
+#pragma region DockSpace;
 
         m_engineUi->BeginDockSpace();
-        
 
-        ImVec2 pos = ImGui::GetCursorScreenPos();
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Bind next framebuffer to the scene buffer
@@ -143,9 +141,9 @@ void GolemEngine::Update()
 
         m_engineUi->EndDockSpace();
 
-        #pragma endregion DockSpace
+#pragma endregion DockSpace
 
-        m_imGuiWrapper->LoopImGui();
+        InterfaceWrapper::GetInstance()->LoopImGui();
         
         glfwSwapBuffers(m_window);
     }

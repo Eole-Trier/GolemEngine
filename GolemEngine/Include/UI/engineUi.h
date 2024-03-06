@@ -3,7 +3,6 @@
 #include "dll.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Wrappers/imGuiWrapper.h"
 
 class BasicActors;
 class Viewport;
@@ -28,7 +27,6 @@ private:
 	DebugWindow* m_debugWindow = nullptr;
 	BasicActors* m_basicActors = nullptr;
 
-	ImGuiWrapper* m_imGuiWrapper = &ImGuiWrapper::GetInstance();
 public:
 	EngineUi(GolemEngine* _golemEngine);
 	~EngineUi();

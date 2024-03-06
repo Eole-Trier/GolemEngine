@@ -1,4 +1,4 @@
-#include "Wrappers/imGuiWrapper.h"
+#include "Wrappers/interfaceWrapper.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -8,17 +8,18 @@
 
 #include "Viewport/camera.h"
 
-ImGuiWrapper& ImGuiWrapper::GetInstance()
+InterfaceWrapper* InterfaceWrapper::m_instancePtr = nullptr;
+
+InterfaceWrapper* InterfaceWrapper::GetInstance()
 {
-    static ImGuiWrapper imGuiWrapper;
-    return imGuiWrapper;
+    return m_instancePtr;
 }
 
-ImGuiWrapper::ImGuiWrapper() {}
+InterfaceWrapper::InterfaceWrapper() {}
 
-ImGuiWrapper::~ImGuiWrapper() {}
+InterfaceWrapper::~InterfaceWrapper() {}
 
-void ImGuiWrapper::InitImGui(GLFWwindow* _window)
+void InterfaceWrapper::InitImGui(GLFWwindow* _window)
 {
     // Setup Imgui context
     IMGUI_CHECKVERSION();
@@ -42,14 +43,14 @@ void ImGuiWrapper::InitImGui(GLFWwindow* _window)
     ImGui_ImplOpenGL3_Init("#version 460");
 }
 
-void ImGuiWrapper::NewFrameImGui()
+void InterfaceWrapper::NewFrameImGui()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void ImGuiWrapper::EditorStyle()
+void InterfaceWrapper::EditorStyle()
 {
     ImGuiStyle& style = ImGui::GetStyle();
 
@@ -60,7 +61,7 @@ void ImGuiWrapper::EditorStyle()
     style.ScrollbarRounding = 0;
 }
 
-void ImGuiWrapper::Dock()
+void InterfaceWrapper::Dock()
 {
     static bool dockspaceOpen = true;
     static bool optFullscreenPersistant = true;
@@ -124,7 +125,7 @@ void ImGuiWrapper::Dock()
     }
 }
 
-void ImGuiWrapper::LoopImGui()
+void InterfaceWrapper::LoopImGui()
 {
     ImGuiIO& io = ImGui::GetIO();
     Camera* camera = Camera::instance;
