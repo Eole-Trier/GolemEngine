@@ -12,21 +12,21 @@ class EngineUi;
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
-	GLFWwindow* m_window = nullptr;
+	float m_deltaTime;
 	std::string m_name;
 	int m_screenWidth, m_screenHeight;
 
+private:
 	Scene* m_scene = nullptr;
+	GLFWwindow* m_window = nullptr;
 	EngineUi* m_engineUi = nullptr;
-
-	float m_deltaTime;
 
 public:
 	GolemEngine();
 
+	void Init();
 	void InitWindow();
 	void InitScene();
-	void Init();
 	void UpdateDeltaTime();
 	void Update();
 	void ProcessInput();

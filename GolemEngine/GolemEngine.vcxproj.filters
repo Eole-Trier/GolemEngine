@@ -29,6 +29,7 @@
     <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
+    <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -62,5 +63,6 @@
     <ClInclude Include="Include\UI\engineUi.h" />
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
+    <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
   </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@
     <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
@@ -46,11 +47,17 @@
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\Windows\viewport.cpp" />
     <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
+    <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="External\imgui\imgui_internal.h" />
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
@@ -80,6 +87,7 @@
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
+    <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -5,6 +5,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "UI/engineUi.h"
+#include "Wrappers/interfaceWrapper.h"
 #include "Wrappers/graphicWrapper.h"
 #include "vector4.h"
 
@@ -52,26 +53,7 @@ void GolemEngine::InitWindow()
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
-    // Setup Imgui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-    // Setup style
-    ImGui::StyleColorsDark();
-
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
-
-    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-    ImGui_ImplOpenGL3_Init("#version 460");
+    InterfaceWrapper::GetInstance()->InitImGui(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -123,24 +105,22 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    ImGuiIO& io = ImGui::GetIO();
     GraphicWrapper::GetInstance()->SetViewport(0, 0, m_screenWidth, m_screenHeight);
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();
-
         UpdateDeltaTime();
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-#pragma region DockSpace;
-        m_engineUi->BeginDockSpace();
-
         ProcessInput();
 
-        ImVec2 pos = ImGui::GetCursorScreenPos();
+        InterfaceWrapper::GetInstance()->NewFrameImGui();
+        InterfaceWrapper::GetInstance()->EditorStyle();
+
+#pragma region DockSpace;
+
+        m_engineUi->BeginDockSpace();
+
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Bind next framebuffer to the scene buffer
         GraphicWrapper::GetInstance()->BindFramebuffer();
@@ -153,20 +133,11 @@ void GolemEngine::Update()
         GraphicWrapper::GetInstance()->UnbindFramebuffer();
         
         m_engineUi->EndDockSpace();
-#pragma enderegion DockSpace
 
-        ImGui::Render();
+#pragma endregion DockSpace
 
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
-
+        InterfaceWrapper::GetInstance()->LoopImGui();
+        
         glfwSwapBuffers(m_window);
     }
 }

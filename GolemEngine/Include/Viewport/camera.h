@@ -35,6 +35,7 @@ public:
     Vector3 up;
     Vector3 right;
     Vector3 worldUp;
+
     float yaw;
     float pitch;
     float movementSpeed;
@@ -45,6 +46,7 @@ public:
     float zNear;
     float zFar;
 
+    bool isMoved = false;
 private:
     void UpdateCameraVectors();
 

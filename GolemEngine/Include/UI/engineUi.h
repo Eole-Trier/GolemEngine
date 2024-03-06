@@ -1,6 +1,8 @@
 #pragma once
 
 #include "dll.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 class BasicActors;
 class Viewport;
@@ -8,6 +10,12 @@ class FileBrowser;
 class WorldActors;
 class DebugWindow;
 class GolemEngine;
+
+class GOLEM_ENGINE_API Window
+{
+public:
+	GLFWwindow* window;
+};
 
 class GOLEM_ENGINE_API EngineUi
 {
