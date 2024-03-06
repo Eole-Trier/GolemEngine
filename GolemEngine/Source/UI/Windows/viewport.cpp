@@ -9,6 +9,7 @@
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
+#include "Wrappers/interfaceWrapper.h"
 
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
@@ -27,7 +28,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     glEnable(GL_DEPTH_TEST);
 
-    ImGui::Begin("Viewport");
+    InterfaceWrapper::GetInstance()->Begin("Viewport");
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetInstance()->GetTextureId(), ImGui::GetContentRegionAvail());
 
@@ -38,7 +39,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
         glfwSetScrollCallback(_golemEngine->GetWindow(), ScrollCallback);
     }
 
-    ImGui::End();
+    InterfaceWrapper::GetInstance()->End();
 }
 
 void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)
