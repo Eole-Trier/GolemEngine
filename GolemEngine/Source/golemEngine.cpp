@@ -11,12 +11,13 @@
 #include "UI/engineUi.h"
 
 
-
 GolemEngine::GolemEngine()
 	: 
     m_name("Golem Engine"),
     m_scene(new Scene()),
-    m_engineUi(new EngineUi(this))
+    m_engineUi(new EngineUi(this)),
+    m_imGuiWrapper(&ImGuiWrapper::GetInstance())
+
 {
     // Get screen dimensions
     RECT desktop;
@@ -59,26 +60,7 @@ void GolemEngine::InitWindow()
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
-    // Setup Imgui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-    // Setup style
-    ImGui::StyleColorsDark();
-
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
-
-    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-    ImGui_ImplOpenGL3_Init("#version 460");
+    m_imGuiWrapper->InitImGui(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -140,11 +122,10 @@ void GolemEngine::Update()
 
         UpdateDeltaTime();
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        m_imGuiWrapper->NewFrameImGui();
+        m_imGuiWrapper->EditorStyle();
+        #pragma region DockSpace;
 
-#pragma region DockSpace;
         m_engineUi->BeginDockSpace();
         
         ProcessInput();
@@ -160,9 +141,10 @@ void GolemEngine::Update()
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_deltaTime);
         // Go back to original framebuffer
         m_scene->UnbindFramebuffer();
-        
+
         m_engineUi->EndDockSpace();
-#pragma enderegion DockSpace
+
+        #pragma enderegion DockSpace
 
         ImGui::Render();
 

@@ -12,12 +12,12 @@ class GolemEngine;
 class GOLEM_ENGINE_API EngineUi
 {
 private:
-	BasicActors* m_basicActors = nullptr;
 	Viewport* m_viewport = nullptr;
-	FileBrowser* m_fileBrowser = nullptr;
 	WorldActors* m_worldActors= nullptr;
-	DebugWindow* m_debugWindow = nullptr;
 	GolemEngine* m_golemEngine= nullptr;
+	FileBrowser* m_fileBrowser = nullptr;
+	DebugWindow* m_debugWindow = nullptr;
+	BasicActors* m_basicActors = nullptr;
 
 public:
 	EngineUi(GolemEngine* _golemEngine);

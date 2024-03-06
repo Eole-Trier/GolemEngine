@@ -15,8 +15,8 @@
 EngineUi::EngineUi(GolemEngine* _golemEngine) 
     : 
     m_golemEngine(_golemEngine),
-	m_basicActors(new BasicActors()),
 	m_viewport(new Viewport()),
+	m_basicActors(new BasicActors()),
 	m_fileBrowser(new FileBrowser()),
 	m_worldActors(new WorldActors()),
 	m_debugWindow(new DebugWindow()) 
@@ -97,7 +97,6 @@ void EngineUi::EndDockSpace()
 
 void EngineUi::UpdateLoop()
 {
-    
     m_basicActors->Update();
     m_fileBrowser->Update();
     m_viewport->Update(m_golemEngine);
