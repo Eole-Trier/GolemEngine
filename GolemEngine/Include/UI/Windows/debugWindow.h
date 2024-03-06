@@ -5,8 +5,6 @@ class GolemEngine;
 class DebugWindow
 {
 public:
-
-public:
 	DebugWindow();
 	~DebugWindow();
 

@@ -23,20 +23,17 @@ private:
 
 public:
 	GolemEngine();
-	~GolemEngine();
 
 	void InitWindow();
 	void InitScene();
 	void Init();
-
-	Scene* GetScene();
-	GLFWwindow* GetGLFWWindow();
-	float GetDeltaTime();
-	float GetTime();
-
 	void UpdateDeltaTime();
 	void Update();
 	void ProcessInput();
-
 	void Close();
+
+	Scene* GetScene();
+	GLFWwindow* GetWindow();
+	float GetDeltaTime();
+	float GetTime();
 };

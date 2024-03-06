@@ -3,8 +3,6 @@
 class FileBrowser
 {
 public:
-
-public:
 	FileBrowser();
 	~FileBrowser();
 

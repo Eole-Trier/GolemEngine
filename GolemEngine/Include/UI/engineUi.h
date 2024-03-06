@@ -14,9 +14,11 @@ class GOLEM_ENGINE_API EngineUi
 private:
 	BasicActors* m_basicActors = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
-	WorldActors* m_worldActors= nullptr;
+	WorldActors* m_worldActors = nullptr;
 	DebugWindow* m_debugWindow = nullptr;
-	GolemEngine* m_golemEngine= nullptr;
+	GolemEngine* m_golemEngine = nullptr;
+
+	bool m_isFullscreen = false;
 
 public:
 	Viewport* m_viewport = nullptr;
@@ -27,6 +29,8 @@ public:
 	void EndDockSpace();
 	void UpdateLoop();
 
+	bool GetIsFullscreen();
+	void SetIsFullscreen(bool _value);
 	void SetViewport(int _width, int _height);
 	Viewport* GetViewport();
 };

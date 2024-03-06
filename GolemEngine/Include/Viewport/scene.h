@@ -27,16 +27,8 @@ public:
 public:
 	Scene();
 
-	// This function is used to create and bind the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	// The result is that we get a movable viewport in an ImGUI window.
-	void CreateFramebuffer();
-	void RescaleFramebuffer(float _width, float _height);
 	void Init();
 	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime);
-
 	void InitLights();
 	void UpdateLights(Shader* _shader);
-
-	void BindFramebuffer();
-	void UnbindFramebuffer();
 };

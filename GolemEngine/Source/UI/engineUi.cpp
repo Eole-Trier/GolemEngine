@@ -104,6 +104,15 @@ void EngineUi::UpdateLoop()
     m_debugWindow->Update(m_golemEngine);
 }
 
+bool EngineUi::GetIsFullscreen()
+{
+    return m_isFullscreen;
+}
+
+void EngineUi::SetIsFullscreen(bool _value)
+{
+    m_isFullscreen = _value;
+}
 void EngineUi::SetViewport(int _width, int _height)
 {
     m_viewport->width = _width;

@@ -3,9 +3,6 @@
 class BasicActors
 {
 public:
-	int a = 1;
-
-public:
 	BasicActors();
 	~BasicActors();
 
