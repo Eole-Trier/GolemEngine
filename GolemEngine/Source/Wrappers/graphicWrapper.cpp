@@ -1,20 +1,20 @@
-#include "Wrappers/openglWrapper.h"
+#include "Wrappers/graphicWrapper.h"
 
 #include <iostream>
 
 #include "vector4.h"
 
-OpenglWrapper* OpenglWrapper::m_instancePtr = nullptr;
+GraphicWrapper* GraphicWrapper::m_instancePtr = nullptr;
 
-OpenglWrapper* OpenglWrapper::GetInstance()
+GraphicWrapper* GraphicWrapper::GetInstance()
 {
     if (!m_instancePtr) {
-        m_instancePtr = new OpenglWrapper();
+        m_instancePtr = new GraphicWrapper();
     }
     return m_instancePtr;
 }
 
-void OpenglWrapper::CreateFramebuffer(int _width, int _height)
+void GraphicWrapper::CreateFramebuffer(int _width, int _height)
 {
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -35,7 +35,7 @@ void OpenglWrapper::CreateFramebuffer(int _width, int _height)
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
 
     // Check framebuffer completeness
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) 
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
         std::cout << "Framebuffer is not complete." << std::endl;
         glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
@@ -46,7 +46,7 @@ void OpenglWrapper::CreateFramebuffer(int _width, int _height)
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
 }
 
-void OpenglWrapper::RescaleFramebuffer(float _width, float _height)
+void GraphicWrapper::RescaleFramebuffer(float _width, float _height)
 {
     glBindTexture(GL_TEXTURE_2D, m_textureId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
@@ -59,27 +59,32 @@ void OpenglWrapper::RescaleFramebuffer(float _width, float _height)
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
 }
 
-void OpenglWrapper::BindFramebuffer()
+void GraphicWrapper::BindFramebuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 }
 
-void OpenglWrapper::UnbindFramebuffer()
+void GraphicWrapper::UnbindFramebuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void OpenglWrapper::ClearBuffer()
+void GraphicWrapper::ClearBuffer()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenglWrapper::SetBackgroundColor(Vector4 _color)
+void GraphicWrapper::SetBackgroundColor(Vector4 _color)
 {
     glClearColor(_color.x, _color.y, _color.z, _color.w);
 }
 
-unsigned int OpenglWrapper::GetTextureId()
+void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax)
+{
+    glViewport(_xMin, _yMin, _xMax, _yMax);
+}
+
+unsigned int GraphicWrapper::GetTextureId()
 {
     return m_textureId;
 }

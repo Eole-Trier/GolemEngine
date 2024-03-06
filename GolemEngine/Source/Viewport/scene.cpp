@@ -1,8 +1,6 @@
 #include "Viewport/scene.h"
 
 #include <MathsLib/utils.h>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "Resource/Rendering/mesh.h"
 #include "Resource/tools.h"
@@ -47,22 +45,18 @@ void Scene::Init()
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, float _deltaTime)
 {
-
     Shader* viking = m_resourceManager.Get<Shader>("viking_shader");
 
     viking->Use();
-
     viking->SetViewPos(camera.position);
 
     UpdateLights(viking);
-
   
     Matrix4 model = Matrix4::Identity(); 
     Matrix4 spherePos = Matrix4(1, 0, 0, 3,
                                 0, 1, 0, 0, 
                                 0, 0, 1, 0, 
                                 0, 0, 0, 1);
-
 
     Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
     Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");

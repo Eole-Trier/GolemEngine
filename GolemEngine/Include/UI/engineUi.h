@@ -15,9 +15,11 @@ private:
 	BasicActors* m_basicActors = nullptr;
 	Viewport* m_viewport = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
-	WorldActors* m_worldActors= nullptr;
+	WorldActors* m_worldActors = nullptr;
 	DebugWindow* m_debugWindow = nullptr;
-	GolemEngine* m_golemEngine= nullptr;
+	GolemEngine* m_golemEngine = nullptr;
+
+	bool m_isFullscreen = false;
 
 public:
 	EngineUi(GolemEngine* _golemEngine);
@@ -26,4 +28,7 @@ public:
 	void BeginDockSpace();
 	void EndDockSpace();
 	void UpdateLoop();
+
+	bool GetIsFullscreen();
+	void SetIsFullscreen(bool _value);
 };

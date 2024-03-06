@@ -1,7 +1,6 @@
 #include <MathsLib/utils.h>
 #include "Viewport/camera.h"
 
-
 Camera* Camera::instance;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)

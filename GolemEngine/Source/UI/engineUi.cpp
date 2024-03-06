@@ -104,3 +104,13 @@ void EngineUi::UpdateLoop()
     m_worldActors->Update();
     m_debugWindow->Update(m_golemEngine);
 }
+
+bool EngineUi::GetIsFullscreen()
+{
+    return m_isFullscreen;
+}
+
+void EngineUi::SetIsFullscreen(bool _value)
+{
+    m_isFullscreen = _value;
+}

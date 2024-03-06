@@ -7,11 +7,11 @@
 
 class Vector4;
 
-class GOLEM_ENGINE_API OpenglWrapper
+class GOLEM_ENGINE_API GraphicWrapper
 {
 private:
 	// Static pointer which points to the only instance of this class
-	static OpenglWrapper* m_instancePtr;
+	static GraphicWrapper* m_instancePtr;
 
 	unsigned int m_vao, m_vbo, m_rbo, m_fbo;
 	unsigned int m_textureId;
@@ -19,11 +19,11 @@ private:
 
 private:
 	// Private constructor to stop intanciation
-	OpenglWrapper() {}
+	GraphicWrapper() {}
 
 public:
 	// Returns instance of the class
-	static OpenglWrapper* GetInstance();
+	static GraphicWrapper* GetInstance();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	void CreateFramebuffer(int _width, int _height);
 	void RescaleFramebuffer(float _width, float _height);
@@ -36,6 +36,8 @@ public:
 	void ClearBuffer();
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
 	void SetBackgroundColor(Vector4 _color);
+	// Used to set current viewport
+	void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	unsigned int GetTextureId();
