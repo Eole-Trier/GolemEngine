@@ -7,6 +7,7 @@
 
 struct GLFWwindow;
 class EngineUi;
+class OpenglWrapper;
 
 class GOLEM_ENGINE_API GolemEngine
 {
@@ -20,6 +21,8 @@ private:
 
 	float m_deltaTime;
 
+	
+
 public:
 	GolemEngine();
 	~GolemEngine();
@@ -27,12 +30,13 @@ public:
 	void InitWindow();
 	void InitScene();
 	void Init();
-	Scene* GetScene();
-	GLFWwindow* GetGLFWWindow();
 	void UpdateDeltaTime();
-	float GetDeltaTime();
-	float GetTime();
 	void ProcessInput();
 	void Update();
 	void Close();
+
+	Scene* GetScene();
+	GLFWwindow* GetGlfwWindow();
+	float GetDeltaTime();
+	float GetTime();
 };

@@ -2,56 +2,84 @@
 
 #include <iostream>
 
-OpenglWrapper::OpenglWrapper() {}
+#include "vector4.h"
 
-OpenglWrapper::~OpenglWrapper() {} 
+OpenglWrapper* OpenglWrapper::m_instancePtr = nullptr;
 
-GLuint OpenglWrapper::CreateFramebuffer(int _width, int _height)
+OpenglWrapper* OpenglWrapper::GetInstance()
+{
+    if (!m_instancePtr) {
+        m_instancePtr = new OpenglWrapper();
+    }
+    return m_instancePtr;
+}
+
+void OpenglWrapper::CreateFramebuffer(int _width, int _height)
 {
     // Create framebuffer
-    GLuint framebuffer;
-    glGenFramebuffers(1, &framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glGenFramebuffers(1, &m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
     // Create texturebuffer
-    GLuint textureId;
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glGenTextures(1, &m_textureId);
+    glBindTexture(GL_TEXTURE_2D, m_textureId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
 
     // Create renderbuffer
-    GLuint renderbuffer;
-    glGenRenderbuffers(1, &renderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+    glGenRenderbuffers(1, &m_rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderbuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
 
     // Check framebuffer completeness
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) 
     {
         std::cout << "Framebuffer is not complete." << std::endl;
         glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
-        return 0;
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
-
-    return framebuffer;
 }
 
-
-
-void OpenglWrapper::BindFramebuffer(GLuint& _framebuffer)
+void OpenglWrapper::RescaleFramebuffer(float _width, float _height)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+    glBindTexture(GL_TEXTURE_2D, m_textureId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
+
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+}
+
+void OpenglWrapper::BindFramebuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 }
 
 void OpenglWrapper::UnbindFramebuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void OpenglWrapper::ClearBuffer()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void OpenglWrapper::SetBackgroundColor(Vector4 _color)
+{
+    glClearColor(_color.x, _color.y, _color.z, _color.w);
+}
+
+unsigned int OpenglWrapper::GetTextureId()
+{
+    return m_textureId;
 }
