@@ -105,7 +105,6 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    GraphicWrapper::GetInstance()->SetViewport(0, 0, m_screenWidth, m_screenHeight);
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();

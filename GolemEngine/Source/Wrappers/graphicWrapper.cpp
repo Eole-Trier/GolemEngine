@@ -84,11 +84,6 @@ void GraphicWrapper::SetBackgroundColor(Vector4 _color)
     glClearColor(_color.x, _color.y, _color.z, _color.w);
 }
 
-void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax)
-{
-    glViewport(_xMin, _yMin, _xMax, _yMax);
-}
-
 unsigned int GraphicWrapper::GetTextureId()
 {
     return m_textureId;

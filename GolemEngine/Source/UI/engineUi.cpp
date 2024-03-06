@@ -53,11 +53,6 @@ void EngineUi::SetIsFullscreen(bool _value)
 {
     m_isFullscreen = _value;
 }
-void EngineUi::SetViewport(int _width, int _height)
-{
-    m_viewport->width = _width;
-    m_viewport->height = _height;
-}
 
 Viewport* EngineUi::GetViewport()
 {

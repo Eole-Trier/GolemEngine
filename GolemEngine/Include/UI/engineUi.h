@@ -39,6 +39,5 @@ public:
 
 	bool GetIsFullscreen();
 	void SetIsFullscreen(bool _value);
-	void SetViewport(int _width, int _height);
 	Viewport* GetViewport();
 };

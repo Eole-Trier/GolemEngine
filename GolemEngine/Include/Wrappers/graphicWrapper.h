@@ -38,8 +38,6 @@ public:
 	void ClearBuffer();
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
 	void SetBackgroundColor(Vector4 _color);
-	// Used to set current viewport
-	void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	unsigned int GetTextureId();
