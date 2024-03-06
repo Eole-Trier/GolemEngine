@@ -1,11 +1,8 @@
 #pragma once
 
-#include "Viewport/scene.h"
-
-struct GLFWindow;
+struct GLFWwindow;
 class GolemEngine;
 class Camera;
-
 
 class Viewport
 {
@@ -27,12 +24,13 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Init();
 	void Update(GolemEngine* _golemEngine);
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
 	void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
 
 	Camera* GetCamera();
+	void MouseMovement(GolemEngine* _golemEngine);
+
 
 };

@@ -28,12 +28,15 @@ public:
 	void InitWindow();
 	void InitScene();
 	void Init();
+
 	Scene* GetScene();
 	GLFWwindow* GetGLFWWindow();
-	void UpdateDeltaTime();
 	float GetDeltaTime();
 	float GetTime();
-	void ProcessInput();
+
+	void UpdateDeltaTime();
 	void Update();
+	void ProcessInput();
+
 	void Close();
 };

@@ -13,9 +13,9 @@ class GOLEM_ENGINE_API Scene
 {
 private:
 	ResourceManager m_resourceManager;
-	std::vector<DirectionalLight*> dirLights;
-	std::vector<PointLight*> pointLights;
-	std::vector<SpotLight*> spotLights;
+	std::vector<DirectionalLight*> m_dirLights;
+	std::vector<PointLight*> m_pointLights;
+	std::vector<SpotLight*> m_spotLights;
 	unsigned int m_sceneTexture;
 
 public:
@@ -34,8 +34,8 @@ public:
 	void Init();
 	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime);
 
-	void InitLights(Shader* shader);
-	void UpdateLights(Shader* shader);
+	void InitLights();
+	void UpdateLights(Shader* _shader);
 
 	void BindFramebuffer();
 	void UnbindFramebuffer();
