@@ -34,7 +34,6 @@ public:
 	~EngineUi();
 
 	void BeginDockSpace();
-	void EndDockSpace();
 	void UpdateLoop();
 
 	bool GetIsFullscreen();

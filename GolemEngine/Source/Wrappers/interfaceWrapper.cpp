@@ -19,7 +19,7 @@ InterfaceWrapper::InterfaceWrapper() {}
 
 InterfaceWrapper::~InterfaceWrapper() {}
 
-void InterfaceWrapper::InitImGui(GLFWwindow* _window)
+void InterfaceWrapper::Init(GLFWwindow* _window)
 {
     // Setup Imgui context
     IMGUI_CHECKVERSION();
@@ -61,6 +61,21 @@ void InterfaceWrapper::EditorStyle()
     style.ScrollbarRounding = 0;
 }
 
+void InterfaceWrapper::End()
+{
+    ImGui::End();
+}
+
+void InterfaceWrapper::Render()
+{
+    ImGui::Render();
+}
+
+void InterfaceWrapper::Begin(const char* _name)
+{
+    ImGui::Begin(_name);
+}
+
 void InterfaceWrapper::Dock()
 {
     static bool dockspaceOpen = true;
@@ -98,7 +113,6 @@ void InterfaceWrapper::Dock()
     {
         ImGuiID dock_id_left, dock_id_right;
         init = false;
-        ImGui::DockBuilderRemoveNode(dockspace_id);
         ImGui::DockBuilderAddNode(dockspace_id);
         ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
@@ -125,16 +139,20 @@ void InterfaceWrapper::Dock()
     }
 }
 
-void InterfaceWrapper::LoopImGui()
+void InterfaceWrapper::Loop()
 {
     ImGuiIO& io = ImGui::GetIO();
     Camera* camera = Camera::instance;
-    ImGui::Begin("Camera");
+
+    Begin("Camera");
+
     ImGui::SliderFloat("Camera Move Speed : ",  &camera->movementSpeed, 0, 30.0f, 0);
     ImGui::SliderFloat("Camera Move Sensitivity : ", &camera->mouseSensitivity, 0, 2.0f, 0);
-    ImGui::End();
 
-    ImGui::Render();
+    End();
+
+    Render();
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

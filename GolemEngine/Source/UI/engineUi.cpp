@@ -25,14 +25,13 @@ EngineUi::~EngineUi() {}
 
 void EngineUi::BeginDockSpace()
 {
+    InterfaceWrapper::GetInstance()->NewFrameImGui();
+    InterfaceWrapper::GetInstance()->EditorStyle();
     InterfaceWrapper::GetInstance()->Dock();
 
     UpdateLoop();
-}
 
-void EngineUi::EndDockSpace()
-{
-    ImGui::End();
+    InterfaceWrapper::GetInstance()->End();
 }
 
 void EngineUi::UpdateLoop()

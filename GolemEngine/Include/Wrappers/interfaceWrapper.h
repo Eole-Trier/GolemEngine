@@ -9,14 +9,19 @@ class GOLEM_ENGINE_API InterfaceWrapper
 public:
 	static InterfaceWrapper* GetInstance();
 
-	void InitImGui(GLFWwindow* _window);
+	void Init(GLFWwindow* _window);
 	void NewFrameImGui();
 
 public:
+	void Begin(const char* _name);
+
 	void Dock();
-	void LoopImGui();
+	void Loop();
 	void EditorStyle();
 
+	void End();
+
+	void Render();
 private:
 	InterfaceWrapper();
 	~InterfaceWrapper();
