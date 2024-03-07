@@ -3,6 +3,7 @@
 #include "dll.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 class BasicActors;
 class Viewport;
@@ -15,11 +16,15 @@ class GOLEM_ENGINE_API Window
 {
 public:
 	GLFWwindow* window;
+	
+	//virtual void Update(GolemEngine* _golemEngine) const;
 };
 
 class GOLEM_ENGINE_API EngineUi
 {
 private:
+	std::vector<Window*> m_windowList;
+
 	BasicActors* m_basicActors = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
 	WorldActors* m_worldActors = nullptr;

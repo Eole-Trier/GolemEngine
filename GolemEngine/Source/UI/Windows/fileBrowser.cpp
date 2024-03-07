@@ -1,9 +1,7 @@
 #include "UI/Windows/fileBrowser.h"
 
-#include "imgui.h"
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "Wrappers/interfaceWrapper.h"
 
 FileBrowser::FileBrowser() {}
 
@@ -11,9 +9,9 @@ FileBrowser::~FileBrowser() {}
 
 void FileBrowser::Update()
 {
-	ImGui::Begin("File_Browser");
+	InterfaceWrapper::GetInstance()->Begin("File_Browser");
 
-    if (ImGui::Button("Open File Dialog"))
+    if (InterfaceWrapper::GetInstance()->Button("Open File Dialog"))
     {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp,.py", ".");
     }
@@ -30,5 +28,5 @@ void FileBrowser::Update()
         ImGuiFileDialog::Instance()->Close();
     }
 
-	ImGui::End();
+	InterfaceWrapper::GetInstance()->End();
 }

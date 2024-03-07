@@ -15,6 +15,7 @@ using GolemDrawData = ImDrawData;
 using GolemViewport = ImGuiViewport;
 using GolemGuiContext = ImGuiContext;
 using GolemDockNodeFlags_ = ImGuiDockNodeFlags_;
+using GolemTextureID = ImTextureID;
 
 class GOLEM_ENGINE_API InterfaceWrapper
 {
@@ -75,6 +76,16 @@ public:
 	bool SliderFloat2(const char* _label, float _v[2], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat4(const char* _label, float _v[4], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
+
+	bool Button(const char* _label, const GolemVec2& _size = GolemVec2(0, 0));
+	void Image(GolemTextureID _textureId, 
+		const GolemVec2& _imageSize, const GolemVec2& _uv0 = GolemVec2(0, 0), const GolemVec2& _uv1 = GolemVec2(1, 1), 
+		const GolemVec4& _tintCol = GolemVec4(1, 1, 1, 1), const GolemVec4& _borderCol = GolemVec4(0, 0, 0, 0));
+
+	void Text(const char* _fmt, ...);
+
+public:
+	GolemVec2 GetContentRegionAvail();
 
 private:
 	InterfaceWrapper();

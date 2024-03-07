@@ -1,8 +1,6 @@
 #include "UI/Windows/worldActors.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "Wrappers/interfaceWrapper.h"
 
 WorldActors::WorldActors() {}
 
@@ -10,6 +8,6 @@ WorldActors::~WorldActors() {}
 
 void WorldActors::Update()
 {
-	ImGui::Begin("World_Actors");
-	ImGui::End();
+	InterfaceWrapper::GetInstance()->Begin("World_Actors");
+	InterfaceWrapper::GetInstance()->End();
 }

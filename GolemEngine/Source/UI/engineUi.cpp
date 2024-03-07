@@ -7,6 +7,7 @@
 #include "UI/Windows/debugWindow.h"
 #include "golemEngine.h"
 #include <iostream>
+#include <vector>
 #include "Wrappers/interfaceWrapper.h"
 
 
@@ -18,7 +19,13 @@ EngineUi::EngineUi(GolemEngine* _golemEngine)
 	m_fileBrowser(new FileBrowser()),
 	m_worldActors(new WorldActors()),
 	m_debugWindow(new DebugWindow()) 
-{}
+{
+    m_windowList.push_back(m_viewport);
+    m_windowList.push_back(m_basicActors);
+    m_windowList.push_back(m_fileBrowser);
+    m_windowList.push_back(m_worldActors);
+    m_windowList.push_back(m_debugWindow);
+}
 
 EngineUi::~EngineUi() {}
 

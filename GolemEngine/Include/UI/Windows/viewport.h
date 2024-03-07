@@ -5,7 +5,7 @@ struct GLFWwindow;
 class GolemEngine;
 class Camera;
 
-class Viewport : Window
+class Viewport : public Window
 {
 private:
 	static Camera* m_camera;

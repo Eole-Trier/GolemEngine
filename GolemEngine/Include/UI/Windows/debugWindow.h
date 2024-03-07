@@ -3,7 +3,7 @@
 struct GLFWwindow;
 class GolemEngine;
 
-class DebugWindow : Window
+class DebugWindow : public Window
 {
 public:
 	DebugWindow();

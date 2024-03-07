@@ -1,6 +1,6 @@
 #pragma once
 #include "UI/engineUi.h"
-class BasicActors : Window
+class BasicActors : public Window
 {
 public:
 	BasicActors();

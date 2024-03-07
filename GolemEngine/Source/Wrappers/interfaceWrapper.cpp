@@ -39,6 +39,29 @@ bool InterfaceWrapper::SliderFloat4(const char* _label, float _v[4], float _vMin
     return ImGui::SliderFloat4(_label, _v, _vMin, _vMax, _format, _flags);
 }
 
+bool InterfaceWrapper::Button(const char* _label, const GolemVec2& _size)
+{
+    return ImGui::Button(_label, _size);
+}
+
+void InterfaceWrapper::Image(GolemTextureID _textureId, const GolemVec2& _imageSize, const GolemVec2& _uv0, const GolemVec2& _uv1, const GolemVec4& _tintCol, const GolemVec4& _borderCol)
+{
+    ImGui::Image(_textureId, _imageSize, _uv0, _uv1, _tintCol, _borderCol);
+}
+
+void InterfaceWrapper::Text(const char* _fmt, ...)
+{
+    va_list args;
+    va_start(args, _fmt);
+    ImGui::TextV(_fmt, args);
+    va_end(args);
+}
+
+GolemVec2 InterfaceWrapper::GetContentRegionAvail()
+{
+    return ImGui::GetContentRegionAvail();
+}
+
 void InterfaceWrapper::Init(GLFWwindow* _window)
 {
     // Setup Imgui context
