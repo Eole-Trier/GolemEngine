@@ -1,4 +1,5 @@
 #include "vector3.h"
+#include "quaternion.h"
 
 Vector3::Vector3() { }
 
@@ -47,6 +48,36 @@ Vector3 Vector3::Cross(Vector3 _a, Vector3 _b)
     return temp;
 }
 
+Vector3 Vector3::RotateVectorAroundAxis(Vector3 _angle, Vector3 _axis)
+{
+    Quaternion p = Quaternion(0, (*this));
+
+    //normalize the axis
+    _axis = _axis.Normalize();
+
+    //create the real quaternion
+    Quaternion qX = Quaternion(_angle.x, _axis);
+    Quaternion qY = Quaternion(_angle.y, _axis);
+    Quaternion qZ = Quaternion(_angle.z, _axis);
+
+    //convert quaternion to unit norm quaternion
+    qX = qX.UnitNorm();
+    qY = qY.UnitNorm();
+    qZ = qZ.UnitNorm();
+
+    //Get the inverse of the quaternion
+    Quaternion qXInverse = qX.Inverse();
+    Quaternion qYInverse = qY.Inverse();
+    Quaternion qZInverse = qZ.Inverse();
+
+    //rotate the quaternion
+    Quaternion rotatedVectorX = qX * p * qXInverse;
+    Quaternion rotatedVectorY = qY * rotatedVectorX * qYInverse;
+    Quaternion rotatedVectorZ = qZ * rotatedVectorY * qZInverse;
+
+    //return the vector part of the quaternion
+    return rotatedVectorZ.i;
+}
 
 #pragma region Operators
 

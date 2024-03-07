@@ -18,10 +18,13 @@ public:
 	~Quaternion();
 	
 	float Norm();
+	Quaternion Normalized();
+	Quaternion UnitNorm();
 	Quaternion Conjugate();
 	Quaternion Inverse();
 
 	GOLEM_ENGINE_API friend Quaternion operator*(Quaternion _q1, Quaternion _q2);
+	GOLEM_ENGINE_API friend Quaternion operator/(Quaternion _q1, float _divider);
 	GOLEM_ENGINE_API friend bool operator==(Quaternion _q1, Quaternion _q2);
 	GOLEM_ENGINE_API friend bool operator!=(Quaternion _q1, Quaternion _q2);
 
