@@ -8,7 +8,7 @@
 
 #include "Viewport/camera.h"
 
-InterfaceWrapper* InterfaceWrapper::m_instancePtr = nullptr;
+InterfaceWrapper* InterfaceWrapper::m_instancePtr = nullptr; // Instantiation InterfaceWrapper API
 
 InterfaceWrapper::InterfaceWrapper() {}
 
@@ -100,17 +100,17 @@ GolemID InterfaceWrapper::GetID(const void* _ptrId)
     return(ImGui::GetID(_ptrId));
 }
 
-ImGuiViewport* InterfaceWrapper::GetMainViewport()
+GolemViewport* InterfaceWrapper::GetMainViewport()
 {
     return(ImGui::GetMainViewport());
 }
 
-ImDrawData* InterfaceWrapper::GetDrawData()
+GolemDrawData* InterfaceWrapper::GetDrawData()
 {
     return(ImGui::GetDrawData());
 }
 
-ImGuiContext* InterfaceWrapper::CreateContext(ImFontAtlas* _sharedFontAtlas)
+GolemGuiContext* InterfaceWrapper::CreateContext(ImFontAtlas* _sharedFontAtlas)
 {
     return(ImGui::CreateContext(_sharedFontAtlas));
 }

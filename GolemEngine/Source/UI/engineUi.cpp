@@ -22,7 +22,12 @@ EngineUi::EngineUi(GolemEngine* _golemEngine)
 
 EngineUi::~EngineUi() {}
 
-void EngineUi::BeginDockSpace()
+void EngineUi::InitUI(GLFWwindow* _window)
+{
+    InterfaceWrapper::GetInstance()->Init(_window);
+}
+
+void EngineUi::Update()
 {
     InterfaceWrapper::GetInstance()->NewFrameImGui();
     InterfaceWrapper::GetInstance()->EditorStyle();
@@ -58,9 +63,13 @@ void EngineUi::BeginDockSpace()
     GolemID dockspace_id = InterfaceWrapper::GetInstance()->GetID("DockSpace");
     InterfaceWrapper::GetInstance()->DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
 
+    // Dock Conctrol Space
     static bool init = true;
     if (init)
     {
+        // The dock has a default 4 block layout
+        // Topleft     TopRight
+        // Bottomlefr  BottomRight
         GolemID dock_id_left, dock_id_right;
         init = false;
         InterfaceWrapper::GetInstance()->DockBuilderAddNode(dockspace_id);
@@ -74,6 +83,7 @@ void EngineUi::BeginDockSpace()
         GolemID dock_id_topLeft, dock_id_bottomLeft;
         InterfaceWrapper::GetInstance()->DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
+        // For defining the position of the dock
         InterfaceWrapper::GetInstance()->DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
         InterfaceWrapper::GetInstance()->DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
         InterfaceWrapper::GetInstance()->DockBuilderDockWindow("Viewport", dock_id_topLeft);
@@ -89,10 +99,12 @@ void EngineUi::BeginDockSpace()
     }
     InterfaceWrapper::GetInstance()->End();
 
-    UpdateLoop();
+    CustomWindows();
+
+    InterfaceWrapper::GetInstance()->Render();
 }
 
-void EngineUi::UpdateLoop()
+void EngineUi::CustomWindows()
 {
     m_basicActors->Update();
     m_fileBrowser->Update();

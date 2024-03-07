@@ -5,7 +5,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "UI/engineUi.h"
-#include "Wrappers/interfaceWrapper.h"
 #include "Wrappers/graphicWrapper.h"
 #include "vector4.h"
 
@@ -52,8 +51,7 @@ void GolemEngine::InitWindow()
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-    InterfaceWrapper::GetInstance()->Init(m_window);
-
+    m_engineUi->InitUI(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -115,17 +113,18 @@ void GolemEngine::Update()
 
         // Bind next framebuffer to the scene buffer
         GraphicWrapper::GetInstance()->BindFramebuffer();
+
         // Assign background color and clear previous scene buffers 
         GraphicWrapper::GetInstance()->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
         GraphicWrapper::GetInstance()->ClearBuffer();
+
         // Render the scene to the framebuffer
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
+       
         // Go back to original framebuffer
         GraphicWrapper::GetInstance()->UnbindFramebuffer();
 
-        m_engineUi->BeginDockSpace();
-
-        InterfaceWrapper::GetInstance()->Render();
+        m_engineUi->Update();
 
         glfwSwapBuffers(m_window);
     }

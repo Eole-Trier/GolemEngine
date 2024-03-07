@@ -33,8 +33,9 @@ public:
 	EngineUi(GolemEngine* _golemEngine);
 	~EngineUi();
 
-	void BeginDockSpace();
-	void UpdateLoop();
+	void InitUI(GLFWwindow* _window);
+	void Update();
+	void CustomWindows();
 
 	bool GetIsFullscreen();
 	void SetIsFullscreen(bool _value);

@@ -5,11 +5,16 @@
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 
+// Rename the ImGuiAPI by Golem InterfaceWrapper
 using GolemID = ImGuiID;
 using GolemIO = ImGuiIO;
 using GolemVec2 = ImVec2;
 using GolemVec4 = ImVec4;
 using GolemStyle = ImGuiStyle;
+using GolemDrawData = ImDrawData;
+using GolemViewport = ImGuiViewport;
+using GolemGuiContext = ImGuiContext;
+using GolemDockNodeFlags_ = ImGuiDockNodeFlags_;
 
 class GOLEM_ENGINE_API InterfaceWrapper
 {
@@ -29,10 +34,10 @@ public:
 	GolemID GetID(const char* _strIdBegin, const char* _strIdEnd);
 	GolemID GetID(const void* _ptrId);
 
-	ImGuiViewport* GetMainViewport();
-	ImDrawData* GetDrawData();
+	GolemViewport* GetMainViewport();
+	GolemDrawData* GetDrawData();
 
-	ImGuiContext* CreateContext(ImFontAtlas* _sharedFontAtlas = NULL);
+	GolemGuiContext* CreateContext(ImFontAtlas* _sharedFontAtlas = NULL);
 
 public:
 	// For creating window and dock
@@ -65,7 +70,7 @@ public:
 
 
 public:
-	// For control values
+	// Basic Functions
 	bool SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat2(const char* _label, float _v[2], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
