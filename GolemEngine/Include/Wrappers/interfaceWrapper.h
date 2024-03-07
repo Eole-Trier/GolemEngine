@@ -5,6 +5,12 @@
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 
+using GolemID = ImGuiID;
+using GolemIO = ImGuiIO;
+using GolemVec2 = ImVec2;
+using GolemVec4 = ImVec4;
+using GolemStyle = ImGuiStyle;
+
 class GOLEM_ENGINE_API InterfaceWrapper
 {
 public:
@@ -12,14 +18,14 @@ public:
 
 	void Init(GLFWwindow* _window);
 	void NewFrameImGui();
-	void StyleColorsDark(ImGuiStyle* _dst = NULL);
+	void StyleColorsDark(GolemStyle* _dst = NULL);
 public:
-	ImGuiIO& GetIO();
-	ImGuiStyle& GetStyle();
+	GolemIO& GetIO();
+	GolemStyle& GetStyle();
 
-	ImGuiID GetID(const char* _strId);                                      
-	ImGuiID GetID(const char* _strIdBegin, const char* _strIdEnd);
-	ImGuiID GetID(const void* _ptrId);
+	GolemID GetID(const char* _strId);                                      
+	GolemID GetID(const char* _strIdBegin, const char* _strIdEnd);
+	GolemID GetID(const void* _ptrId);
 
 	ImGuiViewport* GetMainViewport();
 	ImDrawData* GetDrawData();
@@ -31,19 +37,19 @@ public:
 
 	void Begin(const char* _name, bool* _open = (bool*)0, ImGuiWindowFlags flags = 0);
 
-	void SetNextWindowPos(const ImVec2& _pos, ImGuiCond _cond = 0, const ImVec2& _pivot = ImVec2(0, 0));
-	void SetNextWindowSize(const ImVec2& _size, ImGuiCond _cond = 0);
-	void SetNextWindowViewport(ImGuiID _viewportId);
+	void SetNextWindowPos(const GolemVec2& _pos, ImGuiCond _cond = 0, const GolemVec2& _pivot = GolemVec2(0, 0));
+	void SetNextWindowSize(const GolemVec2& _size, ImGuiCond _cond = 0);
+	void SetNextWindowViewport(GolemID _viewportId);
 
-	void DockSpace(ImGuiID _id, const ImVec2& _size = ImVec2(0, 0), ImGuiDockNodeFlags _flags = 0, const ImGuiWindowClass* _windowClass = NULL);
-	void DockBuilderAddNode(ImGuiID _id = 0U, ImGuiDockNodeFlags _flags = 0);
-	void DockBuilderSetNodeSize(ImGuiID _id, ImVec2 _size);
-	void DockBuilderSplitNode(ImGuiID _id, ImGuiDir _splitDir, float _sizeRatioForNodeAtDir, ImGuiID* _outIdAtDir, ImGuiID* _outIdAtOppositeDir);
-	void DockBuilderDockWindow(const char* _windowName, ImGuiID _id);
-	void DockBuilderFinish(ImGuiID _id);
+	void DockSpace(GolemID _id, const GolemVec2& _size = GolemVec2(0, 0), ImGuiDockNodeFlags _flags = 0, const ImGuiWindowClass* _windowClass = NULL);
+	void DockBuilderAddNode(GolemID _id = 0U, ImGuiDockNodeFlags _flags = 0);
+	void DockBuilderSetNodeSize(GolemID _id, GolemVec2 _size);
+	void DockBuilderSplitNode(GolemID _id, ImGuiDir _splitDir, float _sizeRatioForNodeAtDir, GolemID* _outIdAtDir, GolemID* _outIdAtOppositeDir);
+	void DockBuilderDockWindow(const char* _windowName, GolemID _id);
+	void DockBuilderFinish(GolemID _id);
 
 	void PushStyleVar(ImGuiStyleVar _idx, float _val);
-	void PushStyleVar(ImGuiStyleVar _idx, const ImVec2& _val);
+	void PushStyleVar(ImGuiStyleVar _idx, const GolemVec2& _val);
 
 	void PopStyleVar(int _count = 1);
 
@@ -59,7 +65,10 @@ public:
 	void Render();
 
 public:
-	void SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
+	bool SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
+	bool SliderFloat2(const char* _label, float _v[2], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
+	bool SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
+	bool SliderFloat4(const char* _label, float _v[4], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 
 private:
 	InterfaceWrapper();

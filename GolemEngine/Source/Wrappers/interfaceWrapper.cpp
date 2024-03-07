@@ -15,9 +15,24 @@ InterfaceWrapper* InterfaceWrapper::GetInstance()
     return m_instancePtr;
 }
 
-void InterfaceWrapper::SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format, ImGuiSliderFlags _flags)
+bool InterfaceWrapper::SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format, ImGuiSliderFlags _flags)
 {
-    ImGui::SliderFloat(_label, _v, _vMin, _vMax, _format, _flags);
+    return ImGui::SliderFloat(_label, _v, _vMin, _vMax, _format, _flags);
+}
+
+bool InterfaceWrapper::SliderFloat2(const char* _label, float _v[2], float _vMin, float _vMax, const char* _format, ImGuiSliderFlags _flags)
+{
+    return ImGui::SliderFloat2(_label, _v, _vMin, _vMax, _format, _flags);
+}
+
+bool InterfaceWrapper::SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format, ImGuiSliderFlags _flags)
+{
+    return ImGui::SliderFloat3(_label, _v, _vMin, _vMax, _format, _flags);
+}
+
+bool InterfaceWrapper::SliderFloat4(const char* _label, float _v[4], float _vMin, float _vMax, const char* _format, ImGuiSliderFlags _flags)
+{
+    return ImGui::SliderFloat4(_label, _v, _vMin, _vMax, _format, _flags);
 }
 
 InterfaceWrapper::InterfaceWrapper() {}
@@ -29,7 +44,7 @@ void InterfaceWrapper::Init(GLFWwindow* _window)
     // Setup Imgui context
     IMGUI_CHECKVERSION();
     CreateContext();
-    ImGuiIO& io = GetIO(); (void)io;
+    GolemIO& io = GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -37,7 +52,7 @@ void InterfaceWrapper::Init(GLFWwindow* _window)
     StyleColorsDark();
 
     // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones
-    ImGuiStyle& style = GetStyle();
+    GolemStyle& style = GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         style.WindowRounding = 0.0f;
@@ -60,7 +75,7 @@ void InterfaceWrapper::StyleColorsDark(ImGuiStyle* _dst)
     ImGui::StyleColorsDark(_dst);
 }
 
-ImGuiIO& InterfaceWrapper::GetIO()
+GolemIO& InterfaceWrapper::GetIO()
 {
     return(ImGui::GetIO());
 }
@@ -70,17 +85,17 @@ ImGuiStyle& InterfaceWrapper::GetStyle()
     return(ImGui::GetStyle());
 }
 
-ImGuiID InterfaceWrapper::GetID(const char* _strId)
+GolemID InterfaceWrapper::GetID(const char* _strId)
 {
     return(ImGui::GetID(_strId));
 }
 
-ImGuiID InterfaceWrapper::GetID(const char* _strIdBegin, const char* _strIdEnd)
+GolemID InterfaceWrapper::GetID(const char* _strIdBegin, const char* _strIdEnd)
 {
     return(ImGui::GetID(_strIdBegin, _strIdEnd));
 }
 
-ImGuiID InterfaceWrapper::GetID(const void* _ptrId)
+GolemID InterfaceWrapper::GetID(const void* _ptrId)
 {
     return(ImGui::GetID(_ptrId));
 }
@@ -102,7 +117,7 @@ ImGuiContext* InterfaceWrapper::CreateContext(ImFontAtlas* _sharedFontAtlas)
 
 void InterfaceWrapper::EditorStyle()
 {
-    ImGuiStyle& style = GetStyle();
+    GolemStyle& style = GetStyle();
 
     style.WindowRounding = 4;
     style.FrameRounding = 4;
@@ -131,47 +146,47 @@ void InterfaceWrapper::Begin(const char* _name, bool* _open, ImGuiWindowFlags fl
     ImGui::Begin(_name, _open, flags);
 }
 
-void InterfaceWrapper::SetNextWindowPos(const ImVec2& _pos, ImGuiCond _cond, const ImVec2& _pivot)
+void InterfaceWrapper::SetNextWindowPos(const GolemVec2& _pos, ImGuiCond _cond, const GolemVec2& _pivot)
 {
     ImGui::SetNextWindowPos(_pos, _cond, _pivot);
 }
 
-void InterfaceWrapper::SetNextWindowSize(const ImVec2& _size, ImGuiCond _cond)
+void InterfaceWrapper::SetNextWindowSize(const GolemVec2& _size, ImGuiCond _cond)
 {
     ImGui::SetNextWindowSize(_size, _cond);
 }
 
-void InterfaceWrapper::SetNextWindowViewport(ImGuiID _viewportId)
+void InterfaceWrapper::SetNextWindowViewport(GolemID _viewportId)
 {
     ImGui::SetNextWindowViewport(_viewportId);
 }
 
-void InterfaceWrapper::DockSpace(ImGuiID _id, const ImVec2& _size, ImGuiDockNodeFlags _flags, const ImGuiWindowClass* _windowClass)
+void InterfaceWrapper::DockSpace(GolemID _id, const GolemVec2& _size, ImGuiDockNodeFlags _flags, const ImGuiWindowClass* _windowClass)
 {
     ImGui::DockSpace(_id, _size, _flags, _windowClass);
 }
 
-void InterfaceWrapper::DockBuilderAddNode(ImGuiID _id, ImGuiDockNodeFlags _flags)
+void InterfaceWrapper::DockBuilderAddNode(GolemID _id, ImGuiDockNodeFlags _flags)
 {
     ImGui::DockBuilderAddNode(_id, _flags);
 }
 
-void InterfaceWrapper::DockBuilderSetNodeSize(ImGuiID _id, ImVec2 _size)
+void InterfaceWrapper::DockBuilderSetNodeSize(GolemID _id, GolemVec2 _size)
 {
     ImGui::DockBuilderSetNodeSize(_id, _size);
 }
 
-void InterfaceWrapper::DockBuilderSplitNode(ImGuiID _id, ImGuiDir _splitDir, float _sizeRatioForNodeAtDir, ImGuiID* _outIdAtDir, ImGuiID* _outIdAtOppositeDir)
+void InterfaceWrapper::DockBuilderSplitNode(GolemID _id, ImGuiDir _splitDir, float _sizeRatioForNodeAtDir, GolemID* _outIdAtDir, GolemID* _outIdAtOppositeDir)
 {
     ImGui::DockBuilderSplitNode(_id, _splitDir, _sizeRatioForNodeAtDir, _outIdAtDir, _outIdAtOppositeDir);
 }
 
-void InterfaceWrapper::DockBuilderDockWindow(const char* _windowName, ImGuiID _id)
+void InterfaceWrapper::DockBuilderDockWindow(const char* _windowName, GolemID _id)
 {
     ImGui::DockBuilderDockWindow(_windowName, _id);
 }
 
-void InterfaceWrapper::DockBuilderFinish(ImGuiID _id)
+void InterfaceWrapper::DockBuilderFinish(GolemID _id)
 {
     ImGui::DockBuilderFinish(_id);
 }
@@ -181,7 +196,7 @@ void InterfaceWrapper::PushStyleVar(ImGuiStyleVar _idx, float _val)
     ImGui::PushStyleVar(_idx, _val);
 }
 
-void InterfaceWrapper::PushStyleVar(ImGuiStyleVar _idx, const ImVec2& _val)
+void InterfaceWrapper::PushStyleVar(ImGuiStyleVar _idx, const GolemVec2& _val)
 {
     ImGui::PushStyleVar(_idx, _val);
 }
@@ -230,23 +245,23 @@ void InterfaceWrapper::Dock()
 
     Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
 
-    ImGuiID dockspace_id = GetID("DockSpace");
-    DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
+    GolemID dockspace_id = GetID("DockSpace");
+    DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
 
     static bool init = true;
     if (init)
     {
-        ImGuiID dock_id_left, dock_id_right;
+        GolemID dock_id_left, dock_id_right;
         init = false;
         DockBuilderAddNode(dockspace_id);
         DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
         DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
-        ImGuiID dock_id_topRight, dock_id_bottomRight;
+        GolemID dock_id_topRight, dock_id_bottomRight;
         DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
 
-        ImGuiID dock_id_topLeft, dock_id_bottomLeft;
+        GolemID dock_id_topLeft, dock_id_bottomLeft;
         DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
         DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
@@ -266,7 +281,7 @@ void InterfaceWrapper::Dock()
 
 void InterfaceWrapper::Loop()
 {
-    ImGuiIO& io = GetIO();
+    GolemIO& io = GetIO();
     Camera* camera = Camera::instance;
 
     Begin("Camera");
