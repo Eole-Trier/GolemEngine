@@ -10,6 +10,10 @@
 
 InterfaceWrapper* InterfaceWrapper::m_instancePtr = nullptr;
 
+InterfaceWrapper::InterfaceWrapper() {}
+
+InterfaceWrapper::~InterfaceWrapper() {}
+
 InterfaceWrapper* InterfaceWrapper::GetInstance()
 {
     return m_instancePtr;
@@ -34,10 +38,6 @@ bool InterfaceWrapper::SliderFloat4(const char* _label, float _v[4], float _vMin
 {
     return ImGui::SliderFloat4(_label, _v, _vMin, _vMax, _format, _flags);
 }
-
-InterfaceWrapper::InterfaceWrapper() {}
-
-InterfaceWrapper::~InterfaceWrapper() {}
 
 void InterfaceWrapper::Init(GLFWwindow* _window)
 {
@@ -133,7 +133,19 @@ void InterfaceWrapper::End()
 
 void InterfaceWrapper::Render()
 {
+    GolemIO& io = GetIO();
+   
     ImGui::Render();
+
+    ImGui_ImplOpenGL3_RenderDrawData(GetDrawData());
+
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        UpdatePlatformWindows();
+        RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup_current_context);
+    }
 }
 
 void InterfaceWrapper::NewFrame()
@@ -215,92 +227,3 @@ void InterfaceWrapper::RenderPlatformWindowsDefault(void* _platformRenderArg, vo
 {
     ImGui::RenderPlatformWindowsDefault(_platformRenderArg, _rendererRenderArg);
 }
-
-void InterfaceWrapper::Dock()
-{
-    static bool dockspaceOpen = true;
-    static bool optFullscreenPersistant = true;
-    const bool optFullscreen = optFullscreenPersistant;
-
-    ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
-    if (optFullscreen)
-    {
-        dockspaceFlags |= ImGuiDockNodeFlags_PassthruCentralNode;
-    }
-
-    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-    if (optFullscreen)
-    {
-        const ImGuiViewport* viewport = GetMainViewport();
-        SetNextWindowPos(viewport->WorkPos);
-        SetNextWindowSize(viewport->WorkSize);
-        SetNextWindowViewport(viewport->ID);
-        PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-        PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-        PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
-
-        windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-        windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
-    }
-
-    Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
-
-    GolemID dockspace_id = GetID("DockSpace");
-    DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
-
-    static bool init = true;
-    if (init)
-    {
-        GolemID dock_id_left, dock_id_right;
-        init = false;
-        DockBuilderAddNode(dockspace_id);
-        DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
-
-        DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
-
-        GolemID dock_id_topRight, dock_id_bottomRight;
-        DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
-
-        GolemID dock_id_topLeft, dock_id_bottomLeft;
-        DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
-
-        DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
-        DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
-        DockBuilderDockWindow("Viewport", dock_id_topLeft);
-        DockBuilderDockWindow("World_Actors", dock_id_topRight);
-        DockBuilderDockWindow("Debug", dock_id_bottomRight);
-
-        DockBuilderFinish(dockspace_id);
-    }
-
-    if (optFullscreen)
-    {
-        PopStyleVar(3);
-    }
-}
-
-void InterfaceWrapper::Loop()
-{
-    GolemIO& io = GetIO();
-    Camera* camera = Camera::instance;
-
-    Begin("Camera");
-
-    SliderFloat("Camera Move Speed : ",  &camera->movementSpeed, 0, 30.0f, 0);
-    SliderFloat("Camera Move Sensitivity : ", &camera->mouseSensitivity, 0, 2.0f, 0);
-
-    End();
-
-    Render();
-
-    ImGui_ImplOpenGL3_RenderDrawData(GetDrawData());
-
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
-        UpdatePlatformWindows();
-        RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
-    }
-}
-

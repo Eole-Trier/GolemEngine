@@ -125,7 +125,7 @@ void GolemEngine::Update()
 
         m_engineUi->BeginDockSpace();
 
-        InterfaceWrapper::GetInstance()->Loop();
+        InterfaceWrapper::GetInstance()->Render();
 
         glfwSwapBuffers(m_window);
     }

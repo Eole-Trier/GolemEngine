@@ -19,7 +19,9 @@ public:
 	void Init(GLFWwindow* _window);
 	void NewFrameImGui();
 	void StyleColorsDark(GolemStyle* _dst = NULL);
+
 public:
+	// For creating context
 	GolemIO& GetIO();
 	GolemStyle& GetStyle();
 
@@ -33,9 +35,14 @@ public:
 	ImGuiContext* CreateContext(ImFontAtlas* _sharedFontAtlas = NULL);
 
 public:
+	// For creating window and dock
+	// Some settings of ui
 	void NewFrame();
 
 	void Begin(const char* _name, bool* _open = (bool*)0, ImGuiWindowFlags flags = 0);
+	void End();
+	void Render();
+	void EditorStyle();
 
 	void SetNextWindowPos(const GolemVec2& _pos, ImGuiCond _cond = 0, const GolemVec2& _pivot = GolemVec2(0, 0));
 	void SetNextWindowSize(const GolemVec2& _size, ImGuiCond _cond = 0);
@@ -56,15 +63,9 @@ public:
 	void UpdatePlatformWindows();
 	void RenderPlatformWindowsDefault(void* _platformRenderArg = NULL, void* _rendererRenderArg = NULL);
 
-	void Dock();
-	void Loop();
-	void EditorStyle();
-
-	void End();
-
-	void Render();
 
 public:
+	// For control values
 	bool SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat2(const char* _label, float _v[2], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
