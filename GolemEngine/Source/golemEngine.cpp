@@ -52,8 +52,8 @@ void GolemEngine::InitWindow()
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
+    InterfaceWrapper::GetInstance()->Init(m_window);
 
-    InterfaceWrapper::GetInstance()->InitImGui(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -111,14 +111,6 @@ void GolemEngine::Update()
         UpdateDeltaTime();
         ProcessInput();
 
-        InterfaceWrapper::GetInstance()->NewFrameImGui();
-        InterfaceWrapper::GetInstance()->EditorStyle();
-
-#pragma region DockSpace;
-
-        m_engineUi->BeginDockSpace();
-
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Bind next framebuffer to the scene buffer
@@ -130,13 +122,11 @@ void GolemEngine::Update()
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
         // Go back to original framebuffer
         GraphicWrapper::GetInstance()->UnbindFramebuffer();
-        
-        m_engineUi->EndDockSpace();
 
-#pragma endregion DockSpace
+        m_engineUi->BeginDockSpace();
 
-        InterfaceWrapper::GetInstance()->LoopImGui();
-        
+        InterfaceWrapper::GetInstance()->Render();
+
         glfwSwapBuffers(m_window);
     }
 }
