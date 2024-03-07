@@ -70,7 +70,7 @@ void InterfaceWrapper::NewFrameImGui()
     NewFrame();
 }
 
-void InterfaceWrapper::StyleColorsDark(ImGuiStyle* _dst)
+void InterfaceWrapper::StyleColorsDark(GolemStyle* _dst)
 {
     ImGui::StyleColorsDark(_dst);
 }
