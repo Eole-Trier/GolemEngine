@@ -3,10 +3,9 @@
 #include <string>
 
 #include "dll.h"
-#include "Viewport/scene.h"
-#include "UI/Windows/viewport.h"
 
 struct GLFWwindow;
+class Scene;
 class EngineUi;
 
 class GOLEM_ENGINE_API GolemEngine
@@ -17,8 +16,8 @@ private:
 	int m_screenWidth, m_screenHeight;
 
 private:
-	Scene* m_scene = nullptr;
 	GLFWwindow* m_window = nullptr;
+	Scene* m_scene = nullptr;
 	EngineUi* m_engineUi = nullptr;
 
 public:

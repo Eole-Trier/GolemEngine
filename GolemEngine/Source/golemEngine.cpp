@@ -1,3 +1,5 @@
+#include "golemEngine.h"
+
 #include <wtypes.h>
 
 #include "imgui.h"
@@ -7,11 +9,9 @@
 #include "UI/engineUi.h"
 #include "Wrappers/graphicWrapper.h"
 #include "vector4.h"
-
-#include "golemEngine.h"
-
 #include "UI/engineUi.h"
 #include "UI/Windows/viewport.h"
+#include "Viewport/scene.h"
 
 
 GolemEngine::GolemEngine()
@@ -59,7 +59,7 @@ void GolemEngine::InitScene()
     // Init scene objects
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::GetInstance()->CreateFramebuffer(m_screenWidth, m_screenHeight);
+   GRAPHIC_INTERFACE->CreateFramebuffer(m_screenWidth, m_screenHeight);
 }
 
 void GolemEngine::Init()
@@ -109,20 +109,18 @@ void GolemEngine::Update()
         UpdateDeltaTime();
         ProcessInput();
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         // Bind next framebuffer to the scene buffer
-        GraphicWrapper::GetInstance()->BindFramebuffer();
+       GRAPHIC_INTERFACE->BindFramebuffer();
 
         // Assign background color and clear previous scene buffers 
-        GraphicWrapper::GetInstance()->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
-        GraphicWrapper::GetInstance()->ClearBuffer();
+       GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+       GRAPHIC_INTERFACE->ClearBuffer();
 
         // Render the scene to the framebuffer
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
        
         // Go back to original framebuffer
-        GraphicWrapper::GetInstance()->UnbindFramebuffer();
+       GRAPHIC_INTERFACE->UnbindFramebuffer();
 
         m_engineUi->Update();
 

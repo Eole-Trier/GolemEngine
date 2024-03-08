@@ -5,6 +5,8 @@
 
 #include "dll.h"
 
+#define GRAPHIC_INTERFACE GraphicWrapper::GetInstance()
+
 class Vector4;
 
 class GOLEM_ENGINE_API GraphicWrapper
