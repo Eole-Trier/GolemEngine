@@ -193,13 +193,19 @@ TEST(Vector3, Cross)
 
 TEST(Vector3, Rotate_Vector_Around_Axis)
 {
-	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	Vector3 pos = Vector3(2, 1, 3);
+	pos = pos.RotateVectorAroundAxis(Vector3(180, 0, 90));
+	Vector3 result = Vector3(1, 2, -3);
+	EXPECT_NEAR(result.x, pos.x, EPSILON);
+	EXPECT_NEAR(result.y, pos.y, EPSILON);
+	EXPECT_NEAR(result.z, pos.z, EPSILON);
 }
 
 TEST(Vector3, Operators_Add_Float)
 {
 	Vector3 a(1.0f, 2.0f, 3.0f);
 	EXPECT_EQ((a + 9.3f), Vector3(10.3f, 11.3f, 12.3f));
+
 }
 
 TEST(Vector3, Operators_Substract_Float)

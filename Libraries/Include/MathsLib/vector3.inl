@@ -48,17 +48,14 @@ Vector3 Vector3::Cross(Vector3 _a, Vector3 _b)
     return temp;
 }
 
-Vector3 Vector3::RotateVectorAroundAxis(Vector3 _angle, Vector3 _axis)
+Vector3 Vector3::RotateVectorAroundAxis(Vector3 _angle)
 {
     Quaternion p = Quaternion(0, (*this));
 
-    //normalize the axis
-    _axis = _axis.Normalize();
-
     //create the real quaternion
-    Quaternion qX = Quaternion(_angle.x, _axis);
-    Quaternion qY = Quaternion(_angle.y, _axis);
-    Quaternion qZ = Quaternion(_angle.z, _axis);
+    Quaternion qX = Quaternion(_angle.x, Vector3(1, 0, 0));
+    Quaternion qY = Quaternion(_angle.y, Vector3(0, 1, 0));
+    Quaternion qZ = Quaternion(_angle.z, Vector3(0, 0, 1));
 
     //convert quaternion to unit norm quaternion
     qX = qX.UnitNorm();
