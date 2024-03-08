@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 
-#define GOLEM_UI InterfaceWrapper::GetInstance()
+#define UI_INTERFACE InterfaceWrapper::GetInstance()
 
 // Rename the ImGuiAPI by Golem InterfaceWrapper
 using GolemID = ImGuiID;
@@ -79,6 +79,7 @@ public:
 	bool SliderFloat4(const char* _label, float _v[4], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 
 	bool Button(const char* _label, const GolemVec2& _size = GolemVec2(0, 0));
+	bool InputText(const char* _label, char* _buf, size_t _bufSize, ImGuiInputTextFlags _flags = 0, ImGuiInputTextCallback _callback = NULL, void* _userData = NULL);
 	void Image(GolemTextureID _textureId, 
 		const GolemVec2& _imageSize, const GolemVec2& _uv0 = GolemVec2(0, 0), const GolemVec2& _uv1 = GolemVec2(1, 1), 
 		const GolemVec4& _tintCol = GolemVec4(1, 1, 1, 1), const GolemVec4& _borderCol = GolemVec4(0, 0, 0, 0));

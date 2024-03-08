@@ -25,9 +25,9 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 {
     GraphicWrapper::GetInstance()->EnableDepth();
 
-    GOLEM_UI->Begin("Viewport");
+    UI_INTERFACE->Begin("Viewport");
 
-    GOLEM_UI->Image((ImTextureID)GraphicWrapper::GetInstance()->GetTextureId(), GOLEM_UI->GetContentRegionAvail());
+    UI_INTERFACE->Image((ImTextureID)GraphicWrapper::GetInstance()->GetTextureId(), UI_INTERFACE->GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused())
     {
@@ -36,7 +36,7 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
         glfwSetScrollCallback(_golemEngine->GetWindow(), ScrollCallback);
     }
 
-    GOLEM_UI->End();
+    UI_INTERFACE->End();
 }
 
 void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)

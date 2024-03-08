@@ -10,9 +10,9 @@ FileBrowser::~FileBrowser() {}
 
 void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 {
-	GOLEM_UI->Begin("File_Browser");
+	UI_INTERFACE->Begin("File_Browser");
 
-    if (GOLEM_UI->Button("Open File Dialog"))
+    if (UI_INTERFACE->Button("Open File Dialog"))
     {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp,.py", ".");
     }
@@ -29,5 +29,5 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
         ImGuiFileDialog::Instance()->Close();
     }
 
-	GOLEM_UI->End();
+	UI_INTERFACE->End();
 }
