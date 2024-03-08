@@ -27,9 +27,6 @@
     <ClCompile Include="Source\UI\editorWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\Windows\viewport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h">
@@ -39,9 +36,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\UI\editorWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\Windows\viewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

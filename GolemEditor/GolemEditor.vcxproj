@@ -175,13 +175,11 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\UI\editorUi.cpp" />
     <ClCompile Include="Source\UI\editorWindow.cpp" />
-    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\editorWindow.h" />
-    <ClInclude Include="Include\UI\Windows\viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

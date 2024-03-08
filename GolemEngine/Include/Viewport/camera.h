@@ -8,6 +8,8 @@
 
 #include "dll.h"
 
+class Camera;
+
 enum GOLEM_ENGINE_API CameraMovement
 {
     FORWARD,

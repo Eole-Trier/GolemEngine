@@ -4,7 +4,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
-#include "../../GolemEditor/Include/UI/Windows/viewport.h"
 
 class BasicActors;
 class Viewport;
