@@ -6,7 +6,7 @@
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
-#include "Wrappers/interfaceWrapper.h"
+#include "Wrappers/interfaceWrapper0.h"
 
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "dll.h"
+
 #include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
+#include "dll.h"
 #include "imgui.h"
 
 #define UI_INTERFACE InterfaceWrapper::GetInstance()
@@ -18,6 +18,8 @@ using GolemViewport = ImGuiViewport;
 using GolemGuiContext = ImGuiContext;
 using GolemDockNodeFlags_ = ImGuiDockNodeFlags_;
 using GolemTextureID = ImTextureID;
+
+struct GLFWwindow;
 
 class GOLEM_ENGINE_API InterfaceWrapper
 {

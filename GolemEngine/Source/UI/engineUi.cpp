@@ -9,7 +9,7 @@
 #include "UI/Windows/worldActors.h"
 #include "UI/Windows/debugWindow.h"
 #include "golemEngine.h"
-#include "Wrappers/interfaceWrapper.h"
+#include "Wrappers/interfaceWrapper0.h"
 
 
 EngineUi::EngineUi(GolemEngine* _golemEngine) 
