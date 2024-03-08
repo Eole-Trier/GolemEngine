@@ -1,5 +1,6 @@
 #pragma once
-#include "golemEngine.h"
+
+class GolemEngine;
 
 class EditorWindow
 {

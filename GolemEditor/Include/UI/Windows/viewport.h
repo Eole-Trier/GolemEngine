@@ -1,9 +1,10 @@
 #pragma once
-#include "UI/engineUi.h"
+
+#include "UI/editorWindow.h"
 #include "Viewport/camera.h"
 
 
-class Viewport : public Window
+class Viewport : public EditorWindow
 {
 private:
 	static Camera* m_camera;

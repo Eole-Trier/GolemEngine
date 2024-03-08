@@ -1,6 +1,6 @@
 #include "UI/Windows/debugWindow.h"
 
-#include "Wrappers/interfaceWrapper0.h"
+#include "Wrappers/interfaceWrapper.h"
 #include "golemEngine.h"
 
 DebugWindow::DebugWindow() {}

@@ -1,4 +1,5 @@
 #include "UI/editorWindow.h"
+
 #include "golemEngine.h"
 #include "Wrappers/interfaceWrapper.h"
 

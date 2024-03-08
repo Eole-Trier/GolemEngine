@@ -1,7 +1,7 @@
 #include "UI/Windows/fileBrowser.h"
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
-#include "Wrappers/interfaceWrapper0.h"
+#include "Wrappers/interfaceWrapper.h"
 #include "golemEngine.h"
 
 FileBrowser::FileBrowser() {}

@@ -33,8 +33,6 @@
     <ClCompile Include="Source\Resource\Light\point.cpp" />
     <ClCompile Include="Source\Resource\Light\spot.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
-    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
-    <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -43,13 +41,8 @@
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
-    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
-    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
-    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
-    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
-    <ClCompile Include="Source\Wrappers\interfaceWrapper0.cpp" />
-    <ClCompile Include="Source\Wrappers\windowWrapper0.cpp" />
+    <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -79,17 +72,10 @@
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
-    <ClInclude Include="Include\UI\Windows\basicActors.h" />
-    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
-    <ClInclude Include="Include\UI\engineUi.h" />
-    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
-    <ClInclude Include="Include\UI\Windows\viewport.h" />
-    <ClInclude Include="Include\UI\Windows\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
-    <ClInclude Include="Include\Wrappers\interfaceWrapper0.h" />
-    <ClInclude Include="Include\Wrappers\windowWrapper0.h" />
+    <ClInclude Include="Include\Wrappers\windowWrapper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

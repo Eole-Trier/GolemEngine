@@ -1,11 +1,12 @@
 #pragma once
-#include "UI/engineUi.h"
 
-class DebugWindow : public Window
+#include "UI/editorWindow.h"
+
+class BasicActors : public EditorWindow
 {
 public:
-	DebugWindow();
-	~DebugWindow();
+	BasicActors();
+	~BasicActors();
 
 	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
 };

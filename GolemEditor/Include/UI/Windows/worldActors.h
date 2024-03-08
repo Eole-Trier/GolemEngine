@@ -1,7 +1,8 @@
 #pragma once
-#include "UI/engineUi.h"
 
-class WorldActors : public Window
+#include "UI/editorWindow.h"
+
+class WorldActors : public EditorWindow
 {
 public:
 	WorldActors();

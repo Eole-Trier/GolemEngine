@@ -6,25 +6,22 @@
 
 struct GLFWwindow;
 class Scene;
-class EngineUi;
 
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
 	float m_deltaTime;
-	std::string m_name;
-	int m_screenWidth, m_screenHeight;
 
-private:
 	GLFWwindow* m_window = nullptr;
 	Scene* m_scene = nullptr;
-	EngineUi* m_engineUi = nullptr;
+
+	int m_screenWidth;
+	int m_screenHeight;
 
 public:
-	GolemEngine();
+	GolemEngine(int _screenWidth, int _screenHeight);
 
 	void Init();
-	void InitWindow();
 	void InitScene();
 	void UpdateDeltaTime();
 	void Update();
@@ -33,7 +30,6 @@ public:
 
 	Scene* GetScene();
 	GLFWwindow* GetWindow();
-	EngineUi* GetUi();
 
 	float GetDeltaTime();
 	float GetTime();
