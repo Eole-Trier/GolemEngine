@@ -2,12 +2,9 @@
 
 #include <wtypes.h>
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
 #include "UI/engineUi.h"
 #include "Wrappers/graphicWrapper.h"
+#include "Wrappers/windowWrapper.h"
 #include "vector4.h"
 #include "UI/engineUi.h"
 #include "UI/Windows/viewport.h"
@@ -15,7 +12,7 @@
 
 
 GolemEngine::GolemEngine()
-	: 
+    :
     m_name("Golem Engine"),
     m_scene(new Scene()),
     m_engineUi(new EngineUi(this))
@@ -31,23 +28,23 @@ GolemEngine::GolemEngine()
 
 void GolemEngine::InitWindow()
 {
-    // Init glfw
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    WINDOW_INTERFACE->Init();
+    WINDOW_INTERFACE->SetOption(OPENGL_MAJOR_VERSION, 3);
+    WINDOW_INTERFACE->SetOption(OPENGL_MINOR_VERSION, 0);
 
     // Create window
-    m_window = glfwCreateWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
+    m_window = WINDOW_INTERFACE->NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
     if (m_window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
-        glfwTerminate();
+        WINDOW_INTERFACE->Terminate();
     }
 
-    glfwMakeContextCurrent(m_window);
-   
+    WINDOW_INTERFACE->SetCurrentWindow(m_window);
+
     // Initialize GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    if (!GRAPHIC_INTERFACE->Init())
+
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
@@ -59,7 +56,7 @@ void GolemEngine::InitScene()
     // Init scene objects
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-   GRAPHIC_INTERFACE->CreateFramebuffer(m_screenWidth, m_screenHeight);
+    GRAPHIC_INTERFACE->CreateFramebuffer(m_screenWidth, m_screenHeight);
 }
 
 void GolemEngine::Init()
@@ -103,32 +100,34 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    while (!glfwWindowShouldClose(m_window))
+    while (!WINDOW_INTERFACE->ShouldWindowClose(m_window))
+
     {
-        glfwPollEvents();
+        //glfwPollEvents();
+        WINDOW_INTERFACE->ProcessEvents();
         UpdateDeltaTime();
         ProcessInput();
 
         // Bind next framebuffer to the scene buffer
-       GRAPHIC_INTERFACE->BindFramebuffer();
+        GRAPHIC_INTERFACE->BindFramebuffer();
 
         // Assign background color and clear previous scene buffers 
-       GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
-       GRAPHIC_INTERFACE->ClearBuffer();
+        GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+        GRAPHIC_INTERFACE->ClearBuffer();
 
         // Render the scene to the framebuffer
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
-       
+
         // Go back to original framebuffer
-       GRAPHIC_INTERFACE->UnbindFramebuffer();
+        GRAPHIC_INTERFACE->UnbindFramebuffer();
 
         m_engineUi->Update();
 
-        glfwSwapBuffers(m_window);
+        WINDOW_INTERFACE->SwapBuffers(m_window);
     }
 }
 
-void GolemEngine::Close() 
+void GolemEngine::Close()
 {
     glfwTerminate();
 }

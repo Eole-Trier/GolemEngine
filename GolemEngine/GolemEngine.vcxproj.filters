@@ -30,6 +30,8 @@
     <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
+    <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
+    <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -64,5 +66,11 @@
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
+    <ClInclude Include="Include\Wrappers\windowWrapper.h" />
   </ItemGroup>
 </Project>

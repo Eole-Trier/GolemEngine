@@ -162,7 +162,7 @@ void InterfaceWrapper::End()
 void InterfaceWrapper::Render()
 {
     GolemIO& io = GetIO();
-   
+
     ImGui::Render();
 
     ImGui_ImplOpenGL3_RenderDrawData(GetDrawData());

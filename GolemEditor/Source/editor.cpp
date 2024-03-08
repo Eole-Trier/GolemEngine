@@ -20,6 +20,7 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
+	
 	m_golemEngine->Update();
 	m_editorUi->Update();
 	std::cout << "test from editor mainloop" << std::endl;

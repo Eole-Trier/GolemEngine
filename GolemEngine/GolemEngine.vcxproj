@@ -49,6 +49,7 @@
     <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
     <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
+    <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
+    <ClInclude Include="Include\Wrappers\windowWrapper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

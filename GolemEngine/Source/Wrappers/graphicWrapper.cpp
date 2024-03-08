@@ -1,6 +1,7 @@
 #include "Wrappers/graphicWrapper.h"
 
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 #include "vector4.h"
 
@@ -12,6 +13,11 @@ GraphicWrapper* GraphicWrapper::GetInstance()
         m_instancePtr = new GraphicWrapper();
     }
     return m_instancePtr;
+}
+
+int GraphicWrapper::Init()
+{
+    return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
 void GraphicWrapper::EnableDepth()

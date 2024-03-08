@@ -1,11 +1,13 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "dll.h"
 
 #define GRAPHIC_INTERFACE GraphicWrapper::GetInstance()
+
+#define OPENGL_MAJOR_VERSION GLFW_CONTEXT_VERSION_MAJOR
+#define OPENGL_MINOR_VERSION GLFW_CONTEXT_VERSION_MINOR
 
 class Vector4;
 
@@ -24,10 +26,13 @@ private:
 	GraphicWrapper() {}
 
 public:
-	// Enable a feature of OpenGl
-	void EnableDepth();
 	// Returns instance of the class
 	static GraphicWrapper* GetInstance();
+
+	// Initialize library
+	int Init();
+	// Enable a feature of OpenGl
+	void EnableDepth();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	void CreateFramebuffer(int _width, int _height);
 	void RescaleFramebuffer(float _width, float _height);
