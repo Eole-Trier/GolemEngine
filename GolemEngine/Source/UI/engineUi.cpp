@@ -73,12 +73,12 @@ void EngineUi::BeginDockSpace()
         ImGuiID dock_id_topLeft, dock_id_bottomLeft;
         ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.5f, &dock_id_topLeft, &dock_id_bottomLeft);
 
-        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_bottomRight);
         ImGui::DockBuilderDockWindow("File_Browser", dock_id_topRight);
-        ImGui::DockBuilderDockWindow("Viewport", dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow("Viewport", dock_id_topLeft);
         ImGui::DockBuilderDockWindow("World_Actors", dock_id_bottomLeft);
         ImGui::DockBuilderDockWindow("Debug", dock_id_topRight);
-
+        
         ImGui::DockBuilderFinish(dockspace_id);
     }
 

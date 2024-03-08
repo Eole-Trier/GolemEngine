@@ -1,15 +1,13 @@
 #pragma once
 
-#include "Viewport/scene.h"
-
-struct GLFWindow;
+struct GLFWwindow;
 class GolemEngine;
 class Camera;
 
 class Viewport
 {
 private:
-	Camera* m_camera;
+	static Camera* m_camera;
 	double m_cursorX;
 	double m_cursorY;
 	float m_lastX;
@@ -22,15 +20,17 @@ public:
 	int width, height;
 
 public:
+
 	Viewport();
 	~Viewport();
 
-	void Init();
 	void Update(GolemEngine* _golemEngine);
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
-	void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
+	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
 
 	Camera* GetCamera();
+	void MouseMovement(GolemEngine* _golemEngine);
+
 
 };

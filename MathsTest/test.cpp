@@ -1,18 +1,14 @@
 #include "pch.h"
+#include "mathslib.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
+#include "quaternion.h"
 #include "utils.h"
 
+
 #define EPSILON 0.01f
-
-
-TEST(TestCaseName, TestName)
-{
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
 
 #pragma region Utils
 
@@ -168,7 +164,8 @@ TEST(Vector3, LengthSq)
 	EXPECT_NEAR(v.LengthSq(), 14.0f, EPSILON);
 }
 
-TEST(Vector3, Normalize) {
+TEST(Vector3, Normalize)
+{
 	Vector3 a(1.0f, 2.0f, 3.0f);
 	Vector3 zero(0.0f, 0.0f, 0.0f);
 	EXPECT_NEAR(a.Normalize().x, 0.27f, EPSILON);
@@ -177,13 +174,15 @@ TEST(Vector3, Normalize) {
 	EXPECT_EQ(zero.Normalize(), zero, EPSILON);
 }
 
-TEST(Vector3, Dot) {
+TEST(Vector3, Dot) 
+{
 	Vector3 a(1.0f, 2.0f, 3.0f);
 	Vector3 b(3.0f, 2.0f, 1.0f);
 	EXPECT_EQ(Vector3::Dot(a, b), 10.0f);
 }
 
-TEST(Vector3, Cross) {
+TEST(Vector3, Cross)
+{
 	Vector3 a(1.0f, 2.0f, 3.0f);
 	Vector3 b(3.0f, 2.0f, 1.0f);
 	Vector3 c(-4.0f, 8.0f, -4.0f);
@@ -192,10 +191,21 @@ TEST(Vector3, Cross) {
 	EXPECT_NEAR(Vector3::Cross(a, b).z, c.z, EPSILON);
 }
 
+TEST(Vector3, Rotate_Vector_Around_Axis)
+{
+	Vector3 pos = Vector3(2, 1, 3);
+	pos = pos.RotateVectorAroundAxis(Vector3(180, 0, 90));
+	Vector3 result = Vector3(1, 2, -3);
+	EXPECT_NEAR(result.x, pos.x, EPSILON);
+	EXPECT_NEAR(result.y, pos.y, EPSILON);
+	EXPECT_NEAR(result.z, pos.z, EPSILON);
+}
+
 TEST(Vector3, Operators_Add_Float)
 {
 	Vector3 a(1.0f, 2.0f, 3.0f);
 	EXPECT_EQ((a + 9.3f), Vector3(10.3f, 11.3f, 12.3f));
+
 }
 
 TEST(Vector3, Operators_Substract_Float)
@@ -514,3 +524,74 @@ TEST(Matrix4, Operator_Not_Equal_Matrix4)
 }
 
 #pragma endregion Matrix4
+
+#pragma region Quaternion
+
+TEST(Quaternion, Constructor)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(1.0f, test1.r);
+	EXPECT_EQ(Vector3(1.0f, 2.0f, 3.0f), test1.i);
+}
+
+TEST(Quaternion, Norm)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_NEAR(3.87f, test1.Norm(), EPSILON);
+}
+
+TEST(Quaternion, Normalized)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	test1 = test1.Normalized();
+	Quaternion result = Quaternion(0.25f, Vector3(0.25f, 0.51f, 0.77f));
+	EXPECT_NEAR(test1.r, result.r, EPSILON);
+	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
+	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
+	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+}
+
+TEST(Quaternion, Conjugate)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(Quaternion(1.0f, Vector3(-1.0f, -2.0f, -3.0f)), test1.Conjugate());
+}
+
+TEST(Quaternion, Inverse)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	test1 = test1.Inverse();
+	Quaternion result = Quaternion(0.067f, Vector3(-0.067f, -0.133f, -0.2f));
+	EXPECT_NEAR(test1.r, result.r, EPSILON);
+	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
+	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
+	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+}
+
+
+TEST(Quaternion, Operator_Multiply_Quaternion)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	Quaternion test2 = Quaternion(-1.0f, Vector3(1.5f, 3.0f, -3.0f));
+	test1 = test1 * test2;
+	Quaternion result = Quaternion(0.5f, Vector3(-14.5f, 8.5f, -6.f));
+	EXPECT_NEAR(test1.r, result.r, EPSILON);
+	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
+	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
+	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+}
+
+TEST(Quaternion, Operator_Equal_Quaternion)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_EQ(test1, test1);
+}
+
+TEST(Quaternion, Operator_Not_Equal_Quaternion)
+{
+	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
+	Quaternion test2 = Quaternion(2.0f, Vector3(1.0f, 2.0f, 3.0f));
+	EXPECT_NE(test1, test2);
+}
+#pragma endregion Quaternion
+

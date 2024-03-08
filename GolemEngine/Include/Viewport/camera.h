@@ -2,10 +2,12 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <MathsLib/Vector3.h>
+
+#include <MathsLib/vector3.h>
 #include <MathsLib/matrix4.h>
 
 #include "dll.h"
+
 
 enum GOLEM_ENGINE_API CameraMovement
 {
@@ -37,10 +39,12 @@ public:
     float yaw;
     float pitch;
     float movementSpeed;
+    float minSpeed;
+    float maxSpeed;
     float mouseSensitivity;
     float zoom;
-    float near = 0.1f;
-    float far = 1000.f;
+    float zNear;
+    float zFar;
 
 private:
     void UpdateCameraVectors();

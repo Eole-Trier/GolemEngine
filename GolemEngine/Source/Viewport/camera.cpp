@@ -1,12 +1,21 @@
 #include <MathsLib/utils.h>
-#include "Viewport/camera.h"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
+#include "Viewport/camera.h"
+#include "UI/engineUi.h"
 
 Camera* Camera::instance;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
     : front(Vector3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
 {
+    zNear = 0.1f;
+    zFar = 1000.f;
+    minSpeed = 1.0f;
+    maxSpeed = 100.0f;
     position = _position;
     worldUp = _up;
     yaw = _yaw;
@@ -16,11 +25,13 @@ Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
         instance = this;
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
+Camera::Camera(float _posX, float _posY, float _posZ, float _upX, float _upY, float _upZ, float _yaw, float _pitch)
     : front(Vector3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
 {
-    position = Vector3(posX, posY, posZ);
-    worldUp = Vector3(upX, upY, upZ);
+    zNear = 0.1f;
+    zFar = 1000.f;
+    position = Vector3(_posX, _posY, _posZ);
+    worldUp = Vector3(_upX, _upY, _upZ);
     yaw = yaw;
     pitch = pitch;
     UpdateCameraVectors();
@@ -72,26 +83,24 @@ void Camera::ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _con
 
 void Camera::ProcessMouseScroll(float _yoffset)
 {
-    zoom -= (float)_yoffset;
-    if (zoom < 1.0f)
-        zoom = 1.0f;
-    if (zoom > 89.1f)
-        zoom = 89.1f;
+    if (movementSpeed + _yoffset > maxSpeed || movementSpeed + _yoffset < minSpeed)
+        return;
+    movementSpeed += (float)_yoffset;
 }
 
-void Camera::ProcessInput(GLFWwindow* window, float _deltaTime)
+void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
 {
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::UP, _deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS)
         ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
 }
 

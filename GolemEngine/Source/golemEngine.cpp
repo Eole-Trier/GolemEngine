@@ -1,5 +1,3 @@
-#include "golemEngine.h"
-
 #include <wtypes.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -7,7 +5,9 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
+
+#include "golemEngine.h"
+
 #include "UI/engineUi.h"
 #include "UI/Windows/viewport.h"
 
@@ -146,7 +146,7 @@ void GolemEngine::Update()
 #pragma region DockSpace;
         m_engineUi->BeginDockSpace();
         
-        ProcessInput();
+         ProcessInput();
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

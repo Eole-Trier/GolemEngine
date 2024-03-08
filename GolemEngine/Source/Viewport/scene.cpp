@@ -1,6 +1,8 @@
-#include <MathsLib/utils.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <MathsLib/utils.h>
+
 #include "Viewport/scene.h"
 #include "Resource/Rendering/mesh.h"
 #include "Resource/tools.h"
@@ -64,7 +66,7 @@ void Scene::Init()
     Shader* shad = m_resourceManager.Create<Shader>("viking_shader");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
     
-    InitLights(shad);
+    InitLights();
 
     Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
@@ -118,33 +120,33 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
     light->Draw(_width, _height, _camera, spherePos);
 }
 
-void Scene::InitLights(Shader* shader)
+void Scene::InitLights()
 {
-    pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector3(3, 0, 0), 1.f, 2.f, 1.f, 0));
-    pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, 1));
-    dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), Vector3(-0.2f, -1.0f, -0.3f), 0));
+    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector3(3, 0, 0), 1.f, 2.f, 1.f, 0));
+    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, 1));
+    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), Vector3(-0.2f, -1.0f, -0.3f), 0));
 }
 
-void Scene::UpdateLights(Shader* shader)
+void Scene::UpdateLights(Shader* _shader)
 {
-    shader->Use();
+    _shader->Use();
 
-    shader->SetInt("nbrDirectionalLights", dirLights.size());
-    for (unsigned int i = 0; i < dirLights.size(); ++i)
+    _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
+    for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
-        dirLights[i]->SetDirectionalLight(shader);
+        m_dirLights[i]->SetDirectionalLight(_shader);
     }
 
-    shader->SetInt("nbrPointLights", pointLights.size());
-    for (unsigned int i = 0; i < pointLights.size(); ++i)
+    _shader->SetInt("nbrPointLights", m_pointLights.size());
+    for (unsigned int i = 0; i < m_pointLights.size(); ++i)
     {
-        pointLights[i]->SetPointLight(shader);
+        m_pointLights[i]->SetPointLight(_shader);
     }
 
-    shader->SetInt("nbrSpotLights", spotLights.size());
-    for (unsigned int i = 0; i < spotLights.size(); ++i)
+    _shader->SetInt("nbrSpotLights", m_spotLights.size());
+    for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
-        spotLights[i]->SetSpotLight(shader);
+        m_spotLights[i]->SetSpotLight(_shader);
     }
 }
 
