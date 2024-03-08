@@ -9,6 +9,6 @@ BasicActors::~BasicActors() {}
 
 void BasicActors::Update(GolemEngine* _golemEngine, const char* _name)
 {
-	InterfaceWrapper::GetInstance()->Begin("Basic_Actors");
-	InterfaceWrapper::GetInstance()->End();
+	GOLEM_UI->Begin("Basic_Actors");
+	GOLEM_UI->End();
 }

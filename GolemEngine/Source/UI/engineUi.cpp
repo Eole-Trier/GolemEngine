@@ -31,13 +31,13 @@ EngineUi::~EngineUi() {}
 
 void EngineUi::InitUI(GLFWwindow* _window)
 {
-    InterfaceWrapper::GetInstance()->Init(_window);
+    GOLEM_UI->Init(_window);
 }
 
 void EngineUi::Update()
 {
-    InterfaceWrapper::GetInstance()->NewFrameImGui();
-    InterfaceWrapper::GetInstance()->EditorStyle();
+    GOLEM_UI->NewFrameImGui();
+    GOLEM_UI->EditorStyle();
 
     //Dock Space
     static bool dockspaceOpen = true;
@@ -53,22 +53,22 @@ void EngineUi::Update()
     ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     if (optFullscreen)
     {
-        const ImGuiViewport* viewport = InterfaceWrapper::GetInstance()->GetMainViewport();
-        InterfaceWrapper::GetInstance()->SetNextWindowPos(viewport->WorkPos);
-        InterfaceWrapper::GetInstance()->SetNextWindowSize(viewport->WorkSize);
-        InterfaceWrapper::GetInstance()->SetNextWindowViewport(viewport->ID);
-        InterfaceWrapper::GetInstance()->PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-        InterfaceWrapper::GetInstance()->PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-        InterfaceWrapper::GetInstance()->PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
+        const ImGuiViewport* viewport = GOLEM_UI->GetMainViewport();
+        GOLEM_UI->SetNextWindowPos(viewport->WorkPos);
+        GOLEM_UI->SetNextWindowSize(viewport->WorkSize);
+        GOLEM_UI->SetNextWindowViewport(viewport->ID);
+        GOLEM_UI->PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        GOLEM_UI->PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        GOLEM_UI->PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
 
         windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
         windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
     }
 
-    InterfaceWrapper::GetInstance()->Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
+    GOLEM_UI->Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
 
-    GolemID dockspace_id = InterfaceWrapper::GetInstance()->GetID("DockSpace");
-    InterfaceWrapper::GetInstance()->DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
+    GolemID dockspace_id = GOLEM_UI->GetID("DockSpace");
+    GOLEM_UI->DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
 
     // Dock Conctrol Space
     static bool init = true;
@@ -79,36 +79,36 @@ void EngineUi::Update()
         // Bottomlefr  BottomRight
         GolemID dock_id_left, dock_id_right;
         init = false;
-        InterfaceWrapper::GetInstance()->DockBuilderAddNode(dockspace_id);
-        InterfaceWrapper::GetInstance()->DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+        GOLEM_UI->DockBuilderAddNode(dockspace_id);
+        GOLEM_UI->DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-        InterfaceWrapper::GetInstance()->DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
+        GOLEM_UI->DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
         GolemID dock_id_topRight, dock_id_bottomRight;
-        InterfaceWrapper::GetInstance()->DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
+        GOLEM_UI->DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
 
         GolemID dock_id_topLeft, dock_id_bottomLeft;
-        InterfaceWrapper::GetInstance()->DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
+        GOLEM_UI->DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
         // For defining the position of the dock
-        InterfaceWrapper::GetInstance()->DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
-        InterfaceWrapper::GetInstance()->DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
-        InterfaceWrapper::GetInstance()->DockBuilderDockWindow("Viewport", dock_id_topLeft);
-        InterfaceWrapper::GetInstance()->DockBuilderDockWindow("World_Actors", dock_id_topRight);
-        InterfaceWrapper::GetInstance()->DockBuilderDockWindow("Debug", dock_id_bottomRight);
+        GOLEM_UI->DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
+        GOLEM_UI->DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
+        GOLEM_UI->DockBuilderDockWindow("Viewport", dock_id_topLeft);
+        GOLEM_UI->DockBuilderDockWindow("World_Actors", dock_id_topRight);
+        GOLEM_UI->DockBuilderDockWindow("Debug", dock_id_bottomRight);
 
-        InterfaceWrapper::GetInstance()->DockBuilderFinish(dockspace_id);
+        GOLEM_UI->DockBuilderFinish(dockspace_id);
     }
 
     if (optFullscreen)
     {
-        InterfaceWrapper::GetInstance()->PopStyleVar(3);
+        GOLEM_UI->PopStyleVar(3);
     }
-    InterfaceWrapper::GetInstance()->End();
+    GOLEM_UI->End();
 
     CustomWindows();
 
-    InterfaceWrapper::GetInstance()->Render();
+    GOLEM_UI->Render();
 }
 
 void EngineUi::CustomWindows()
@@ -121,23 +121,23 @@ void EngineUi::CustomWindows()
 
     Camera* camera = Camera::instance;
 
-    InterfaceWrapper::GetInstance()->Begin("Menu");
+    GOLEM_UI->Begin("Menu");
     
-    if (InterfaceWrapper::GetInstance()->Button("New Window"))
+    if (GOLEM_UI->Button("New Window"))
     {
         Window* newWindow = new Window();
         AddNewWindow(newWindow);
     }
-    InterfaceWrapper::GetInstance()->SameLine();
-    if (InterfaceWrapper::GetInstance()->Button("Show All Windows"))
+    GOLEM_UI->SameLine();
+    if (GOLEM_UI->Button("Show All Windows"))
     {
         for (auto dock : m_windowList)
         {
             dock->isRendered = true;
         }
     }
-    InterfaceWrapper::GetInstance()->SameLine();
-    if (InterfaceWrapper::GetInstance()->Button("Hide All Windows"))
+    GOLEM_UI->SameLine();
+    if (GOLEM_UI->Button("Hide All Windows"))
     {
         for (auto dock : m_windowList)
         {
@@ -145,7 +145,7 @@ void EngineUi::CustomWindows()
         }
     }
 
-    InterfaceWrapper::GetInstance()->End();
+    GOLEM_UI->End();
 }
 
 bool EngineUi::GetIsFullscreen()
@@ -170,6 +170,6 @@ void EngineUi::AddNewWindow(Window* _newWindow)
 
 void Window::Update(GolemEngine* _golemEngine, const char* _name)
 {
-    InterfaceWrapper::GetInstance()->Begin(_name);
-    InterfaceWrapper::GetInstance()->End();
+    GOLEM_UI->Begin(_name);
+    GOLEM_UI->End();
 }

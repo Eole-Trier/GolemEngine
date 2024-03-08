@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 
+#define GOLEM_UI InterfaceWrapper::GetInstance()
+
 // Rename the ImGuiAPI by Golem InterfaceWrapper
 using GolemID = ImGuiID;
 using GolemIO = ImGuiIO;

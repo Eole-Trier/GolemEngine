@@ -9,6 +9,6 @@ WorldActors::~WorldActors() {}
 
 void WorldActors::Update(GolemEngine* _golemEngine, const char* _name)
 {
-	InterfaceWrapper::GetInstance()->Begin("World_Actors");
-	InterfaceWrapper::GetInstance()->End();
+	GOLEM_UI->Begin("World_Actors");
+	GOLEM_UI->End();
 }
