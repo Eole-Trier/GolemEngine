@@ -1,15 +1,14 @@
 #include "UI/Windows/basicActors.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "Wrappers/interfaceWrapper.h"
+#include "golemEngine.h"
 
 BasicActors::BasicActors() {}
 
 BasicActors::~BasicActors() {}
 
-void BasicActors::Update()
+void BasicActors::Update(GolemEngine* _golemEngine, const char* _name)
 {
-	ImGui::Begin("Basic_Actors");
-	ImGui::End();
+	InterfaceWrapper::GetInstance()->Begin("Basic_Actors");
+	InterfaceWrapper::GetInstance()->End();
 }

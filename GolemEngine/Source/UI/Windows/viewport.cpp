@@ -21,7 +21,7 @@ Viewport::Viewport()
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine)
+void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 {
     GraphicWrapper::GetInstance()->EnableDepth();
 

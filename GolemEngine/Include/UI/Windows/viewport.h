@@ -1,9 +1,6 @@
 #pragma once
 #include "UI/engineUi.h"
-
-struct GLFWwindow;
-class GolemEngine;
-class Camera;
+#include "Viewport/camera.h"
 
 class Viewport : public Window
 {
@@ -25,13 +22,11 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
 	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
 
 	Camera* GetCamera();
 	void MouseMovement(GolemEngine* _golemEngine);
-
-
 };

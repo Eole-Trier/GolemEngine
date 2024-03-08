@@ -6,5 +6,5 @@ public:
 	BasicActors();
 	~BasicActors();
 
-	void Update();
+	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
 };

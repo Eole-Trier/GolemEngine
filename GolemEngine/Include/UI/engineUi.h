@@ -14,10 +14,14 @@ class GolemEngine;
 
 class GOLEM_ENGINE_API Window
 {
+private:
+	const char* m_name;
+
 public:
+	bool isRendered = true;
 	GLFWwindow* window;
 	
-	//virtual void Update(GolemEngine* _golemEngine) const;
+	virtual void Update(GolemEngine* _golemEngine, const char* _name = "default window");
 };
 
 class GOLEM_ENGINE_API EngineUi
@@ -45,4 +49,6 @@ public:
 	bool GetIsFullscreen();
 	void SetIsFullscreen(bool _value);
 	Viewport* GetViewport();
+
+	void AddNewWindow(Window* _newWindow);
 };

@@ -7,5 +7,5 @@ public:
 	FileBrowser();
 	~FileBrowser();
 
-	void Update();
+	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
 };

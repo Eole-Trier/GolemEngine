@@ -69,7 +69,6 @@ public:
 	void UpdatePlatformWindows();
 	void RenderPlatformWindowsDefault(void* _platformRenderArg = NULL, void* _rendererRenderArg = NULL);
 
-
 public:
 	// Basic Functions
 	bool SliderFloat(const char* _label, float* _v, float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
@@ -83,6 +82,8 @@ public:
 		const GolemVec4& _tintCol = GolemVec4(1, 1, 1, 1), const GolemVec4& _borderCol = GolemVec4(0, 0, 0, 0));
 
 	void Text(const char* _fmt, ...);
+
+	void SameLine(float _offsetFromStartX = 0.0f, float _spacing = -1.0f);
 
 public:
 	GolemVec2 GetContentRegionAvail();

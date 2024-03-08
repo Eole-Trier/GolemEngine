@@ -113,16 +113,38 @@ void EngineUi::Update()
 
 void EngineUi::CustomWindows()
 {
-    m_basicActors->Update();
-    m_fileBrowser->Update();
-    m_worldActors->Update();
-    m_viewport->Update(m_golemEngine);
-    m_debugWindow->Update(m_golemEngine);
+    for (auto dock : m_windowList)
+    {
+        if(dock->isRendered)
+            dock->Update(m_golemEngine);
+    }
 
     Camera* camera = Camera::instance;
 
-    InterfaceWrapper::GetInstance()->Begin("Camera");
-    InterfaceWrapper::GetInstance()->SliderFloat("Camera Move Speed", &camera->movementSpeed, camera->minSpeed, camera->maxSpeed, 0);
+    InterfaceWrapper::GetInstance()->Begin("Menu");
+    
+    if (InterfaceWrapper::GetInstance()->Button("New Window"))
+    {
+        Window* newWindow = new Window();
+        AddNewWindow(newWindow);
+    }
+    InterfaceWrapper::GetInstance()->SameLine();
+    if (InterfaceWrapper::GetInstance()->Button("Show All Windows"))
+    {
+        for (auto dock : m_windowList)
+        {
+            dock->isRendered = true;
+        }
+    }
+    InterfaceWrapper::GetInstance()->SameLine();
+    if (InterfaceWrapper::GetInstance()->Button("Hide All Windows"))
+    {
+        for (auto dock : m_windowList)
+        {
+            dock->isRendered = false;
+        }
+    }
+
     InterfaceWrapper::GetInstance()->End();
 }
 
@@ -139,4 +161,15 @@ void EngineUi::SetIsFullscreen(bool _value)
 Viewport* EngineUi::GetViewport()
 {
     return m_viewport;
+}
+
+void EngineUi::AddNewWindow(Window* _newWindow)
+{
+    m_windowList.push_back(_newWindow);
+}
+
+void Window::Update(GolemEngine* _golemEngine, const char* _name)
+{
+    InterfaceWrapper::GetInstance()->Begin(_name);
+    InterfaceWrapper::GetInstance()->End();
 }

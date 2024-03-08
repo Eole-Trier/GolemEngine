@@ -2,12 +2,13 @@
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "Wrappers/interfaceWrapper.h"
+#include "golemEngine.h"
 
 FileBrowser::FileBrowser() {}
 
 FileBrowser::~FileBrowser() {}
 
-void FileBrowser::Update()
+void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 {
 	InterfaceWrapper::GetInstance()->Begin("File_Browser");
 

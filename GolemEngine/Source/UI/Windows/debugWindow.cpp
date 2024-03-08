@@ -7,7 +7,7 @@ DebugWindow::DebugWindow() {}
 
 DebugWindow::~DebugWindow() {}
 
-void DebugWindow::Update(GolemEngine* _golemEngine)
+void DebugWindow::Update(GolemEngine* _golemEngine, const char* _name)
 {
 	InterfaceWrapper::GetInstance()->Begin("Debug");
 	InterfaceWrapper::GetInstance()->Text("deltaTime: %f", _golemEngine->GetDeltaTime());

@@ -57,6 +57,11 @@ void InterfaceWrapper::Text(const char* _fmt, ...)
     va_end(args);
 }
 
+void InterfaceWrapper::SameLine(float _offsetFromStartX, float _spacing)
+{
+    ImGui::SameLine(_offsetFromStartX, _spacing);
+}
+
 GolemVec2 InterfaceWrapper::GetContentRegionAvail()
 {
     return ImGui::GetContentRegionAvail();
