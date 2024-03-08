@@ -4,7 +4,6 @@
 
 class GolemEngine;
 class EditorUi;
-
 class Editor
 {
 private:

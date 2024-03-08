@@ -2,9 +2,10 @@
 
 #include <GLFW/glfw3.h>
 
-
 #include "golemEngine.h"
 #include "UI/editorUi.h"
+#include "Wrappers/windowWrapper.h"
+#include "UI/engineUi.h"
 
 Editor::Editor()
 	: 
@@ -21,9 +22,13 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
-	
-	m_golemEngine->Update();
-	m_editorUi->Update();
+    while (!WINDOW_INTERFACE->ShouldWindowClose(m_golemEngine->GetWindow()))
+    {
+		m_golemEngine->Update();
+        m_golemEngine->GetUi()->Update();
+        m_editorUi->Update();
+        WINDOW_INTERFACE->SwapBuffers(m_golemEngine->GetWindow());
+    }
 	std::cout << "test from editor mainloop" << std::endl;
 }
 

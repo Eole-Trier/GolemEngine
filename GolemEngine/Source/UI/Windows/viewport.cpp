@@ -10,6 +10,7 @@
 
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
+
 Viewport::Viewport()
     :m_lastX(0),
     m_lastY(0),

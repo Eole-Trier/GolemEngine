@@ -33,6 +33,11 @@ public:
 
 	Scene* GetScene();
 	GLFWwindow* GetWindow();
+	EngineUi* GetUi();
+
 	float GetDeltaTime();
 	float GetTime();
+
+	float GetScreenWidth();
+	float GetScreenHeight();
 };

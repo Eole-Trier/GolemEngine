@@ -47,8 +47,8 @@
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\Windows\viewport.cpp" />
     <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
-    <ClCompile Include="Source\Wrappers\interfaceWrapper0.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
+    <ClCompile Include="Source\Wrappers\interfaceWrapper0.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper0.cpp" />
   </ItemGroup>
   <ItemGroup>

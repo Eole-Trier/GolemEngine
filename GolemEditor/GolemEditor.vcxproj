@@ -183,7 +183,6 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\UI\editorUi.cpp" />
     <ClCompile Include="Source\UI\editorWindow.cpp" />
-    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
     <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
@@ -205,7 +204,6 @@
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\editorWindow.h" />
-    <ClInclude Include="Include\UI\Windows\viewport.h" />
     <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
   </ItemGroup>

@@ -100,31 +100,22 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    while (!WINDOW_INTERFACE->ShouldWindowClose(m_window))
-
-    {
-        //glfwPollEvents();
-        WINDOW_INTERFACE->ProcessEvents();
-        UpdateDeltaTime();
-        ProcessInput();
-
-        // Bind next framebuffer to the scene buffer
-        GRAPHIC_INTERFACE->BindFramebuffer();
-
-        // Assign background color and clear previous scene buffers 
-        GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
-        GRAPHIC_INTERFACE->ClearBuffer();
-
-        // Render the scene to the framebuffer
-        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
-
-        // Go back to original framebuffer
-        GRAPHIC_INTERFACE->UnbindFramebuffer();
-
-        m_engineUi->Update();
-
-        WINDOW_INTERFACE->SwapBuffers(m_window);
-    }
+    WINDOW_INTERFACE->ProcessEvents();
+    UpdateDeltaTime();
+    ProcessInput();
+    
+    // Bind next framebuffer to the scene buffer
+    GRAPHIC_INTERFACE->BindFramebuffer();
+    
+    // Assign background color and clear previous scene buffers 
+    GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    GRAPHIC_INTERFACE->ClearBuffer();
+    
+    // Render the scene to the framebuffer
+    m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
+    
+    // Go back to original framebuffer
+    GRAPHIC_INTERFACE->UnbindFramebuffer();
 }
 
 void GolemEngine::Close()
@@ -142,6 +133,11 @@ GLFWwindow* GolemEngine::GetWindow()
     return m_window;
 }
 
+EngineUi* GolemEngine::GetUi()
+{
+    return m_engineUi;
+}
+
 float GolemEngine::GetDeltaTime()
 {
     return m_deltaTime;
@@ -151,3 +147,14 @@ float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
 }
+
+float GolemEngine::GetScreenWidth()
+{
+    return m_screenWidth;
+}
+
+float GolemEngine::GetScreenHeight()
+{
+    return m_screenHeight;
+}
+
