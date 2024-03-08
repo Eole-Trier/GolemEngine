@@ -78,6 +78,8 @@ public:
 	bool SliderFloat3(const char* _label, float _v[3], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 	bool SliderFloat4(const char* _label, float _v[4], float _vMin, float _vMax, const char* _format = "%.3f", ImGuiSliderFlags _flags = 0);
 
+	bool SliderAngle(const char* _label, float* _vRad, float _vDegreesMin = -360.0f, float _vDegreesMax = +360.0f, const char* _format = "%.0f deg", ImGuiSliderFlags _flags = 0);
+
 	bool Button(const char* _label, const GolemVec2& _size = GolemVec2(0, 0));
 	bool InputText(const char* _label, char* _buf, size_t _bufSize, ImGuiInputTextFlags _flags = 0, ImGuiInputTextCallback _callback = NULL, void* _userData = NULL);
 	void Image(GolemTextureID _textureId,

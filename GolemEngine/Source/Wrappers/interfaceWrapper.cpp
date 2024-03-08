@@ -39,9 +39,19 @@ bool InterfaceWrapper::SliderFloat4(const char* _label, float _v[4], float _vMin
     return ImGui::SliderFloat4(_label, _v, _vMin, _vMax, _format, _flags);
 }
 
+bool InterfaceWrapper::SliderAngle(const char* _label, float* _vRad, float _vDegreesMin, float _vDegreesMax, const char* _format, ImGuiSliderFlags _flags)
+{
+    return ImGui::SliderAngle(_label, _vRad, _vDegreesMin, _vDegreesMax, _format, _flags);
+}
+
 bool InterfaceWrapper::Button(const char* _label, const GolemVec2& _size)
 {
     return ImGui::Button(_label, _size);
+}
+
+bool InterfaceWrapper::InputText(const char* _label, char* _buf, size_t _bufSize, ImGuiInputTextFlags _flags, ImGuiInputTextCallback _callback, void* _userData)
+{
+    return ImGui::InputText(_label, _buf, _bufSize, _flags, _callback, _userData);
 }
 
 void InterfaceWrapper::Image(GolemTextureID _textureId, const GolemVec2& _imageSize, const GolemVec2& _uv0, const GolemVec2& _uv1, const GolemVec4& _tintCol, const GolemVec4& _borderCol)
