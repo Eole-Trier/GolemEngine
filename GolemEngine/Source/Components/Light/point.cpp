@@ -1,6 +1,6 @@
 
 #include "Resource/Rendering/shader.h"
-#include "Resource/Light/Point.h"
+#include "Components/Light/Point.h"
 
 PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const float constant, const float linear, const float quadratic, int id)
 {

@@ -1,7 +1,7 @@
 
 
 #include "Resource/Rendering/shader.h"
-#include "Resource/Light/Directional.h"
+#include "Components/Light/Directional.h"
 
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "dll.h"
-#include "Resource/Light/Light.h"
+#include "Components/Light/Light.h"
 
 class Shader;
 

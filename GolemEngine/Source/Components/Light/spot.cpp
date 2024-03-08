@@ -1,7 +1,7 @@
 
 #include <MathsLib/utils.h>
 #include "Resource/Rendering/shader.h"
-#include "Resource/Light/Spot.h"
+#include "Components/Light/Spot.h"
 
 
 

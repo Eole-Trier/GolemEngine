@@ -9,9 +9,10 @@
 
 #include "Resource/Rendering/mesh.h"
 #include "Resource/tools.h"
-#include "Resource/Light/point.h"
-#include "Resource/Light/directional.h"
-#include "Resource/Light/spot.h"
+#include "Components/Light/light.h"
+#include "Components/Light/point.h"
+#include "Components/Light/directional.h"
+#include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 
 Scene::Scene() 
@@ -71,31 +72,47 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 
 void Scene::InitLights()
 {
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector3(3, 0, 0), 1.f, 2.f, 1.f, 0));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, 1));
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), Vector3(-0.2f, -1.0f, -0.3f), 0));
+    m_lights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector3(3, 0, 0), 1.f, 2.f, 1.f, 0));
+    m_lights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, 1));
+    m_lights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), Vector3(-0.2f, -1.0f, -0.3f), 0));
 }
 
 void Scene::UpdateLights(Shader* _shader)
 {
+    int nbrDir = 0;
+    int nbrPoint = 0;
+    int nbrSpot = 0;
+
     _shader->Use();
 
-    _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
-    for (unsigned int i = 0; i < m_dirLights.size(); ++i)
+    for (unsigned int i = 0; i < m_lights.size(); ++i)
     {
-        m_dirLights[i]->SetDirectionalLight(_shader);
+        if (static_cast<DirectionalLight*>(m_lights[i]) != nullptr)
+        {
+            DirectionalLight* dir = static_cast<DirectionalLight*>(m_lights[i]);
+            dir->SetDirectionalLight(_shader);
+            nbrDir += 1;
+        }
+        else if (static_cast<PointLight*>(m_lights[i]) != nullptr)
+        {
+            PointLight* point = static_cast<PointLight*>(m_lights[i]);
+            point->SetPointLight(_shader);
+            nbrPoint += 1;
+        }
+        else if (static_cast<SpotLight*>(m_lights[i]) != nullptr)
+        {
+            SpotLight* spot = static_cast<SpotLight*>(m_lights[i]);
+            spot->SetSpotLight(_shader);
+            nbrSpot += 1;
+        }
+        else //should not happen
+        {
+            Log::Print("Can't cast light %d", i);
+        }
     }
 
-    _shader->SetInt("nbrPointLights", m_pointLights.size());
-    for (unsigned int i = 0; i < m_pointLights.size(); ++i)
-    {
-        m_pointLights[i]->SetPointLight(_shader);
-    }
-
-    _shader->SetInt("nbrSpotLights", m_spotLights.size());
-    for (unsigned int i = 0; i < m_spotLights.size(); ++i)
-    {
-        m_spotLights[i]->SetSpotLight(_shader);
-    }
+    _shader->SetInt("nbrDirectionalLights", nbrDir);
+    _shader->SetInt("nbrPointLights", nbrPoint);
+    _shader->SetInt("nbrSpotLights", nbrSpot);
 }
 

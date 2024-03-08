@@ -9,9 +9,9 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Source\Resource\Light\directional.cpp" />
-    <ClCompile Include="Source\Resource\Light\point.cpp" />
-    <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\Components\Light\directional.cpp" />
+    <ClCompile Include="Source\Components\Light\point.cpp" />
+    <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
+    <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -41,10 +42,10 @@
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
-    <ClInclude Include="Include\Resource\Light\directional.h" />
-    <ClInclude Include="Include\Resource\Light\light.h" />
-    <ClInclude Include="Include\Resource\Light\point.h" />
-    <ClInclude Include="Include\Resource\Light\spot.h" />
+    <ClInclude Include="Include\Components\Light\directional.h" />
+    <ClInclude Include="Include\Components\Light\light.h" />
+    <ClInclude Include="Include\Components\Light\point.h" />
+    <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
@@ -64,5 +65,10 @@
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
   </ItemGroup>
 </Project>
