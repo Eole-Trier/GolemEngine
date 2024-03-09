@@ -11,7 +11,9 @@
 
 Editor::Editor()
 	: 
-    m_name("Golem Engine")
+    m_name("Golem Engine"),
+    m_golemEngine(new GolemEngine()),
+    m_editorUi(new EditorUi(m_golemEngine))
 {
     // Get screen dimensions
     RECT desktop;
@@ -20,16 +22,12 @@ Editor::Editor()
     m_screenWidth = desktop.right;
     m_screenHeight = desktop.bottom;
 
-    // Create engine
-    m_golemEngine = new GolemEngine(m_screenWidth, m_screenHeight);
-    // Create Ui
-    m_editorUi = new EditorUi(m_golemEngine);
-    int a;
+    m_golemEngine->SetScreenSize(m_screenWidth, m_screenHeight);
 }
 
 Editor::~Editor() {}
 
-void Editor::Init()
+void Editor::InitWindow()
 {
     WINDOW_INTERFACE->Init();
     WINDOW_INTERFACE->SetOption(OPENGL_MAJOR_VERSION, 3);
@@ -53,7 +51,11 @@ void Editor::Init()
     }
 
     UI_INTERFACE->Init(m_window);
+}
 
+void Editor::Init()
+{
+    InitWindow();
     m_golemEngine->Init();
 }
 

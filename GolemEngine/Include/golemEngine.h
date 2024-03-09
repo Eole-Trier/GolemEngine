@@ -19,7 +19,7 @@ private:
 	int m_screenHeight;
 
 public:
-	GolemEngine(int _screenWidth, int _screenHeight);
+	GolemEngine();
 
 	void Init();
 	void InitScene();
@@ -36,4 +36,6 @@ public:
 
 	float GetScreenWidth();
 	float GetScreenHeight();
+
+	void SetScreenSize(int _width, int _height);
 };

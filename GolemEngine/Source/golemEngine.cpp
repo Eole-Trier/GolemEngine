@@ -6,11 +6,9 @@
 #include "vector4.h"
 #include "Viewport/scene.h"
 
-GolemEngine::GolemEngine(int _screenWidth, int _screenHeight)
+GolemEngine::GolemEngine()
     :
-    m_scene(new Scene()),
-    m_screenWidth(_screenWidth),
-    m_screenHeight(_screenHeight)
+    m_scene(new Scene())
 {}
 
 void GolemEngine::InitScene()
@@ -114,3 +112,8 @@ float GolemEngine::GetScreenHeight()
     return m_screenHeight;
 }
 
+void GolemEngine::SetScreenSize(int _width, int _height)
+{
+    m_screenWidth = _width;
+    m_screenHeight = _height;
+}

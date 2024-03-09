@@ -20,6 +20,7 @@ public:
 	Editor();
 	~Editor();
 
+	void InitWindow();
 	void Init();
 	void Run();
 	void MainLoop();
