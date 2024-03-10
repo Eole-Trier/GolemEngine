@@ -85,12 +85,17 @@ void GraphicWrapper::ClearBuffer()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+unsigned int GraphicWrapper::GetTextureId()
+{
+    return m_textureId;
+}
+
 void GraphicWrapper::SetBackgroundColor(Vector4 _color)
 {
     glClearColor(_color.x, _color.y, _color.z, _color.w);
 }
 
-unsigned int GraphicWrapper::GetTextureId()
+void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax)
 {
-    return m_textureId;
+    glViewport(_xMin, _yMin, _xMax, _yMax);
 }

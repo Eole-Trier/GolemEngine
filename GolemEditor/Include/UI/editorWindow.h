@@ -6,7 +6,6 @@ class EditorWindow
 {
 public:
 	virtual void Update(GolemEngine* _golemEngine, const char* _name = "default window");
-
 private:
 	const char* m_name;
 

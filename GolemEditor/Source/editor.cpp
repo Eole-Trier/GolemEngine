@@ -29,6 +29,7 @@ Editor::~Editor() {}
 
 void Editor::InitWindow()
 {
+    // Setup window
     WINDOW_INTERFACE->Init();
     WINDOW_INTERFACE->SetOption(OPENGL_MAJOR_VERSION, 3);
     WINDOW_INTERFACE->SetOption(OPENGL_MINOR_VERSION, 0);
@@ -45,12 +46,12 @@ void Editor::InitWindow()
 
     // Initialize GLAD
     if (!GRAPHIC_INTERFACE->Init())
-
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
 
-    UI_INTERFACE->Init(m_window);
+    m_editorUi->Init(m_window);
+    m_golemEngine->SetWindow(m_window);
 }
 
 void Editor::Init()
@@ -61,11 +62,16 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
-    while (!WINDOW_INTERFACE->ShouldWindowClose(m_golemEngine->GetWindow()))
+    GRAPHIC_INTERFACE->SetViewport(0, 0, m_screenWidth, m_screenHeight);
+    while (!WINDOW_INTERFACE->ShouldWindowClose(m_window))
     {
+        WINDOW_INTERFACE->ProcessEvents();
+        UI_INTERFACE->NewFrameImGui();
+        m_editorUi->BeginDockSpace();
 		m_golemEngine->Update();
-        m_editorUi->Update();
-        WINDOW_INTERFACE->SwapBuffers(m_golemEngine->GetWindow());
+        m_editorUi->EndDockSpace();
+        UI_INTERFACE->Render();
+        WINDOW_INTERFACE->SwapBuffers(m_window);
     }
 	std::cout << "test from editor mainloop" << std::endl;
 }

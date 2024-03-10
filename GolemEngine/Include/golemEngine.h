@@ -38,4 +38,5 @@ public:
 	float GetScreenHeight();
 
 	void SetScreenSize(int _width, int _height);
+	void SetWindow(GLFWwindow* _window);
 };

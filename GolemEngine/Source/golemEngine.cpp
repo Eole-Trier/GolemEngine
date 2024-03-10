@@ -1,7 +1,6 @@
 #include "golemEngine.h"
 
 #include "Wrappers/graphicWrapper.h"
-#include "Wrappers/windowWrapper.h"
 #include "vector4.h"
 #include "vector4.h"
 #include "Viewport/scene.h"
@@ -59,7 +58,6 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    WINDOW_INTERFACE->ProcessEvents();
     UpdateDeltaTime();
     //ProcessInput();
     
@@ -116,4 +114,9 @@ void GolemEngine::SetScreenSize(int _width, int _height)
 {
     m_screenWidth = _width;
     m_screenHeight = _height;
+}
+
+void GolemEngine::SetWindow(GLFWwindow* _window)
+{
+    m_window = _window;
 }

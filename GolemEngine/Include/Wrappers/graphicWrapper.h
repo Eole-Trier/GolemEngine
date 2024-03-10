@@ -43,9 +43,12 @@ public:
 	void UnbindFramebuffer();
 	// Used to clear a buffer for the next draw
 	void ClearBuffer();
-	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
-	void SetBackgroundColor(Vector4 _color);
-
+	
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	unsigned int GetTextureId();
+
+	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
+	void SetBackgroundColor(Vector4 _color);
+	// Used to set the viewport that will be used
+	void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 };
