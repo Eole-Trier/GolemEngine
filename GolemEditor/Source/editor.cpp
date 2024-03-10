@@ -70,7 +70,7 @@ void Editor::MainLoop()
         UI_INTERFACE->NewFrameImGui();
 
         m_editorUi->BeginDockSpace();
-		//m_golemEngine->Update();
+		m_golemEngine->Update();
         m_editorUi->EndDockSpace();
         
         UI_INTERFACE->Render();
