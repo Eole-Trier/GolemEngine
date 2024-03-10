@@ -157,7 +157,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -175,7 +175,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -193,7 +193,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -211,7 +211,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>

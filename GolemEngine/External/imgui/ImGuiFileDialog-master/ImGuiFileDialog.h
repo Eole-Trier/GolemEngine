@@ -1270,8 +1270,10 @@ struct IGFD_Thumbnail_Info {
 // Using ImGuiFileDialog via a shared library is not recommended, because we don't guarantee
 // backward nor forward ABI compatibility and also function call overhead. If you
 // do use ImGuiFileDialog as a DLL, be sure to call SetImGuiContext (see Miscellanous section).
-#ifndef IGFD_API
-#define IGFD_API
+#ifdef IMGUI_EXPORT
+#define IGFD_API __declspec(dllexport)
+#else
+#define IGFD_API __declspec(dllimport)
 #endif  // IGFD_API
 
 #pragma endregion
