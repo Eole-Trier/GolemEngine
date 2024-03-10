@@ -104,11 +104,6 @@ void EditorUi::EndDockSpace()
     UI_INTERFACE->End();
 }
 
-void EditorUi::CustomWindow()
-{
-    m_viewport->Update(m_golemEngine);
-}
-
 void EditorUi::UpdateWindows()
 {
     m_basicActors->Update(m_golemEngine);

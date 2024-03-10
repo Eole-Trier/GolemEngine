@@ -2,8 +2,6 @@
 
 #include <vector>
 
-#include "UI/editorWindow.h"
-
 class GolemEngine;
 class Viewport;
 class BasicActors;
@@ -30,7 +28,6 @@ public:
 	void Init(GLFWwindow* _window);
 	void BeginDockSpace();
 	void EndDockSpace();
-	void CustomWindow();		// TEMP
 	void UpdateWindows();
 
 	bool GetIsFullscreen();
