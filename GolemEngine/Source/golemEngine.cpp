@@ -59,7 +59,7 @@ void GolemEngine::ProcessInput()
 void GolemEngine::Update()
 {
     UpdateDeltaTime();
-    //ProcessInput();
+    ProcessInput();
     
     // Bind next framebuffer to the scene buffer
     GRAPHIC_INTERFACE->BindFramebuffer();

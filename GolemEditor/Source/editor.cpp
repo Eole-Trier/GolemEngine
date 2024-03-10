@@ -8,6 +8,7 @@
 #include "Wrappers/interfaceWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
+#include "vector4.h"
 
 Editor::Editor()
 	: 
@@ -67,9 +68,11 @@ void Editor::MainLoop()
     {
         WINDOW_INTERFACE->ProcessEvents();
         UI_INTERFACE->NewFrameImGui();
+
         m_editorUi->BeginDockSpace();
-		m_golemEngine->Update();
+		//m_golemEngine->Update();
         m_editorUi->EndDockSpace();
+        
         UI_INTERFACE->Render();
         WINDOW_INTERFACE->SwapBuffers(m_window);
     }

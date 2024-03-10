@@ -1,12 +1,12 @@
 #pragma once
 
-#include "UI/editorWindow.h"
+class GolemEngine;
 
-class FileBrowser : public EditorWindow
+class FileBrowser
 {
 public:
 	FileBrowser();
 	~FileBrowser();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
+	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
 };

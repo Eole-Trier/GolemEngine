@@ -219,6 +219,11 @@ void InterfaceWrapper::DockBuilderAddNode(GolemID _id, ImGuiDockNodeFlags _flags
     ImGui::DockBuilderAddNode(_id, _flags);
 }
 
+void InterfaceWrapper::DockBuilderRemoveNode(GolemID _id)
+{
+    ImGui::DockBuilderRemoveNode(_id);
+}
+
 void InterfaceWrapper::DockBuilderSetNodeSize(GolemID _id, GolemVec2 _size)
 {
     ImGui::DockBuilderSetNodeSize(_id, _size);

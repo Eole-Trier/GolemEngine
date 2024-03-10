@@ -1,12 +1,12 @@
 #pragma once
 
-#include "UI/editorWindow.h"
+class GolemEngine;
 
-class WorldActors : public EditorWindow
+class WorldActors
 {
 public:
 	WorldActors();
 	~WorldActors();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
+	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
 };

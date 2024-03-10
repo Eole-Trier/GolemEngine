@@ -59,6 +59,7 @@ public:
 
 	void DockSpace(GolemID _id, const GolemVec2& _size = GolemVec2(0, 0), ImGuiDockNodeFlags _flags = 0, const ImGuiWindowClass* _windowClass = NULL);
 	void DockBuilderAddNode(GolemID _id = 0U, ImGuiDockNodeFlags _flags = 0);
+	void DockBuilderRemoveNode(GolemID _id);
 	void DockBuilderSetNodeSize(GolemID _id, GolemVec2 _size);
 	void DockBuilderSplitNode(GolemID _id, ImGuiDir _splitDir, float _sizeRatioForNodeAtDir, GolemID* _outIdAtDir, GolemID* _outIdAtOppositeDir);
 	void DockBuilderDockWindow(const char* _windowName, GolemID _id);

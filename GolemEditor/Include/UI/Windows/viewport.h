@@ -1,10 +1,10 @@
 #pragma once
 
-#include "UI/editorWindow.h"
 #include "Viewport/camera.h"
 
+class GolemEngine;
 
-class Viewport : public EditorWindow
+class Viewport
 {
 private:
 	static Camera* m_camera;
@@ -24,7 +24,7 @@ public:
 	Viewport();
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default window") override;
+	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
 	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);

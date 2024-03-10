@@ -69,6 +69,7 @@ void EditorUi::BeginDockSpace()
         // Bottomlefr  BottomRight
         GolemID dock_id_left, dock_id_right;
         init = false;
+        UI_INTERFACE->DockBuilderRemoveNode(dockspace_id);
         UI_INTERFACE->DockBuilderAddNode(dockspace_id);
         UI_INTERFACE->DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
