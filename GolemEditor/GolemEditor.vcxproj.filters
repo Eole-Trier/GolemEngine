@@ -24,12 +24,6 @@
     <ClCompile Include="Source\UI\editorUi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\editorWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\UI\Windows\basicActors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,12 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\UI\editorUi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\UI\editorWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Wrappers\interfaceWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\UI\Windows\basicActors.h">

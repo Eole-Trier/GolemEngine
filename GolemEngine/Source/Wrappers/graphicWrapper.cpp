@@ -20,11 +20,6 @@ int GraphicWrapper::Init()
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
-void GraphicWrapper::EnableDepth()
-{
-    glEnable(GL_DEPTH_TEST);
-}
-
 void GraphicWrapper::CreateFramebuffer(int _width, int _height)
 {
     // Create framebuffer
@@ -57,17 +52,9 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
 }
 
-void GraphicWrapper::RescaleFramebuffer(float _width, float _height)
+void GraphicWrapper::ClearBuffer()
 {
-    glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
-
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void GraphicWrapper::BindFramebuffer()
@@ -80,9 +67,9 @@ void GraphicWrapper::UnbindFramebuffer()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GraphicWrapper::ClearBuffer()
+void GraphicWrapper::EnableDepth()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
 }
 
 unsigned int GraphicWrapper::GetTextureId()

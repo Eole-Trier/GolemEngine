@@ -1,8 +1,11 @@
 #include "UI/Windows/fileBrowser.h"
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
-#include "Wrappers/interfaceWrapper.h"
 #include "golemEngine.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 
 FileBrowser::FileBrowser() {}
 
@@ -10,9 +13,9 @@ FileBrowser::~FileBrowser() {}
 
 void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 {
-	UI_INTERFACE->Begin("File_Browser");
+    ImGui::Begin("File_Browser");
 
-    if (UI_INTERFACE->Button("Open File Dialog"))
+    if (ImGui::Button("Open File Dialog"))
     {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp,.py", ".");
     }
@@ -29,5 +32,5 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
         ImGuiFileDialog::Instance()->Close();
     }
 
-	UI_INTERFACE->End();
+    ImGui::End();
 }

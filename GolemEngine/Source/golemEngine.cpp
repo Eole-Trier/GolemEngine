@@ -1,14 +1,15 @@
 #include "golemEngine.h"
 
 #include "Wrappers/graphicWrapper.h"
-#include "vector4.h"
-#include "vector4.h"
 #include "Viewport/scene.h"
+#include "vector4.h"
 
 GolemEngine::GolemEngine()
     :
     m_scene(new Scene())
 {}
+
+GolemEngine::~GolemEngine() {}
 
 void GolemEngine::InitScene()
 {
@@ -36,41 +37,19 @@ void GolemEngine::ProcessInput()
     {
         glfwSetWindowShouldClose(m_window, true);
     }
-
-    //if (glfwGetKey(m_window, GLFW_KEY_F) == GLFW_PRESS)
-    //{
-    //    m_engineUi->SetIsFullscreen(!m_engineUi->GetIsFullscreen());
-
-    //    if (m_engineUi->GetIsFullscreen())
-    //    {
-    //        // Switch to fullscreen mode
-    //        GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
-    //        const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
-    //        glfwSetWindowMonitor(m_window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-    //    }
-    //    else
-    //    {
-    //        // Switch back to windowed mode
-    //        glfwSetWindowMonitor(m_window, NULL, 100, 100, m_screenWidth, m_screenHeight, GLFW_DONT_CARE);
-    //    }
-    //}
 }
 
 void GolemEngine::Update()
 {
     UpdateDeltaTime();
-    ProcessInput();
-    
     // Bind next framebuffer to the scene buffer
     GRAPHIC_INTERFACE->BindFramebuffer();
-    
     // Assign background color and clear previous scene buffers 
     GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    // Clear buffer
     GRAPHIC_INTERFACE->ClearBuffer();
-    
     // Render the scene to the framebuffer
     m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance, m_deltaTime);
-    
     // Go back to original framebuffer
     GRAPHIC_INTERFACE->UnbindFramebuffer();
 }
@@ -98,16 +77,6 @@ float GolemEngine::GetDeltaTime()
 float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
-}
-
-float GolemEngine::GetScreenWidth()
-{
-    return m_screenWidth;
-}
-
-float GolemEngine::GetScreenHeight()
-{
-    return m_screenHeight;
 }
 
 void GolemEngine::SetScreenSize(int _width, int _height)

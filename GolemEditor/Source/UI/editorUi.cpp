@@ -1,13 +1,15 @@
 #include "UI/editorUi.h"
 
 #include "golemEngine.h"
-#include "UI/Windows/basicActors.h"
-#include "UI/Windows/viewport.h"
-#include "UI/Windows/fileBrowser.h"
-#include "UI/Windows/worldActors.h"
-#include "UI/Windows/debugWindow.h"
-#include "Wrappers/interfaceWrapper.h"
+#include "Ui/Windows/basicActors.h"
+#include "Ui/Windows/viewport.h"
+#include "Ui/Windows/fileBrowser.h"
+#include "Ui/Windows/worldActors.h"
+#include "Ui/Windows/debugWindow.h"
 #include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 
 
 EditorUi::EditorUi(GolemEngine* _golemEngine)
@@ -22,8 +24,32 @@ EditorUi::EditorUi(GolemEngine* _golemEngine)
 
 void EditorUi::Init(GLFWwindow* _window)
 {
-    UI_INTERFACE->Init(_window);
-    UI_INTERFACE->EditorStyle();
+    // Setup Imgui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    // Setup style
+    ImGui::StyleColorsDark();
+
+    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+
+    ImGui_ImplGlfw_InitForOpenGL(_window, true);
+    ImGui_ImplOpenGL3_Init("#version 460");
+
+    style.WindowRounding = 4;
+    style.FrameRounding = 4;
+    style.GrabRounding = 3;
+    style.ScrollbarSize = 7;
+    style.ScrollbarRounding = 0;
 }
 
 void EditorUi::BeginDockSpace()
@@ -42,13 +68,13 @@ void EditorUi::BeginDockSpace()
     ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     if (optFullscreen)
     {
-        const ImGuiViewport* viewport = UI_INTERFACE->GetMainViewport();
-        UI_INTERFACE->SetNextWindowPos(viewport->WorkPos);
-        UI_INTERFACE->SetNextWindowSize(viewport->WorkSize);
-        UI_INTERFACE->SetNextWindowViewport(viewport->ID);
-        UI_INTERFACE->PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-        UI_INTERFACE->PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-        UI_INTERFACE->PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        ImGui::SetNextWindowSize(viewport->WorkSize);
+        ImGui::SetNextWindowViewport(viewport->ID);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
 
         windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
         windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
@@ -56,53 +82,54 @@ void EditorUi::BeginDockSpace()
 #pragma endregion Setup dockspace
 
 #pragma region Create dockspace
-    UI_INTERFACE->Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
+    ImGui::Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
 
-    GolemID dockspace_id = UI_INTERFACE->GetID("DockSpace");
-    UI_INTERFACE->DockSpace(dockspace_id, GolemVec2(0.0f, 0.0f), dockspaceFlags);
+    ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
     // Dock Control Space
     static bool init = true;
+    ImGuiID dock_id_left, dock_id_right;
     if (init)
     {
         // The dock has a default 4 block layout
         // Topleft     TopRight
         // Bottomlefr  BottomRight
-        GolemID dock_id_left, dock_id_right;
         init = false;
-        UI_INTERFACE->DockBuilderRemoveNode(dockspace_id);
-        UI_INTERFACE->DockBuilderAddNode(dockspace_id);
-        UI_INTERFACE->DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+        ImGui::DockBuilderRemoveNode(dockspace_id);
+        ImGui::DockBuilderAddNode(dockspace_id);
+        ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
-        UI_INTERFACE->DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
-        GolemID dock_id_topRight, dock_id_bottomRight;
-        UI_INTERFACE->DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
+        ImGuiID dock_id_topRight, dock_id_bottomRight;
+        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
 
-        GolemID dock_id_topLeft, dock_id_bottomLeft;
-        UI_INTERFACE->DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
+        ImGuiID dock_id_topLeft, dock_id_bottomLeft;
+        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
         // For defining the position of the dock
-        UI_INTERFACE->DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
-        UI_INTERFACE->DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
-        UI_INTERFACE->DockBuilderDockWindow("Viewport", dock_id_topLeft);
-        UI_INTERFACE->DockBuilderDockWindow("World_Actors", dock_id_topRight);
-        UI_INTERFACE->DockBuilderDockWindow("Debug", dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
+        ImGui::DockBuilderDockWindow("Viewport", dock_id_topLeft);
+        ImGui::DockBuilderDockWindow("World_Actors", dock_id_topRight);
+        ImGui::DockBuilderDockWindow("Debug", dock_id_bottomRight);
 
-        UI_INTERFACE->DockBuilderFinish(dockspace_id);
+        ImGui::DockBuilderFinish(dockspace_id);
     }
 #pragma endregion Create dockspace 
 
     if (optFullscreen)
     {
-        UI_INTERFACE->PopStyleVar(3);
+        ImGui::PopStyleVar(3);
     }
+
     UpdateWindows();
 }
 
 void EditorUi::EndDockSpace()
 {
-    UI_INTERFACE->End();
+    ImGui::End();
 }
 
 void EditorUi::UpdateWindows()
@@ -112,19 +139,4 @@ void EditorUi::UpdateWindows()
     m_viewport->Update(m_golemEngine);
     m_worldActors->Update(m_golemEngine);
     m_debugWindow->Update(m_golemEngine);
-}
-
-bool EditorUi::GetIsFullscreen()
-{
-    return m_isFullscreen;
-}
-
-void EditorUi::SetIsFullscreen(bool _value)
-{
-    m_isFullscreen = _value;
-}
-
-Viewport* EditorUi::GetViewport()
-{
-    return m_viewport;
 }

@@ -1,12 +1,14 @@
 #include "UI/Windows/viewport.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
-#include "Wrappers/interfaceWrapper.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
@@ -26,9 +28,9 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 {
     GRAPHIC_INTERFACE->EnableDepth();
 
-    UI_INTERFACE->Begin("Viewport");
+    ImGui::Begin("Viewport");
 
-    UI_INTERFACE->Image((ImTextureID)GRAPHIC_INTERFACE->GetTextureId(), UI_INTERFACE->GetContentRegionAvail());
+    ImGui::Image((ImTextureID)GRAPHIC_INTERFACE->GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused())
     {
@@ -37,7 +39,7 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
         glfwSetScrollCallback(_golemEngine->GetWindow(), ScrollCallback);
     }
 
-    UI_INTERFACE->End();
+    ImGui::End();
 }
 
 void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)

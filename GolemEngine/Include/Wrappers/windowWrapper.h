@@ -7,6 +7,8 @@
 struct GLFWwindow;
 struct GLFWmonitor;
 
+//using ScrollCallback = void(*)(double xoffset, double yoffset);
+
 class GOLEM_ENGINE_API WindowWrapper
 {
 private:
@@ -21,20 +23,26 @@ public:
 	// Returns instance of the class
 	static WindowWrapper* GetInstance();
 
-	// Initialize window library
+	// Init GLFW
 	void Init();
-	// Set options of window
-	void SetOption(int _hint, int _value);
-	// Create window
+	// Create new GLFW window
 	GLFWwindow* NewWindow(int _width, int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share);
-	// Terminate windowing library
+	// Terminate in case of error
 	void Terminate();
-	// Makes the window passed in parameter the window that will be set as active (to perform operations on...etc).
-	void SetCurrentWindow(GLFWwindow* _window);
+	// Check if user tried to close window
+	int ShouldWindowClose(GLFWwindow* _window);
 	// Process different events to the window
 	void ProcessEvents();
 	// Swap between front and back buffer to render (back) or display (front)
 	void SwapBuffers(GLFWwindow* _window);
-	// Check if user tried to close window
-	int ShouldWindowClose(GLFWwindow* _window);
+
+	// Gets active window
+	GLFWwindow* GetCurrentWindow();
+	// Makes the window passed in parameter the window that will be set as active (to perform operations on...etc).
+	void SetCurrentWindow(GLFWwindow* _window);
+
+	//void SetScrollCallback(ScrollCallback callback);
+
+private:
+	//ScrollCallback m_scrollCallback;
 };

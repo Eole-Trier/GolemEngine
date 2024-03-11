@@ -3,8 +3,8 @@
 #include <vector>
 
 class GolemEngine;
-class Viewport;
 class BasicActors;
+class Viewport;
 class FileBrowser;
 class WorldActors;
 class DebugWindow;
@@ -14,13 +14,11 @@ class EditorUi
 {
 private:
 	GolemEngine* m_golemEngine = nullptr;
-	Viewport* m_viewport = nullptr;
 	BasicActors* m_basicActors = nullptr;
+	Viewport* m_viewport = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
 	WorldActors* m_worldActors = nullptr;
 	DebugWindow* m_debugWindow = nullptr;
-
-	bool m_isFullscreen = false;
 
 public:
 	EditorUi(GolemEngine* _golemEngine);
@@ -29,8 +27,4 @@ public:
 	void BeginDockSpace();
 	void EndDockSpace();
 	void UpdateWindows();
-
-	bool GetIsFullscreen();
-	void SetIsFullscreen(bool _value);
-	Viewport* GetViewport();
 };

@@ -31,19 +31,18 @@ public:
 
 	// Initialize library
 	int Init();
-	// Enable a feature of OpenGl
-	void EnableDepth();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	void CreateFramebuffer(int _width, int _height);
-	void RescaleFramebuffer(float _width, float _height);
+	// Used to clear a buffer for the next draw
+	void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
 	void BindFramebuffer();
 	// Used to UNBIND the scene from a framebuffer to free the framebuffer. 
 	void UnbindFramebuffer();
-	// Used to clear a buffer for the next draw
-	void ClearBuffer();
-	
+	// Enable a feature of OpenGl
+	void EnableDepth();
+
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	unsigned int GetTextureId();
 

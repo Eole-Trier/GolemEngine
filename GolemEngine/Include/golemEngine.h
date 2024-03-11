@@ -10,32 +10,27 @@ class Scene;
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
-	float m_deltaTime = 0.f;
-
 	GLFWwindow* m_window = nullptr;
 	Scene* m_scene = nullptr;
-
 	int m_screenWidth = 0;
 	int m_screenHeight = 0;
+	float m_deltaTime = 0.f;
 
 public:
 	GolemEngine();
+	~GolemEngine();
 
-	void Init();
 	void InitScene();
+	void Init();
 	void UpdateDeltaTime();
-	void Update();
 	void ProcessInput();
+	void Update();
 	void Close();
 
 	Scene* GetScene();
 	GLFWwindow* GetWindow();
-
 	float GetDeltaTime();
 	float GetTime();
-
-	float GetScreenWidth();
-	float GetScreenHeight();
 
 	void SetScreenSize(int _width, int _height);
 	void SetWindow(GLFWwindow* _window);

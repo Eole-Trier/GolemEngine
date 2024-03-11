@@ -1,14 +1,15 @@
 #include "editor.h"
 
-#include <GLFW/glfw3.h>
 #include <wtypes.h>
 
 #include "golemEngine.h"
-#include "UI/editorUi.h"
-#include "Wrappers/interfaceWrapper.h"
+#include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
-#include "vector4.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 
 Editor::Editor()
 	: 
@@ -30,64 +31,79 @@ Editor::~Editor() {}
 
 void Editor::InitWindow()
 {
-    // Setup window
     WINDOW_INTERFACE->Init();
-    WINDOW_INTERFACE->SetOption(OPENGL_MAJOR_VERSION, 3);
-    WINDOW_INTERFACE->SetOption(OPENGL_MINOR_VERSION, 0);
-
-    // Create window
     m_window = WINDOW_INTERFACE->NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
     if (m_window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
         WINDOW_INTERFACE->Terminate();
     }
-
     WINDOW_INTERFACE->SetCurrentWindow(m_window);
+}
 
-    // Initialize GLAD
+void Editor::InitGraphics()
+{
     if (!GRAPHIC_INTERFACE->Init())
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
+}
 
-    m_editorUi->Init(m_window);
-    m_golemEngine->SetWindow(m_window);
+void Editor::InitUi(GLFWwindow* _window)
+{
+    m_editorUi->Init(_window);
 }
 
 void Editor::Init()
 {
     InitWindow();
+    InitGraphics();
+    InitUi(m_window);
+    m_golemEngine->SetWindow(m_window);
     m_golemEngine->Init();
 }
 
 void Editor::MainLoop()
 {
-    GraphicWrapper* apiGraph = GraphicWrapper::GetInstance();
-    apiGraph->SetViewport(0, 0, m_screenWidth, m_screenHeight);
+	ImGuiIO& io = ImGui::GetIO();
+	GraphicWrapper* graphicInterface = GraphicWrapper::GetInstance();
+	graphicInterface->SetViewport(0, 0, m_screenWidth, m_screenHeight);
 
-    WindowWrapper* window = WindowWrapper::GetInstance();
-    InterfaceWrapper* ui = InterfaceWrapper::GetInstance();
+	WindowWrapper* windowInterface = WindowWrapper::GetInstance();
 
-    while (!window->ShouldWindowClose(m_window))
-    {
-        window->ProcessEvents();
-        ui->NewFrameImGui();
-        //ui->EditorStyle();
+	while (!windowInterface->ShouldWindowClose(m_window))
+	{
+		windowInterface->ProcessEvents();
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 
-        m_editorUi->BeginDockSpace();
+		m_editorUi->BeginDockSpace();
+
+		m_golemEngine->ProcessInput();
 		m_golemEngine->Update();
-        m_editorUi->EndDockSpace();
-        
-        ui->Render();
-        window->SwapBuffers(m_window);
-    }
-	std::cout << "test from editor mainloop" << std::endl;
+
+		m_editorUi->EndDockSpace();
+
+		ImGui::Render();
+
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = windowInterface->GetCurrentWindow();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			windowInterface->SetCurrentWindow(backup_current_context);
+		}
+
+		windowInterface->SwapBuffers(m_window);
+	}
 }
 
 void Editor::Cleanup()
 {
-	m_golemEngine->Close();
+	//m_golemEngine->Close();
 	delete m_golemEngine->GetScene();
 	delete m_golemEngine;
 }

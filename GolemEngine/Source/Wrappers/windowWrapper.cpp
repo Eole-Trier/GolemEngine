@@ -11,18 +11,15 @@ WindowWrapper* WindowWrapper::GetInstance()
 {
     if (!m_instancePtr) {
         m_instancePtr = new WindowWrapper();
-    } 
+    }
     return m_instancePtr;
 }
 
 void WindowWrapper::Init()
 {
     glfwInit();
-}
-
-void WindowWrapper::SetOption(int _hint, int _value)
-{
-    glfwWindowHint(_hint, _value);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 }
 
 GLFWwindow* WindowWrapper::NewWindow(int _width, int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share)
@@ -35,9 +32,9 @@ void WindowWrapper::Terminate()
     glfwTerminate();
 }
 
-void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
+int WindowWrapper::ShouldWindowClose(GLFWwindow* _window)
 {
-    glfwMakeContextCurrent(_window);
+    return glfwWindowShouldClose(_window);
 }
 
 void WindowWrapper::ProcessEvents()
@@ -50,7 +47,16 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-int WindowWrapper::ShouldWindowClose(GLFWwindow* _window)
+GLFWwindow* WindowWrapper::GetCurrentWindow()
 {
-    return glfwWindowShouldClose(_window);
+    return glfwGetCurrentContext();
 }
+
+void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
+{
+    glfwMakeContextCurrent(_window);
+}
+
+//void WindowWrapper::SetScrollCallback(ScrollCallback callback)
+//{
+//}
