@@ -28,11 +28,13 @@
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
-    <ClCompile Include="Source\Resource\gameObject.cpp" />
     <ClCompile Include="Source\Inputs\Mouse.cpp" />
     <ClCompile Include="Source\Components\Light\directional.cpp" />
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Core\gameObject.cpp" />
+    <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Core\transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -68,12 +70,14 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
-    <ClInclude Include="Include\Resource\gameObject.h" />
     <ClInclude Include="Include\Inputs\Mouse.h" />
     <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Components\Light\directional.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\point.h" />
     <ClInclude Include="Include\Resource\Light\light.h" />
+    <ClInclude Include="Include\Core\gameobject.h" />
+    <ClInclude Include="Include\Components\component.h" />
+    <ClInclude Include="Include\Core\transform.h" />
   </ItemGroup>
 </Project>

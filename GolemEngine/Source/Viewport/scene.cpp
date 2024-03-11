@@ -13,6 +13,7 @@
 #include "Components/Light/directional.h"
 #include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
+#include "Core/gameobject.h"
 
 Scene::Scene() 
 {

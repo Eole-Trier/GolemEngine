@@ -1,4 +1,5 @@
-#include "..\..\Include\Resource\gameObject.h"
+#include "Core/gameobject.h"
+#include "Components/component.h"
 
 GameObject::GameObject(const std::string& _name) :
 	m_name(_name)
@@ -48,13 +49,3 @@ void GameObject::Destroy()
 {
 
 }*/
-
-
-void Component::SetOwner(GameObject* _owner)
-{
-	owner = _owner;
-}
-
-void Transform::Update()
-{
-}

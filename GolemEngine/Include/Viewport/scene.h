@@ -8,11 +8,14 @@ class DirectionalLight;
 class PointLight;
 class SpotLight;
 class Shader;
+class GameObject;
 
 class GOLEM_ENGINE_API Scene
 {
 private:
 	ResourceManager m_resourceManager;
+
+	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 1;
 	static constexpr size_t m_maxPointLights = 10; // According to the shader

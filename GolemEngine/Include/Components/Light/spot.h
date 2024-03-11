@@ -20,4 +20,6 @@ public:
     SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
         const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots);
     void SetSpotLight(Shader* shader);
+
+    void Update() override {};
 };

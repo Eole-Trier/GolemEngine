@@ -19,4 +19,5 @@ public:
         const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints);
     void SetPointLight(Shader* shader);
    
+    void Update() override {};
 };

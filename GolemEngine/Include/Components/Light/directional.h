@@ -15,4 +15,5 @@ public:
 		const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs);
 	void SetDirectionalLight(Shader* shader);
 	
+	void Update() override {};
 };
