@@ -11,6 +11,7 @@
 #include "model.h"
 #include "Viewport/camera.h"
 
+
 class GOLEM_ENGINE_API Mesh : public Resource
 {
 private:

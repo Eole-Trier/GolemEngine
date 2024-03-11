@@ -4,6 +4,7 @@
 
 #include "../../Libraries/Include/glad/glad.h"
 
+
 void Mesh::SetupMesh()
 {
     glGenVertexArrays(1, &m_model->VAO);

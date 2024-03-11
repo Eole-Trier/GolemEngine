@@ -101,12 +101,7 @@ void Editor::MainLoop()
 	}
 }
 
-void Editor::Cleanup()
-{
-	//m_golemEngine->Close();
-	delete m_golemEngine->GetScene();
-	delete m_golemEngine;
-}
+void Editor::Cleanup() {}
 
 void Editor::Run()
 {

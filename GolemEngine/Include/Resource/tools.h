@@ -1,6 +1,9 @@
 #pragma once
-#include "dll.h"
+
 #include <string>
+
+#include "dll.h"
+
 
 namespace Tools
 {

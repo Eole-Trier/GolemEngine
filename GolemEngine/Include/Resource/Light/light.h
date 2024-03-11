@@ -4,6 +4,7 @@
 #include <MathsLib/vector4.h>
 #include "Resource/resource.h"
 
+
 class GOLEM_ENGINE_API Light : Resource
 {
 public:

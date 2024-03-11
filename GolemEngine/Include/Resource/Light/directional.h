@@ -5,6 +5,7 @@
 
 class Shader;
 
+
 class GOLEM_ENGINE_API DirectionalLight : public Light
 {
 public:

@@ -1,10 +1,10 @@
 #pragma once
 
-
 #include "dll.h"
 #include "Resource/Light/Light.h"
 
 class Shader;
+
 
 class GOLEM_ENGINE_API PointLight : public Light
 {

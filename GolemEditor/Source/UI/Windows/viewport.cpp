@@ -19,8 +19,7 @@ Viewport::Viewport()
     m_yaw(0),
     m_pitch(0),
     m_firstMouse(true)
-{
-}
+{}
 
 Viewport::~Viewport() {}
 

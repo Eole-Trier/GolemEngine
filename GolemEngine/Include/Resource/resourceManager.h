@@ -2,9 +2,11 @@
 
 #include <unordered_map>
 #include <string>
+
 #include "dll.h"
 #include "Resource.h"
 #include "Debug/log.h"
+
 
 class GOLEM_ENGINE_API ResourceManager
 {
