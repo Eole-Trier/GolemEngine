@@ -1,4 +1,6 @@
 
+#include <vector>
+
 #include <MathsLib/utils.h>
 #include "Resource/Rendering/shader.h"
 #include "Components/Light/Spot.h"
@@ -6,7 +8,7 @@
 
 
 SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-    const float quadratic, const float cutOff, const float outerCutOff, int id)
+    const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights)
 {
     diffuseColor = diffuse;
     ambientColor = ambient;
@@ -18,7 +20,7 @@ SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vecto
     this->quadratic = quadratic;
     this->cutOff = cutOff;
     this->outerCutOff = outerCutOff;
-    this->id = id;
+    id = _spotLights.size();
 
 };
 void SpotLight::SetSpotLight(Shader* shader)

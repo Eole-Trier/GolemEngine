@@ -1,8 +1,10 @@
+#include <vector>
 
 #include "Resource/Rendering/shader.h"
 #include "Components/Light/Point.h"
 
-PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const float constant, const float linear, const float quadratic, int id)
+PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, 
+    const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights)
 {
     diffuseColor = diffuse;
     ambientColor = ambient;
@@ -11,7 +13,7 @@ PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vec
     this->constant = constant;
     this->linear = linear;
     this->quadratic = quadratic;
-    this->id = id;
+    id = _pointLights.size();
 }
 
 void PointLight::SetPointLight(Shader* shader)

@@ -4,14 +4,19 @@
 #include "Resource/resourceManager.h"
 #include "Viewport/camera.h"
 
-class Light;
+class DirectionalLight;
+class PointLight;
+class SpotLight;
 class Shader;
 
 class GOLEM_ENGINE_API Scene
 {
 private:
 	ResourceManager m_resourceManager;
-	std::vector<Light*> m_lights;
+
+	std::vector<DirectionalLight*> m_dirLights;
+	std::vector<PointLight*> m_pointLights;
+	std::vector<SpotLight*> m_spotLights;
 
 public:
 	Scene();

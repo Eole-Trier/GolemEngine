@@ -1,17 +1,17 @@
-
+#include <vector>
 
 #include "Resource/Rendering/shader.h"
 #include "Components/Light/Directional.h"
 
 
 
-DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, int id)
+DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, std::vector<DirectionalLight*> _dirLights)
 {
 	diffuseColor = diffuse;
 	ambientColor = ambient;
 	specularColor = specular;
 	this->direction = direction;
-	this->id = id;
+	id = _dirLights.size();
 };
 void DirectionalLight::SetDirectionalLight(Shader* shader)
 {
