@@ -72,20 +72,19 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), Vector3(-0.2f, -1.0f, -0.3f), m_dirLights));
+    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), 
+        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
 
     // Add some point lights
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights));
+    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 
+        Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
+    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), 
+        Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
 
 }
 
 void Scene::UpdateLights(Shader* _shader)
 {
-    int nbrDir = 0;
-    int nbrPoint = 0;
-    int nbrSpot = 0;
-
     _shader->Use();
 
     _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
@@ -104,6 +103,5 @@ void Scene::UpdateLights(Shader* _shader)
     {
         m_spotLights[i]->SetSpotLight(_shader);
     }
-
 }
 

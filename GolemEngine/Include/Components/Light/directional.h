@@ -11,7 +11,7 @@ public:
 	int id;
 	Vector3 direction;
 
-	DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, std::vector<DirectionalLight*> _dirLights);
+	DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, const std::vector<DirectionalLight*>& _dirLights, int _maxDirs);
 	void SetDirectionalLight(Shader* shader);
 	
 };

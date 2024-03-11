@@ -1,10 +1,11 @@
 #include <vector>
 
+#include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
 #include "Components/Light/Point.h"
 
 PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, 
-    const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights)
+    const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights, int _maxPoints)
 {
     diffuseColor = diffuse;
     ambientColor = ambient;
@@ -14,6 +15,11 @@ PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vec
     this->linear = linear;
     this->quadratic = quadratic;
     id = _pointLights.size();
+    if (_pointLights.size() >= (size_t)_maxPoints);
+    {
+        Log::Print("The Point light %d will not be used. Point lights limit : %d", id, _maxPoints);
+    }
+
 }
 
 void PointLight::SetPointLight(Shader* shader)

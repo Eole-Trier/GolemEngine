@@ -15,7 +15,8 @@ public:
     float linear;
     float quadratic;
 
-    PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights);
+    PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, 
+        const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights, int _maxPoints);
     void SetPointLight(Shader* shader);
    
 };

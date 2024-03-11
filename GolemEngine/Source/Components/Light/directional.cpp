@@ -1,17 +1,23 @@
 #include <vector>
 
+#include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
 #include "Components/Light/Directional.h"
 
 
 
-DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, std::vector<DirectionalLight*> _dirLights)
+DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, const std::vector<DirectionalLight*>& _dirLights, int _maxDirs)
 {
 	diffuseColor = diffuse;
 	ambientColor = ambient;
 	specularColor = specular;
+	Matrix4 m = Matrix4(4);
 	this->direction = direction;
 	id = _dirLights.size();
+	if (_dirLights.size() >= (size_t)_maxDirs)
+	{
+		Log::Print("The Directional light %d will not be used. Directional lights limit : %d", id, _maxDirs);
+	}
 };
 void DirectionalLight::SetDirectionalLight(Shader* shader)
 {

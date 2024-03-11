@@ -20,7 +20,7 @@ public:
 		float _i, float _j, float _k, float _l,
 		float _m, float _n, float _o, float _p
 	);
-	Matrix4(float _number);
+	explicit Matrix4(float _number);
 
 	static Matrix4 Identity();
 	Matrix4 Transpose() const;
