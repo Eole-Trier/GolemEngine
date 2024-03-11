@@ -4,6 +4,7 @@
 
 #include "dll.h"
 #include "Viewport/scene.h"
+#include "Inputs/Mouse.h"
 
 struct GLFWwindow;
 class EngineUi;

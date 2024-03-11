@@ -51,6 +51,8 @@ void GolemEngine::InitWindow()
    //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
     glfwMakeContextCurrent(m_window);
+
+    //glfwSetMouseButtonCallback(m_window, Mouse::mouse_button_callback);
    
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
