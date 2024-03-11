@@ -1,12 +1,15 @@
 
+#include <vector>
+
+#include "Debug/log.h"
 #include <MathsLib/utils.h>
 #include "Resource/Rendering/shader.h"
-#include "Resource/Light/Spot.h"
+#include "Components/Light/Spot.h"
 
 
 
 SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-    const float quadratic, const float cutOff, const float outerCutOff, int id)
+    const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, int _maxSpots)
 {
     diffuseColor = diffuse;
     ambientColor = ambient;
@@ -18,9 +21,13 @@ SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vecto
     this->quadratic = quadratic;
     this->cutOff = cutOff;
     this->outerCutOff = outerCutOff;
-    this->id = id;
-
+    id = _spotLights.size();
+    if (_spotLights.size() >= (size_t)_maxSpots)
+    {
+        Log::Print("The Spot light %d will not be used. Spot lights limit : %d", id, _maxSpots);
+    }
 };
+
 void SpotLight::SetSpotLight(Shader* shader)
 {
     shader->SetVec3("spotLights[" + std::to_string(id) + "].position", position);

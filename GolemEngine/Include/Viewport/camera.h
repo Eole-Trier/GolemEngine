@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <MathsLib/Vector3.h>
+
+#include <MathsLib/vector3.h>
 #include <MathsLib/matrix4.h>
 
 #include "dll.h"
@@ -34,14 +35,18 @@ public:
     Vector3 up;
     Vector3 right;
     Vector3 worldUp;
+
     float yaw;
     float pitch;
     float movementSpeed;
+    float minSpeed;
+    float maxSpeed;
     float mouseSensitivity;
     float zoom;
-    float near = 0.1f;
-    float far = 1000.f;
+    float zNear;
+    float zFar;
 
+    bool isMoved = false;
 private:
     void UpdateCameraVectors();
 

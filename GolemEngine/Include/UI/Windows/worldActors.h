@@ -1,10 +1,8 @@
 #pragma once
+#include "UI/engineUi.h"
 
-
-class WorldActors
+class WorldActors : Window
 {
-public:
-
 public:
 	WorldActors();
 	~WorldActors();

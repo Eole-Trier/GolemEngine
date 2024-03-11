@@ -1,9 +1,8 @@
 #pragma once
+#include "UI/engineUi.h"
 
-class FileBrowser
+class FileBrowser : Window
 {
-public:
-
 public:
 	FileBrowser();
 	~FileBrowser();

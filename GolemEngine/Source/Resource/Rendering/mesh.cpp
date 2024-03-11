@@ -50,7 +50,7 @@ void Mesh::Draw(float _width, float _height, Camera* _cam, const Matrix4& _local
     m_shader->Use();
 
     Matrix4 view = _cam->GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->zoom), _width / _height, _cam->near, _cam->far);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->zoom), _width / _height, _cam->zNear, _cam->zFar);
     m_shader->SetMat4("view", view);
     m_shader->SetMat4("projection", projection);
     m_shader->SetMat4("model", _localModel);
