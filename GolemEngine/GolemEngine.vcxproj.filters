@@ -9,9 +9,6 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Source\Components\Light\directional.cpp" />
-    <ClCompile Include="Source\Components\Light\point.cpp" />
-    <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -33,6 +30,9 @@
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="Source\Resource\gameObject.cpp" />
     <ClCompile Include="Source\Inputs\Mouse.cpp" />
+    <ClCompile Include="Source\Components\Light\directional.cpp" />
+    <ClCompile Include="Source\Components\Light\point.cpp" />
+    <ClCompile Include="Source\Components\Light\spot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -44,10 +44,6 @@
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
-    <ClInclude Include="Include\Components\Light\directional.h" />
-    <ClInclude Include="Include\Components\Light\light.h" />
-    <ClInclude Include="Include\Components\Light\point.h" />
-    <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
@@ -74,5 +70,10 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Resource\gameObject.h" />
     <ClInclude Include="Include\Inputs\Mouse.h" />
+    <ClInclude Include="Include\Components\Light\spot.h" />
+    <ClInclude Include="Include\Components\Light\directional.h" />
+    <ClInclude Include="Include\Components\Light\light.h" />
+    <ClInclude Include="Include\Components\Light\point.h" />
+    <ClInclude Include="Include\Resource\Light\light.h" />
   </ItemGroup>
 </Project>

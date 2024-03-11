@@ -9,7 +9,7 @@
 
 
 SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-    const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, int _maxSpots)
+    const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
 {
     diffuseColor = diffuse;
     ambientColor = ambient;
@@ -22,7 +22,7 @@ SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vecto
     this->cutOff = cutOff;
     this->outerCutOff = outerCutOff;
     id = _spotLights.size();
-    if (_spotLights.size() >= (size_t)_maxSpots)
+    if (id >= (size_t)_maxSpots)
     {
         Log::Print("The Spot light %d will not be used. Spot lights limit : %d", id, _maxSpots);
     }

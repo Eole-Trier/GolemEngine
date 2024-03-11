@@ -6,7 +6,8 @@
 
 
 
-DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, const std::vector<DirectionalLight*>& _dirLights, int _maxDirs)
+DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, 
+	const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs)
 {
 	diffuseColor = diffuse;
 	ambientColor = ambient;
@@ -14,7 +15,7 @@ DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambien
 	Matrix4 m = Matrix4(4);
 	this->direction = direction;
 	id = _dirLights.size();
-	if (_dirLights.size() >= (size_t)_maxDirs)
+	if (id >= (size_t)_maxDirs)
 	{
 		Log::Print("The Directional light %d will not be used. Directional lights limit : %d", id, _maxDirs);
 	}

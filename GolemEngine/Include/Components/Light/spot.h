@@ -8,7 +8,7 @@ class Shader;
 class GOLEM_ENGINE_API SpotLight : public Light
 {
 public:
-    int id;
+    size_t id;
     Vector3 position;
     Vector3 direction;
     float constant;
@@ -18,6 +18,6 @@ public:
     float outerCutOff;
 
     SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-        const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, int _maxSpots);
+        const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots);
     void SetSpotLight(Shader* shader);
 };

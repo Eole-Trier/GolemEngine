@@ -14,9 +14,9 @@ class GOLEM_ENGINE_API Scene
 private:
 	ResourceManager m_resourceManager;
 
-	const int m_maxDirLights = 1;
-	const int m_maxPointLights = 10; // According to the shader
-	const int m_maxSpotLights = 10;
+	static constexpr size_t m_maxDirLights = 1;
+	static constexpr size_t m_maxPointLights = 10; // According to the shader
+	static constexpr size_t m_maxSpotLights = 10;
 
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
