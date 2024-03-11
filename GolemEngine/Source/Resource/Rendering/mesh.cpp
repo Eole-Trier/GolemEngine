@@ -2,7 +2,9 @@
 
 #include <MathsLib/utils.h>
 
-#include "../../Libraries/Include/glad/glad.h"
+#include <glad/glad.h>
+
+#include "Core/transform.h"
 
 void Mesh::SetupMesh()
 {
@@ -27,7 +29,11 @@ void Mesh::SetupMesh()
     glBindVertexArray(0);  
 }
 
-Mesh::Mesh() {}
+Mesh::Mesh(const std::string& _name, Transform* _transform, Model* _model, Texture* _texture, Shader* _shader)
+    : GameObject(_name, _transform), m_model(_model), m_texture(_texture), m_shader(_shader)
+{
+    SetupMesh();
+}
 
 Mesh::~Mesh() 
 {
@@ -35,15 +41,7 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &m_model->VBO);
 }
 
-void Mesh::Init(Model* _model, Texture* _texture, Shader* _shader) 
-{
-    m_model = _model;
-    m_texture = _texture;
-    m_shader = _shader;
-    SetupMesh();
-}
-
-void Mesh::Draw(float _width, float _height, Camera* _cam, const Matrix4& _localModel)
+void Mesh::Draw(float _width, float _height, Camera* _cam)
 {
     glActiveTexture(GL_TEXTURE0);
     m_texture->Use();
@@ -53,7 +51,7 @@ void Mesh::Draw(float _width, float _height, Camera* _cam, const Matrix4& _local
     Matrix4 projection = Matrix4::Projection(DegToRad(_cam->zoom), _width / _height, _cam->zNear, _cam->zFar);
     m_shader->SetMat4("view", view);
     m_shader->SetMat4("projection", projection);
-    m_shader->SetMat4("model", _localModel);
+    m_shader->SetMat4("model", Matrix4::TRS(transform->position, transform->rotation, transform->scaling));
 
     glBindVertexArray(m_model->VAO);
     glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());

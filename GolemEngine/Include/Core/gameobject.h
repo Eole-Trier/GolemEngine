@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+class Transform;
 class Component;
 
 class GameObject
@@ -14,7 +15,10 @@ private:
 	bool selected;
 
 public:
-	GameObject(const std::string& _name);
+	Transform* transform;
+
+public:
+	GameObject(const std::string& _name, Transform* _transform);
 	~GameObject();
 
 	void AddComponent(Component* _component);

@@ -7,10 +7,12 @@
 class Transform : public Component
 {
 public:
+	Vector3 position;
+	Vector3 rotation;
+	Vector3 scaling;
+
+public:
+	Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
 	void Update() override;
 
-private:
-	Vector3 m_transform;
-	Vector3 m_rotation;
-	Vector3 m_scaling;
 };

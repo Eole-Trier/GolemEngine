@@ -1,8 +1,9 @@
 #include "Core/gameobject.h"
+#include "Core/transform.h"
 #include "Components/component.h"
 
-GameObject::GameObject(const std::string& _name) :
-	m_name(_name)
+GameObject::GameObject(const std::string& _name, Transform* _transform) :
+	m_name(_name), transform(_transform)
 {
 	selected = false;
 }
