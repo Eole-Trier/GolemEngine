@@ -14,6 +14,9 @@ InterfaceWrapper::~InterfaceWrapper() {}
 
 InterfaceWrapper* InterfaceWrapper::GetInstance()
 {
+    if (!m_instancePtr) {
+        m_instancePtr = new InterfaceWrapper();
+    }
     return m_instancePtr;
 }
 
@@ -138,7 +141,8 @@ GolemID InterfaceWrapper::GetID(const void* _ptrId)
 
 GolemViewport* InterfaceWrapper::GetMainViewport()
 {
-    return(ImGui::GetMainViewport());
+    GolemViewport* viewport = ImGui::GetMainViewport();
+    return viewport;
 }
 
 GolemDrawData* InterfaceWrapper::GetDrawData()

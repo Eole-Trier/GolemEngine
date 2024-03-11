@@ -63,18 +63,24 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
-    GRAPHIC_INTERFACE->SetViewport(0, 0, m_screenWidth, m_screenHeight);
-    while (!WINDOW_INTERFACE->ShouldWindowClose(m_window))
+    GraphicWrapper* apiGraph = GraphicWrapper::GetInstance();
+    apiGraph->SetViewport(0, 0, m_screenWidth, m_screenHeight);
+
+    WindowWrapper* window = WindowWrapper::GetInstance();
+    InterfaceWrapper* ui = InterfaceWrapper::GetInstance();
+
+    while (!window->ShouldWindowClose(m_window))
     {
-        WINDOW_INTERFACE->ProcessEvents();
-        UI_INTERFACE->NewFrameImGui();
+        window->ProcessEvents();
+        ui->NewFrameImGui();
+        //ui->EditorStyle();
 
         m_editorUi->BeginDockSpace();
 		m_golemEngine->Update();
         m_editorUi->EndDockSpace();
         
-        UI_INTERFACE->Render();
-        WINDOW_INTERFACE->SwapBuffers(m_window);
+        ui->Render();
+        window->SwapBuffers(m_window);
     }
 	std::cout << "test from editor mainloop" << std::endl;
 }

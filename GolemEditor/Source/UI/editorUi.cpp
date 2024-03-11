@@ -96,7 +96,6 @@ void EditorUi::BeginDockSpace()
     {
         UI_INTERFACE->PopStyleVar(3);
     }
-
     UpdateWindows();
 }
 

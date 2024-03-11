@@ -10,13 +10,13 @@ class Scene;
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
-	float m_deltaTime;
+	float m_deltaTime = 0.f;
 
 	GLFWwindow* m_window = nullptr;
 	Scene* m_scene = nullptr;
 
-	int m_screenWidth;
-	int m_screenHeight;
+	int m_screenWidth = 0;
+	int m_screenHeight = 0;
 
 public:
 	GolemEngine();

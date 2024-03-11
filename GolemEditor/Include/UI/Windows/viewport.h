@@ -17,7 +17,7 @@ private:
 	bool m_firstMouse;
 
 public:
-	int width, height;
+	int width = 0, height = 0;
 
 public:
 
