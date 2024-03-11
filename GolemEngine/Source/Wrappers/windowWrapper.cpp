@@ -15,9 +15,9 @@ WindowWrapper* WindowWrapper::GetInstance()
     return m_instancePtr;
 }
 
-int WindowWrapper::Init()
+void WindowWrapper::Init()
 {
-    return glfwInit();
+    glfwInit();
 }
 
 void WindowWrapper::SetOption(int _hint, int _value)

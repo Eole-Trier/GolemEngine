@@ -22,7 +22,7 @@ public:
 	static WindowWrapper* GetInstance();
 
 	// Initialize window library
-	int Init();
+	void Init();
 	// Set options of window
 	void SetOption(int _hint, int _value);
 	// Create window

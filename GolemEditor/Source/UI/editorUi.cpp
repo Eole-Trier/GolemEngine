@@ -7,6 +7,7 @@
 #include "UI/Windows/worldActors.h"
 #include "UI/Windows/debugWindow.h"
 #include "Wrappers/interfaceWrapper.h"
+#include "imgui.h"
 
 
 EditorUi::EditorUi(GolemEngine* _golemEngine)
