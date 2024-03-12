@@ -1,19 +1,14 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <MathsLib/utils.h>
 
 #include "Viewport/scene.h"
 
-#include <MathsLib/utils.h>
-
-#include "Resource/Rendering/mesh.h"
+#include "Resource/resourceManager.h"
 #include "Resource/tools.h"
+#include "Resource/Rendering/mesh.h"
+#include "Resource/Rendering/shader.h"
 #include "Resource/Light/point.h"
 #include "Resource/Light/directional.h"
 #include "Resource/Light/spot.h"
-#include "Resource/Rendering/shader.h"
-#include "Resource/resourceManager.h"
 
 Scene::Scene() {}
 
