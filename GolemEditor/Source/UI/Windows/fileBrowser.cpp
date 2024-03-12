@@ -27,6 +27,8 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 
 	ImGui::SameLine();
 	ImGui::BeginChild("child2", ImVec2(0, 0), ImGuiChildFlags_Border);
+	ImGui::Text(GetFileName(m_currentDirectory.string().c_str()));
+	ImGui::Text("");
 	ContentBrowser();
 	ImGui::EndChild();
 
@@ -59,6 +61,7 @@ void FileBrowser::ContentBrowser()
 {
 	if (m_currentDirectory != m_editorDirectory)
 	{
+		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 0.0f, 0.0f)); 
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.5f, 0.5f));
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(100.0f, 30.0f));
@@ -68,17 +71,26 @@ void FileBrowser::ContentBrowser()
 		}
 		ImGui::PopStyleColor();
 		ImGui::PopStyleVar(2);
+		ImGui::Text("");
 	}
 
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
-		if (p.is_directory())
+		std::string fileName = GetFileName(path.c_str());
+		if (fileName != "x64" &&
+			fileName != "GolemEditor.vcxproj" &&
+			fileName != "GolemEditor.vcxproj.filters" &&
+			fileName != "GolemEditor.vcxproj.user" &&
+			fileName != "imgui.ini")
 		{
 			ImGui::SameLine();
 			if (ImGui::Button(GetFileName(path.c_str())))
 			{
-				m_currentDirectory = path;
+				if (p.is_directory())
+				{
+					m_currentDirectory = path;
+				}
 			}
 		}
 	}
