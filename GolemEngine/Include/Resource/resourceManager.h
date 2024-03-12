@@ -11,11 +11,23 @@
 class GOLEM_ENGINE_API ResourceManager
 {
 private:
+	// Static pointer which points to the only instance of this class
+	static ResourceManager* m_instancePtr;
+
 	std::unordered_map<std::string, Resource*> m_resources;
 
-public:
+private:
 	ResourceManager() {}
-	~ResourceManager() {}
+
+public:
+	static ResourceManager* GetInstance()
+	{
+		if (!m_instancePtr) 
+		{
+			m_instancePtr = new ResourceManager();
+		}
+		return m_instancePtr;
+	}
 
 	template<class T>
 	T* Create(std::string _name);
@@ -24,11 +36,15 @@ public:
 	void Delete(std::string _name);
 };
 
+//static inline ResourceManager* ResourceManager::GetInstance()
+
 template<class T>
 inline T* ResourceManager::Create(std::string _name)
 {
 	if (m_resources[_name] != nullptr)
+	{
 		Delete(_name);
+	}
 	T* resource = new T;
 	m_resources[_name] = resource;
 	return resource;
@@ -38,7 +54,9 @@ template<class T>
 inline T* ResourceManager::Get(std::string _name)
 {
 	if (m_resources[_name] == nullptr)
+	{
 		Log::Print("No resource of this name exists");
+	}
 	return dynamic_cast<T*>(m_resources[_name]);
 }
 

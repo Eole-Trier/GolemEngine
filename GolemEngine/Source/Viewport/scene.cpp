@@ -13,41 +13,45 @@
 #include "Resource/Light/directional.h"
 #include "Resource/Light/spot.h"
 #include "Resource/Rendering/shader.h"
+#include "Resource/resourceManager.h"
 
 Scene::Scene() {}
 
 void Scene::Init()
 {
-    #pragma region VikingRoom
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-    Texture* text = m_resourceManager.Create<Texture>("viking_texture");
+    #pragma region VikingRoom
+    Texture* text = resourceManager->Create<Texture>("viking_texture");
     text->Load(Tools::FindFile("viking_room.jpg").c_str());
-    
-    Model* viking = m_resourceManager.Create<Model>("model_viking");
+
+    Model* viking = resourceManager->Create<Model>("model_viking");
     viking->Load(Tools::FindFile("viking_room.obj").c_str());
 
-    Shader* shad = m_resourceManager.Create<Shader>("viking_shader");
+    Shader* shad = resourceManager->Create<Shader>("viking_shader");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
-    
+
     InitLights();
 
-    Mesh* mesh = m_resourceManager.Create<Mesh>("viking_mesh");
+    Mesh* mesh = resourceManager->Create<Mesh>("viking_mesh");
     mesh->Init(viking, text, shad);
-    #pragma endregion VikingRoom
+#pragma endregion VikingRoom
 
-    Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
+    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
 
-    Model* sphere = m_resourceManager.Create<Model>("model_sphere");
+    Model* sphere = resourceManager->Create<Model>("model_sphere");
     sphere->Load("Assets/Basics/sphere.obj");
 
-    Mesh* cube = m_resourceManager.Create<Mesh>("Lighting_Cube");
+    Mesh* cube = resourceManager->Create<Mesh>("Lighting_Cube");
     cube->Init(sphere, sphere_texture, shad);
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime)
 {
-    Shader* viking = m_resourceManager.Get<Shader>("viking_shader");
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Shader* viking = resourceManager->Get<Shader>("viking_shader");
 
     viking->Use();
 
@@ -61,8 +65,8 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
                                 0, 0, 1, 0, 
                                 0, 0, 0, 1);
 
-    Mesh* mesh = m_resourceManager.Get<Mesh>("viking_mesh");
-    Mesh* light = m_resourceManager.Get<Mesh>("Lighting_Cube");
+    Mesh* mesh = resourceManager->Get<Mesh>("viking_mesh");
+    Mesh* light = resourceManager->Get<Mesh>("Lighting_Cube");
     mesh->Draw(_width, _height, _camera, model);
     light->Draw(_width, _height, _camera, spherePos);
 }

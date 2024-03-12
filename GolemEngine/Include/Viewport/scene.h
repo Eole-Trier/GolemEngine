@@ -12,7 +12,6 @@ class Shader;
 class GOLEM_ENGINE_API Scene
 {
 private:
-	ResourceManager m_resourceManager;
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;

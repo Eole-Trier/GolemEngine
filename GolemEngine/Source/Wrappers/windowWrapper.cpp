@@ -9,7 +9,8 @@ WindowWrapper::WindowWrapper() {}
 
 WindowWrapper* WindowWrapper::GetInstance()
 {
-    if (!m_instancePtr) {
+    if (!m_instancePtr) 
+    {
         m_instancePtr = new WindowWrapper();
     }
     return m_instancePtr;

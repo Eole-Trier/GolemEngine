@@ -12,7 +12,8 @@ GraphicWrapper* GraphicWrapper::m_instancePtr = nullptr;
 
 GraphicWrapper* GraphicWrapper::GetInstance()
 {
-    if (!m_instancePtr) {
+    if (!m_instancePtr) 
+    {
         m_instancePtr = new GraphicWrapper();
     }
     return m_instancePtr;
