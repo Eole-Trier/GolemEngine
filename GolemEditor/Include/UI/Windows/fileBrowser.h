@@ -14,11 +14,11 @@ public:
 	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
 
 	void TreeNodes(std::filesystem::path _path);
-
+	// Content Browser loop
 	void ContentBrowser();
-
+	
 	void LastPath(std::filesystem::path& _currentPath);
-
+	// Get ever file name
 	const char* GetFileName(const char* _path);
 
 private:
