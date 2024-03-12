@@ -1,6 +1,7 @@
 #include "UI/Windows/fileBrowser.h"
 
 #include <filesystem>
+#include <stack>
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "golemEngine.h"
@@ -10,6 +11,13 @@
 #include "imgui_internal.h"
 
 namespace fs = std::filesystem;
+
+#define EXCLUDE_FILE(name) \
+    (name != "x64" && \
+    name != "GolemEditor.vcxproj" && \
+    name != "GolemEditor.vcxproj.filters" && \
+    name != "GolemEditor.vcxproj.user" && \
+    name != "imgui.ini")
 
 FileBrowser::FileBrowser() 
 	:m_currentDirectory(m_editorDirectory)
@@ -38,26 +46,35 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
 {
-	bool test = std::filesystem::is_directory(_path);
-	if (test)
+	std::stack<std::filesystem::path> stack;
+	stack.push(_path);
+
+	while (!stack.empty())
 	{
-		if (ImGui::TreeNodeEx(_path.filename().string().c_str(), ImGuiTreeNodeFlags_OpenOnArrow))
+		std::filesystem::path currentPath = stack.top();
+		stack.pop();
+
+		bool isDirectory = std::filesystem::is_directory(currentPath);
+
+		ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
+
+		if (ImGui::TreeNodeEx(currentPath.filename().string().c_str(), flags))
 		{
-			for (const auto& entry : std::filesystem::directory_iterator(_path))
+			if (isDirectory)
 			{
-				TreeNodes(entry);
+				ImGui::Indent();
+				
+				for (const auto& entry : std::filesystem::directory_iterator(currentPath))
+				{
+					stack.push(entry);
+				}
 			}
 			ImGui::TreePop();
 		}
 	}
-	else
-	{
-		ImGui::TreeNodeEx(_path.filename().string().c_str(), ImGuiTreeNodeFlags_Leaf);
-		ImGui::TreePop();
-	}
 }
 
-void FileBrowser::ContentBrowser()
+void FileBrowser::ContentBrowser()	
 {
 	if (m_currentDirectory != m_editorDirectory)
 	{
@@ -78,11 +95,7 @@ void FileBrowser::ContentBrowser()
 	{
 		std::string path = p.path().string();
 		std::string fileName = GetFileName(path.c_str());
-		if (fileName != "x64" &&
-			fileName != "GolemEditor.vcxproj" &&
-			fileName != "GolemEditor.vcxproj.filters" &&
-			fileName != "GolemEditor.vcxproj.user" &&
-			fileName != "imgui.ini")
+		if (EXCLUDE_FILE(fileName))
 		{
 			ImGui::SameLine();
 			if (ImGui::Button(GetFileName(path.c_str())))
