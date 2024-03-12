@@ -57,6 +57,19 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 
 void FileBrowser::ContentBrowser()
 {
+	if (m_currentDirectory != m_editorDirectory)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 0.0f, 0.0f)); 
+		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.5f, 0.5f));
+		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(100.0f, 30.0f));
+		if (ImGui::Button("<-Back"))
+		{
+			LastPath(m_currentDirectory);
+		}
+		ImGui::PopStyleColor();
+		ImGui::PopStyleVar(2);
+	}
+
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
@@ -68,6 +81,19 @@ void FileBrowser::ContentBrowser()
 				m_currentDirectory = path;
 			}
 		}
+	}
+}
+
+void FileBrowser::LastPath(std::filesystem::path& _currentPath)
+{
+	if (!_currentPath.empty())
+	{
+		fs::path parentPath = _currentPath.parent_path();
+		_currentPath = parentPath;
+	}
+	else if (_currentPath == m_editorDirectory)
+	{
+		_currentPath = m_editorDirectory;
 	}
 }
 

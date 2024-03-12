@@ -17,6 +17,8 @@ public:
 
 	void ContentBrowser();
 
+	void LastPath(std::filesystem::path& _currentPath);
+
 	const char* GetFileName(const char* _path);
 
 private:
