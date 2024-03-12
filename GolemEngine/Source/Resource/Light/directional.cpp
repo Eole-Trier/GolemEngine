@@ -1,8 +1,7 @@
-
-
-#include "Resource/Rendering/shader.h"
 #include "Resource/Light/Directional.h"
 
+#include "vector4.h"
+#include "Resource/Rendering/shader.h"
 
 
 DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, int id)

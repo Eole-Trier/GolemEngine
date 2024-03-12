@@ -14,9 +14,7 @@
 #include "Resource/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 
-Scene::Scene() 
-{
-}
+Scene::Scene() {}
 
 void Scene::Init()
 {

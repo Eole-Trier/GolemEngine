@@ -47,7 +47,7 @@ void Editor::InitGraphics()
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-}
+} 
 
 void Editor::InitUi(GLFWwindow* _window)
 {

@@ -3,7 +3,10 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+#include "vector2.h"
+#include "vector3.h"
 #include "vector4.h"
+#include "matrix4.h"
 
 GraphicWrapper* GraphicWrapper::m_instancePtr = nullptr;
 
@@ -86,3 +89,110 @@ void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsize
 {
     glViewport(_xMin, _yMin, _xMax, _yMax);
 }
+
+#pragma region Shader functions
+void GraphicWrapper::GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params)
+{
+    glGetShaderiv(_shader, _pName, _params);
+}
+
+void GraphicWrapper::GetShaderLog(GLuint _shader, GLsizei _bufSize, GLsizei* _length, GLchar* _infoLog)
+{
+    glGetShaderInfoLog(_shader, _bufSize, _length, _infoLog);
+}
+
+GLuint GraphicWrapper::CreateShader(GLenum _shaderType)
+{
+    return glCreateShader(_shaderType);
+}
+
+void GraphicWrapper::SetShaderSourceCode(GLuint _shader, GLsizei _count, const GLchar** _string, const GLint* _length)
+{
+    glShaderSource(_shader, _count, _string, _length);
+}
+
+void GraphicWrapper::CompileShader(GLuint _shader)
+{
+    glCompileShader(_shader);
+}
+
+GLuint GraphicWrapper::CreateShaderProgram()
+{
+    return glCreateProgram();
+}
+
+void GraphicWrapper::AttachShaderToProgram(GLuint _program, GLuint _shader)
+{
+    glAttachShader(_program, _shader);
+}
+
+void GraphicWrapper::LinkProgram(GLuint _program)
+{
+    glLinkProgram(_program);
+}
+
+void GraphicWrapper::DeleteShaderObject(GLuint _shader)
+{
+    glDeleteShader(_shader);
+}
+
+void GraphicWrapper::UseShader(GLuint _program)
+{
+    glUseProgram(_program);
+}
+
+void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value) const
+{
+    glUniform1i(glGetUniformLocation(_program, _name.c_str()), (int)_value);
+}
+
+void GraphicWrapper::SetShaderInt(GLuint _program, const std::string& _name, int _value) const
+{
+    glUniform1i(glGetUniformLocation(_program, _name.c_str()), _value);
+}
+
+void GraphicWrapper::SetShaderFloat(GLuint _program, const std::string& _name, float _value) const
+{
+    glUniform1f(glGetUniformLocation(_program, _name.c_str()), _value);
+}
+
+void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, const Vector2& _value) const
+{
+    glUniform2fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
+}
+
+void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, float _x, float _y) const
+{
+    glUniform2f(glGetUniformLocation(_program, _name.c_str()), _x, _y);
+}
+
+void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, const Vector3& _value) const
+{
+    glUniform3fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
+}
+
+void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, float _x, float _y, float _z) const
+{
+    glUniform3f(glGetUniformLocation(_program, _name.c_str()), _x, _y, _z);
+}
+
+void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value) const
+{
+    glUniform4fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
+}
+
+void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w) const
+{
+    glUniform4f(glGetUniformLocation(_program, _name.c_str()), _x, _y, _z, _w);
+}
+
+void GraphicWrapper::SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(_program, _name.c_str()), 1, GL_TRUE, &_mat.data[0][0]);
+}
+
+void GraphicWrapper::SetShaderViewPos(GLuint _program, Vector3& _viewPos)
+{
+    SetShaderVec3(_program, "viewPos", _viewPos);
+}
+#pragma endregion Shader functions

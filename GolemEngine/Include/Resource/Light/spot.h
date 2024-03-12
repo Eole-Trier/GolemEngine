@@ -2,9 +2,10 @@
 
 #include "dll.h"
 #include "Resource/Light/Light.h"
+#include "vector3.h"
 
 class Shader;
-
+class Vector4;
 
 class GOLEM_ENGINE_API SpotLight : public Light
 {

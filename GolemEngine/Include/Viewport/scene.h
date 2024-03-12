@@ -19,10 +19,11 @@ private:
 	unsigned int m_sceneTexture;
 
 public:
-	unsigned int vao, vbo, rbo;
-	unsigned int fbo;
-	unsigned int textureId;
-	Shader* shad;
+	unsigned int vao = 0;
+	unsigned int vbo = 0;
+	unsigned int rbo = 0;
+	unsigned int fbo = 0;
+	unsigned int textureId = 0;
 
 public:
 	Scene();

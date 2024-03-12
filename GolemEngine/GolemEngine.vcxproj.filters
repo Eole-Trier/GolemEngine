@@ -17,7 +17,6 @@
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
@@ -25,6 +24,7 @@
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -43,7 +43,6 @@
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
-    <ClInclude Include="Include\Resource\Rendering\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
@@ -58,5 +57,6 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
+    <ClInclude Include="Include\Resource\Rendering\shader.h" />
   </ItemGroup>
 </Project>

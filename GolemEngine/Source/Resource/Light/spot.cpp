@@ -2,7 +2,7 @@
 #include <MathsLib/utils.h>
 #include "Resource/Rendering/shader.h"
 #include "Resource/Light/Spot.h"
-
+#include "vector4.h"
 
 
 SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
