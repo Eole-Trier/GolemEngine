@@ -1,29 +1,22 @@
-#include <vector>
+#include "Components/Light/Directional.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
-#include "Components/Light/Directional.h"
 
-
-
-DirectionalLight::DirectionalLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& direction, 
+DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction, 
 	const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs)
+	: Light(_diffuse, _ambient, _specular), direction(_direction)
 {
-	diffuseColor = diffuse;
-	ambientColor = ambient;
-	specularColor = specular;
-	Matrix4 m = Matrix4(4);
-	this->direction = direction;
 	id = _dirLights.size();
-	if (id >= (size_t)_maxDirs)
+	if (id >= _maxDirs)
 	{
 		Log::Print("The Directional light %d will not be used. Directional lights limit : %d", id, _maxDirs);
 	}
 };
-void DirectionalLight::SetDirectionalLight(Shader* shader)
+void DirectionalLight::SetDirectionalLight(Shader* _shader)
 {
-	shader->SetVec3("dirLight[" + std::to_string(id) + "].direction", direction);
-	shader->SetVec4("dirLight[" + std::to_string(id) + "].ambient", ambientColor);
-	shader->SetVec4("dirLight[" + std::to_string(id) + "].diffuse", diffuseColor);
-	shader->SetVec4("dirLight[" + std::to_string(id) + "].specular", specularColor);
+	_shader->SetVec3("dirLight[" + std::to_string(id) + "].direction", direction);
+	_shader->SetVec4("dirLight[" + std::to_string(id) + "].ambient", ambientColor);
+	_shader->SetVec4("dirLight[" + std::to_string(id) + "].diffuse", diffuseColor);
+	_shader->SetVec4("dirLight[" + std::to_string(id) + "].specular", specularColor);
 }

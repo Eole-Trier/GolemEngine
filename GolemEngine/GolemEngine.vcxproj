@@ -30,6 +30,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Components\component.cpp" />
     <ClCompile Include="Source\Components\Light\directional.cpp" />
+    <ClCompile Include="Source\Components\Light\light.cpp" />
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />

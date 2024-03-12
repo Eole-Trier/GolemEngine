@@ -1,43 +1,32 @@
-
-#include <vector>
-
-#include "Debug/log.h"
-#include <MathsLib/utils.h>
-#include "Resource/Rendering/shader.h"
 #include "Components/Light/Spot.h"
 
+#include <MathsLib/utils.h>
 
+#include "Debug/log.h"
+#include "Resource/Rendering/shader.h"
 
-SpotLight::SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-    const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
+SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, 
+    const float _linear, const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
+    : Light(_diffuse, _ambient, _specular), position(_position), direction(_direction), constant(_constant), linear(_linear), quadratic(_quadratic), 
+    cutOff(_cutOff), outerCutOff(_outerCutOff)
 {
-    diffuseColor = diffuse;
-    ambientColor = ambient;
-    specularColor = specular;
-    this->position = position;
-    this->direction = direction;
-    this->constant = constant;
-    this->linear = linear;
-    this->quadratic = quadratic;
-    this->cutOff = cutOff;
-    this->outerCutOff = outerCutOff;
     id = _spotLights.size();
-    if (id >= (size_t)_maxSpots)
+    if (id >= _maxSpots)
     {
         Log::Print("The Spot light %d will not be used. Spot lights limit : %d", id, _maxSpots);
     }
 };
 
-void SpotLight::SetSpotLight(Shader* shader)
+void SpotLight::SetSpotLight(Shader* _shader)
 {
-    shader->SetVec3("spotLights[" + std::to_string(id) + "].position", position);
-    shader->SetVec3("spotLights[" + std::to_string(id) + "].direction", direction);
-    shader->SetVec4("spotLights[" + std::to_string(id) + "].ambient", ambientColor);
-    shader->SetVec4("spotLights[" + std::to_string(id) + "].diffuse", diffuseColor);
-    shader->SetVec4("spotLights[" + std::to_string(id) + "].specular", specularColor);
-    shader->SetFloat("spotLights[" + std::to_string(id) + "].constant", constant);
-    shader->SetFloat("spotLights[" + std::to_string(id) + "].linear", linear);
-    shader->SetFloat("spotLights[" + std::to_string(id) + "].quadratic", quadratic);
-    shader->SetFloat("spotLights[" + std::to_string(id) + "].cutOff", cos(DegToRad(cutOff)));
-    shader->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
+    _shader->SetVec3("spotLights[" + std::to_string(id) + "].position", position);
+    _shader->SetVec3("spotLights[" + std::to_string(id) + "].direction", direction);
+    _shader->SetVec4("spotLights[" + std::to_string(id) + "].ambient", ambientColor);
+    _shader->SetVec4("spotLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+    _shader->SetVec4("spotLights[" + std::to_string(id) + "].specular", specularColor);
+    _shader->SetFloat("spotLights[" + std::to_string(id) + "].constant", constant);
+    _shader->SetFloat("spotLights[" + std::to_string(id) + "].linear", linear);
+    _shader->SetFloat("spotLights[" + std::to_string(id) + "].quadratic", quadratic);
+    _shader->SetFloat("spotLights[" + std::to_string(id) + "].cutOff", cos(DegToRad(cutOff)));
+    _shader->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
 }

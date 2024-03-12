@@ -1,10 +1,13 @@
 #include "Resource/Rendering/mesh.h"
 
+#include <glad/glad.h>
 #include <MathsLib/utils.h>
 
-#include <glad/glad.h>
-
 #include "Core/transform.h"
+#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/model.h"
+#include "Viewport/camera.h"
 
 void Mesh::SetupMesh()
 {

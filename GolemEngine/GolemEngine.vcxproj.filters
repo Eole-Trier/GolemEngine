@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
     <ClCompile Include="Source\Core\transform.cpp" />
+    <ClCompile Include="Source\Components\Light\light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />

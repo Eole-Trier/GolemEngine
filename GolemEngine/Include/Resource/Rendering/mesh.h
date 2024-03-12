@@ -1,16 +1,15 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
-#include "Resource/resource.h"
-#include "vector3.h"
-#include "shader.h"
-#include "texture.h"
-#include "vertex.h"
-#include "model.h"
-#include "Viewport/camera.h"
+#include "dll.h"
 #include "Core/gameobject.h"
+
+class Model;
+class Texture;
+class Shader;
+class Transform;
+class Camera;
 
 class GOLEM_ENGINE_API Mesh : public GameObject
 {

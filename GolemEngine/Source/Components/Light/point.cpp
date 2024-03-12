@@ -1,19 +1,12 @@
-#include <vector>
+#include "Components/Light/Point.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
-#include "Components/Light/Point.h"
 
-PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, 
-    const float constant, const float linear, const float quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints)
+PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, 
+    const float _constant, const float _linear, const float _quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints)
+    : Light(_diffuse, _ambient, _specular), position(_position), constant(_constant), linear(_linear), quadratic(_quadratic)
 {
-    diffuseColor = diffuse;
-    ambientColor = ambient;
-    specularColor = specular;
-    this->position = position;
-    this->constant = constant;
-    this->linear = linear;
-    this->quadratic = quadratic;
     id = _pointLights.size();
     if (id >= _maxPoints)
     {
@@ -22,13 +15,13 @@ PointLight::PointLight(const Vector4& diffuse, const Vector4& ambient, const Vec
 
 }
 
-void PointLight::SetPointLight(Shader* shader)
+void PointLight::SetPointLight(Shader* _shader)
 {
-    shader->SetVec3("pointLights[" + std::to_string(id) + "].position", position);
-    shader->SetVec4("pointLights[" + std::to_string(id) + "].ambient", ambientColor);
-    shader->SetVec4("pointLights[" + std::to_string(id) + "].diffuse", diffuseColor);
-    shader->SetVec4("pointLights[" + std::to_string(id) + "].specular", specularColor);
-    shader->SetFloat("pointLights[" + std::to_string(id) + "].constant", constant);
-    shader->SetFloat("pointLights[" + std::to_string(id) + "].linear", linear);
-    shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
+    _shader->SetVec3("pointLights[" + std::to_string(id) + "].position", position);
+    _shader->SetVec4("pointLights[" + std::to_string(id) + "].ambient", ambientColor);
+    _shader->SetVec4("pointLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+    _shader->SetVec4("pointLights[" + std::to_string(id) + "].specular", specularColor);
+    _shader->SetFloat("pointLights[" + std::to_string(id) + "].constant", constant);
+    _shader->SetFloat("pointLights[" + std::to_string(id) + "].linear", linear);
+    _shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
 }

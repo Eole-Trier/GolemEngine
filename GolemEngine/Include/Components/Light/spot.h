@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+
+#include <vector3.h>
+
 #include "dll.h"
 #include "Components/Light/Light.h"
 
@@ -17,9 +21,10 @@ public:
     float cutOff;
     float outerCutOff;
 
-    SpotLight(const Vector4& diffuse, const Vector4& ambient, const Vector4& specular, const Vector3& position, const Vector3& direction, const float constant, const float linear,
-        const float quadratic, const float cutOff, const float outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots);
-    void SetSpotLight(Shader* shader);
+public:
+    SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, const float _linear,
+        const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots);
+    void SetSpotLight(Shader* _shader);
 
     void Update() override {};
 };
