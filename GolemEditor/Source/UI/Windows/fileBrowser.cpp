@@ -46,52 +46,36 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
 {
-	std::stack<std::filesystem::path> stack;
-	stack.push(_path);
+	bool isDirectory = std::filesystem::is_directory(_path);
 
-	while (!stack.empty())
+	ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
+
+
+	if (ImGui::TreeNodeEx(_path.filename().string().c_str(), flags))
 	{
-		std::filesystem::path currentPath = stack.top();
-		stack.pop();
-
-		bool isDirectory = std::filesystem::is_directory(currentPath);
-
-		ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
-
-		if (ImGui::TreeNodeEx(currentPath.filename().string().c_str(), flags))
+		if (isDirectory)
 		{
-			if (ImGui::IsItemClicked(1))
-			{
-				ImGui::OpenPopup("OptionsPopup");
-			}
-
-			if (isDirectory)
-			{
-				ImGui::Indent();
+			ImGui::Indent();
 				
-				for (const auto& entry : std::filesystem::directory_iterator(currentPath))
-				{
-					stack.push(entry);
-				}
+			for (const auto& entry : std::filesystem::directory_iterator(_path))
+			{
+				TreeNodes(entry);
 			}
-			ImGui::TreePop();
 		}
 
-		if (ImGui::BeginPopup("OptionsPopup"))
+		else if (ImGui::BeginPopupContextItem("OptionsPopup"))
 		{
-			if (!isDirectory)
+			if (ImGui::Selectable("Rename"))
 			{
-				if (ImGui::Selectable("Renommer"))
-				{
-					bool renameDialogOpen = true;
-					std::string newFileName = currentPath.filename().string();
-					ShowRenameFileDialog(&renameDialogOpen, currentPath, newFileName);
-				}
+				bool renameDialogOpen = true;
+				std::string newFileName = _path.filename().string();
+				ShowRenameFileDialog(&renameDialogOpen, _path, newFileName);
 			}
-
 			ImGui::EndPopup();
 		}
+		ImGui::TreePop();
 	}
+
 }
 
 void FileBrowser::ContentBrowser()	
