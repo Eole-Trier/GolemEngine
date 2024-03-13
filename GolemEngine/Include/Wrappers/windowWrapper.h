@@ -1,12 +1,14 @@
 #pragma once
 
 #include "dll.h"
+#include <GLFW/glfw3.h>
 
 #define WINDOW_INTERFACE WindowWrapper::GetInstance()
 
 struct GLFWwindow;
 struct GLFWmonitor;
 
+using Golemint = GLuint;
 //using ScrollCallback = void(*)(double xoffset, double yoffset);
 
 class GOLEM_ENGINE_API WindowWrapper
@@ -42,6 +44,8 @@ public:
 	void SetCurrentWindow(GLFWwindow* _window);
 
 	//void SetScrollCallback(ScrollCallback callback);
+
+	GLuint LoadUITexture(const char* _filename);
 
 private:
 	//ScrollCallback m_scrollCallback;

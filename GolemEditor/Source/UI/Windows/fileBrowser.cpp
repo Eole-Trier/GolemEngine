@@ -9,6 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "Wrappers/windowWrapper.h"
 
 namespace fs = std::filesystem;
 
@@ -90,7 +91,7 @@ void FileBrowser::ContentBrowser()
 		ImGui::PopStyleVar(2);
 		ImGui::Text("");
 	}
-
+	Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/One_For_All/Textures/all_bald.jpg");
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
@@ -105,6 +106,8 @@ void FileBrowser::ContentBrowser()
 					m_currentDirectory = path;
 				}
 			}
+			ImGui::SameLine();
+			ImGui::Image((void*)(intptr_t)texture, ImVec2(30, 30));
 		}
 	}
 }
