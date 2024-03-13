@@ -32,15 +32,17 @@ void Scene::Init()
 
 void Scene::InitGameObjects()
 {
+    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
+
     Shader* defaultShader = m_resourceManager.Get<Shader>("default");
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(90, 0, 0), Vector3(1, 1, 1));
+    Transform* vikingTransform = new Transform(Vector3(0), Vector3(0), Vector3(1));
     Texture* viking_text = m_resourceManager.Get<Texture>("viking_texture");
     Model* viking_room = m_resourceManager.Get<Model>("model_viking");
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1));
+    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
     Texture* ballBaldTexture = m_resourceManager.Get<Texture>("all_bald_texture");
     Model* ballBald = m_resourceManager.Get<Model>("model_sphere");
 
@@ -52,6 +54,10 @@ void Scene::InitGameObjects()
 
     m_gameObjects.push_back(vikingMesh);
     m_gameObjects.push_back(ballBaldMesh);
+    
+    m_world->transform->AddChild(vikingMesh->transform);
+    m_world->transform->AddChild(ballBaldMesh->transform);
+
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera)
@@ -67,6 +73,8 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 
 void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
+    m_world->transform->UpdateSelfAndChilds();
+
     for (int i = 0; i < m_meshes.size(); i++)
     {
         m_meshes[i]->Draw(_width, _height, _camera);

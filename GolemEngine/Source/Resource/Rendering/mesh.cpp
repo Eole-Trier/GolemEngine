@@ -54,7 +54,7 @@ void Mesh::Draw(float _width, float _height, Camera* _cam)
     Matrix4 projection = Matrix4::Projection(DegToRad(_cam->zoom), _width / _height, _cam->zNear, _cam->zFar);
     m_shader->SetMat4("view", view);
     m_shader->SetMat4("projection", projection);
-    m_shader->SetMat4("model", Matrix4::TRS(transform->position, transform->rotation, transform->scaling));
+    m_shader->SetMat4("model", transform->GetGlobalModel());
 
     glBindVertexArray(m_model->VAO);
     glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());
