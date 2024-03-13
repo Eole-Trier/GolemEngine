@@ -31,19 +31,22 @@ Editor::~Editor() {}
 
 void Editor::InitWindow()
 {
-    WINDOW_INTERFACE->Init();
-    m_window = WINDOW_INTERFACE->NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
+	WindowWrapper* windowWrapper = WindowWrapper::GetInstance();
+
+    windowWrapper->Init();
+    m_window = windowWrapper->NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
     if (m_window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
-        WINDOW_INTERFACE->Terminate();
+        windowWrapper->Terminate();
     }
-    WINDOW_INTERFACE->SetCurrentWindow(m_window);
+    windowWrapper->SetCurrentWindow(m_window);
 }
 
 void Editor::InitGraphics()
 {
-    if (!GRAPHIC_INTERFACE->Init())
+	GraphicWrapper* graphicWrapper = GraphicWrapper::GetInstance();
+    if (!graphicWrapper->Init())
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }

@@ -25,11 +25,12 @@ Viewport::~Viewport() {}
 
 void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 {
-    GRAPHIC_INTERFACE->EnableDepth();
+    GraphicWrapper* graphicWrapper = GraphicWrapper::GetInstance();
+    graphicWrapper->EnableDepth();
 
     ImGui::Begin("Viewport");
 
-    ImGui::Image((ImTextureID)GRAPHIC_INTERFACE->GetTextureId(), ImGui::GetContentRegionAvail());
+    ImGui::Image((ImTextureID)graphicWrapper->GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused())
     {

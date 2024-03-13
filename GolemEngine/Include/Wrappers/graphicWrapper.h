@@ -5,8 +5,6 @@
 
 #include "dll.h"
 
-#define GRAPHIC_INTERFACE GraphicWrapper::GetInstance()
-
 #define OPENGL_MAJOR_VERSION GLFW_CONTEXT_VERSION_MAJOR
 #define OPENGL_MINOR_VERSION GLFW_CONTEXT_VERSION_MINOR
 

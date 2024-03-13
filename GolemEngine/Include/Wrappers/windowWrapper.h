@@ -2,8 +2,6 @@
 
 #include "dll.h"
 
-#define WINDOW_INTERFACE WindowWrapper::GetInstance()
-
 struct GLFWwindow;
 struct GLFWmonitor;
 
