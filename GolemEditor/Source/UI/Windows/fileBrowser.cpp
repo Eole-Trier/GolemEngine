@@ -55,7 +55,9 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 	const char* nodeName = nodeNameStr.c_str();
 
 	if (nodeNameStr == m_fileToRename)
+	{
 		nodeName = "##";
+	}
 
 	if (ImGui::TreeNodeEx(nodeName, flags))
 	{
@@ -75,7 +77,7 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 			{
 				m_fileToRename = nodeNameStr;
 				renameDialogOpen = true;
-				m_test = nodeName;
+				m_string = nodeName;
 			}
 
 			ImGui::EndPopup();
@@ -84,7 +86,7 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 		if (nodeNameStr == m_fileToRename)
 		{
 			ImGui::SameLine();
-			if (ImGui::InputText("##renaming", &m_test, ImGuiInputTextFlags_EnterReturnsTrue))
+			if (ImGui::InputText("##renaming", &m_string, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
 
 				// Apply
