@@ -160,21 +160,3 @@ const char* FileBrowser::GetFileName(const char* _path)
 
 	return _path + index + 1;
 }
-
-
-void FileBrowser::ShowRenameFileDialog(bool* _p_open, std::filesystem::path& _filePath, std::string& _newFileName) 
-{
-	ImGui::Begin("Rename file", _p_open);
-	ImGui::InputText("New name", &_newFileName[0], _newFileName.size());
-
-	if (ImGui::Button("Validate"))
-	{
-		std::filesystem::path newPath = _filePath.parent_path() / _newFileName;
-		std::filesystem::rename(_filePath, newPath);
-		_filePath = newPath;
-
-		*_p_open = false;
-	}
-
-	ImGui::End();
-}
