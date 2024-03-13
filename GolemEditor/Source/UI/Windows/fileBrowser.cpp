@@ -60,6 +60,11 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 
 		if (ImGui::TreeNodeEx(currentPath.filename().string().c_str(), flags))
 		{
+			if (ImGui::IsItemClicked(1))
+			{
+				ImGui::OpenPopup("OptionsPopup");
+			}
+
 			if (isDirectory)
 			{
 				ImGui::Indent();
@@ -70,6 +75,21 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 				}
 			}
 			ImGui::TreePop();
+		}
+
+		if (ImGui::BeginPopup("OptionsPopup"))
+		{
+			if (!isDirectory)
+			{
+				if (ImGui::Selectable("Renommer"))
+				{
+					bool renameDialogOpen = true;
+					std::string newFileName = currentPath.filename().string();
+					ShowRenameFileDialog(&renameDialogOpen, currentPath, newFileName);
+				}
+			}
+
+			ImGui::EndPopup();
 		}
 	}
 }
@@ -136,4 +156,22 @@ const char* FileBrowser::GetFileName(const char* _path)
 	}
 
 	return _path + index + 1;
+}
+
+
+void FileBrowser::ShowRenameFileDialog(bool* _p_open, std::filesystem::path& _filePath, std::string& _newFileName) 
+{
+	ImGui::Begin("Rename file", _p_open);
+	ImGui::InputText("New name", &_newFileName[0], _newFileName.size());
+
+	if (ImGui::Button("Validate"))
+	{
+		std::filesystem::path newPath = _filePath.parent_path() / _newFileName;
+		std::filesystem::rename(_filePath, newPath);
+		_filePath = newPath;
+
+		*_p_open = false;
+	}
+
+	ImGui::End();
 }

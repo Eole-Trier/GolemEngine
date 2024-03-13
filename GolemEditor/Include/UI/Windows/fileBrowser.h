@@ -21,6 +21,8 @@ public:
 	// Get ever file name
 	const char* GetFileName(const char* _path);
 
+	void ShowRenameFileDialog(bool* _p_open, std::filesystem::path& _filePath, std::string& _newFileName);
+
 private:
 
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
