@@ -9,6 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "imgui_stdlib.h"
 
 namespace fs = std::filesystem;
 
@@ -50,8 +51,13 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 
 	ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
 
+	std::string nodeNameStr = _path.filename().string();
+	const char* nodeName = nodeNameStr.c_str();
 
-	if (ImGui::TreeNodeEx(_path.filename().string().c_str(), flags))
+	if (nodeNameStr == m_fileToRename)
+		nodeName = "##";
+
+	if (ImGui::TreeNodeEx(nodeName, flags))
 	{
 		if (isDirectory)
 		{
@@ -67,12 +73,25 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 		{
 			if (ImGui::Selectable("Rename"))
 			{
-				bool renameDialogOpen = true;
-				std::string newFileName = _path.filename().string();
-				ShowRenameFileDialog(&renameDialogOpen, _path, newFileName);
+				m_fileToRename = nodeNameStr;
+				renameDialogOpen = true;
+				m_test = nodeName;
 			}
+
 			ImGui::EndPopup();
 		}
+
+		if (nodeNameStr == m_fileToRename)
+		{
+			ImGui::SameLine();
+			if (ImGui::InputText("##renaming", &m_test, ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+
+				// Apply
+				m_fileToRename = "";
+			}
+		}
+
 		ImGui::TreePop();
 	}
 
