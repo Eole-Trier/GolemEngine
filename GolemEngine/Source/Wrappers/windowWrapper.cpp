@@ -1,7 +1,5 @@
 #include "Wrappers/windowWrapper.h"
 
-#include <GLFW/glfw3.h>
-
 
 WindowWrapper* WindowWrapper::m_instancePtr = nullptr;
 

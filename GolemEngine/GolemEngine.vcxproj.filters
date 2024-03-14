@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
+    <ClCompile Include="Source\inputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -59,5 +60,6 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
+    <ClInclude Include="Include\inputManager.h" />
   </ItemGroup>
 </Project>

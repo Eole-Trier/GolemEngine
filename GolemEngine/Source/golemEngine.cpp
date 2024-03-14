@@ -2,6 +2,7 @@
 
 #include "Wrappers/graphicWrapper.h"
 #include "Viewport/scene.h"
+#include "inputManager.h"
 #include "vector4.h"
 
 GolemEngine::GolemEngine()
@@ -23,6 +24,8 @@ void GolemEngine::InitScene()
 void GolemEngine::Init()
 {
     InitScene();
+    InputManager::Init(m_window);
+    
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -34,7 +37,7 @@ void GolemEngine::UpdateDeltaTime()
 
 void GolemEngine::ProcessInput()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (InputManager::IsKeyPressed(KEY_ESCAPE))
     {
         glfwSetWindowShouldClose(m_window, true);
     }

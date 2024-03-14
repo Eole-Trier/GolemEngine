@@ -5,7 +5,6 @@
 
 #include <MathsLib/vector3.h>
 #include <MathsLib/matrix4.h>
-
 #include "dll.h"
 
 enum GOLEM_ENGINE_API CameraMovement

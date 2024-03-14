@@ -1,10 +1,12 @@
+#include "Viewport/camera.h"
+
 #include <MathsLib/utils.h>
 
+#include "inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "Viewport/camera.h"
 
 Camera* Camera::instance;
 
@@ -89,18 +91,30 @@ void Camera::ProcessMouseScroll(float _yoffset)
 
 void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
 {
-    if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
+    if (InputManager::IsKeyPressed(KEY_W))
+    {
         ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
+    }
+    if (InputManager::IsKeyPressed(KEY_S))
+    {
         ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
+    }
+    if (InputManager::IsKeyPressed(KEY_A))
+    {
         ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
+    }
+    if (InputManager::IsKeyPressed(KEY_D))
+    {
         ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS)
+    }
+    if (InputManager::IsKeyPressed(KEY_Q))
+    {
         ProcessKeyboard(CameraMovement::UP, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS)
+    }
+    if (InputManager::IsKeyPressed(KEY_E))
+    {
         ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
+    }
 }
 
 void Camera::UpdateCameraVectors()

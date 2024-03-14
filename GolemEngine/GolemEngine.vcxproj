@@ -28,6 +28,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\inputManager.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Resource\Light\directional.cpp" />
     <ClCompile Include="Source\Resource\Light\point.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
+    <ClInclude Include="Include\inputManager.h" />
     <ClInclude Include="Include\Resource\Light\directional.h" />
     <ClInclude Include="Include\Resource\Light\light.h" />
     <ClInclude Include="Include\Resource\Light\point.h" />
