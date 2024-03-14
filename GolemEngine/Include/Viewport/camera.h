@@ -1,11 +1,11 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "dll.h"
 #include "vector3.h"
 #include "matrix4.h"
+
+
+class GLFWwindow;
 
 enum GOLEM_ENGINE_API CameraMovement
 {
@@ -55,7 +55,7 @@ public:
 
     Matrix4 GetViewMatrix();
     void ProcessKeyboard(CameraMovement _direction, float _deltaTime);
-    void ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _constrainPitch = true);
+    void ProcessMouseMovement(float _xoffset, float _yoffset, bool _constrainPitch = true);
     void ProcessMouseScroll(float _yoffset);
     void ProcessInput(GLFWwindow* _window, float _deltaTime);
 };

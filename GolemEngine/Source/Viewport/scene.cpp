@@ -1,7 +1,8 @@
-#include <MathsLib/utils.h>
-
 #include "Viewport/scene.h"
 
+#include "utils.h"
+
+#include "Viewport/camera.h"
 #include "Resource/resourceManager.h"
 #include "Resource/tools.h"
 #include "Resource/Rendering/mesh.h"
@@ -42,7 +43,7 @@ void Scene::Init()
     cube->Init(sphere, sphere_texture, shad);
 }
 
-void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime)
+void Scene::Update(float _width, float _height, Camera* _camera, float _deltaTime)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 

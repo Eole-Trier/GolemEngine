@@ -5,6 +5,7 @@
 #include "dll.h"
 #include "Resource/resource.h"
 
+
 class Vector2;
 class Vector3;
 class Vector4;

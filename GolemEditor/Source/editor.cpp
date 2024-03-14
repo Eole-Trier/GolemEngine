@@ -1,5 +1,6 @@
 #include "editor.h"
 
+#include <iostream>
 #include <wtypes.h>
 
 #include "golemEngine.h"

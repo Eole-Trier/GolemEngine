@@ -1,10 +1,8 @@
 #include "Viewport/camera.h"
 
-#include "utils.h"
+#include "Wrappers/windowWrapper.h"
 #include "inputManager.h"
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "utils.h"
 
 
 Camera* Camera::instance;
@@ -62,7 +60,7 @@ void Camera::ProcessKeyboard(CameraMovement _direction, float _deltaTime)
         position = position - up * velocity;
 }
 
-void Camera::ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _constrainPitch)
+void Camera::ProcessMouseMovement(float _xoffset, float _yoffset, bool _constrainPitch)
 {
     _xoffset *= mouseSensitivity;
     _yoffset *= mouseSensitivity;

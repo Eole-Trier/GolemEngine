@@ -2,6 +2,7 @@
 
 #include "Wrappers/graphicWrapper.h"
 #include "Viewport/scene.h"
+#include "Viewport/camera.h"
 #include "inputManager.h"
 #include "vector4.h"
 
@@ -52,7 +53,7 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance, m_deltaTime);
+    m_scene->Update(m_screenWidth, m_screenHeight, Camera::instance, m_deltaTime);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }

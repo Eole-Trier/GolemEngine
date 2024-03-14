@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "dll.h"
@@ -39,8 +40,8 @@
 #define KEY_Z GLFW_KEY_Z
 #pragma endregion InputManager defines
 
-struct GLFWwindow;
-struct GLFWmonitor;
+//struct GLFWwindow;
+//struct GLFWmonitor;
 
 //using ScrollCallback = void(*)(double xoffset, double yoffset);
 
