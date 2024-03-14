@@ -25,12 +25,11 @@ Viewport::~Viewport() {}
 
 void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 {
-    GraphicWrapper* graphicWrapper = GraphicWrapper::GetInstance();
-    graphicWrapper->EnableDepth();
+    GraphicWrapper::EnableDepth();
 
     ImGui::Begin("Viewport");
 
-    ImGui::Image((ImTextureID)graphicWrapper->GetTextureId(), ImGui::GetContentRegionAvail());
+    ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused())
     {
@@ -76,6 +75,7 @@ Camera* Viewport::GetCamera()
 void Viewport::MouseMovement(GolemEngine* _golemEngine)
 {
     glfwGetCursorPos(_golemEngine->GetWindow(), &m_cursorX, &m_cursorY);
+    std::cout << m_cursorX << " " << m_cursorY << std::endl;
     if (glfwGetKey(_golemEngine->GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
     {
         glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);

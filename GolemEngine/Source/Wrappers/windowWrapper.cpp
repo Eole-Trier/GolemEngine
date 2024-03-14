@@ -1,20 +1,7 @@
 #include "Wrappers/windowWrapper.h"
 
 
-WindowWrapper* WindowWrapper::m_instancePtr = nullptr;
-
-WindowWrapper::WindowWrapper() {}
-
-WindowWrapper* WindowWrapper::GetInstance()
-{
-    if (!m_instancePtr) 
-    {
-        m_instancePtr = new WindowWrapper();
-    }
-    return m_instancePtr;
-}
-
-void WindowWrapper::Init()
+void WindowWrapper::InitWindow()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -46,7 +33,7 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-GLFWwindow* WindowWrapper::GetCurrentWindow()
+GLFWwindow* WindowWrapper::GetWindow()
 {
     return glfwGetCurrentContext();
 }

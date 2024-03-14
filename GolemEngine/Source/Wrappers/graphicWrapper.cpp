@@ -8,16 +8,11 @@
 #include "vector4.h"
 #include "matrix4.h"
 
-GraphicWrapper* GraphicWrapper::m_instancePtr = nullptr;
-
-GraphicWrapper* GraphicWrapper::GetInstance()
-{
-    if (!m_instancePtr) 
-    {
-        m_instancePtr = new GraphicWrapper();
-    }
-    return m_instancePtr;
-}
+unsigned int GraphicWrapper::m_vao;
+unsigned int GraphicWrapper::m_vbo;
+unsigned int GraphicWrapper::m_rbo;
+unsigned int GraphicWrapper::m_fbo;
+unsigned int GraphicWrapper::m_textureId;
 
 int GraphicWrapper::Init()
 {
@@ -142,52 +137,52 @@ void GraphicWrapper::UseShader(GLuint _program)
     glUseProgram(_program);
 }
 
-void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value) const
+void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value)
 {
     glUniform1i(glGetUniformLocation(_program, _name.c_str()), (int)_value);
 }
 
-void GraphicWrapper::SetShaderInt(GLuint _program, const std::string& _name, int _value) const
+void GraphicWrapper::SetShaderInt(GLuint _program, const std::string& _name, int _value)
 {
     glUniform1i(glGetUniformLocation(_program, _name.c_str()), _value);
 }
 
-void GraphicWrapper::SetShaderFloat(GLuint _program, const std::string& _name, float _value) const
+void GraphicWrapper::SetShaderFloat(GLuint _program, const std::string& _name, float _value)
 {
     glUniform1f(glGetUniformLocation(_program, _name.c_str()), _value);
 }
 
-void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, const Vector2& _value) const
+void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, const Vector2& _value)
 {
     glUniform2fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
 }
 
-void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, float _x, float _y) const
+void GraphicWrapper::SetShaderVec2(GLuint _program, const std::string& _name, float _x, float _y)
 {
     glUniform2f(glGetUniformLocation(_program, _name.c_str()), _x, _y);
 }
 
-void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, const Vector3& _value) const
+void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, const Vector3& _value)
 {
     glUniform3fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
 }
 
-void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, float _x, float _y, float _z) const
+void GraphicWrapper::SetShaderVec3(GLuint _program, const std::string& _name, float _x, float _y, float _z)
 {
     glUniform3f(glGetUniformLocation(_program, _name.c_str()), _x, _y, _z);
 }
 
-void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value) const
+void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value)
 {
     glUniform4fv(glGetUniformLocation(_program, _name.c_str()), 1, &_value.x);
 }
 
-void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w) const
+void GraphicWrapper::SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w)
 {
     glUniform4f(glGetUniformLocation(_program, _name.c_str()), _x, _y, _z, _w);
 }
 
-void GraphicWrapper::SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat) const
+void GraphicWrapper::SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat)
 {
     glUniformMatrix4fv(glGetUniformLocation(_program, _name.c_str()), 1, GL_TRUE, &_mat.data[0][0]);
 }

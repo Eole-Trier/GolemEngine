@@ -17,15 +17,14 @@ void GolemEngine::InitScene()
     // Init scene objects
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper* graphicWrapper = GraphicWrapper::GetInstance();
-    graphicWrapper->CreateFramebuffer(m_screenWidth, m_screenHeight);
+    
+    GraphicWrapper::CreateFramebuffer(m_screenWidth, m_screenHeight);
 }
 
 void GolemEngine::Init()
 {
     InitScene();
     InputManager::Init(m_window);
-    
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -45,19 +44,17 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    GraphicWrapper* graphicWrapper = GraphicWrapper::GetInstance();
-     
     UpdateDeltaTime();
     // Bind next framebuffer to the scene buffer
-    graphicWrapper->BindFramebuffer();
+    GraphicWrapper::BindFramebuffer();
     // Assign background color and clear previous scene buffers 
-    graphicWrapper->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     // Clear buffer
-    graphicWrapper->ClearBuffer();
+    GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
     m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance, m_deltaTime);
     // Go back to original framebuffer
-    graphicWrapper->UnbindFramebuffer();
+    GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()

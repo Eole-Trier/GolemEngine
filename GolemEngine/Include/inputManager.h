@@ -8,6 +8,8 @@ private:
 	static inline GLFWwindow* m_window = nullptr;
 	static inline bool m_keyboardKeys[LAST_KEY_INT];
 
+private:
+	// Static class
 	InputManager() = delete;
 
 public:
