@@ -26,9 +26,9 @@ public:
 
 	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
 
-	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
+	void MouseCallback(double _xposIn, double _yposIn);
 	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
 
 	Camera* GetCamera();
-	void MouseMovement(GolemEngine* _golemEngine);
+	void MouseMovement();
 };

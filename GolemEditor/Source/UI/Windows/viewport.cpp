@@ -1,10 +1,9 @@
 #include "UI/Windows/viewport.h"
 
-#include <GLFW/glfw3.h>
-
 #include "Viewport/camera.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
+#include "Wrappers/windowWrapper.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -14,7 +13,8 @@ Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
 
 Viewport::Viewport()
-    :m_lastX(0),
+    :
+    m_lastX(0),
     m_lastY(0),
     m_yaw(0),
     m_pitch(0),
@@ -33,15 +33,15 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 
     if (ImGui::IsWindowFocused())
     {
-        Camera::instance->ProcessInput(_golemEngine->GetWindow(), _golemEngine->GetDeltaTime());
-        MouseMovement(_golemEngine);
-        glfwSetScrollCallback(_golemEngine->GetWindow(), ScrollCallback);
+        Camera::instance->ProcessInput(WindowWrapper::GetWindow(), _golemEngine->GetDeltaTime());
+        MouseMovement();
+        glfwSetScrollCallback(WindowWrapper::GetWindow(), ScrollCallback);
     }
 
     ImGui::End();
 }
 
-void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)
+void Viewport::MouseCallback(double _xposIn, double _yposIn)
 {
     float xpos = (float)(_xposIn);
     float ypos = (float)(_yposIn);
@@ -72,18 +72,18 @@ Camera* Viewport::GetCamera()
     return m_camera;
 }
 
-void Viewport::MouseMovement(GolemEngine* _golemEngine)
+void Viewport::MouseMovement()
 {
-    glfwGetCursorPos(_golemEngine->GetWindow(), &m_cursorX, &m_cursorY);
+    glfwGetCursorPos(WindowWrapper::GetWindow(), &m_cursorX, &m_cursorY);
     std::cout << m_cursorX << " " << m_cursorY << std::endl;
-    if (glfwGetKey(_golemEngine->GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
+    if (glfwGetKey(WindowWrapper::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        MouseCallback(_golemEngine, m_cursorX, -m_cursorY);
+        glfwSetInputMode(WindowWrapper::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        MouseCallback(m_cursorX, -m_cursorY);
     }
     else
     {
         m_firstMouse = true;
-        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwSetInputMode(WindowWrapper::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 }

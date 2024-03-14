@@ -23,10 +23,10 @@ class Matrix4;
 class GOLEM_ENGINE_API GraphicWrapper
 {
 private:
-	static GLuint m_vao;
-	static GLuint m_vbo;
-	static GLuint m_rbo;
-	static GLuint m_fbo;
+	static unsigned int m_vao;
+	static unsigned int m_vbo;
+	static unsigned int m_rbo;
+	static unsigned int m_fbo;
 	static unsigned int m_textureId;
 	static int m_width;
 	static int m_height;
