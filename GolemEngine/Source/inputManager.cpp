@@ -5,8 +5,10 @@
 
 void InputManager::Init(GLFWwindow* _window)
 {
+    std::cout << GLFW_MOUSE_BUTTON_LAST;
     glfwSetKeyCallback(_window, KeyCallback);
     glfwSetCursorPosCallback(_window, MousePositionCallback);
+    glfwSetMouseButtonCallback(_window, MouseButtonCallback);
 }
 
 void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
@@ -36,6 +38,12 @@ void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, doub
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
 {
+    if (_action == GLFW_PRESS) {
+        std::cout << "Mouse button " << _button << " pressed" << std::endl;
+    }
+    else if (_action == GLFW_RELEASE) {
+        std::cout << "Mouse button " << _button << " released" << std::endl;
+    }
 }
 
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
