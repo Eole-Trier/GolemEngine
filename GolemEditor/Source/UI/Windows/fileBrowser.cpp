@@ -98,6 +98,26 @@ void FileBrowser::ContentBrowser()
 		std::string fileName = GetFileName(path.c_str());
 		if (EXCLUDE_FILE(fileName))
 		{
+			ImGui::PushID(path.c_str());
+			ImGui::BeginChild(GetFileName(path.c_str()), ImVec2(100, 100));
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+			if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
+			{
+				if (p.is_directory())
+				{
+					m_currentDirectory = path;
+				}
+			}
+			ImGui::PopStyleColor();
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
+			ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			ImGui::Text(GetFileName(path.c_str()));
+
+			ImGui::EndChild();
+
+			ImGui::PopID();
+			ImGui::SameLine();
+			// TODO
 			//ImGui::SameLine();
 			//if (ImGui::Button(GetFileName(path.c_str())))
 			//{
@@ -106,11 +126,6 @@ void FileBrowser::ContentBrowser()
 			//		m_currentDirectory = path;
 			//	}
 			//}
-			ImGui::SameLine();
-			ImGui::Image((void*)(intptr_t)texture, ImVec2(30, 30));
-			ImGui::Text(GetFileName(path.c_str()));
-			// TODO
-
 		}
 	}
 }
