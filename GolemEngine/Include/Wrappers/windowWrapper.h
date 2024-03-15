@@ -27,7 +27,7 @@ public:
 
 	// Init GLFW
 	void Init();
-	// Create new GLFW window
+	// Create new GLFW window 
 	GLFWwindow* NewWindow(int _width, int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share);
 	// Terminate in case of error
 	void Terminate();

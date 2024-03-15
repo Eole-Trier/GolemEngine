@@ -91,23 +91,26 @@ void FileBrowser::ContentBrowser()
 		ImGui::PopStyleVar(2);
 		ImGui::Text("");
 	}
-	Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/One_For_All/Textures/all_bald.jpg");
+	Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
 		std::string fileName = GetFileName(path.c_str());
 		if (EXCLUDE_FILE(fileName))
 		{
-			ImGui::SameLine();
-			if (ImGui::Button(GetFileName(path.c_str())))
-			{
-				if (p.is_directory())
-				{
-					m_currentDirectory = path;
-				}
-			}
+			//ImGui::SameLine();
+			//if (ImGui::Button(GetFileName(path.c_str())))
+			//{
+			//	if (p.is_directory())
+			//	{
+			//		m_currentDirectory = path;
+			//	}
+			//}
 			ImGui::SameLine();
 			ImGui::Image((void*)(intptr_t)texture, ImVec2(30, 30));
+			ImGui::Text(GetFileName(path.c_str()));
+			// TODO
+
 		}
 	}
 }
