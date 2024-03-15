@@ -23,6 +23,8 @@ public:
 
 	std::string GetFileExtension(const std::string& _fileName);
 
+	void RightMouseClickEvent();
+
 private:
 
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();

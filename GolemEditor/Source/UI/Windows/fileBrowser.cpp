@@ -10,6 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Wrappers/windowWrapper.h"
+#include "Resource/tools.h"
 
 namespace fs = std::filesystem;
 
@@ -40,7 +41,7 @@ void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 	ImGui::Text("");
 	ContentBrowser();
 	ImGui::EndChild();
-
+	RightMouseClickEvent();
 	ImGui::End();
 }
 
@@ -110,9 +111,13 @@ void FileBrowser::ContentBrowser()
 			}
 			ImGui::PopStyleColor();
 			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
+			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
+			{
+			}
+
 			if (p.is_directory())
 			{
-				Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
+				Golemint texture = WINDOW_INTERFACE->LoadUITexture(Tools::FindFile("File_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
 			}
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
@@ -122,12 +127,10 @@ void FileBrowser::ContentBrowser()
 			}
 			else
 			{
-				Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
+				Golemint texture = WINDOW_INTERFACE->LoadUITexture(Tools::FindFile("File_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
 			}
-
 			ImGui::Text(GetFileName(path.c_str()));
-
 			ImGui::EndChild();
 
 			ImGui::SameLine();
@@ -172,4 +175,20 @@ std::string FileBrowser::GetFileExtension(const std::string& _fileName)
 		return _fileName.substr(dotPosition);
 	}
 	return "";
+}
+
+void FileBrowser::RightMouseClickEvent()
+{
+	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(1))
+	{
+		ImGui::OpenPopup("Context Menu");
+	}
+
+	if (ImGui::BeginPopup("Context Menu"))
+	{
+		if (ImGui::MenuItem("Perform Some Logic"))
+		{
+		}
+		ImGui::EndPopup();
+	}
 }
