@@ -6,6 +6,11 @@
 #include <sstream>
 #include <iostream>
 
+#include <vector2.h>
+#include <vector3.h>
+#include <vector4.h>
+#include <matrix4.h>
+
 #include "Debug/log.h"
 
 Shader::Shader() {}

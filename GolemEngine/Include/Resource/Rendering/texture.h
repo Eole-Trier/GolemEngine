@@ -6,6 +6,7 @@
 #include "dll.h"
 #include "Resource/resource.h"
 
+
 class GOLEM_ENGINE_API Texture : public Resource
 {
 public:

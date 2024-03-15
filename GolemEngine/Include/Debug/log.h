@@ -2,7 +2,9 @@
 
 #include <filesystem>
 #include <fstream>
+
 #include "dll.h"
+
 
 class GOLEM_ENGINE_API Log
 {
