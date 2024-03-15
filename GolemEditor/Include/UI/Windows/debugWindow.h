@@ -10,5 +10,5 @@ public:
 	DebugWindow(std::string _name);
 	~DebugWindow();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine) override;
 };

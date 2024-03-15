@@ -25,7 +25,7 @@ public:
 	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine) override;
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
 	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);

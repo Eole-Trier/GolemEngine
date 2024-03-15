@@ -13,7 +13,7 @@ public:
 	FileBrowser(std::string _name);
 	~FileBrowser();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine) override;
 
 	void TreeNodes(std::filesystem::path _path);
 	// Content Browser loop

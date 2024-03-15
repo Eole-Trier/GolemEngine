@@ -10,5 +10,5 @@ public:
 	BasicActors(std::string _name);
 	~BasicActors();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine) override;
 };

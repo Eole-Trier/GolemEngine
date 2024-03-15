@@ -10,5 +10,5 @@ public:
 	SceneGraph(std::string _name);
 	~SceneGraph();
 
-	void Update(GolemEngine* _golemEngine);
+	void Update(GolemEngine* _golemEngine) override;
 };
