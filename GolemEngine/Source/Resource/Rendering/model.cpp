@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 
+#include "Resource/Rendering/vertex.h"
 #include "Debug/log.h"
 
 Model::Model()

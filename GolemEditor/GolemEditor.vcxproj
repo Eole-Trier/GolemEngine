@@ -74,25 +74,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,14 +100,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -119,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -128,7 +128,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -138,14 +138,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -157,7 +157,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -166,16 +166,28 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
+    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
+    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
+    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
+    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
     <ClCompile Include="Source\editor.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\UI\editorUi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
+    <ClInclude Include="Include\UI\editorUi.h" />
+    <ClInclude Include="Include\UI\Windows\basicActors.h" />
+    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
+    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
+    <ClInclude Include="Include\UI\Windows\viewport.h" />
+    <ClInclude Include="Include\UI\Windows\worldActors.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

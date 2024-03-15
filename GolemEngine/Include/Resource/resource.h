@@ -2,6 +2,7 @@
 
 #include "dll.h"
 
+
 class GOLEM_ENGINE_API Resource
 {
 public:

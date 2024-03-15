@@ -22,18 +22,22 @@
     <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\Light\directional.cpp" />
+    <ClCompile Include="Source\Components\Light\light.cpp" />
+    <ClCompile Include="Source\Components\Light\point.cpp" />
+    <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Core\gameObject.cpp" />
+    <ClCompile Include="Source\Core\transform.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
-    <ClCompile Include="Source\Resource\Light\directional.cpp" />
-    <ClCompile Include="Source\Resource\Light\point.cpp" />
-    <ClCompile Include="Source\Resource\Light\spot.cpp" />
+    <ClCompile Include="Source\Inputs\Mouse.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
-    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
-    <ClCompile Include="Source\UI\engineUi.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -42,26 +46,34 @@
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
-    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
-    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
-    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
-    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
+    <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
+    <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
+    <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="External\imgui\imgui_internal.h" />
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Include\Components\component.h" />
+    <ClInclude Include="Include\Components\Light\directional.h" />
+    <ClInclude Include="Include\Components\Light\light.h" />
+    <ClInclude Include="Include\Components\Light\point.h" />
+    <ClInclude Include="Include\Components\Light\spot.h" />
+    <ClInclude Include="Include\Core\gameobject.h" />
+    <ClInclude Include="Include\Core\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
-    <ClInclude Include="Include\Resource\Light\directional.h" />
+    <ClInclude Include="Include\Inputs\Mouse.h" />
     <ClInclude Include="Include\Resource\Light\light.h" />
-    <ClInclude Include="Include\Resource\Light\point.h" />
-    <ClInclude Include="Include\Resource\Light\spot.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
@@ -70,14 +82,10 @@
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
-    <ClInclude Include="Include\UI\Windows\basicActors.h" />
-    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
-    <ClInclude Include="Include\UI\engineUi.h" />
-    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
-    <ClInclude Include="Include\UI\Windows\viewport.h" />
-    <ClInclude Include="Include\UI\Windows\worldActors.h" />
     <ClInclude Include="Include\Viewport\camera.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
+    <ClInclude Include="Include\Wrappers\windowWrapper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -159,7 +167,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -177,7 +185,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -195,7 +203,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
@@ -213,7 +221,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>

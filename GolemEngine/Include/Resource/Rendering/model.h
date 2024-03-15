@@ -1,12 +1,10 @@
 #pragma once
+
 #include <vector>
 
 #include "dll.h"
 #include "Resource/resource.h"
-#include "vector2.h"
-#include "vector3.h"
 #include "vertex.h"
-
 
 class GOLEM_ENGINE_API Model : public Resource
 {
