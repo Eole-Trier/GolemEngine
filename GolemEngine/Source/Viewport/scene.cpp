@@ -57,7 +57,6 @@ void Scene::InitGameObjects()
     
     m_world->transform->AddChild(vikingMesh->transform);
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
-
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera)
@@ -81,7 +80,6 @@ void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, 
     {
         m_meshes[i]->Draw(_width, _height, _camera);
     }
-
 }
 
 void Scene::InitLights()
@@ -138,3 +136,13 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
+Mesh* Scene::GetMeshByName(std::string _name)
+{
+    for (Mesh* mesh : m_meshes)
+    {
+        if (mesh->GetName() == _name)
+            return mesh;
+    }
+    Log::Print("No mesh with the name %s has been found", _name.c_str());
+    return nullptr;
+}

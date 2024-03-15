@@ -30,6 +30,8 @@ public:
 
 	void DisplayInformations();
 
+	std::string GetName();
+
 	/*GameObject* Instantiate();
 	void Destroy();*/
 };

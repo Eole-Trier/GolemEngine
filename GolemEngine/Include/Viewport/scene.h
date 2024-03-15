@@ -3,6 +3,7 @@
 #include "dll.h"
 #include "Resource/resourceManager.h"
 #include "Viewport/camera.h"
+#include "Debug/log.h"
 
 class DirectionalLight;
 class PointLight;
@@ -40,4 +41,6 @@ public:
 	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera);
 	void UpdateLights(Shader* _shader);
+
+	Mesh* GetMeshByName(std::string _name);
 };

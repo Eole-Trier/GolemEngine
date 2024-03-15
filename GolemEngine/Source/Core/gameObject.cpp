@@ -41,6 +41,11 @@ void GameObject::DisplayInformations()
 	//to do
 }
 
+std::string GameObject::GetName()
+{
+	return m_name;
+}
+
 /*GameObject* GameObject::Instantiate()
 {
 	return nullptr;

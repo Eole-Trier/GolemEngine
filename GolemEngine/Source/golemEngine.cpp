@@ -122,7 +122,6 @@ void GolemEngine::Update()
 
         // Render the scene to the framebuffer
         m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera());
-       
         // Go back to original framebuffer
         GraphicWrapper::GetInstance()->UnbindFramebuffer();
 
