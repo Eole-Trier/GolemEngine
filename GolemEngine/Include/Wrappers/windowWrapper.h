@@ -69,7 +69,7 @@ public:
 	static void SwapBuffers(GLFWwindow* _window);
 
 	// Gets active window
-	static GLFWwindow* GetWindow();
+	static GLFWwindow* GetCurrentWindow();
 
 	// Makes the window passed in parameter the window that will be set as active (to perform operations on...etc).
 	static void SetCurrentWindow(GLFWwindow* _window);

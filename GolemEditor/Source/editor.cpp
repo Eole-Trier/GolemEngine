@@ -90,7 +90,7 @@ void Editor::MainLoop()
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backup_current_context = WindowWrapper::GetWindow();
+			GLFWwindow* backup_current_context = WindowWrapper::GetCurrentWindow();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
 			WindowWrapper::SetCurrentWindow(backup_current_context);

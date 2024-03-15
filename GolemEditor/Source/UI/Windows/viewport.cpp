@@ -32,7 +32,7 @@ void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
 
     if (ImGui::IsWindowFocused())
     {
-        Camera::instance->ProcessInput(WindowWrapper::GetWindow(), _golemEngine->GetDeltaTime());
+        Camera::instance->ProcessInput(_golemEngine->GetDeltaTime());
     }
 
     ImGui::End();

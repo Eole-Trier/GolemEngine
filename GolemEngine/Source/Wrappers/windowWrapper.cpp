@@ -33,7 +33,7 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-GLFWwindow* WindowWrapper::GetWindow()
+GLFWwindow* WindowWrapper::GetCurrentWindow()
 {
     return glfwGetCurrentContext();
 }

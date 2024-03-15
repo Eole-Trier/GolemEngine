@@ -1,6 +1,5 @@
 #include "Viewport/camera.h"
 
-#include "Wrappers/windowWrapper.h"
 #include "inputManager.h"
 #include "utils.h"
 
@@ -86,8 +85,9 @@ void Camera::ProcessMouseScroll(float _yoffset)
     movementSpeed += (float)_yoffset;
 }
 
-void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
+void Camera::ProcessInput(float _deltaTime)
 {
+#pragma region Keyboard input
     if (InputManager::IsKeyPressed(KEY_W))
     {
         ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
@@ -112,6 +112,11 @@ void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
     {
         ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
     }
+#pragma endregion Keyboard input
+
+#pragma region Mouse input
+
+#pragma endregion Mouse input
 }
 
 void Camera::UpdateCameraVectors()

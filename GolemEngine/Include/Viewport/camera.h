@@ -5,8 +5,6 @@
 #include "matrix4.h"
 
 
-class GLFWwindow;
-
 enum GOLEM_ENGINE_API CameraMovement
 {
     FORWARD,
@@ -22,7 +20,6 @@ const float PITCH = 0.0f;
 const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
-
 
 class GOLEM_ENGINE_API Camera
 {
@@ -46,6 +43,7 @@ public:
     float zFar;
 
     bool isMoved = false;
+
 private:
     void UpdateCameraVectors();
 
@@ -57,5 +55,5 @@ public:
     void ProcessKeyboard(CameraMovement _direction, float _deltaTime);
     void ProcessMouseMovement(float _xoffset, float _yoffset, bool _constrainPitch = true);
     void ProcessMouseScroll(float _yoffset);
-    void ProcessInput(GLFWwindow* _window, float _deltaTime);
+    void ProcessInput(float _deltaTime);
 };
