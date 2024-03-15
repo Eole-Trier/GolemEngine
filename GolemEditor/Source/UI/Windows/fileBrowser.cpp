@@ -91,14 +91,14 @@ void FileBrowser::ContentBrowser()
 		ImGui::PopStyleVar(2);
 		ImGui::Text("");
 	}
-	Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
+
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
 		std::string fileName = GetFileName(path.c_str());
+		std::string extensionFile = GetFileExtension(fileName);
 		if (EXCLUDE_FILE(fileName))
 		{
-			ImGui::PushID(path.c_str());
 			ImGui::BeginChild(GetFileName(path.c_str()), ImVec2(100, 100));
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 			if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
@@ -110,22 +110,27 @@ void FileBrowser::ContentBrowser()
 			}
 			ImGui::PopStyleColor();
 			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
-			ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			if (p.is_directory())
+			{
+				Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
+			else if (extensionFile == ".jpg" || extensionFile == ".png")
+			{
+				Golemint texture = WINDOW_INTERFACE->LoadUITexture(path.c_str());
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
+			else
+			{
+				Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/Icons/File_Icon.png");
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
+
 			ImGui::Text(GetFileName(path.c_str()));
 
 			ImGui::EndChild();
 
-			ImGui::PopID();
 			ImGui::SameLine();
-			// TODO
-			//ImGui::SameLine();
-			//if (ImGui::Button(GetFileName(path.c_str())))
-			//{
-			//	if (p.is_directory())
-			//	{
-			//		m_currentDirectory = path;
-			//	}
-			//}
 		}
 	}
 }
@@ -157,4 +162,14 @@ const char* FileBrowser::GetFileName(const char* _path)
 	}
 
 	return _path + index + 1;
+}
+
+
+std::string FileBrowser::GetFileExtension(const std::string& _fileName) 
+{
+	size_t dotPosition = _fileName.find_last_of('.');
+	if (dotPosition != std::string::npos) {
+		return _fileName.substr(dotPosition);
+	}
+	return "";
 }

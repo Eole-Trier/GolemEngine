@@ -21,6 +21,7 @@ public:
 	// Get ever file name
 	const char* GetFileName(const char* _path);
 
+	std::string GetFileExtension(const std::string& _fileName);
 
 private:
 
