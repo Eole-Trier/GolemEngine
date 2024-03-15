@@ -147,3 +147,13 @@ Mesh* Scene::GetMeshByName(std::string _name)
     Log::Print("No mesh with the name %s has been found", _name.c_str());
     return nullptr;
 }
+
+const std::vector<GameObject*>& Scene::GetGameObjects()
+{
+    return m_gameObjects;
+}
+
+GameObject* Scene::GetWorld()
+{
+    return m_world;
+}

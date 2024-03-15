@@ -94,9 +94,6 @@ void EditorUi::BeginDockSpace()
     ImGuiID dock_id_left, dock_id_right;
     if (init)
     {
-        // The dock has a default 4 block layout
-        // Topleft     TopRight
-        // Bottomlefr  BottomRight
         init = false;
         ImGui::DockBuilderRemoveNode(dockspace_id);
         ImGui::DockBuilderAddNode(dockspace_id);

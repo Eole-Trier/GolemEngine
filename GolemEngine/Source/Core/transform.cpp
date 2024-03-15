@@ -21,21 +21,21 @@ void Transform::UpdateSelfAndChilds()
     else
         m_globalModel = m_localModel;
 
-    for (int i = 0; i < m_childs.size(); i++)
+    for (int i = 0; i < m_children.size(); i++)
     {
-        m_childs[i]->UpdateSelfAndChilds();
+        m_children[i]->UpdateSelfAndChilds();
     }
 }
 
 void Transform::AddChild(Transform* const t)
 {
-    m_childs.push_back(t);
+    m_children.push_back(t);
     if (t->m_parent)
         t->m_parent->RemoveChild(t);
     t->m_parent = this;
 }
 
-void Transform::AddChilds(std::vector<Transform*> const ts)
+void Transform::AddChildren(std::vector<Transform*> const ts)
 {
     for (Transform* t : ts)
         AddChild(t);
@@ -43,12 +43,14 @@ void Transform::AddChilds(std::vector<Transform*> const ts)
 
 void Transform::RemoveChild(Transform* const t)
 {
-    std::erase(m_childs, t);
+    std::erase(m_children, t);
+    // todo
 }
 
 void Transform::SetParent(Transform* const t)
 {
     m_parent = t;
+    // todo
 }
 
 Matrix4 Transform::GetGlobalModel()
@@ -60,3 +62,9 @@ Matrix4 Transform::GetLocalModel()
 {
 	return m_localModel;
 }
+
+const std::vector<Transform*>& Transform::GetChildren() const
+{
+    return m_children;
+}
+
