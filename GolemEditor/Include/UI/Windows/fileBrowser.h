@@ -3,15 +3,17 @@
 #include <filesystem>
 #include <string>
 
+#include "UI/Windows/window.h"
+
 class GolemEngine;
 
-class FileBrowser
+class FileBrowser : public Window
 {
 public:
-	FileBrowser();
+	FileBrowser(std::string _name);
 	~FileBrowser();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
+	void Update(GolemEngine* _golemEngine);
 
 	void TreeNodes(std::filesystem::path _path);
 	// Content Browser loop

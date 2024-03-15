@@ -13,21 +13,17 @@
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
 
-Viewport::Viewport()
-    :m_lastX(0),
-    m_lastY(0),
-    m_yaw(0),
-    m_pitch(0),
-    m_firstMouse(true)
+Viewport::Viewport(std::string _name)
+    : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0), m_firstMouse(true)
 {}
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine, const char* _name)
+void Viewport::Update(GolemEngine* _golemEngine)
 {
     GRAPHIC_INTERFACE->EnableDepth();
 
-    ImGui::Begin("Viewport");
+    ImGui::Begin(name.c_str());
 
     ImGui::Image((ImTextureID)GRAPHIC_INTERFACE->GetTextureId(), ImGui::GetContentRegionAvail());
 

@@ -6,7 +6,7 @@ class GolemEngine;
 class BasicActors;
 class Viewport;
 class FileBrowser;
-class WorldActors;
+class SceneGraph;
 class DebugWindow;
 struct GLFWwindow;
 
@@ -17,7 +17,7 @@ private:
 	BasicActors* m_basicActors = nullptr;
 	Viewport* m_viewport = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
-	WorldActors* m_worldActors = nullptr;
+	SceneGraph* m_sceneGraph = nullptr;
 	DebugWindow* m_debugWindow = nullptr;
 
 public:

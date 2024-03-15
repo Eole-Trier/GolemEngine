@@ -4,11 +4,11 @@
 
 class GolemEngine;
 
-class BasicActors : public Window
+class SceneGraph : public Window
 {
 public:
-	BasicActors(std::string _name);
-	~BasicActors();
+	SceneGraph(std::string _name);
+	~SceneGraph();
 
 	void Update(GolemEngine* _golemEngine);
 };

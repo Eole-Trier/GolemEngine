@@ -175,10 +175,11 @@
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\Windows\viewport.cpp" />
-    <ClCompile Include="Source\UI\Windows\worldActors.cpp" />
+    <ClCompile Include="Source\UI\Windows\sceneGraph.cpp" />
     <ClCompile Include="Source\editor.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\UI\editorUi.cpp" />
+    <ClCompile Include="Source\UI\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
@@ -187,7 +188,8 @@
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
     <ClInclude Include="Include\UI\Windows\viewport.h" />
-    <ClInclude Include="Include\UI\Windows\worldActors.h" />
+    <ClInclude Include="Include\UI\Windows\sceneGraph.h" />
+    <ClInclude Include="Include\UI\Windows\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

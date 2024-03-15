@@ -7,13 +7,16 @@
 #include "imgui_internal.h"
 
 
-DebugWindow::DebugWindow() {}
+DebugWindow::DebugWindow(std::string _name)
+	: Window(_name)
+{
+}
 
 DebugWindow::~DebugWindow() {}
 
-void DebugWindow::Update(GolemEngine* _golemEngine, const char* _name)
+void DebugWindow::Update(GolemEngine* _golemEngine)
 {
-	ImGui::Begin("Debug");
+	ImGui::Begin(name.c_str());
 	ImGui::Text("deltaTime: %f", _golemEngine->GetDeltaTime());
 	ImGui::Text("time: %f", _golemEngine->GetTime());
 	ImGui::End();

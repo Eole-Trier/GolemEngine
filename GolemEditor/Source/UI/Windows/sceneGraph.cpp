@@ -1,4 +1,4 @@
-#include "UI/Windows/basicActors.h"
+#include "UI/Windows/sceneGraph.h"
 
 #include "golemEngine.h"
 #include "imgui.h"
@@ -7,15 +7,14 @@
 #include "imgui_internal.h"
 
 
-BasicActors::BasicActors(std::string _name) 
+SceneGraph::SceneGraph(std::string _name) 
 	: Window(_name)
 {
 }
 
+SceneGraph::~SceneGraph() {}
 
-BasicActors::~BasicActors() {}
-
-void BasicActors::Update(GolemEngine* _golemEngine)
+void SceneGraph::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 	ImGui::End();

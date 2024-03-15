@@ -20,15 +20,16 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj.user" && \
     name != "imgui.ini")
 
-FileBrowser::FileBrowser() 
-	:m_currentDirectory(m_editorDirectory)
-{}
+FileBrowser::FileBrowser(std::string _name)
+	: Window(_name), m_currentDirectory(m_editorDirectory)
+{
+}
 
 FileBrowser::~FileBrowser() {}
 
-void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
+void FileBrowser::Update(GolemEngine* _golemEngine)
 {
-	ImGui::Begin("File_Browser");
+	ImGui::Begin(name.c_str());
 
 	ImGui::BeginChild("child1", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 0), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX);
 	TreeNodes(std::filesystem::current_path());

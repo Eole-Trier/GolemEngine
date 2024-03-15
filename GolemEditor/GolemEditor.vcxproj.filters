@@ -36,7 +36,10 @@
     <ClCompile Include="Source\UI\Windows\viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\Windows\worldActors.cpp">
+    <ClCompile Include="Source\UI\Windows\sceneGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\Windows\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +62,10 @@
     <ClInclude Include="Include\UI\Windows\viewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\UI\Windows\worldActors.h">
+    <ClInclude Include="Include\UI\Windows\sceneGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\UI\Windows\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

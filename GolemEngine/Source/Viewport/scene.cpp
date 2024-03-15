@@ -21,6 +21,7 @@
 
 Scene::Scene() 
 {
+    m_world = nullptr;
 }
 
 void Scene::Init()

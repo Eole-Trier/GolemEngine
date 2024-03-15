@@ -1,12 +1,14 @@
 #pragma once
 
+#include "UI/Windows/window.h"
+
 class GolemEngine;
 
-class DebugWindow
+class DebugWindow : public Window
 {
 public:
-	DebugWindow();
+	DebugWindow(std::string _name);
 	~DebugWindow();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default window");
+	void Update(GolemEngine* _golemEngine);
 };

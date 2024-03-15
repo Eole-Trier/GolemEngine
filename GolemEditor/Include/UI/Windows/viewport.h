@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Viewport/camera.h"
+#include "UI/Windows/window.h"
 
 class GolemEngine;
 
-class Viewport
+class Viewport : public Window
 {
 private:
 	static Camera* m_camera;
@@ -21,10 +22,10 @@ public:
 
 public:
 
-	Viewport();
+	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
+	void Update(GolemEngine* _golemEngine);
 
 	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
 	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
