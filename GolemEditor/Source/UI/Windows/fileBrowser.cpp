@@ -1,7 +1,6 @@
 #include "UI/Windows/fileBrowser.h"
 
 #include <filesystem>
-#include <stack>
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "golemEngine.h"
@@ -86,11 +85,18 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 		if (nodeNameStr == m_fileToRename)
 		{
 			ImGui::SameLine();
+			ImGui::SetKeyboardFocusHere();
 			if (ImGui::InputText("##renaming", &m_string, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
+				std::filesystem::path oldPath = _path;
 
-				// Apply
-				m_fileToRename = "";
+				std::filesystem::path newPath = _path.parent_path().string() + '\\' + m_string;
+
+				if (!std::filesystem::exists(newPath))
+				{
+					std::filesystem::rename(oldPath, newPath);
+					m_fileToRename = "";
+				}
 			}
 		}
 
