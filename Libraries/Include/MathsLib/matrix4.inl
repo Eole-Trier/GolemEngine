@@ -107,7 +107,7 @@ Matrix4 Matrix4::Scale(Vector3 _scale) const
 	return (*this) * scale;
 }
 
-Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale) const
+Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
 {
 	Matrix4 result = Matrix4::Identity();
 

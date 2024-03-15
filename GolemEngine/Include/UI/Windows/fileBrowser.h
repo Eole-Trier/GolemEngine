@@ -1,12 +1,18 @@
 #pragma once
+#include "UI/engineUi.h"
 
-class FileBrowser
+#include <filesystem>
+#include <string>
+
+class FileBrowser : Window
 {
-public:
-
 public:
 	FileBrowser();
 	~FileBrowser();
+
+	void Init();
+
+	void TreeNodes(std::filesystem::path path);
 
 	void Update();
 };

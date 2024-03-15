@@ -1,10 +1,7 @@
 #pragma once
-
-class BasicActors
+#include "UI/engineUi.h"
+class BasicActors : Window
 {
-public:
-	int a = 1;
-
 public:
 	BasicActors();
 	~BasicActors();

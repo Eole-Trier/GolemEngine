@@ -8,35 +8,36 @@ class DirectionalLight;
 class PointLight;
 class SpotLight;
 class Shader;
+class GameObject;
+class Mesh;
 
 class GOLEM_ENGINE_API Scene
 {
 private:
 	ResourceManager m_resourceManager;
+
+	GameObject* m_world;
+	std::vector<GameObject*> m_gameObjects;
+	std::vector<Mesh*> m_meshes;
+
+	static constexpr size_t m_maxDirLights = 1;
+	static constexpr size_t m_maxPointLights = 10; // According to the shader
+	static constexpr size_t m_maxSpotLights = 10;
+
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
-	unsigned int m_sceneTexture;
-
-public:
-	unsigned int vao, vbo, rbo;
-	unsigned int fbo;
-	unsigned int textureId;
-	Shader* shad;
 
 public:
 	Scene();
 
-	// This function is used to create and bind the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	// The result is that we get a movable viewport in an ImGUI window.
-	void CreateFramebuffer();
-	void RescaleFramebuffer(float _width, float _height);
 	void Init();
-	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera, float _deltaTime);
-
+	void InitGameObjects();
 	void InitLights();
-	void UpdateLights(Shader* _shader);
 
-	void BindFramebuffer();
-	void UnbindFramebuffer();
+	void CreateAndLoadResources();
+
+	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera);
+	void UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera);
+	void UpdateLights(Shader* _shader);
 };

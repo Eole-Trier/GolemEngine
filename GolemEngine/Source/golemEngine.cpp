@@ -1,10 +1,12 @@
 #include <wtypes.h>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
+#include "UI/engineUi.h"
+#include "Wrappers/graphicWrapper.h"
+#include "vector4.h"
 
 #include "golemEngine.h"
 
@@ -22,13 +24,10 @@ GolemEngine::GolemEngine()
     RECT desktop;
     const HWND hDesktop = GetDesktopWindow();
     GetWindowRect(hDesktop, &desktop);
+
     m_screenWidth = desktop.right;
     m_screenHeight = desktop.bottom;
-
-    m_engineUi->SetViewport(m_screenWidth, m_screenHeight);
 }
-
-GolemEngine::~GolemEngine() {}
 
 void GolemEngine::InitWindow()
 {
@@ -45,39 +44,16 @@ void GolemEngine::InitWindow()
         glfwTerminate();
     }
 
-   // Set fullscreen
-   //m_monitor = glfwGetPrimaryMonitor();
-   //const GLFWvidmode* mode = glfwGetVideoMode(m_monitor);
-   //glfwSetWindowMonitor(m_window, m_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-
     glfwMakeContextCurrent(m_window);
+
+    //glfwSetMouseButtonCallback(m_window, Mouse::mouse_button_callback);
    
     // Initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-
-    // Setup Imgui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-    // Setup style
-    ImGui::StyleColorsDark();
-
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
-
-    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-    ImGui_ImplOpenGL3_Init("#version 460");
+    m_engineUi->InitUI(m_window);
 }
 
 void GolemEngine::InitScene()
@@ -85,7 +61,7 @@ void GolemEngine::InitScene()
     // Init scene objects
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    m_scene->CreateFramebuffer();
+    GraphicWrapper::GetInstance()->CreateFramebuffer(m_screenWidth, m_screenHeight);
 }
 
 void GolemEngine::Init()
@@ -94,21 +70,81 @@ void GolemEngine::Init()
     InitScene();
 }
 
-Scene* GolemEngine::GetScene()
-{
-    return m_scene;
-}
-
-GLFWwindow* GolemEngine::GetGLFWWindow()
-{
-    return m_window;
-}
-
 void GolemEngine::UpdateDeltaTime()
 {
     static float lastFrame = 0;
     m_deltaTime = static_cast<float>(glfwGetTime()) - lastFrame;
     lastFrame = static_cast<float>(glfwGetTime());
+}
+
+void GolemEngine::ProcessInput()
+{
+    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(m_window, true);
+    }
+
+    if (glfwGetKey(m_window, GLFW_KEY_F) == GLFW_PRESS)
+    {
+        m_engineUi->SetIsFullscreen(!m_engineUi->GetIsFullscreen());
+
+        if (m_engineUi->GetIsFullscreen())
+        {
+            // Switch to fullscreen mode
+            GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+            glfwSetWindowMonitor(m_window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        else
+        {
+            // Switch back to windowed mode
+            glfwSetWindowMonitor(m_window, NULL, 100, 100, m_screenWidth, m_screenHeight, GLFW_DONT_CARE);
+        }
+    }
+}
+
+void GolemEngine::Update()
+{
+    while (!glfwWindowShouldClose(m_window))
+    {
+        glfwPollEvents();
+        UpdateDeltaTime();
+        ProcessInput();
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Bind next framebuffer to the scene buffer
+        GraphicWrapper::GetInstance()->BindFramebuffer();
+
+        // Assign background color and clear previous scene buffers 
+        GraphicWrapper::GetInstance()->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+        GraphicWrapper::GetInstance()->ClearBuffer();
+
+        // Render the scene to the framebuffer
+        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera());
+       
+        // Go back to original framebuffer
+        GraphicWrapper::GetInstance()->UnbindFramebuffer();
+
+        m_engineUi->Update();
+
+        glfwSwapBuffers(m_window);
+    }
+}
+
+void GolemEngine::Close() 
+{
+    glfwTerminate();
+}
+
+Scene* GolemEngine::GetScene()
+{
+    return m_scene;
+}
+
+GLFWwindow* GolemEngine::GetWindow()
+{
+    return m_window;
 }
 
 float GolemEngine::GetDeltaTime()
@@ -119,67 +155,4 @@ float GolemEngine::GetDeltaTime()
 float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
-}
-
-void GolemEngine::ProcessInput()
-{
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(m_window, true);
-    }
-}
-
-void GolemEngine::Update()
-{
-    ImGuiIO& io = ImGui::GetIO();
-    glViewport(0, 0, m_screenWidth, m_screenHeight);
-    while (!glfwWindowShouldClose(m_window))
-    {
-        glfwPollEvents();
-
-        UpdateDeltaTime();
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-#pragma region DockSpace;
-        m_engineUi->BeginDockSpace();
-        
-         ProcessInput();
-
-        ImVec2 pos = ImGui::GetCursorScreenPos();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // Bind next framebuffer to the scene buffer
-        m_scene->BindFramebuffer();
-        // Clear previous scene buffers
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // Render the scene to the framebuffer
-        m_scene->Update(m_screenWidth, m_screenHeight, m_window, m_engineUi->GetViewport()->GetCamera(), m_deltaTime);
-        // Go back to original framebuffer
-        m_scene->UnbindFramebuffer();
-        
-        m_engineUi->EndDockSpace();
-#pragma enderegion DockSpace
-
-        ImGui::Render();
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
-
-        glfwSwapBuffers(m_window);
-    }
-}
-
-void GolemEngine::Close() 
-{
-    glfwTerminate();
 }

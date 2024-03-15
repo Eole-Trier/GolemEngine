@@ -8,6 +8,8 @@
 #include "imgui_impl_opengl3.h"
 #include "Viewport/camera.h"
 #include "golemEngine.h"
+#include "Wrappers/graphicWrapper.h"
+#include "Wrappers/interfaceWrapper.h"
 
 Camera* Viewport::m_camera = new Camera(Vector3(0.0f, 0.0f, 3.0f));
 
@@ -24,20 +26,20 @@ Viewport::~Viewport() {}
 
 void Viewport::Update(GolemEngine* _golemEngine)
 {
-    glEnable(GL_DEPTH_TEST);
+    GraphicWrapper::GetInstance()->EnableDepth();
 
-    ImGui::Begin("Viewport");
+    InterfaceWrapper::GetInstance()->Begin("Viewport");
 
-    ImGui::Image((ImTextureID)_golemEngine->GetScene()->textureId, ImGui::GetContentRegionAvail());
+    ImGui::Image((ImTextureID)GraphicWrapper::GetInstance()->GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused())
     {
-        m_camera->ProcessInput(_golemEngine->GetGLFWWindow(), _golemEngine->GetDeltaTime());
+        m_camera->ProcessInput(_golemEngine->GetWindow(), _golemEngine->GetDeltaTime());
         MouseMovement(_golemEngine);
-        glfwSetScrollCallback(_golemEngine->GetGLFWWindow(), ScrollCallback);
+        glfwSetScrollCallback(_golemEngine->GetWindow(), ScrollCallback);
     }
 
-    ImGui::End();
+    InterfaceWrapper::GetInstance()->End();
 }
 
 void Viewport::MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn)
@@ -73,15 +75,15 @@ Camera* Viewport::GetCamera()
 
 void Viewport::MouseMovement(GolemEngine* _golemEngine)
 {
-    glfwGetCursorPos(_golemEngine->GetGLFWWindow(), &m_cursorX, &m_cursorY);
-    if (glfwGetKey(_golemEngine->GetGLFWWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
+    glfwGetCursorPos(_golemEngine->GetWindow(), &m_cursorX, &m_cursorY);
+    if (glfwGetKey(_golemEngine->GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        glfwSetInputMode(_golemEngine->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         MouseCallback(_golemEngine, m_cursorX, -m_cursorY);
     }
     else
     {
         m_firstMouse = true;
-        glfwSetInputMode(_golemEngine->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 }

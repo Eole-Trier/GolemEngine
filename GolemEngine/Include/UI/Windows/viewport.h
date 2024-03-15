@@ -1,10 +1,11 @@
 #pragma once
+#include "UI/engineUi.h"
 
 struct GLFWwindow;
 class GolemEngine;
 class Camera;
 
-class Viewport
+class Viewport : Window
 {
 private:
 	static Camera* m_camera;

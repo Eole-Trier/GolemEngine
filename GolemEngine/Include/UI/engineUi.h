@@ -1,6 +1,8 @@
 #pragma once
 
 #include "dll.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 class BasicActors;
 class Viewport;
@@ -9,24 +11,33 @@ class WorldActors;
 class DebugWindow;
 class GolemEngine;
 
+class GOLEM_ENGINE_API Window
+{
+public:
+	GLFWwindow* window;
+};
+
 class GOLEM_ENGINE_API EngineUi
 {
 private:
 	BasicActors* m_basicActors = nullptr;
 	FileBrowser* m_fileBrowser = nullptr;
-	WorldActors* m_worldActors= nullptr;
+	WorldActors* m_worldActors = nullptr;
 	DebugWindow* m_debugWindow = nullptr;
-	GolemEngine* m_golemEngine= nullptr;
+	GolemEngine* m_golemEngine = nullptr;
+
+	bool m_isFullscreen = false;
 
 public:
 	Viewport* m_viewport = nullptr;
 	EngineUi(GolemEngine* _golemEngine);
 	~EngineUi();
 
-	void BeginDockSpace();
-	void EndDockSpace();
-	void UpdateLoop();
+	void InitUI(GLFWwindow* _window);
+	void Update();
+	void CustomWindows();
 
-	void SetViewport(int _width, int _height);
+	bool GetIsFullscreen();
+	void SetIsFullscreen(bool _value);
 	Viewport* GetViewport();
 };

@@ -1,11 +1,10 @@
 #pragma once
-
+#include "UI/engineUi.h"
+struct GLFWwindow;
 class GolemEngine;
 
-class DebugWindow
+class DebugWindow : Window
 {
-public:
-
 public:
 	DebugWindow();
 	~DebugWindow();
