@@ -56,7 +56,7 @@ void Scene::InitGameObjects()
     m_gameObjects.push_back(ballBaldMesh);
     
     m_world->transform->AddChild(vikingMesh->transform);
-    m_world->transform->AddChild(ballBaldMesh->transform);
+    vikingMesh->transform->AddChild(ballBaldMesh->transform);
 
 }
 
@@ -73,12 +73,15 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 
 void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
+    // Temporary to test graph scene
+    m_meshes[0]->transform->rotation.y += 0.01f;
+    m_meshes[1]->transform->rotation.x += 0.01f;
     m_world->transform->UpdateSelfAndChilds();
-
     for (int i = 0; i < m_meshes.size(); i++)
     {
         m_meshes[i]->Draw(_width, _height, _camera);
     }
+
 }
 
 void Scene::InitLights()

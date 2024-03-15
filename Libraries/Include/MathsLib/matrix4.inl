@@ -213,10 +213,13 @@ Matrix4 operator-(Matrix4 _A, Matrix4 _B)
 
 Matrix4 operator*(Matrix4 _A, Matrix4 _B)
 {
-	return Matrix4(_A.data[0][0] * _B.data[0][0] + _A.data[0][1] * _B.data[0][3] + _A.data[0][2] * _B.data[2][0] + _A.data[0][3] * _B.data[3][0], _A.data[0][0] * _B.data[0][1] + _A.data[0][1] * _B.data[1][1] + _A.data[0][2] * _B.data[2][1] + _A.data[0][3] * _B.data[3][1], _A.data[0][0] * _B.data[0][2] + _A.data[0][1] * _B.data[1][2] + _A.data[0][2] * _B.data[2][2] + _A.data[0][3] * _B.data[3][2], _A.data[0][0] * _B.data[0][3] + _A.data[0][1] * _B.data[1][3] + _A.data[0][2] * _B.data[2] + _A.data[0][3] * _B.data[3][3],
-					  _A.data[0][3] * _B.data[0][0] + _A.data[1][1] * _B.data[0][3] + _A.data[1][2] * _B.data[2][0] + _A.data[1][3] * _B.data[3][0], _A.data[0][3] * _B.data[0][1] + _A.data[1][1] * _B.data[1][1] + _A.data[1][2] * _B.data[2][1] + _A.data[1][3] * _B.data[3][1], _A.data[0][3] * _B.data[0][2] + _A.data[1][1] * _B.data[1][2] + _A.data[1][2] * _B.data[2][2] + _A.data[1][3] * _B.data[3][2], _A.data[0][3] * _B.data[3] + _A.data[1][1] * _B.data[1][3] + _A.data[1][2] * _B.data[2] + _A.data[1][3] * _B.data[3][3],
-					  _A.data[2][0] * _B.data[0][0] + _A.data[2][1] * _B.data[0][3] + _A.data[2][2] * _B.data[2][0] + _A.data[2] * _B.data[3][0], _A.data[2][0] * _B.data[0][1] + _A.data[2][1] * _B.data[1][1] + _A.data[2][2] * _B.data[2][1] + _A.data[2] * _B.data[3][1], _A.data[2][0] * _B.data[0][2] + _A.data[2][1] * _B.data[1][2] + _A.data[2][2] * _B.data[2][2] + _A.data[2] * _B.data[3][2], _A.data[2][0] * _B.data[0][3] + _A.data[2][1] * _B.data[1][3] + _A.data[2][2] * _B.data[2] + _A.data[2] * _B.data[3][3],
-					  _A.data[3][0] * _B.data[0][0] + _A.data[3][1] * _B.data[0][3] + _A.data[3][2] * _B.data[2][0] + _A.data[3][3] * _B.data[3][0], _A.data[3][0] * _B.data[0][1] + _A.data[3][1] * _B.data[1][1] + _A.data[3][2] * _B.data[2][1] + _A.data[3][3] * _B.data[3][1], _A.data[3][0] * _B.data[0][2] + _A.data[3][1] * _B.data[1][2] + _A.data[3][2] * _B.data[2][2] + _A.data[3][3] * _B.data[3][2], _A.data[3][0] * _B.data[0][3] + _A.data[3][1] * _B.data[1][3] + _A.data[3][2] * _B.data[2] + _A.data[3][3] * _B.data[3][3] );
+	Matrix4 temp(0);
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			for (int k = 0; k < 4; k++)
+				temp.data[i][j] += _A.data[i][k] * _B.data[k][j];
+	return temp;
 }
 
 bool operator==(Matrix4 _A, Matrix4 _B)
