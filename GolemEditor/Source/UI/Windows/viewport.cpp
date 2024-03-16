@@ -30,11 +30,15 @@ void Viewport::Update(GolemEngine* _golemEngine, Camera* _camera, const char* _n
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-    //if (ImGui::IsWindowFocused())
+    //if (ImGui::IsWindowFocused() && InputManager::IsKeyPressed(KEY_O))
+    if (InputManager::IsKeyPressed(KEY_O))
     {
-        float a = InputManager::GetMouseOffsetX();
-        std::cout << a << std::endl;
+        _camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         _camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
+        // Mouse offset values of x and y are not 0 so if you don't set them to 0 (with the following two lines), if you still activate viewport movement,
+        // the camera will move even if you don't move the mouse.
+        InputManager::SetMouseOffsetX(0.0f);
+        InputManager::SetMouseOffsetY(0.0f);
     }
 
     ImGui::End();

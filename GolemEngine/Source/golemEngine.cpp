@@ -26,8 +26,9 @@ void GolemEngine::InitScene()
 void GolemEngine::Init()
 {
     InitScene();
-    InputManager::Init(m_window);
+    InputManager::Init(m_window, m_camera);
     m_camera = new Camera(m_window);
+    InputManager::SetCamera(m_camera);
 }
 
 void GolemEngine::UpdateDeltaTime()

@@ -5,10 +5,15 @@
 #include "Viewport/camera.h"
 
 
+Camera* InputManager::m_camera = nullptr;
 float InputManager::m_mouseOffsetX = 0.0f;
 float InputManager::m_mouseOffsetY = 0.0f;
+bool InputManager::m_firstMouse = true;
+float InputManager::m_lastX = 0.0f;
+float InputManager::m_lastY = 0.0f;
 
-void InputManager::Init(GLFWwindow* _window)
+void InputManager::Init(GLFWwindow* _window, Camera* _camera)
+    //: m_camera(_camera) 
 {
     std::cout << GLFW_MOUSE_BUTTON_LAST << std::endl;
     glfwSetKeyCallback(_window, KeyCallback);
@@ -38,18 +43,23 @@ bool InputManager::IsKeyPressed(int _key)
 
 void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, double _yPos)
 {
-    static bool firstMouse = true;
-    static double lastX = _xPos;
-    static double lastY = _yPos;
+    float xPos = (float)_xPos;
+    float yPos = (float)_yPos;
 
-    if (firstMouse) {
-        lastX = _xPos;
-        lastY = _yPos;
-        firstMouse = false;
+    if (m_firstMouse) {
+        m_lastX = xPos;
+        m_lastY = yPos;
+        m_firstMouse = false;
     }
 
-    m_mouseOffsetX = _xPos - lastX;
-    m_mouseOffsetY = lastY - _yPos; // Reversed since y-coordinates go from bottom to top
+    float xOffset = xPos - m_lastX;
+    float yOffset = m_lastY - yPos;
+    m_lastX = xPos;
+    m_lastY = yPos;
+
+    m_mouseOffsetX = xOffset;
+    m_mouseOffsetY = -yOffset;  // Invert y coordinate
+
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
@@ -82,4 +92,19 @@ float InputManager::GetMouseOffsetY()
 void InputManager::SetWindow(GLFWwindow* _window)
 {
     m_window = _window;
+}
+
+void InputManager::SetCamera(Camera* _camera)
+{
+    m_camera = _camera;
+}
+
+void InputManager::SetMouseOffsetX(float _value)
+{
+    m_mouseOffsetX = _value;
+}
+
+void InputManager::SetMouseOffsetY(float _value)
+{
+    m_mouseOffsetY = _value;
 }
