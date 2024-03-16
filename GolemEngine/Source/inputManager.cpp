@@ -6,19 +6,21 @@
 
 
 Camera* InputManager::m_camera = nullptr;
+
 float InputManager::m_mouseOffsetX = 0.0f;
 float InputManager::m_mouseOffsetY = 0.0f;
-bool InputManager::m_firstMouse = true;
+bool InputManager::m_isFirstMouse = true;
 float InputManager::m_lastX = 0.0f;
 float InputManager::m_lastY = 0.0f;
+float InputManager::m_scrollOffsetY = 0.0f;
 
 void InputManager::Init(GLFWwindow* _window, Camera* _camera)
-    //: m_camera(_camera) 
 {
     std::cout << GLFW_MOUSE_BUTTON_LAST << std::endl;
     glfwSetKeyCallback(_window, KeyCallback);
     glfwSetCursorPosCallback(_window, MousePositionCallback);
     glfwSetMouseButtonCallback(_window, MouseButtonCallback);
+    glfwSetScrollCallback(_window, MouseScrollCallback);
 }
 
 void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
@@ -46,10 +48,10 @@ void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, doub
     float xPos = (float)_xPos;
     float yPos = (float)_yPos;
 
-    if (m_firstMouse) {
+    if (m_isFirstMouse) {
         m_lastX = xPos;
         m_lastY = yPos;
-        m_firstMouse = false;
+        m_isFirstMouse = false;
     }
 
     float xOffset = xPos - m_lastX;
@@ -76,7 +78,7 @@ void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _ac
 
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
 {
-    
+    m_scrollOffsetY = _yOffset;
 }
 
 float InputManager::GetMouseOffsetX()
@@ -87,6 +89,11 @@ float InputManager::GetMouseOffsetX()
 float InputManager::GetMouseOffsetY()
 {
     return m_mouseOffsetY;
+}
+
+float InputManager::GetScrollOffsetY()
+{
+    return m_scrollOffsetY;
 }
 
 void InputManager::SetWindow(GLFWwindow* _window)

@@ -6,18 +6,20 @@
 
 
 Camera::Camera(GLFWwindow* _window, Vector3 _position, Vector3 _up, float _yaw, float _pitch)
-	:
-	m_window(_window),
-	m_position(_position),
-	m_front(Vector3(0.0f, 0.0f, -1.0f)),
-	m_worldUp(_up),
-	m_yaw(_yaw),
-	m_pitch(_pitch),
-	m_movementSpeed(2.5f),
-	m_mouseSensitivity(0.1f),
-	m_zoom(45.0f),
+    :
+    m_window(_window),
+    m_position(_position),
+    m_front(Vector3(0.0f, 0.0f, -1.0f)),
+    m_worldUp(_up),
+    m_yaw(_yaw),
+    m_pitch(_pitch),
+    m_movementSpeed(2.5f),
+    m_mouseSensitivity(0.1f),
+    m_zoom(45.0f),
     m_near(0.1f),
-    m_far(1000.0f)
+    m_far(1000.0f),
+    m_minSpeed(1.0f),
+    m_maxSpeed(100.0f)
 {
 	UpdateVectors();
 }
@@ -70,11 +72,10 @@ void Camera::ProcessMouseInput(float _xOffset, float _yOffset, bool _constrainPi
 
 void Camera::ProcessMouseScroll(float _yOffset)
 {
-    if (m_movementSpeed + _yOffset > m_maxSpeed || m_movementSpeed + _yOffset < m_minSpeed)
+    if (m_movementSpeed + _yOffset <= m_maxSpeed && m_movementSpeed + _yOffset >= m_minSpeed)
     {
-        return;
+        m_movementSpeed += (float)_yOffset;
     }
-    m_movementSpeed += (float)_yOffset;
 }
 
 void Camera::UpdateVectors()

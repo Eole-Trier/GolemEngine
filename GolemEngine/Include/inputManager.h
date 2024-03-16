@@ -11,13 +11,19 @@ class GOLEM_ENGINE_API InputManager
 private:
 	static inline GLFWwindow* m_window = nullptr;
 	static Camera* m_camera;
-	static inline bool m_keyboardKeys[LAST_KEY_INT];
 
+#pragma region Keyboard variables
+	static inline bool m_keyboardKeys[LAST_KEY_INT];
+#pragma endregion Keyboard variables
+
+#pragma region Mouse variables
 	static float m_mouseOffsetX;
 	static float m_mouseOffsetY;
-	static bool m_firstMouse;
+	static bool m_isFirstMouse;
 	static float m_lastX;
 	static float m_lastY;
+	static float m_scrollOffsetY;
+#pragma endregion Mouse variables
 
 private:
 	// Static class
@@ -33,6 +39,7 @@ public:
 
 	static float GetMouseOffsetX();
 	static float GetMouseOffsetY();
+	static float GetScrollOffsetY();
 
 	static void SetWindow(GLFWwindow* _window);
 	static void SetCamera(Camera* _camera);

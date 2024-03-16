@@ -30,8 +30,7 @@ void Viewport::Update(GolemEngine* _golemEngine, Camera* _camera, const char* _n
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-    //if (ImGui::IsWindowFocused() && InputManager::IsKeyPressed(KEY_O))
-    if (InputManager::IsKeyPressed(KEY_O))
+    if (InputManager::IsKeyPressed(KEY_SPACE))
     {
         _camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         _camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
@@ -39,6 +38,7 @@ void Viewport::Update(GolemEngine* _golemEngine, Camera* _camera, const char* _n
         // the camera will move even if you don't move the mouse.
         InputManager::SetMouseOffsetX(0.0f);
         InputManager::SetMouseOffsetY(0.0f);
+        _camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
     }
 
     ImGui::End();
