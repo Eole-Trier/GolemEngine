@@ -26,7 +26,7 @@ void GolemEngine::InitScene()
 void GolemEngine::Init()
 {
     InitScene();
-    InputManager::Init(m_window, m_camera);
+    InputManager::Init(m_window);
     m_camera = new Camera(m_window);
     InputManager::SetCamera(m_camera);
 }
@@ -91,7 +91,7 @@ float GolemEngine::GetTime()
     return static_cast<float>(glfwGetTime());
 }
 
-void GolemEngine::SetScreenSize(int _width, int _height)
+void GolemEngine::SetScreenSize(const int _width, const int _height)
 {
     m_screenWidth = _width;
     m_screenHeight = _height;

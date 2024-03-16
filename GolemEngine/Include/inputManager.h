@@ -30,7 +30,7 @@ private:
 	InputManager() = delete;
 
 public:
-	static void Init(GLFWwindow* _window, Camera* _camera);
+	static void Init(GLFWwindow* _window);
 	static void KeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods);
 	static bool IsKeyPressed(int _key);
 	static void MousePositionCallback(GLFWwindow* _window, double _xPos, double _yPos);

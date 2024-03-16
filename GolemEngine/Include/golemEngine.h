@@ -35,6 +35,6 @@ public:
 	float GetDeltaTime();
 	float GetTime();
 
-	void SetScreenSize(int _width, int _height);
+	void SetScreenSize(const int _width, const int _height);
 	void SetWindow(GLFWwindow* _window);
 };

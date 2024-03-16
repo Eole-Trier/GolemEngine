@@ -29,7 +29,7 @@ public:
 	Scene();
 
 	void Init();
-	void Update(float _width, float _height, Camera* _camera, float _deltaTime);
+	void Update(int _width, int _height, Camera* _camera, float _deltaTime);
 	void InitLights();
 	void UpdateLights(Shader* _shader);
 };

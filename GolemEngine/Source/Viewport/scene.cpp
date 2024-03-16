@@ -43,7 +43,7 @@ void Scene::Init()
     cube->Init(sphere, sphere_texture, shad);
 }
 
-void Scene::Update(float _width, float _height, Camera* _camera, float _deltaTime)
+void Scene::Update(int _width, int _height, Camera* _camera, float _deltaTime)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 

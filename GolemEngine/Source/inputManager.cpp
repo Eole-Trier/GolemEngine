@@ -14,9 +14,8 @@ float InputManager::m_lastX = 0.0f;
 float InputManager::m_lastY = 0.0f;
 float InputManager::m_scrollOffsetY = 0.0f;
 
-void InputManager::Init(GLFWwindow* _window, Camera* _camera)
+void InputManager::Init(GLFWwindow* _window)
 {
-    std::cout << GLFW_MOUSE_BUTTON_LAST << std::endl;
     glfwSetKeyCallback(_window, KeyCallback);
     glfwSetCursorPosCallback(_window, MousePositionCallback);
     glfwSetMouseButtonCallback(_window, MouseButtonCallback);
