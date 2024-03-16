@@ -1,12 +1,18 @@
 #pragma once
 
+#include "dll.h"
 #include "Wrappers/windowWrapper.h"
+#include "Viewport/camera.h"
 
-class InputManager
+
+class GOLEM_ENGINE_API InputManager
 {
 private:
 	static inline GLFWwindow* m_window = nullptr;
 	static inline bool m_keyboardKeys[LAST_KEY_INT];
+
+	static float m_mouseOffsetX;
+	static float m_mouseOffsetY;
 
 private:
 	// Static class
@@ -20,5 +26,7 @@ public:
 	static void MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods);
 	static void MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset);
 
+	static float GetMouseOffsetX();
+	static float GetMouseOffsetY();
 	static void SetWindow(GLFWwindow* _window);
 };

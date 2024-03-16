@@ -6,12 +6,14 @@
 
 struct GLFWwindow;
 class Scene;
+class Camera;
 
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
 	GLFWwindow* m_window = nullptr;
 	Scene* m_scene = nullptr;
+	Camera* m_camera = nullptr;
 	int m_screenWidth = 0;
 	int m_screenHeight = 0;
 	float m_deltaTime = 0.f;
@@ -27,8 +29,9 @@ public:
 	void Update();
 	void Close();
 
-	Scene* GetScene();
 	GLFWwindow* GetWindow();
+	Scene* GetScene();
+	Camera* GetCamera();
 	float GetDeltaTime();
 	float GetTime();
 

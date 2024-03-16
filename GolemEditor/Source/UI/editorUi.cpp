@@ -136,7 +136,7 @@ void EditorUi::UpdateWindows()
 {
     m_basicActors->Update(m_golemEngine);
     m_fileBrowser->Update(m_golemEngine);
-    m_viewport->Update(m_golemEngine);
+    m_viewport->Update(m_golemEngine, m_golemEngine->GetCamera());
     m_worldActors->Update(m_golemEngine);
     m_debugWindow->Update(m_golemEngine);
 }

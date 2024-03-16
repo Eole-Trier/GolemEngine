@@ -2,10 +2,15 @@
 
 #include <iostream>
 
+#include "Viewport/camera.h"
+
+
+float InputManager::m_mouseOffsetX = 0.0f;
+float InputManager::m_mouseOffsetY = 0.0f;
 
 void InputManager::Init(GLFWwindow* _window)
 {
-    std::cout << GLFW_MOUSE_BUTTON_LAST;
+    std::cout << GLFW_MOUSE_BUTTON_LAST << std::endl;
     glfwSetKeyCallback(_window, KeyCallback);
     glfwSetCursorPosCallback(_window, MousePositionCallback);
     glfwSetMouseButtonCallback(_window, MouseButtonCallback);
@@ -33,21 +38,45 @@ bool InputManager::IsKeyPressed(int _key)
 
 void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, double _yPos)
 {
-    std::cout << "mouse pos: " << _xPos << " " << _yPos << std::endl;
+    static bool firstMouse = true;
+    static double lastX = _xPos;
+    static double lastY = _yPos;
+
+    if (firstMouse) {
+        lastX = _xPos;
+        lastY = _yPos;
+        firstMouse = false;
+    }
+
+    m_mouseOffsetX = _xPos - lastX;
+    m_mouseOffsetY = lastY - _yPos; // Reversed since y-coordinates go from bottom to top
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
 {
-    if (_action == GLFW_PRESS) {
+    if (_action == GLFW_PRESS)
+    {
         std::cout << "Mouse button " << _button << " pressed" << std::endl;
     }
-    else if (_action == GLFW_RELEASE) {
+    else if (_action == GLFW_RELEASE) 
+    {
         std::cout << "Mouse button " << _button << " released" << std::endl;
     }
 }
 
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
 {
+    
+}
+
+float InputManager::GetMouseOffsetX()
+{
+    return m_mouseOffsetX;
+}
+
+float InputManager::GetMouseOffsetY()
+{
+    return m_mouseOffsetY;
 }
 
 void InputManager::SetWindow(GLFWwindow* _window)

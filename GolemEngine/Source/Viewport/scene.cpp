@@ -51,7 +51,7 @@ void Scene::Update(float _width, float _height, Camera* _camera, float _deltaTim
 
     viking->Use();
 
-    viking->SetViewPos(_camera->position);
+    viking->SetViewPos(_camera->m_position);
 
     UpdateLights(viking);
   

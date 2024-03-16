@@ -85,6 +85,18 @@ Vector3 operator-(Vector3 _a, Vector3 _b)
     return { _a.x - _b.x, _a.y - _b.y, _a.z - _b.z };
 }
 
+Vector3 operator+=(Vector3& _a, Vector3 _b)
+{
+    _a = _a + _b;
+    return _a;
+}
+
+Vector3 operator-=(Vector3& _a, Vector3 _b)
+{
+    _a = _a - _b;
+    return _a;
+}
+
 bool operator==(Vector3 _a, Vector3 _b)
 {
     return (_a.x == _b.x && _a.y == _b.y && _a.z == _b.z) ? true : false;

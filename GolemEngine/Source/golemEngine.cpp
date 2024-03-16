@@ -1,6 +1,7 @@
 #include "golemEngine.h"
 
 #include "Wrappers/graphicWrapper.h"
+#include "Wrappers/windowWrapper.h"
 #include "Viewport/scene.h"
 #include "Viewport/camera.h"
 #include "inputManager.h"
@@ -26,6 +27,7 @@ void GolemEngine::Init()
 {
     InitScene();
     InputManager::Init(m_window);
+    m_camera = new Camera(m_window);
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -53,7 +55,7 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    m_scene->Update(m_screenWidth, m_screenHeight, Camera::instance, m_deltaTime);
+    m_scene->Update(m_screenWidth, m_screenHeight, m_camera, m_deltaTime);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }
@@ -63,14 +65,19 @@ void GolemEngine::Close()
     glfwTerminate();
 }
 
-Scene* GolemEngine::GetScene()
-{
-    return m_scene;
-}
-
 GLFWwindow* GolemEngine::GetWindow()
 {
     return m_window;
+}
+
+Camera* GolemEngine::GetCamera()
+{
+    return m_camera;
+}
+
+Scene* GolemEngine::GetScene()
+{
+    return m_scene;
 }
 
 float GolemEngine::GetDeltaTime()
