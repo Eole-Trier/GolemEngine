@@ -188,7 +188,31 @@ void FileBrowser::RightMouseClickEvent()
 	{
 		if (ImGui::MenuItem("Perform Some Logic"))
 		{
+			CreateFolder();
 		}
 		ImGui::EndPopup();
 	}
 }
+
+void FileBrowser::CreateFolder()
+{
+	std::string newFolderName = "NewFolder";
+	
+	int count = 1;
+
+	while (std::filesystem::exists(m_currentDirectory / newFolderName))
+	{
+		newFolderName = "NewFolder" + std::to_string(count);
+		count++;
+	}
+	try
+	{
+		std::filesystem::create_directories(m_currentDirectory / newFolderName);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << "Failed to create folder: " << e.what() << std::endl;
+		return;
+	}
+}
+

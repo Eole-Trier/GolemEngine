@@ -25,6 +25,8 @@ public:
 
 	void RightMouseClickEvent();
 
+	void CreateFolder();
+
 private:
 
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
