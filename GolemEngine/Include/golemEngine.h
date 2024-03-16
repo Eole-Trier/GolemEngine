@@ -12,14 +12,22 @@ class Scene;
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
+	static GolemEngine* m_golemInstance;
+
 	GLFWwindow* m_window = nullptr;
 	Scene* m_scene = nullptr;
 	int m_screenWidth = 0;
 	int m_screenHeight = 0;
 	float m_deltaTime = 0.f;
 
-public:
+private:
+	GolemEngine(GolemEngine& other) = delete;
 	GolemEngine();
+
+public:
+	void operator=(const GolemEngine&) = delete;
+	static GolemEngine* GetInstance();
+
 	~GolemEngine();
 
 	void InitScene();
