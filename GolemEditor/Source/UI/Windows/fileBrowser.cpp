@@ -1,6 +1,7 @@
 #include "UI/Windows/fileBrowser.h"
 
 #include <filesystem>
+#include <iostream>
 #include <stack>
 
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
@@ -30,15 +31,14 @@ FileBrowser::~FileBrowser() {}
 void FileBrowser::Update(GolemEngine* _golemEngine, const char* _name)
 {
 	ImGui::Begin("File_Browser");
-
+	// Tree node
 	ImGui::BeginChild("child1", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 0), ImGuiChildFlags_Border | ImGuiChildFlags_ResizeX);
 	TreeNodes(std::filesystem::current_path());
 	ImGui::EndChild();
-
 	ImGui::SameLine();
+
+	// Content browser viewer
 	ImGui::BeginChild("child2", ImVec2(0, 0), ImGuiChildFlags_Border);
-	ImGui::Text(GetFileName(m_currentDirectory.string().c_str()));
-	ImGui::Text("");
 	ContentBrowser();
 	ImGui::EndChild();
 	RightMouseClickEvent();
@@ -78,17 +78,17 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 
 void FileBrowser::ContentBrowser()	
 {
+	ImGui::Text(GetFileName(m_currentDirectory.string().c_str()));
+	ImGui::Text("");
 	if (m_currentDirectory != m_editorDirectory)
 	{
 		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 0.0f, 0.0f)); 
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.5f, 0.5f));
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(100.0f, 30.0f));
 		if (ImGui::Button("<-Back"))
 		{
 			LastPath(m_currentDirectory);
 		}
-		ImGui::PopStyleColor();
 		ImGui::PopStyleVar(2);
 		ImGui::Text("");
 	}
@@ -113,6 +113,10 @@ void FileBrowser::ContentBrowser()
 			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
 			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
 			{
+				std::cout << "right clicked this window" << path.c_str() << std::endl;
+				// TODO a small menu
+				ImGui::OpenPopup("FolderContextMenu");
+				SelectedFolder = path;
 			}
 
 			if (p.is_directory())
@@ -131,8 +135,15 @@ void FileBrowser::ContentBrowser()
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
 			}
 			ImGui::Text(GetFileName(path.c_str()));
+			if (ImGui::BeginPopupContextItem("FolderContextMenu"))
+			{
+				if (ImGui::MenuItem("Delete"))
+				{
+					DeleteFolder(SelectedFolder.c_str());
+				}
+				ImGui::EndPopup();
+			}
 			ImGui::EndChild();
-
 			ImGui::SameLine();
 		}
 	}
@@ -186,7 +197,7 @@ void FileBrowser::RightMouseClickEvent()
 
 	if (ImGui::BeginPopup("Context Menu"))
 	{
-		if (ImGui::MenuItem("Perform Some Logic"))
+		if (ImGui::MenuItem("New Folder"))
 		{
 			CreateFolder();
 		}
@@ -216,3 +227,15 @@ void FileBrowser::CreateFolder()
 	}
 }
 
+void FileBrowser::DeleteFolder(const std::string& _folderPath)
+{
+	try
+	{
+		std::filesystem::remove_all(_folderPath);
+		std::cout << "Folder " << _folderPath << "deleted successfully." << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Failed to delete folder: " << e.what() << std::endl;
+	}
+}

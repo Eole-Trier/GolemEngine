@@ -26,6 +26,10 @@ public:
 	void RightMouseClickEvent();
 
 	void CreateFolder();
+	
+	void DeleteFolder(const std::string& _folderPath);
+
+	std::string SelectedFolder;
 
 private:
 
