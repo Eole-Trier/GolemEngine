@@ -23,6 +23,15 @@ public:
 	// Get ever file name
 	const char* GetFileName(const char* _path);
 
+	std::string GetFileExtension(const std::string& _fileName);
+
+	void RightMouseClickEvent();
+
+	void CreateFolder();
+	
+	void DeleteFolder(const std::string& _folderPath);
+
+	std::string SelectedFolder;
 
 private:
 

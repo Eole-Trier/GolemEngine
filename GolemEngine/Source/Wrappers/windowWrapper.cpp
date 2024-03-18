@@ -1,5 +1,7 @@
 #include "Wrappers/windowWrapper.h"
 
+#include <string>
+
 #include "Image/stb_image.h"
 
 
@@ -56,7 +58,23 @@ GLuint WindowWrapper::LoadUiTexture(const char* _filename)
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+    std::string filenameStr(_filename);
+    std::string extension;
+    size_t dotIndex = filenameStr.find_last_of('.');
+    if (dotIndex != std::string::npos) {
+        extension = filenameStr.substr(dotIndex);
+    }
+
+    GLenum internalFormat = GL_RGBA;
+    if (extension == ".png") {
+        internalFormat = GL_RGBA;
+    }
+    else if (extension == ".jpg") {
+        internalFormat = GL_RGB;
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     stbi_image_free(data);
