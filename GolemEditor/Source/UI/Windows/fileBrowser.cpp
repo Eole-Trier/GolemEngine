@@ -102,20 +102,22 @@ void FileBrowser::ContentBrowser()
 		if (EXCLUDE_FILE(fileName))
 		{
 			ImGui::BeginChild(GetFileName(path.c_str()), ImVec2(100, 100));
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-			if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
+			if (!isSelected)
 			{
-				if (p.is_directory())
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
 				{
-					m_currentDirectory = path;
+					if (p.is_directory())
+					{
+						m_currentDirectory = path;
+					}
 				}
+				ImGui::PopStyleColor();
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
 			}
-			ImGui::PopStyleColor();
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
 			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
 			{
 				std::cout << "right clicked this window" << path.c_str() << std::endl;
-				// TODO a small menu
 				ImGui::OpenPopup("FolderContextMenu");
 				SelectedFolder = path;
 			}
@@ -125,6 +127,7 @@ void FileBrowser::ContentBrowser()
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
 			}
+			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
