@@ -28,18 +28,23 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-    if (InputManager::IsKeyPressed(KEY_SPACE))
+    if (ImGui::IsWindowFocused() && InputManager::IsKeyPressed(KEY_SPACE))
     {
+        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         // Update mouse offset x and y value
         InputManager::MousePositionCallback(_golemEngine->GetWindow(), ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Use these offsets
         m_camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
+        m_camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
         // Mouse offset values of x and y are not 0 so if you don't set them to 0 (with the following two lines), if you still activate viewport movement,
         // the camera will move even if you don't move the mouse.
         InputManager::SetMouseOffsetX(0.0f);
         InputManager::SetMouseOffsetY(0.0f);
-        m_camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
+    }
+    else
+    {
+        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     ImGui::End();

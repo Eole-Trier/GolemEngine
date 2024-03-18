@@ -50,9 +50,6 @@ using Golemint = GLuint;
 class GOLEM_ENGINE_API WindowWrapper
 {
 private:
-	static GLFWwindow* m_window;
-
-private:
 	// Static class
 	WindowWrapper() = delete;
 
@@ -78,7 +75,4 @@ public:
 	//void SetScrollCallback(ScrollCallback callback);
 
 	static GLuint LoadUiTexture(const char* _filename);
-
-private:
-	//ScrollCallback m_scrollCallback;
 };
