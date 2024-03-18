@@ -72,7 +72,7 @@ public:
 
 	// Makes the window passed in parameter the window that will be set as active (to perform operations on...etc).
 	static void SetCurrentWindow(GLFWwindow* _window);
-	//void SetScrollCallback(ScrollCallback callback);
+	// 
 
 	static GLuint LoadUiTexture(const char* _filename);
 };

@@ -9,6 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "vector2.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -26,6 +27,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Begin(name.c_str());
 
+    Vector2 a(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y);
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (ImGui::IsWindowFocused() && InputManager::IsKeyPressed(KEY_SPACE))
