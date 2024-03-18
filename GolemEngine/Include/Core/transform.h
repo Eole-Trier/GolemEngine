@@ -25,10 +25,13 @@ public:
 	GOLEM_ENGINE_API void Update() override;
 
 	GOLEM_ENGINE_API void UpdateSelfAndChilds();
-	GOLEM_ENGINE_API void AddChild(Transform* const t);
-	GOLEM_ENGINE_API void AddChildren(std::vector<Transform*> const ts);
-	GOLEM_ENGINE_API void RemoveChild(Transform* const t);
-	GOLEM_ENGINE_API void SetParent(Transform* const t);
+	GOLEM_ENGINE_API void AddChild(Transform* const _t);
+	GOLEM_ENGINE_API void AddChildren(std::vector<Transform*> const _ts);
+	GOLEM_ENGINE_API void RemoveChild(Transform* const _t);
+	GOLEM_ENGINE_API void SetParent(Transform* const _t);
+	GOLEM_ENGINE_API bool IsChildOf(Transform* const _parent);
+	GOLEM_ENGINE_API bool IsAParentOf(Transform* const _t);
+
 
 	GOLEM_ENGINE_API Transform* GetParent();
 

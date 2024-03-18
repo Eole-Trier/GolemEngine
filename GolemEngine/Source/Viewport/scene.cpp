@@ -43,16 +43,25 @@ void Scene::InitGameObjects()
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
 
+    std::string ballBaldName2 = "ball_bald2";
+    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
+    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
+    Model* ballBald2 = resourceManager->Get<Model>("model_sphere");
+
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
     Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
+    Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
 
     m_meshes.push_back(vikingMesh);
     m_meshes.push_back(ballBaldMesh);
+    m_meshes.push_back(ballBaldMesh2);
 
     m_gameObjects.push_back(vikingMesh);
     m_gameObjects.push_back(ballBaldMesh);
+    m_gameObjects.push_back(ballBaldMesh2);
 
     m_world->transform->AddChild(vikingMesh->transform);
+    m_world->transform->AddChild(ballBaldMesh2->transform);
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
 }
 

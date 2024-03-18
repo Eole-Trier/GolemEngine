@@ -59,10 +59,14 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 			if (dragged)
 			{
-				GameObject* gameObject = *(GameObject**)dragged->Data;
+				GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
 				// to do reparent
-				_gameObject->transform->AddChild(gameObject->transform);
+				if (gameObjectDragged->transform->IsAParentOf(_gameObject->transform) || gameObjectDragged->transform->IsChildOf(_gameObject->transform))
+				{
+				}
+				else
+					_gameObject->transform->AddChild(gameObjectDragged->transform);
 			}
 
 			ImGui::EndDragDropTarget();
