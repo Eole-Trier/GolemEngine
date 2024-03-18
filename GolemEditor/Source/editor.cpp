@@ -88,7 +88,7 @@ void Editor::MainLoop()
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		if (io.ConfigFlags && ImGuiConfigFlags_ViewportsEnable)
 		{
 			GLFWwindow* backup_current_context = WindowWrapper::GetCurrentWindow();
 			ImGui::UpdatePlatformWindows();

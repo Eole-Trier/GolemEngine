@@ -14,5 +14,7 @@ BasicActors::~BasicActors() {}
 void BasicActors::Update(GolemEngine* _golemEngine, const char* _name)
 {
 	ImGui::Begin("Basic_Actors");
+	const ImVec2 pos = ImGui::GetIO().MousePos;
+	//std::cout << pos.x << "; " << pos.y << std::endl;
 	ImGui::End();
 }

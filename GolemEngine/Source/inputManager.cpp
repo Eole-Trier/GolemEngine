@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "imgui.h"
 #include "Viewport/camera.h"
 
 
@@ -17,8 +18,6 @@ float InputManager::m_scrollOffsetY = 0.0f;
 void InputManager::Init(GLFWwindow* _window)
 {
     glfwSetKeyCallback(_window, KeyCallback);
-    glfwSetCursorPosCallback(_window, MousePositionCallback);
-    glfwSetMouseButtonCallback(_window, MouseButtonCallback);
     glfwSetScrollCallback(_window, MouseScrollCallback);
 }
 
@@ -60,7 +59,6 @@ void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, doub
 
     m_mouseOffsetX = xOffset;
     m_mouseOffsetY = -yOffset;  // Invert y coordinate
-
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
@@ -77,7 +75,7 @@ void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _ac
 
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
 {
-    m_scrollOffsetY = _yOffset;
+    m_scrollOffsetY = -_yOffset;
 }
 
 float InputManager::GetMouseOffsetX()
