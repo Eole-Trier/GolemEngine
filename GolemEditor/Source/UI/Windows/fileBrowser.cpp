@@ -86,17 +86,15 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 		{
 			ImGui::SameLine();
 			ImGui::SetKeyboardFocusHere();
+
 			if (ImGui::InputText("##renaming", &m_string, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
 				std::filesystem::path oldPath = _path;
 
 				std::filesystem::path newPath = _path.parent_path().string() + '\\' + m_string;
 
-				if (!std::filesystem::exists(newPath))
-				{
-					std::filesystem::rename(oldPath, newPath);
-					m_fileToRename = "";
-				}
+				std::filesystem::rename(oldPath, newPath);
+				m_fileToRename = "";
 			}
 		}
 
