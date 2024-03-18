@@ -1,10 +1,11 @@
 #include "UI/editorUi.h"
 
 #include "golemEngine.h"
+#include "UI/Windows/window.h"
 #include "Ui/Windows/basicActors.h"
 #include "Ui/Windows/viewport.h"
 #include "Ui/Windows/fileBrowser.h"
-#include "Ui/Windows/worldActors.h"
+#include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -14,13 +15,14 @@
 
 EditorUi::EditorUi(GolemEngine* _golemEngine)
     :
-    m_golemEngine(_golemEngine),
-    m_viewport(new Viewport()),
-    m_basicActors(new BasicActors()),
-    m_fileBrowser(new FileBrowser()),
-    m_worldActors(new WorldActors()),
-    m_debugWindow(new DebugWindow())
-{}
+    m_golemEngine(_golemEngine)
+{
+    m_windows.push_back(new Viewport("Viewport"));
+    m_windows.push_back(new BasicActors("Basic_Actors"));
+    m_windows.push_back(new FileBrowser("File_Browser"));
+    m_windows.push_back(new SceneGraph("Scene_Graph"));
+    m_windows.push_back(new DebugWindow("Debug"));
+}
 
 void EditorUi::Init(GLFWwindow* _window)
 {
@@ -92,9 +94,6 @@ void EditorUi::BeginDockSpace()
     ImGuiID dock_id_left, dock_id_right;
     if (init)
     {
-        // The dock has a default 4 block layout
-        // Topleft     TopRight
-        // Bottomlefr  BottomRight
         init = false;
         ImGui::DockBuilderRemoveNode(dockspace_id);
         ImGui::DockBuilderAddNode(dockspace_id);
@@ -109,11 +108,11 @@ void EditorUi::BeginDockSpace()
         ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
 
         // For defining the position of the dock
-        ImGui::DockBuilderDockWindow("Basic_Actors", dock_id_topRight);
-        ImGui::DockBuilderDockWindow("File_Browser", dock_id_bottomLeft);
-        ImGui::DockBuilderDockWindow("Viewport", dock_id_topLeft);
-        ImGui::DockBuilderDockWindow("World_Actors", dock_id_topRight);
-        ImGui::DockBuilderDockWindow("Debug", dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topRight);
+        ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottomLeft);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_topLeft);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Debug")->name.c_str(), dock_id_bottomRight);
 
         ImGui::DockBuilderFinish(dockspace_id);
     }
@@ -134,9 +133,19 @@ void EditorUi::EndDockSpace()
 
 void EditorUi::UpdateWindows()
 {
-    m_basicActors->Update(m_golemEngine);
-    m_fileBrowser->Update(m_golemEngine);
-    m_viewport->Update(m_golemEngine, m_golemEngine->GetCamera());
-    m_worldActors->Update(m_golemEngine);
-    m_debugWindow->Update(m_golemEngine);
+    for (Window* window : m_windows)
+    {
+        window->Update(m_golemEngine);
+    }
+}
+
+Window* EditorUi::GetWindowByName(std::string _name)
+{
+    for (Window* window : m_windows)
+    {
+        if (window->name == _name)
+            return window;
+    }
+    Log::Print("No window with the name %s has been found", _name.c_str());
+    return nullptr;
 }

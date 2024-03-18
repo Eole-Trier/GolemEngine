@@ -11,7 +11,7 @@ class Transform : public Component
 {
 private:
 	Transform* m_parent;
-	std::vector<Transform*> m_childs;
+	std::vector<Transform*> m_children;
 	Matrix4 m_globalModel;
 	Matrix4 m_localModel;
 
@@ -26,10 +26,13 @@ public:
 
 	void UpdateSelfAndChilds();
 	void AddChild(Transform* const t);
-	void AddChilds(std::vector<Transform*> const ts);
+	void AddChildren(std::vector<Transform*> const ts);
 	void RemoveChild(Transform* const t);
 	void SetParent(Transform* const t);
 
 	Matrix4 GetGlobalModel();
 	Matrix4 GetLocalModel();
+
+	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
+
 };

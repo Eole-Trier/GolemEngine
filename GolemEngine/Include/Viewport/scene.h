@@ -41,4 +41,6 @@ public:
 	void UpdateLights(Shader* _shader);
 
 	Mesh* GetMeshByName(std::string _name);
+	const std::vector<GameObject*>& GetGameObjects();
+	GameObject* GetWorld();
 };

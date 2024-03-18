@@ -7,6 +7,18 @@
 #include "inputManager.h"
 #include "vector4.h"
 
+GolemEngine* GolemEngine::m_golemInstance = nullptr;
+
+GolemEngine* GolemEngine::GetInstance()
+{
+    if (m_golemInstance == nullptr) 
+    {
+        m_golemInstance = new GolemEngine();
+    }
+    return m_golemInstance;
+}
+
+
 GolemEngine::GolemEngine()
     :
     m_scene(new Scene())

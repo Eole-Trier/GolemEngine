@@ -7,14 +7,16 @@
 #include "imgui_internal.h"
 
 
-BasicActors::BasicActors() {}
+BasicActors::BasicActors(std::string _name) 
+	: Window(_name)
+{
+}
+
 
 BasicActors::~BasicActors() {}
 
-void BasicActors::Update(GolemEngine* _golemEngine, const char* _name)
+void BasicActors::Update(GolemEngine* _golemEngine)
 {
-	ImGui::Begin("Basic_Actors");
-	const ImVec2 pos = ImGui::GetIO().MousePos;
-	//std::cout << pos.x << "; " << pos.y << std::endl;
+	ImGui::Begin(name.c_str());
 	ImGui::End();
 }

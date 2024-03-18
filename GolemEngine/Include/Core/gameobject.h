@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "dll.h"
 
 class Transform;
 class Component;
@@ -30,7 +31,7 @@ public:
 
 	void DisplayInformations();
 
-	std::string GetName();
+	GOLEM_ENGINE_API std::string GetName();
 
 	/*GameObject* Instantiate();
 	void Destroy();*/

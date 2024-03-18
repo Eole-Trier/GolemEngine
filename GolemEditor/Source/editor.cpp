@@ -14,10 +14,7 @@
 #include "imgui_internal.h"
 
 Editor::Editor()
-	: 
-    m_name("Golem Engine"),
-    m_golemEngine(new GolemEngine()),
-    m_editorUi(new EditorUi(m_golemEngine))
+	: m_name("Golem Engine"), m_golemEngine(GolemEngine::GetInstance()), m_editorUi(new EditorUi(m_golemEngine))
 {
     // Get screen dimensions
     RECT desktop;

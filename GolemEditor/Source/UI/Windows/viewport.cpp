@@ -11,37 +11,35 @@
 #include "imgui_internal.h"
 
 
-Viewport::Viewport()
-    :
-    m_lastX(0),
-    m_lastY(0),
-    m_yaw(0),
-    m_pitch(0),
-    m_firstMouse(true)
-{}
+Viewport::Viewport(std::string _name)
+    : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0), m_firstMouse(true)
+{
+}
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine, Camera* _camera, const char* _name)
+void Viewport::Update(GolemEngine* _golemEngine)
 {
+    SetCamera(GolemEngine::GetInstance()->GetCamera());
+
     GraphicWrapper::EnableDepth();
 
-    ImGui::Begin("Viewport");
+    ImGui::Begin(name.c_str());
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
     if (InputManager::IsKeyPressed(KEY_SPACE))
     {
-        _camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
+        m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         // Update mouse offset x and y value
         InputManager::MousePositionCallback(_golemEngine->GetWindow(), ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Use these offsets
-        _camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
+        m_camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
         // Mouse offset values of x and y are not 0 so if you don't set them to 0 (with the following two lines), if you still activate viewport movement,
         // the camera will move even if you don't move the mouse.
         InputManager::SetMouseOffsetX(0.0f);
         InputManager::SetMouseOffsetY(0.0f);
-        _camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
+        m_camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
     }
 
     ImGui::End();

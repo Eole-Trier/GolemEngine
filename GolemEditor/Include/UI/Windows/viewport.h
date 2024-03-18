@@ -1,12 +1,13 @@
 #pragma once
 
-//#include "Viewport/camera.h"
+#include "Viewport/camera.h"
+#include "UI/Windows/window.h"
 
 
 class Camera;
 class GolemEngine;
 
-class Viewport
+class Viewport : public Window
 {
 private:
 	Camera* m_camera = nullptr;
@@ -23,11 +24,11 @@ public:
 
 public:
 
-	Viewport();
+	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine, Camera* _camera, const char* _name = "default_window");
-	
+	void Update(GolemEngine* _golemEngine) override;
+
 	void SetCamera(Camera* _camera);
 
 	Camera* GetCamera();
