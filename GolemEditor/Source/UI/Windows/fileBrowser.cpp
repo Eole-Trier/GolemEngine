@@ -96,11 +96,15 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 				std::filesystem::rename(oldPath, newPath);
 				m_fileToRename = "";
 			}
+
+			if (!ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+			{
+				m_fileToRename = "";
+			}
 		}
 
 		ImGui::TreePop();
 	}
-
 }
 
 void FileBrowser::ContentBrowser()	
