@@ -15,8 +15,6 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
-	ResourceManager m_resourceManager;
-
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
 	std::vector<Mesh*> m_meshes;

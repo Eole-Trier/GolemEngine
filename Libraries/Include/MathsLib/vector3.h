@@ -28,6 +28,8 @@ public:
 	GOLEM_ENGINE_API friend Vector3 operator/(Vector3 _a, float b);
 	GOLEM_ENGINE_API friend Vector3 operator+(Vector3 _a, Vector3 _b);
 	GOLEM_ENGINE_API friend Vector3 operator-(Vector3 _a, Vector3 _b);
+	GOLEM_ENGINE_API friend Vector3 operator+=(Vector3& _a, Vector3 _b);
+	GOLEM_ENGINE_API friend Vector3 operator-=(Vector3& _a, Vector3 _b);
 	GOLEM_ENGINE_API friend bool operator==(Vector3 _a, Vector3 _b);
 	
 	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);

@@ -4,7 +4,7 @@
 
 #include "dll.h"
 
-class Vector3;
+#include "vector3.h"
 
 class GOLEM_ENGINE_API Matrix4
 {

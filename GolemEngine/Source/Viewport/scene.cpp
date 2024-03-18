@@ -1,12 +1,7 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <MathsLib/utils.h>
-
 #include "Viewport/scene.h"
 
-#include <MathsLib/utils.h>
-
+#include "utils.h"
+#include "Resource/resourceManager.h"
 #include "Resource/Rendering/mesh.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
@@ -19,9 +14,7 @@
 #include "Core/gameobject.h"
 #include "Core/transform.h"
 
-Scene::Scene() 
-{
-}
+Scene::Scene() {}
 
 void Scene::Init()
 {
@@ -32,19 +25,20 @@ void Scene::Init()
 
 void Scene::InitGameObjects()
 {
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
 
-    Shader* defaultShader = m_resourceManager.Get<Shader>("default");
+    Shader* defaultShader = resourceManager->Get<Shader>("default");
 
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0), Vector3(0), Vector3(1));
-    Texture* viking_text = m_resourceManager.Get<Texture>("viking_texture");
-    Model* viking_room = m_resourceManager.Get<Model>("model_viking");
+    Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
+    Model* viking_room = resourceManager->Get<Model>("model_viking");
 
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
-    Texture* ballBaldTexture = m_resourceManager.Get<Texture>("all_bald_texture");
-    Model* ballBald = m_resourceManager.Get<Model>("model_sphere");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
+    Model* ballBald = resourceManager->Get<Model>("model_sphere");
 
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
     Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
@@ -54,17 +48,18 @@ void Scene::InitGameObjects()
 
     m_gameObjects.push_back(vikingMesh);
     m_gameObjects.push_back(ballBaldMesh);
-    
+
     m_world->transform->AddChild(vikingMesh->transform);
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
 }
 
 void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
-    Shader* viking = m_resourceManager.Get<Shader>("default");
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();
 
-    viking->SetViewPos(_camera->position);
+    viking->SetViewPos(_camera->m_position);
 
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _window, _camera);
@@ -85,32 +80,33 @@ void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, 
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f), 
+    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
         Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
 
     // Add some point lights
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 
+    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
         Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f), 
+    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f),
         Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
 }
 
 void Scene::CreateAndLoadResources()
 {
-    Texture* text = m_resourceManager.Create<Texture>("viking_texture");
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    Texture* text = resourceManager->Create<Texture>("viking_texture");
     text->Load(Tools::FindFile("viking_room.jpg").c_str());
 
-    Model* viking_room = m_resourceManager.Create<Model>("model_viking");
+    Model* viking_room = resourceManager->Create<Model>("model_viking");
     viking_room->Load(Tools::FindFile("viking_room.obj").c_str());
 
-    Shader* shad = m_resourceManager.Create<Shader>("default");
+    Shader* shad = resourceManager->Create<Shader>("default");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
 
-   
-    Texture* sphere_texture = m_resourceManager.Create<Texture>("all_bald_texture");
+
+    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
 
-    Model* sphere = m_resourceManager.Create<Model>("model_sphere");
+    Model* sphere = resourceManager->Create<Model>("model_sphere");
     sphere->Load("Assets/Basics/sphere.obj");
 }
 

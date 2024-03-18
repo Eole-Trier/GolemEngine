@@ -3,12 +3,12 @@
 #include <filesystem>
 #include <stack>
 
-#include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "golemEngine.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "Wrappers/windowWrapper.h"
 
 namespace fs = std::filesystem;
@@ -75,12 +75,12 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 	}
 }
 
-void FileBrowser::ContentBrowser()	
+void FileBrowser::ContentBrowser()
 {
 	if (m_currentDirectory != m_editorDirectory)
 	{
 		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 0.0f, 0.0f)); 
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 0.0f, 0.0f));
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.5f, 0.5f));
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(100.0f, 30.0f));
 		if (ImGui::Button("<-Back"))
@@ -91,7 +91,7 @@ void FileBrowser::ContentBrowser()
 		ImGui::PopStyleVar(2);
 		ImGui::Text("");
 	}
-	Golemint texture = WINDOW_INTERFACE->LoadUITexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/One_For_All/Textures/all_bald.jpg");
+	Golemint texture = WindowWrapper::LoadUiTexture("C:/dev/2023_gp_2027_gp_2027_projet_moteur-golem/GolemEditor/Assets/One_For_All/Textures/all_bald.jpg");
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();

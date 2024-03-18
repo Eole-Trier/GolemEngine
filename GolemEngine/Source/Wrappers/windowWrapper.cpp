@@ -1,22 +1,9 @@
 #include "Wrappers/windowWrapper.h"
 
-#include <GLFW/glfw3.h>
-#include "imgui/ImGuiFileDialog-master/stb/stb_image.h"
+#include "Image/stb_image.h"
 
 
-WindowWrapper* WindowWrapper::m_instancePtr = nullptr;
-
-WindowWrapper::WindowWrapper() {}
-
-WindowWrapper* WindowWrapper::GetInstance()
-{
-    if (!m_instancePtr) {
-        m_instancePtr = new WindowWrapper();
-    }
-    return m_instancePtr;
-}
-
-void WindowWrapper::Init()
+void WindowWrapper::InitWindow()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -58,7 +45,7 @@ void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
     glfwMakeContextCurrent(_window);
 }
 
-GLuint WindowWrapper::LoadUITexture(const char* _filename)
+GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
     int width, height, channels;
     unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);

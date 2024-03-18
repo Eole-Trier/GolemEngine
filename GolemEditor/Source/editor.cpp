@@ -1,11 +1,13 @@
 #include "editor.h"
 
+#include <iostream>
 #include <wtypes.h>
 
 #include "golemEngine.h"
 #include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
+#include "inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -31,23 +33,23 @@ Editor::~Editor() {}
 
 void Editor::InitWindow()
 {
-    WINDOW_INTERFACE->Init();
-    m_window = WINDOW_INTERFACE->NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
+	WindowWrapper::InitWindow();
+    m_window = WindowWrapper::NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
     if (m_window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
-        WINDOW_INTERFACE->Terminate();
+		WindowWrapper::Terminate();
     }
-    WINDOW_INTERFACE->SetCurrentWindow(m_window);
+	WindowWrapper::SetCurrentWindow(m_window);
 }
 
 void Editor::InitGraphics()
 {
-    if (!GRAPHIC_INTERFACE->Init())
+    if (!GraphicWrapper::Init())
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-}
+} 
 
 void Editor::InitUi(GLFWwindow* _window)
 {
@@ -66,14 +68,11 @@ void Editor::Init()
 void Editor::MainLoop()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	GraphicWrapper* graphicInterface = GraphicWrapper::GetInstance();
-	graphicInterface->SetViewport(0, 0, m_screenWidth, m_screenHeight);
+	GraphicWrapper::SetViewport(0, 0, m_screenWidth, m_screenHeight);
 
-	WindowWrapper* windowInterface = WindowWrapper::GetInstance();
-
-	while (!windowInterface->ShouldWindowClose(m_window))
+	while (!WindowWrapper::ShouldWindowClose(m_window))
 	{
-		windowInterface->ProcessEvents();
+		WindowWrapper::ProcessEvents();
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -91,13 +90,13 @@ void Editor::MainLoop()
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backup_current_context = windowInterface->GetCurrentWindow();
+			GLFWwindow* backup_current_context = WindowWrapper::GetCurrentWindow();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			windowInterface->SetCurrentWindow(backup_current_context);
+			WindowWrapper::SetCurrentWindow(backup_current_context);
 		}
 
-		windowInterface->SwapBuffers(m_window);
+		WindowWrapper::SwapBuffers(m_window);
 	}
 }
 
