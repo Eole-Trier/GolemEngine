@@ -21,17 +21,19 @@ public:
 	Vector3 scaling;
 
 public:
-	Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
-	void Update() override;
+	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
+	GOLEM_ENGINE_API void Update() override;
 
-	void UpdateSelfAndChilds();
-	void AddChild(Transform* const t);
-	void AddChildren(std::vector<Transform*> const ts);
-	void RemoveChild(Transform* const t);
-	void SetParent(Transform* const t);
+	GOLEM_ENGINE_API void UpdateSelfAndChilds();
+	GOLEM_ENGINE_API void AddChild(Transform* const t);
+	GOLEM_ENGINE_API void AddChildren(std::vector<Transform*> const ts);
+	GOLEM_ENGINE_API void RemoveChild(Transform* const t);
+	GOLEM_ENGINE_API void SetParent(Transform* const t);
 
-	Matrix4 GetGlobalModel();
-	Matrix4 GetLocalModel();
+	GOLEM_ENGINE_API Transform* GetParent();
+
+	GOLEM_ENGINE_API Matrix4 GetGlobalModel();
+	GOLEM_ENGINE_API Matrix4 GetLocalModel();
 
 	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
 

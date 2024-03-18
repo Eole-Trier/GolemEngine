@@ -55,13 +55,14 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			const ImGuiPayload* ok = ImGui::AcceptDragDropPayload("Golem");
+			const ImGuiPayload* dragged = ImGui::AcceptDragDropPayload("Golem");
 
-			if (ok)
+			if (dragged)
 			{
-				GameObject* gameObject = *(GameObject**)ok->Data;
+				GameObject* gameObject = *(GameObject**)dragged->Data;
 
 				// to do reparent
+				_gameObject->transform->AddChild(gameObject->transform);
 			}
 
 			ImGui::EndDragDropTarget();
