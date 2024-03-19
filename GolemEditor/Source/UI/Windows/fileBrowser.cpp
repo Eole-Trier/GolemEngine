@@ -102,14 +102,20 @@ void FileBrowser::ContentBrowser()
 		if (EXCLUDE_FILE(fileName))
 		{
 			ImGui::BeginChild(GetFileName(path.c_str()), ImVec2(100, 100));
-			if (!isSelected)
+			// Check the mouse is on the UI or not
+			// if it is on the UI show the button 
+			if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
 				{
-					if (p.is_directory())
+					double currentTime = ImGui::GetTime();
+					double clickInterval = currentTime - m_buttonState.lastClickTime;
+					m_buttonState.lastClickTime = currentTime;
+					if (p.is_directory() && clickInterval < ImGui::GetIO().MouseDoubleClickTime)
 					{
 						m_currentDirectory = path;
+						m_buttonState.clicked = false;
 					}
 				}
 				ImGui::PopStyleColor();

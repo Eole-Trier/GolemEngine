@@ -33,9 +33,15 @@ public:
 
 	std::string SelectedFolder;
 
-	bool isSelected = false;
+	struct ButtonState
+	{
+		bool clicked = false;
+		double lastClickTime = -1.0;
+	};
 
 private:
+
+	ButtonState m_buttonState;
 
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
 
