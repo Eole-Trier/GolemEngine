@@ -1,6 +1,7 @@
 #include "Wrappers/windowWrapper.h"
 
 #include <GLFW/glfw3.h>
+#include "imgui/ImGuiFileDialog-master/stb/stb_image.h"
 
 
 WindowWrapper* WindowWrapper::m_instancePtr = nullptr;
@@ -55,6 +56,25 @@ GLFWwindow* WindowWrapper::GetCurrentWindow()
 void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
 {
     glfwMakeContextCurrent(_window);
+}
+
+GLuint WindowWrapper::LoadUITexture(const char* _filename)
+{
+    int width, height, channels;
+    unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);
+    if (!data) {
+        return 0;
+    }
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    stbi_image_free(data);
+
+    return texture;
 }
 
 //void WindowWrapper::SetScrollCallback(ScrollCallback callback)

@@ -49,7 +49,7 @@ void GolemEngine::Update()
     // Clear buffer
     GRAPHIC_INTERFACE->ClearBuffer();
     // Render the scene to the framebuffer
-    m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance, m_deltaTime);
+    m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance);
     // Go back to original framebuffer
     GRAPHIC_INTERFACE->UnbindFramebuffer();
 }

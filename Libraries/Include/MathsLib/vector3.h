@@ -11,8 +11,9 @@ public:
 
 public:
 	Vector3();
-	~Vector3();
+	Vector3(float _xyz);
 	Vector3(float _x, float _y, float _z);
+	~Vector3();
 
 	float Length() const;
 	// Used for comparing purpose only because doesn't sqrt to make less operations.

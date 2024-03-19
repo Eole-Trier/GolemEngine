@@ -3,12 +3,12 @@
 #include <string>
 
 #include "dll.h"
-#include "vector2.h"
-#include "vector3.h"
-#include "vector4.h"
-#include "matrix4.h"
 #include "Resource/resource.h"
 
+class Vector2;
+class Vector3;
+class Vector4;
+class Matrix4;
 
 class GOLEM_ENGINE_API Shader : public Resource
 {
