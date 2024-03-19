@@ -107,6 +107,25 @@ Matrix4 Matrix4::Scale(Vector3 _scale) const
 	return (*this) * scale;
 }
 
+Vector3 Matrix4::TrsToPosition()
+{
+	return Vector3(data[0][3], data[1][3], data[2][3]);
+}
+
+Quaternion Matrix4::TrsToRotation()
+{
+
+}
+
+Vector3 Matrix4::TrsToScaling()
+{
+	float scaleX = std::sqrt(data[0][0] * data[0][0] + data[0][1] * data[0][1] + data[0][2] * data[0][2]);
+	float scaleY = std::sqrt(data[1][0] * data[1][0] + data[1][1] * data[1][1] + data[1][2] * data[1][2]);
+	float scaleZ = std::sqrt(data[2][0] * data[2][0] + data[2][1] * data[2][1] + data[2][2] * data[2][2]);
+
+	return Vector3(scaleX, scaleY, scaleZ);
+}
+
 Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
 {
 	Matrix4 result = Matrix4::Identity();

@@ -18,7 +18,9 @@ void Transform::UpdateSelfAndChilds()
     m_localModel = Matrix4::TRS(position, rotation, scaling);
 
     if (m_parent)
+    {
         m_globalModel = m_parent->m_globalModel * m_localModel;
+    }
     else
         m_globalModel = m_localModel;
 
@@ -76,12 +78,10 @@ bool Transform::IsAParentOf(Transform* const _t)
         return false;
 }
 
-
 Transform* Transform::GetParent()
 {
     return m_parent;
 }
-
 
 Matrix4 Transform::GetGlobalModel()
 {

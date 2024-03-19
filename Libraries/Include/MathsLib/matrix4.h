@@ -5,6 +5,7 @@
 #include "dll.h"
 
 #include "vector3.h"
+#include "quaternion.h"
 
 class GOLEM_ENGINE_API Matrix4
 {
@@ -27,6 +28,9 @@ public:
 	Matrix4 Translate(Vector3 _t) const;
 	Matrix4 Rotate(Vector3 _XYZrad) const;
 	Matrix4 Scale(Vector3 _scale) const;
+	Vector3 TrsToPosition();
+	Quaternion TrsToRotation();
+	Vector3 TrsToScaling();
 	static Matrix4 TRS(Vector3 _translate, Vector3 _rotate, Vector3 _scale);
 	static Matrix4 Projection(float _fov, float _aspectRatio, float _zNear, float _zFar);
 	static Matrix4 LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up);
