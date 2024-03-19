@@ -235,11 +235,18 @@ void FileBrowser::DeleteFolder(const std::string& _folderPath)
 {
 	try
 	{
-		std::filesystem::remove_all(_folderPath);
-		std::cout << "Folder " << _folderPath << "deleted successfully." << std::endl;
+		const char* folderName = GetFileName(_folderPath.c_str());
+		const std::vector<const char*> protectedFolders = { "Assets", "Source", "Include", "Shaders" };
+
+		if (std::find(protectedFolders.begin(), protectedFolders.end(), folderName) == protectedFolders.end())
+		{
+			std::filesystem::remove_all(_folderPath);
+			std::cout << "Folder " << _folderPath << " deleted successfully." << folderName << std::endl;
+		}
 	}
-	catch(const std::exception& e)
+	catch (const std::exception& e)
 	{
 		std::cerr << "Failed to delete folder: " << e.what() << std::endl;
 	}
+
 }

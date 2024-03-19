@@ -129,14 +129,6 @@ void EditorUi::BeginDockSpace()
 void EditorUi::EndDockSpace()
 {
     ImGui::End();
-    ImGui::Begin("My Window", NULL, ImGuiWindowFlags_NoCollapse);
-    if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
-    {
-        std::cout << "In this window" << std::endl;
-    }
-    else
-        std::cout << "Out of window" << std::endl;
-    ImGui::End();
 }
 
 void EditorUi::UpdateWindows()
