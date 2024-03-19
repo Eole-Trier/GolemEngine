@@ -6,6 +6,9 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
+#include "Core/gameobject.h"
+#include "Viewport/scene.h"
+
 #include <iostream>
 
 class Mouse

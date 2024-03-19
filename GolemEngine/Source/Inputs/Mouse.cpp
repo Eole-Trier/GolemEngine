@@ -2,6 +2,7 @@
 
 Mouse::Mouse()
 {
+
 }
 
 Mouse::~Mouse()
@@ -10,7 +11,7 @@ Mouse::~Mouse()
 
 void Mouse::SelectObject(float _mouseX, float _mouseY)
 {
-    for (const auto& obj : objects)
+    for (const auto& obj : Scene::GetGameObjects())
     {
         if (ImGui::GetWindowSize().x >= obj.minX && ImGui::GetWindowSize().x <= obj.maxX && ImGui::GetWindowSize().y >= obj.minY && ImGui::GetWindowSize().y <= obj.maxY)
         {

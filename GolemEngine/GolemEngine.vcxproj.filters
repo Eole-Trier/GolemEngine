@@ -20,7 +20,6 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
-    <ClCompile Include="Source\Wrappers\interfaceWrapper.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="Source\Inputs\Mouse.cpp" />
     <ClCompile Include="Source\Components\Light\directional.cpp" />
@@ -57,7 +56,6 @@
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
-    <ClInclude Include="Include\Wrappers\interfaceWrapper.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
@@ -75,5 +73,6 @@
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
     <ClInclude Include="Include\Inputs\Mouse.h" />
+    <ClInclude Include="Include\Resource\Light\directional.h" />
   </ItemGroup>
 </Project>
