@@ -191,16 +191,6 @@ TEST(Vector3, Cross)
 	EXPECT_NEAR(Vector3::Cross(a, b).z, c.z, EPSILON);
 }
 
-TEST(Vector3, Rotate_Vector_Around_Axis)
-{
-	Vector3 pos = Vector3(2, 1, 3);
-	pos = pos.RotateVectorAroundAxis(Vector3(180, 0, 90));
-	Vector3 result = Vector3(1, 2, -3);
-	EXPECT_NEAR(result.x, pos.x, EPSILON);
-	EXPECT_NEAR(result.y, pos.y, EPSILON);
-	EXPECT_NEAR(result.z, pos.z, EPSILON);
-}
-
 TEST(Vector3, Operators_Add_Float)
 {
 	Vector3 a(1.0f, 2.0f, 3.0f);
@@ -539,8 +529,8 @@ TEST(Matrix4, Operator_Not_Equal_Matrix4)
 TEST(Quaternion, Constructor)
 {
 	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
-	EXPECT_EQ(1.0f, test1.r);
-	EXPECT_EQ(Vector3(1.0f, 2.0f, 3.0f), test1.i);
+	EXPECT_EQ(1.0f, test1.w);
+	EXPECT_EQ(Vector3(1.0f, 2.0f, 3.0f), Vector3(test1.x, test1.y, test1.z));
 }
 
 TEST(Quaternion, Norm)
@@ -554,10 +544,10 @@ TEST(Quaternion, Normalized)
 	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
 	test1 = test1.Normalized();
 	Quaternion result = Quaternion(0.25f, Vector3(0.25f, 0.51f, 0.77f));
-	EXPECT_NEAR(test1.r, result.r, EPSILON);
-	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
-	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
-	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+	EXPECT_NEAR(test1.w, result.w, EPSILON);
+	EXPECT_NEAR(test1.x, result.x, EPSILON);
+	EXPECT_NEAR(test1.y, result.y, EPSILON);
+	EXPECT_NEAR(test1.z, result.z, EPSILON);
 }
 
 TEST(Quaternion, Conjugate)
@@ -571,12 +561,22 @@ TEST(Quaternion, Inverse)
 	Quaternion test1 = Quaternion(1.0f, Vector3(1.0f, 2.0f, 3.0f));
 	test1 = test1.Inverse();
 	Quaternion result = Quaternion(0.067f, Vector3(-0.067f, -0.133f, -0.2f));
-	EXPECT_NEAR(test1.r, result.r, EPSILON);
-	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
-	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
-	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+	EXPECT_NEAR(test1.w, result.w, EPSILON);
+	EXPECT_NEAR(test1.x, result.x, EPSILON);
+	EXPECT_NEAR(test1.y, result.y, EPSILON);
+	EXPECT_NEAR(test1.z, result.z, EPSILON);
 }
 
+TEST(Quaternion, Rotate_Quaternion_Around_Axis)
+{
+	Quaternion test1 = Quaternion(0.0f, Vector3(1.0f, 0.0f, 0.0f));
+	test1 = test1.RotateQuaternionAroundAxis(90, Vector3(0, 1, 0));
+	Quaternion result = Quaternion(0.0f, Vector3(-0.0f, -0.0f, -1.0f));
+	EXPECT_NEAR(test1.w, result.w, EPSILON);
+	EXPECT_NEAR(test1.x, result.x, EPSILON);
+	EXPECT_NEAR(test1.y, result.y, EPSILON);
+	EXPECT_NEAR(test1.z, result.z, EPSILON);
+}
 
 TEST(Quaternion, Operator_Multiply_Quaternion)
 {
@@ -584,10 +584,10 @@ TEST(Quaternion, Operator_Multiply_Quaternion)
 	Quaternion test2 = Quaternion(-1.0f, Vector3(1.5f, 3.0f, -3.0f));
 	test1 = test1 * test2;
 	Quaternion result = Quaternion(0.5f, Vector3(-14.5f, 8.5f, -6.f));
-	EXPECT_NEAR(test1.r, result.r, EPSILON);
-	EXPECT_NEAR(test1.i.x, result.i.x, EPSILON);
-	EXPECT_NEAR(test1.i.y, result.i.y, EPSILON);
-	EXPECT_NEAR(test1.i.z, result.i.z, EPSILON);
+	EXPECT_NEAR(test1.w, result.w, EPSILON);
+	EXPECT_NEAR(test1.x, result.x, EPSILON);
+	EXPECT_NEAR(test1.y, result.y, EPSILON);
+	EXPECT_NEAR(test1.z, result.z, EPSILON);
 }
 
 TEST(Quaternion, Operator_Equal_Quaternion)

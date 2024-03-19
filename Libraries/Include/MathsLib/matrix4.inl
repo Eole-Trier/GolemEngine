@@ -114,7 +114,8 @@ Vector3 Matrix4::TrsToPosition()
 
 Quaternion Matrix4::TrsToRotation()
 {
-
+	Quaternion result;
+	return result;
 }
 
 Vector3 Matrix4::TrsToScaling()

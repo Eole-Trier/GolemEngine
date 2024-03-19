@@ -9,12 +9,12 @@ class Vector3;
 class GOLEM_ENGINE_API Quaternion
 {
 public:
-	float r;
-	Vector3 i;
+	float x, y, z, w;
 
 public:
 	Quaternion();
-	Quaternion(float _real, Vector3 _imaginary);
+	Quaternion(float _x, float _y, float _z, float _w);
+	Quaternion(float _w, Vector3 _xyz);
 	~Quaternion();
 	
 	float Norm();
@@ -22,6 +22,8 @@ public:
 	Quaternion UnitNorm();
 	Quaternion Conjugate();
 	Quaternion Inverse();
+	Quaternion RotateQuaternionAroundAxis(float _angle, Vector3 _axis);
+
 
 	GOLEM_ENGINE_API friend Quaternion operator*(Quaternion _q1, Quaternion _q2);
 	GOLEM_ENGINE_API friend Quaternion operator/(Quaternion _q1, float _divider);

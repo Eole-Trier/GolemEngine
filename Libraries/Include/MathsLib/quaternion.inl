@@ -6,8 +6,13 @@
 
 Quaternion::Quaternion() { }
 
-Quaternion::Quaternion(float _real, Vector3 _imaginary)
-	:r(_real), i(_imaginary)
+Quaternion::Quaternion(float _w, float _x, float _y, float _z)
+	: w(_w), x(_x), y(_y), z(_z)
+{
+}
+
+Quaternion::Quaternion(float _w, Vector3 _xyz)
+	: w(_w), x(_xyz.x), y(_xyz.y), z(_xyz.z)
 {
 }
 
@@ -15,7 +20,7 @@ Quaternion::~Quaternion() { }
 
 float Quaternion::Norm()
 {
-	return sqrt(r * r + i.x * i.x + i.y * i.y + i.z * i.z);
+	return sqrt(w * w + x * x + y * y + z * z);
 }
 
 Quaternion Quaternion::Normalized()
@@ -23,7 +28,7 @@ Quaternion Quaternion::Normalized()
 	if ((*this).Norm() == 0)
 	{
 		std::cout << "ERROR: Norm is = to 0." << std::endl;
-		return Quaternion(0, Vector3(0, 0, 0));
+		return Quaternion(0, 0, 0, 0);
 	}
 	return (*this) / (*this).Norm();
 }
@@ -31,16 +36,22 @@ Quaternion Quaternion::Normalized()
 Quaternion Quaternion::UnitNorm()
 {
 	Quaternion q = (*this);
-	float angle = DegToRad(q.r);
-	q.i = q.i.Normalize();
-	q.r = cosf(angle * 0.5);
-	q.i = q.i * sinf(angle * 0.5);
+
+	float angle = DegToRad(q.w);
+	q.w = cosf(angle * 0.5);
+
+	Vector3 normalize = Vector3(x, y, z).Normalize();
+	normalize = normalize * sinf(angle * 0.5);
+	q.x = normalize.x;
+	q.y = normalize.y;
+	q.z = normalize.z;
+
 	return q;
 }
 
 Quaternion Quaternion::Conjugate()
 {
-	return Quaternion(r, i * (-1));
+	return Quaternion(w, x * (-1), y * (-1), z * (-1));
 }
 
 Quaternion Quaternion::Inverse()
@@ -51,19 +62,45 @@ Quaternion Quaternion::Inverse()
 
 	Quaternion conjugateValue = Conjugate();
 
-	float scalar = conjugateValue.r * absoluteValue;
-	Vector3 imaginary = conjugateValue.i * absoluteValue;
+	float scalar = conjugateValue.w * absoluteValue;
+	Vector3 imaginary = Vector3(conjugateValue.x * absoluteValue, conjugateValue.y * absoluteValue, conjugateValue.z * absoluteValue);
 
 	return Quaternion(scalar, imaginary);
+}
+
+Quaternion Quaternion::RotateQuaternionAroundAxis(float _angle, Vector3 _axis) 
+{
+
+	Quaternion p(0, x, y, z);
+
+	Vector3 normalize = _axis.Normalize();
+
+	Quaternion q(_angle, normalize);
+
+	//convert quaternion to unit norm quaternion
+	q = q.UnitNorm();
+
+	//Get the inverse of the quaternion
+	Quaternion qInverse = q.Inverse();
+
+	//rotate the quaternion
+	Quaternion rotatedQuaternion = q * p * qInverse;
+
+	//return the vector part of the quaternion
+	return rotatedQuaternion;
+
 }
 
 #pragma region Operators
 
 Quaternion operator*(Quaternion _q1, Quaternion _q2)
 {
-	float real = _q1.r * _q2.r - Vector3::Dot(_q1.i, _q2.i);
+	Vector3 q1i = Vector3(_q1.x, _q1.y, _q1.z);
+	Vector3 q2i = Vector3(_q2.x, _q2.y, _q2.z);
 
-	Vector3 imaginary = _q2.i * _q1.r + _q1.i * _q2.r + Vector3::Cross(_q1.i, _q2.i);
+	float real = _q1.w * _q2.w - Vector3::Dot(q1i, q2i);
+
+	Vector3 imaginary = q2i * _q1.w + q1i * _q2.w + Vector3::Cross(q1i, q2i);
 
 	return Quaternion(real, imaginary);
 }
@@ -75,12 +112,12 @@ Quaternion operator/(Quaternion _q1, float _divider)
 		std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
 		return Quaternion(0, Vector3(0, 0, 0));
 	}
-	return Quaternion(_q1.r / _divider, _q1.i / _divider);
+	return Quaternion(_q1.w / _divider, _q1.x / _divider, _q1.y / _divider, _q1.z / _divider);
 }
 
 bool operator==(Quaternion _q1, Quaternion _q2)
 {
-	if (_q1.r != _q2.r || _q1.i != _q2.i)
+	if (_q1.w != _q2.w || _q1.x != _q2.x)
 		return false;
 	return true;
 }
