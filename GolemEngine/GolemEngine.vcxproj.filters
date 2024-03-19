@@ -26,6 +26,7 @@
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="Source\Inputs\Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -60,5 +61,6 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
+    <ClInclude Include="Include\Inputs\Mouse.h" />
   </ItemGroup>
 </Project>
