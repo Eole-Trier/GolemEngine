@@ -93,21 +93,19 @@ void Scene::InitLights()
 void Scene::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Texture* text = resourceManager->Create<Texture>("viking_texture");
-    text->Load(Tools::FindFile("viking_room.jpg").c_str());
-
+    
+    Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
+    viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
     Model* viking_room = resourceManager->Create<Model>("model_viking");
     viking_room->Load(Tools::FindFile("viking_room.obj").c_str());
 
-    Shader* shad = resourceManager->Create<Shader>("default");
-    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
-
-
     Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
-
     Model* sphere = resourceManager->Create<Model>("model_sphere");
     sphere->Load("Assets/Basics/sphere.obj");
+    
+    Shader* shad = resourceManager->Create<Shader>("default");
+    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
 }
 
 void Scene::UpdateLights(Shader* _shader)

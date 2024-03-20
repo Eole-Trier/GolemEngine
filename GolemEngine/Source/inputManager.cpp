@@ -59,6 +59,7 @@ void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, doub
 
     m_mouseOffsetX = xOffset;
     m_mouseOffsetY = -yOffset;  // Invert y coordinate
+    //std::cout << m_mouseOffsetX << " , " << m_mouseOffsetY << std::endl;
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)

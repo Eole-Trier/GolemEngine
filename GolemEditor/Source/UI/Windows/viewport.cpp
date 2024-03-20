@@ -28,6 +28,29 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
+    if (ImGui::BeginDragDropTarget())
+    {
+        m_isDragging = true;
+
+        ImGui::EndDragDropTarget();
+    }
+
+    if (m_isDragging)
+    {
+        ImVec2 itemRectMin = ImGui::GetItemRectMin();
+        ImVec2 itemRectMax = ImGui::GetItemRectMax();
+
+        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
+            std::cout << "Dropping" << std::endl;
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
+        {
+            std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
+            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            m_isDragging = false;
+        }
+    }
+
     if (InputManager::IsKeyPressed(KEY_SPACE))
     {
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
@@ -43,6 +66,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
     }
 
     ImGui::End();
+
 }
 
 void Viewport::SetCamera(Camera* _camera)

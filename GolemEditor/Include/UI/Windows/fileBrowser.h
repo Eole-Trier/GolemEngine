@@ -35,7 +35,11 @@ public:
 
 	void LoadFile(const std::string& _filePath);
 
-	std::string SelectedFolder;
+	std::string selectedFolder;
+
+	std::string draggingFilePath;
+
+	bool isDragging = false;
 
 	struct ButtonState
 	{

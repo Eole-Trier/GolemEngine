@@ -12,6 +12,8 @@
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/tools.h"
+#include "Viewport/scene.h"
+#include "Core/gameobject.h"
 
 namespace fs = std::filesystem;
 
@@ -44,6 +46,23 @@ void FileBrowser::Update(GolemEngine* _golemEngine)
 	ImGui::EndChild();
 	RightMouseClickEvent();
 	ImGui::End();
+	if (isDragging)
+	{
+		ImVec2 mousePos = ImGui::GetMousePos();
+		ImVec2 windowPos = ImVec2(mousePos.x - 35, mousePos.y - 35);
+
+		ImGui::SetNextWindowPos(windowPos);
+		ImGui::Begin("Dragging Window", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+
+		Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
+		ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+		ImGui::End();
+	}
+	if (ImGui::IsMouseReleased(0))
+	{
+		isDragging = false;
+		std::cout << GetFileName(draggingFilePath.c_str()) << std::endl;
+	}
 }
 
 
@@ -125,9 +144,18 @@ void FileBrowser::ContentBrowser()
 			{
 				std::cout << "right clicked this window" << path.c_str() << std::endl;
 				ImGui::OpenPopup("FolderContextMenu");
-				SelectedFolder = path;
+				selectedFolder = path;
 			}
 
+			if (ImGui::BeginDragDropSource())
+			{
+				draggingFilePath = path;
+				ImGui::SetDragDropPayload("FileDrop", draggingFilePath.c_str(), strlen(draggingFilePath.c_str()) + 1);
+				isDragging = true;
+				ImGui::EndDragDropSource();
+			}
+
+			// Show UI ICON
 			if (p.is_directory())
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
@@ -168,7 +196,7 @@ void FileBrowser::ContentBrowser()
 				}
 				if (ImGui::MenuItem("Delete"))
 				{
-					DeleteFolder(SelectedFolder.c_str());
+					DeleteFolder(selectedFolder.c_str());
 				}
 				ImGui::EndPopup();
 			}
@@ -278,5 +306,5 @@ void FileBrowser::DeleteFolder(const std::string& _folderPath)
 
 void FileBrowser::LoadFile(const std::string& _filePath)
 {
-
+	
 }

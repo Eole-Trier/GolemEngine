@@ -18,6 +18,7 @@ private:
 	float m_yaw;
 	float m_pitch;
 	bool m_firstMouse;
+	bool m_isDragging = false;
 
 public:
 	int width = 0, height = 0;
