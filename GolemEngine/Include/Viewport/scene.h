@@ -36,8 +36,8 @@ public:
 
 	void CreateAndLoadResources();
 
-	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera);
-	void UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera);
+	void Update(float _width, float _height, Camera* _camera);
+	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
 
 	Mesh* GetMeshByName(std::string _name);

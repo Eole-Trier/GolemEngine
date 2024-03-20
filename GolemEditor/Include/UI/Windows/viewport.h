@@ -17,7 +17,8 @@ private:
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
-	bool m_firstMouse;
+
+	bool m_lastSpacePress = false;
 
 public:
 	int width = 0, height = 0;

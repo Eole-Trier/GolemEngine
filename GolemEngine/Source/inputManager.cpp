@@ -4,25 +4,23 @@
 
 #include "imgui.h"
 #include "Viewport/camera.h"
+#include "imgui/backends/imgui_impl_glfw.h"
 
 
-Camera* InputManager::m_camera = nullptr;
-
-float InputManager::m_mouseOffsetX = 0.0f;
-float InputManager::m_mouseOffsetY = 0.0f;
-bool InputManager::m_isFirstMouse = true;
-float InputManager::m_lastX = 0.0f;
-float InputManager::m_lastY = 0.0f;
-float InputManager::m_scrollOffsetY = 0.0f;
+Vector2 InputManager::m_mousePos = { 0.0f, 0.0f };
+float InputManager::m_mouseScrollValue = 0.0f;
 
 void InputManager::Init(GLFWwindow* _window)
 {
     glfwSetKeyCallback(_window, KeyCallback);
+    glfwSetCursorPosCallback(_window, MousePositionCallback);
     glfwSetScrollCallback(_window, MouseScrollCallback);
+    glfwSetMouseButtonCallback(_window, MouseButtonCallback);
 }
 
 void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
 {
+    ImGui_ImplGlfw_KeyCallback(_window, _key, _scancode, _action, _mods);
     if (_action == KEY_PRESSED)
     {
         m_keyboardKeys[_key] = true;
@@ -36,79 +34,53 @@ void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int
     }
 }
 
-bool InputManager::IsKeyPressed(int _key)
-{
-    return m_keyboardKeys[_key];
-}
-
 void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, double _yPos)
 {
-    float xPos = (float)_xPos;
-    float yPos = (float)_yPos;
-
-    if (m_isFirstMouse) {
-        m_lastX = xPos;
-        m_lastY = yPos;
-        m_isFirstMouse = false;
-    }
-
-    float xOffset = xPos - m_lastX;
-    float yOffset = m_lastY - yPos;
-    m_lastX = xPos;
-    m_lastY = yPos;
-
-    m_mouseOffsetX = xOffset;
-    m_mouseOffsetY = -yOffset;  // Invert y coordinate
+    ImGui_ImplGlfw_CursorPosCallback(_window, _xPos, _yPos);
+    m_mousePos = { (float)_xPos, (float)_yPos };
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
 {
+    ImGui_ImplGlfw_MouseButtonCallback(_window, _button, _action, _mods);
     if (_action == GLFW_PRESS)
     {
+        m_mouseButtons[_button] = true;
+
         std::cout << "Mouse button " << _button << " pressed" << std::endl;
     }
-    else if (_action == GLFW_RELEASE) 
+    else if (_action == KEY_RELEASED)
     {
-        std::cout << "Mouse button " << _button << " released" << std::endl;
+        if (m_mouseButtons[_button] == true)
+        {
+            m_mouseButtons[_button] = false;
+        }
     }
 }
 
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
 {
-    m_scrollOffsetY = -_yOffset;
+    ImGui_ImplGlfw_ScrollCallback(_window, _xOffset, _yOffset);
+    m_mouseScrollValue = _yOffset;
+
 }
 
-float InputManager::GetMouseOffsetX()
+bool InputManager::IsKeyPressed(int _key)
 {
-    return m_mouseOffsetX;
+    return m_keyboardKeys[_key];
 }
 
-float InputManager::GetMouseOffsetY()
+bool InputManager::IsButtonPressed(int _button)
 {
-    return m_mouseOffsetY;
+    return m_mouseButtons[_button];
 }
 
-float InputManager::GetScrollOffsetY()
+Vector2 InputManager::GetMousePos()
 {
-    return m_scrollOffsetY;
+    return m_mousePos;
 }
 
-void InputManager::SetWindow(GLFWwindow* _window)
+float InputManager::GetMouseScroll()
 {
-    m_window = _window;
-}
-
-void InputManager::SetCamera(Camera* _camera)
-{
-    m_camera = _camera;
-}
-
-void InputManager::SetMouseOffsetX(float _value)
-{
-    m_mouseOffsetX = _value;
-}
-
-void InputManager::SetMouseOffsetY(float _value)
-{
-    m_mouseOffsetY = _value;
+    return m_mouseScrollValue;
 }

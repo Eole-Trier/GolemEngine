@@ -20,10 +20,8 @@ Editor::Editor()
     RECT desktop;
     const HWND hDesktop = GetDesktopWindow();
     GetWindowRect(hDesktop, &desktop);
-    m_screenWidth = desktop.right;
-    m_screenHeight = desktop.bottom;
 
-    m_golemEngine->SetScreenSize(m_screenWidth, m_screenHeight);
+	WindowWrapper::SetScreenSize({ (float)desktop.right, (float)desktop.bottom });
 }
 
 Editor::~Editor() {}
@@ -31,13 +29,13 @@ Editor::~Editor() {}
 void Editor::InitWindow()
 {
 	WindowWrapper::InitWindow();
-    m_window = WindowWrapper::NewWindow(m_screenWidth, m_screenHeight, m_name.c_str(), NULL, NULL);
-    if (m_window == NULL)
+    WindowWrapper::window = WindowWrapper::NewWindow(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_name.c_str(), NULL, NULL);
+    if (WindowWrapper::window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
 		WindowWrapper::Terminate();
     }
-	WindowWrapper::SetCurrentWindow(m_window);
+	WindowWrapper::MakeContext(WindowWrapper::window);
 }
 
 void Editor::InitGraphics()
@@ -48,26 +46,25 @@ void Editor::InitGraphics()
     }
 } 
 
-void Editor::InitUi(GLFWwindow* _window)
+void Editor::InitUi()
 {
-    m_editorUi->Init(_window);
+    m_editorUi->Init();
 }
 
 void Editor::Init()
 {
     InitWindow();
     InitGraphics();
-    InitUi(m_window);
-    m_golemEngine->SetWindow(m_window);
+    InitUi();
     m_golemEngine->Init();
 }
 
 void Editor::MainLoop()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	GraphicWrapper::SetViewport(0, 0, m_screenWidth, m_screenHeight);
+	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
-	while (!WindowWrapper::ShouldWindowClose(m_window))
+	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{
 		WindowWrapper::ProcessEvents();
 		ImGui_ImplOpenGL3_NewFrame();
@@ -87,13 +84,13 @@ void Editor::MainLoop()
 
 		if (io.ConfigFlags && ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backup_current_context = WindowWrapper::GetCurrentWindow();
+			GLFWwindow* backup_current_context = WindowWrapper::window;
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			WindowWrapper::SetCurrentWindow(backup_current_context);
+			WindowWrapper::MakeContext(backup_current_context);
 		}
 
-		WindowWrapper::SwapBuffers(m_window);
+		WindowWrapper::SwapBuffers(WindowWrapper::window);
 	}
 }
 

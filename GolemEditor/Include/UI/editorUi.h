@@ -16,7 +16,7 @@ private:
 public:
 	EditorUi(GolemEngine* _golemEngine);
 
-	void Init(GLFWwindow* _window);
+	void Init();
 	void BeginDockSpace();
 	void EndDockSpace();
 	void UpdateWindows();

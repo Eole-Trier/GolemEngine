@@ -13,9 +13,8 @@
 
 
 Viewport::Viewport(std::string _name)
-    : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0), m_firstMouse(true)
-{
-}
+    : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0)
+{}
 
 Viewport::~Viewport() {}
 
@@ -26,27 +25,28 @@ void Viewport::Update(GolemEngine* _golemEngine)
     GraphicWrapper::EnableDepth();
 
     ImGui::Begin(name.c_str());
-
-    Vector2 a(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y);
+    
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-    if (ImGui::IsWindowFocused() && InputManager::IsKeyPressed(KEY_SPACE))
+
+
+    if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
-        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+        m_lastSpacePress = true;
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
-        // Update mouse offset x and y value
-        InputManager::MousePositionCallback(_golemEngine->GetWindow(), ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-        // Use these offsets
-        m_camera->ProcessMouseInput(InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY(), true);
-        m_camera->ProcessMouseScroll(InputManager::GetScrollOffsetY());
-        // Mouse offset values of x and y are not 0 so if you don't set them to 0 (with the following two lines), if you still activate viewport movement,
-        // the camera will move even if you don't move the mouse.
-        InputManager::SetMouseOffsetX(0.0f);
-        InputManager::SetMouseOffsetY(0.0f);
+        // Update camera with mouse position
+        m_camera->ProcessMouseMovement(InputManager::GetMousePos(), true);
+        // Update camera speed depending on scroll
+        m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
+        m_camera->ProcessMouseInput();
     }
-    else
+
+    // Upon space key released
+    if (m_lastSpacePress && !InputManager::IsButtonPressed(BUTTON_1))
     {
-        glfwSetInputMode(_golemEngine->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        m_lastSpacePress = false;
+        m_camera->isFirstMouse = true;  // Important so the next time you move in the viewport, it doesn't teleport the camera to the cursor
     }
 
     ImGui::End();

@@ -1,12 +1,13 @@
 #pragma once
 
+#include "dll.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "dll.h"
-#include <GLFW/glfw3.h>
+#include "vector2.h"
 
-#pragma region InputManager defines
+#pragma region Keyboard defines
 #define LAST_KEY_INT GLFW_KEY_LAST
 #define KEY_PRESSED GLFW_PRESS
 #define KEY_RELEASED GLFW_RELEASE
@@ -39,16 +40,24 @@
 #define KEY_X GLFW_KEY_X
 #define KEY_Y GLFW_KEY_Y
 #define KEY_Z GLFW_KEY_Z
-#pragma endregion InputManager defines
+#pragma endregion Keyboard defines
 
-//struct GLFWwindow;
-//struct GLFWmonitor;
+#pragma region Mouse defines
+#define LAST_MOUSE_BUTTON_INT GLFW_MOUSE_BUTTON_LAST
+
+#define BUTTON_0 GLFW_MOUSE_BUTTON_1
+#define BUTTON_1 GLFW_MOUSE_BUTTON_2
+#pragma endregion Mouse defines
+
 
 using Golemint = GLuint;
-//using ScrollCallback = void(*)(double xoffset, double yoffset);
 
 class GOLEM_ENGINE_API WindowWrapper
 {
+public:
+	static GLFWwindow* window;
+	static Vector2 m_screenSize;
+
 private:
 	// Static class
 	WindowWrapper() = delete;
@@ -66,13 +75,11 @@ public:
 	static void ProcessEvents();
 	// Swap between front and back buffer to render (back) or display (front)
 	static void SwapBuffers(GLFWwindow* _window);
-
-	// Gets active window
-	static GLFWwindow* GetCurrentWindow();
-
 	// Makes the window passed in parameter the window that will be set as active (to perform operations on...etc).
-	static void SetCurrentWindow(GLFWwindow* _window);
-	// 
-
+	static void MakeContext(GLFWwindow* _window);
 	static GLuint LoadUiTexture(const char* _filename);
+
+	static Vector2 GetScreenSize();
+	
+	static void SetScreenSize(Vector2 _screenSize);
 };

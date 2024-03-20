@@ -5,6 +5,9 @@
 #include "Image/stb_image.h"
 
 
+GLFWwindow* WindowWrapper::window = nullptr;
+Vector2 WindowWrapper::m_screenSize = { 0.0f, 0.0f };
+
 void WindowWrapper::InitWindow()
 {
     glfwInit();
@@ -37,12 +40,8 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-GLFWwindow* WindowWrapper::GetCurrentWindow()
-{
-    return glfwGetCurrentContext();
-}
 
-void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
+void WindowWrapper::MakeContext(GLFWwindow* _window)
 {
     glfwMakeContextCurrent(_window);
 }
@@ -82,6 +81,12 @@ GLuint WindowWrapper::LoadUiTexture(const char* _filename)
     return texture;
 }
 
-//void WindowWrapper::SetScrollCallback(ScrollCallback callback)
-//{
-//}
+Vector2 WindowWrapper::GetScreenSize()
+{
+    return m_screenSize;
+}
+
+void WindowWrapper::SetScreenSize(Vector2 _screenSize)
+{
+    m_screenSize = { _screenSize.x, _screenSize.y };
+}

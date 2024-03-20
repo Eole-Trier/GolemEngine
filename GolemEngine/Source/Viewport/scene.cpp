@@ -13,6 +13,7 @@
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
+#include "Wrappers/windowWrapper.h"
 
 Scene::Scene() 
 {
@@ -56,7 +57,7 @@ void Scene::InitGameObjects()
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
 }
 
-void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera)
+void Scene::Update(float _width, float _height,Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
@@ -65,10 +66,10 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
     viking->SetViewPos(_camera->m_position);
 
     UpdateLights(viking);
-    UpdateGameObjects(_width, _height, _window, _camera);
+    UpdateGameObjects(_width, _height, _camera);
 }
 
-void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera)
+void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
     // Temporary to test graph scene
     m_meshes[0]->transform->rotation.y += 0.01f;

@@ -1,16 +1,14 @@
 #pragma once
 
 #include "dll.h"
+#include "vector2.h"
 #include "vector3.h"
 #include "matrix4.h"
 
 
-struct GLFWwindow;
-
 class GOLEM_ENGINE_API Camera
 {
 private:
-	GLFWwindow* m_window = nullptr;
 	Vector3 m_front;
 	Vector3 m_up;
 	Vector3 m_right;
@@ -25,19 +23,23 @@ private:
 	float m_minSpeed;
 	float m_maxSpeed;
 
-public:
-	Vector3 m_position;
+	Vector2 m_lastMousePos = { 0, 0 };
 
 public:
-	Camera(GLFWwindow* _window, Vector3 _position = Vector3(0.0f, 0.0f, 3.0f), Vector3 _up = Vector3(0.0f, 1.0f, 0.0f), float _yaw = -90.0f, float _pitch = 0.0f);
-	// Process changes on keybaord
+	Vector3 m_position;
+	bool isFirstMouse = true;
+
+public:
+	Camera(Vector3 _position = Vector3(0.0f, 0.0f, 3.0f), Vector3 _up = Vector3(0.0f, 1.0f, 0.0f), float _yaw = -90.0f, float _pitch = 0.0f);
+
 	void ProcessKeyboardInput(float _deltaTime);
+	void ProcessMouseInput();
 	// Process changes on mouse position
-	void ProcessMouseInput(float _xOffset, float _yOffset, bool _constrainPitch);
-	// Process changes on mouse scrool
-	void ProcessMouseScroll(float _yOffset);
+	void ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch);
 	// When mouse values changes, process these changes to move the mouse
 	void UpdateVectors();
+	// Process changes on mouse scrool
+	void ProcessMouseScroll(float _yOffset);
 
 	Matrix4 GetViewMatrix();
 	float GetZoom();

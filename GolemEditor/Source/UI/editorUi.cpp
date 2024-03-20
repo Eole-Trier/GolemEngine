@@ -11,6 +11,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "inputManager.h"
+#include "Wrappers/windowWrapper.h"
 
 
 EditorUi::EditorUi(GolemEngine* _golemEngine)
@@ -24,7 +26,7 @@ EditorUi::EditorUi(GolemEngine* _golemEngine)
     m_windows.push_back(new DebugWindow("Debug"));
 }
 
-void EditorUi::Init(GLFWwindow* _window)
+void EditorUi::Init()
 {
     // Setup Imgui context
     IMGUI_CHECKVERSION();
@@ -44,7 +46,9 @@ void EditorUi::Init(GLFWwindow* _window)
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
 
-    ImGui_ImplGlfw_InitForOpenGL(_window, true);
+    ImGui_ImplGlfw_InitForOpenGL(WindowWrapper::window, true);
+    //ImGui_ImplGlfw_InstallCallbacks(_window);
+    //ImGui_ImplGlfw_CursorPosCallback(_window, InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY());
     ImGui_ImplOpenGL3_Init("#version 460");
 
     style.WindowRounding = 4;
