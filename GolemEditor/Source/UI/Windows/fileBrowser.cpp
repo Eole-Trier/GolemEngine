@@ -139,6 +139,21 @@ void FileBrowser::ContentBrowser()
 				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
 			}
+			else if (extensionFile == ".cpp")
+			{
+				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
+			else if (extensionFile == ".h")
+			{
+				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
+			else if (extensionFile == ".obj")
+			{
+				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+			}
 			else
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
@@ -147,6 +162,10 @@ void FileBrowser::ContentBrowser()
 			ImGui::Text(GetFileName(path.c_str()));
 			if (ImGui::BeginPopupContextItem("FolderContextMenu"))
 			{
+				if (ImGui::MenuItem("Rename"))
+				{
+					// TODO
+				}
 				if (ImGui::MenuItem("Delete"))
 				{
 					DeleteFolder(SelectedFolder.c_str());
@@ -254,5 +273,10 @@ void FileBrowser::DeleteFolder(const std::string& _folderPath)
 	{
 		std::cerr << "Failed to delete folder: " << e.what() << std::endl;
 	}
+
+}
+
+void FileBrowser::LoadFile(const std::string& _filePath)
+{
 
 }

@@ -37,19 +37,16 @@ void Scene::InitGameObjects()
     Transform* vikingTransform = new Transform(Vector3(0), Vector3(0), Vector3(1));
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("model_viking");
+    Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
+    m_meshes.push_back(vikingMesh);
+    m_gameObjects.push_back(vikingMesh);
 
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
-
-    Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
     Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
-
-    m_meshes.push_back(vikingMesh);
     m_meshes.push_back(ballBaldMesh);
-
-    m_gameObjects.push_back(vikingMesh);
     m_gameObjects.push_back(ballBaldMesh);
 
     m_world->transform->AddChild(vikingMesh->transform);

@@ -31,6 +31,10 @@ public:
 	
 	void DeleteFolder(const std::string& _folderPath);
 
+	// TODO RENAME
+
+	void LoadFile(const std::string& _filePath);
+
 	std::string SelectedFolder;
 
 	struct ButtonState
