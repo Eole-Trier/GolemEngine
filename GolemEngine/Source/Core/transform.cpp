@@ -52,10 +52,17 @@ void Transform::RemoveChild(Transform* const _t)
 
 void Transform::SetParent(Transform* const _t)
 {
+
     if (m_parent)
         m_parent->RemoveChild(this);
     m_parent = _t;
-    _t->AddChild(this);
+    _t->m_children.push_back(this);
+
+    m_globalModel = _t->m_globalModel.Inverse() * m_globalModel;
+
+    position = m_globalModel.TrsToPosition();
+    rotation = Vector3::QuaternionToEuler(m_globalModel.TrsToRotation());
+    scaling = m_globalModel.TrsToScaling();
 }
 
 bool Transform::IsChildOf(Transform* const _parent)

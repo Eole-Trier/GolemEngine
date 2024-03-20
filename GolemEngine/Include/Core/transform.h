@@ -14,9 +14,9 @@ private:
 	Transform* m_parent;
 	std::vector<Transform*> m_children;
 	Matrix4 m_localModel;
+	Matrix4 m_globalModel;
 
 public:
-	Matrix4 m_globalModel;
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scaling;
@@ -31,6 +31,7 @@ public:
 	GOLEM_ENGINE_API void RemoveChild(Transform* const _t);
 	GOLEM_ENGINE_API void SetParent(Transform* const _t);
 	GOLEM_ENGINE_API bool IsChildOf(Transform* const _parent);
+	_NODISCARD
 	GOLEM_ENGINE_API bool IsAParentOf(Transform* const _t);
 
 

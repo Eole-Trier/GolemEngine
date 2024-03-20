@@ -25,6 +25,8 @@ public:
 
 	static Matrix4 Identity();
 	Matrix4 Transpose() const;
+	float GetDeterminant() const;
+	Matrix4 Inverse() const;
 	Matrix4 Translate(Vector3 _t) const;
 	Matrix4 Rotate(Vector3 _XYZrad) const;
 	Matrix4 Rotate(Quaternion _q) const;
