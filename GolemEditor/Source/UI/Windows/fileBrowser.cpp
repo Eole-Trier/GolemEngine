@@ -22,10 +22,12 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj.user" && \
     name != "imgui.ini")
 
+
 FileBrowser::FileBrowser(std::string _name)
-	: Window(_name), m_currentDirectory(m_editorDirectory)
-{
-}
+	: 
+	Window(_name), 
+	m_currentDirectory(m_editorDirectory)
+{}
 
 FileBrowser::~FileBrowser() {}
 

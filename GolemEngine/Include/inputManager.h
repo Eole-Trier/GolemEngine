@@ -10,8 +10,6 @@ class Camera;
 class GOLEM_ENGINE_API InputManager
 {
 private:
-	//static Camera* m_camera;
-
 #pragma region Keyboard variables
 	static inline bool m_keyboardKeys[LAST_KEY_INT];
 #pragma endregion Keyboard variables

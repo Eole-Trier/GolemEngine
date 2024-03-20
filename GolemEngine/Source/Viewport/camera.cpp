@@ -17,7 +17,7 @@ const int TP_TOP_Y_POS_MARGIN = 40;
 const int TP_LEFT_Y_BOTTOM_MARGIN = 10;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
-    :
+    : 
     m_position(_position),
     m_front(Vector3(0.0f, 0.0f, -1.0f)),
     m_worldUp(_up),
