@@ -6,7 +6,7 @@ Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
 	: position(_position), rotation(_rotation), scaling(_scaling)
 {
     m_parent = nullptr;
-	m_localModel = Matrix4::TRS(_position, _rotation, _scaling);
+	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
 }
 
 void Transform::Update()
@@ -15,7 +15,7 @@ void Transform::Update()
 
 void Transform::UpdateSelfAndChilds()
 {
-    m_localModel = Matrix4::TRS(position, rotation, scaling);
+    m_localModel = Matrix4::TRS(position, Quaternion::EulerToQuaternion(rotation), scaling);
 
     if (m_parent)
     {

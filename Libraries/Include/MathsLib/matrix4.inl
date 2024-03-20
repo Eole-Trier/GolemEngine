@@ -96,6 +96,28 @@ Matrix4 Matrix4::Rotate(Vector3 _XYZrad) const
 	return (*this) * rotate;
 }
 
+Matrix4 Matrix4::Rotate(Quaternion _q) const
+{
+	const float_t xx = _q.x * _q.x;
+	const float_t yy = _q.y * _q.y;
+	const float_t zz = _q.z * _q.z;
+
+	const float_t xy = _q.x * _q.y;
+	const float_t wz = _q.z * _q.w;
+	const float_t xz = _q.z * _q.x;
+	const float_t wy = _q.y * _q.w;
+	const float_t yz = _q.y * _q.z;
+	const float_t wx = _q.x * _q.w;
+
+	return (*this) * Matrix4(
+		1.f - 2.f * (yy + zz), 2.f * (xy - wz), 2.f * (xz + wy), 0.f,
+		2.f * (xy + wz), 1.f - 2.f * (zz + xx), 2.f * (yz - wx), 0.f,
+		2.f * (xz - wy), 2.f * (yz + wx), 1.f - 2.f * (yy + xx), 0.f,
+		0.f, 0.f, 0.f, 1.f
+	);
+}
+
+
 Matrix4 Matrix4::Scale(Vector3 _scale) const
 {
 	Matrix4 scale(
@@ -127,13 +149,13 @@ Vector3 Matrix4::TrsToScaling()
 	return Vector3(scaleX, scaleY, scaleZ);
 }
 
-Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
+Matrix4 Matrix4::TRS(Vector3 _translate, Vector3 _XYZrad, Vector3 _scale)
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.data[0][3] = _t.x;
-	result.data[1][3] = _t.y;
-	result.data[2][3] = _t.z;
+	result.data[0][3] = _translate.x;
+	result.data[1][3] = _translate.y;
+	result.data[2][3] = _translate.z;
 
 	result = result.Rotate(_XYZrad);
 
@@ -141,6 +163,22 @@ Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
 
 	return result;
 }
+
+Matrix4 Matrix4::TRS(Vector3 _translate, Quaternion _rotate, Vector3 _scale)
+{
+	Matrix4 result = Matrix4::Identity();
+
+	result.data[0][3] = _translate.x;
+	result.data[1][3] = _translate.y;
+	result.data[2][3] = _translate.z;
+
+	result = result.Rotate(_rotate);
+
+	result = result.Scale(_scale);
+
+	return result;
+}
+
 
 Matrix4 Matrix4::Projection(float _fov, float _aspectRatio, float _zNear, float _zFar)
 {

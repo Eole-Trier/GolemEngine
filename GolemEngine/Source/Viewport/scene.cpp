@@ -34,7 +34,7 @@ void Scene::InitGameObjects()
     Shader* defaultShader = resourceManager->Get<Shader>("default");
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0), Vector3(0), Vector3(1));
+    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("model_viking");
 
@@ -81,8 +81,10 @@ void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, 
 {
     // Temporary to test graph scene
     m_meshes[0]->transform->rotation.y += 0.01f;
-    m_meshes[1]->transform->rotation.x += 0.01f;
+     m_meshes[1]->transform->rotation.x += 0.01f;
     m_world->transform->UpdateSelfAndChilds();
+    m_meshes[0]->Draw(_width, _height, _camera);
+
     for (int i = 0; i < m_meshes.size(); i++)
     {
         m_meshes[i]->Draw(_width, _height, _camera);

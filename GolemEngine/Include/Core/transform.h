@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "vector3.h"
+#include "quaternion.h"
 #include "matrix4.h"
 
 #include "Components/component.h"
@@ -12,10 +13,10 @@ class Transform : public Component
 private:
 	Transform* m_parent;
 	std::vector<Transform*> m_children;
-	Matrix4 m_globalModel;
 	Matrix4 m_localModel;
 
 public:
+	Matrix4 m_globalModel;
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scaling;

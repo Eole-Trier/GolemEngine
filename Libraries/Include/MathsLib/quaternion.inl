@@ -91,6 +91,24 @@ Quaternion Quaternion::RotateQuaternionAroundAxis(float _angle, Vector3 _axis)
 
 }
 
+Quaternion Quaternion::EulerToQuaternion(Vector3 _xyzAngles)
+{
+	double cr = cos(_xyzAngles.x * 0.5);
+	double sr = sin(_xyzAngles.x * 0.5);
+	double cp = cos(_xyzAngles.y * 0.5);
+	double sp = sin(_xyzAngles.y * 0.5);
+	double cy = cos(_xyzAngles.z * 0.5);
+	double sy = sin(_xyzAngles.z * 0.5);
+
+	Quaternion q;
+	q.w = cr * cp * cy + sr * sp * sy;
+	q.x = sr * cp * cy - cr * sp * sy;
+	q.y = cr * sp * cy + sr * cp * sy;
+	q.z = cr * cp * sy - sr * sp * cy;
+
+	return q;
+}
+
 #pragma region Operators
 
 Quaternion operator*(Quaternion _q1, Quaternion _q2)

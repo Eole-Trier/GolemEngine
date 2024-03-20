@@ -24,6 +24,11 @@ public:
 	Quaternion Inverse();
 	Quaternion RotateQuaternionAroundAxis(float _angle, Vector3 _axis);
 
+	/*
+	- From Euler angles to Quaternion : angles are in radians
+	- Returns the associated Quaternion
+	*/
+	static Quaternion EulerToQuaternion(Vector3 _xyzAngles);
 
 	GOLEM_ENGINE_API friend Quaternion operator*(Quaternion _q1, Quaternion _q2);
 	GOLEM_ENGINE_API friend Quaternion operator/(Quaternion _q1, float _divider);

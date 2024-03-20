@@ -67,9 +67,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				}
 				else
 				{
-					gameObjectDragged->transform->position = gameObjectDragged->transform->GetGlobalModel().TrsToPosition();
-					gameObjectDragged->transform->rotation = gameObjectDragged->transform->GetGlobalModel().TrsToRotation();
-					gameObjectDragged->transform->scaling = gameObjectDragged->transform->GetGlobalModel().TrsToScaling();
+					//gameObjectDragged->transform->position = gameObjectDragged->transform->GetGlobalModel().TrsToPosition();
+					//gameObjectDragged->transform->rotation = gameObjectDragged->transform->GetGlobalModel().TrsToRotation();
+					//gameObjectDragged->transform->scaling = gameObjectDragged->transform->GetGlobalModel().TrsToScaling();
 					_gameObject->transform->AddChild(gameObjectDragged->transform);
 				}
 			}
