@@ -44,18 +44,15 @@ void EditorUi::Init()
     {
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        style.WindowRounding = 4;
+        style.FrameRounding = 4;
+        style.GrabRounding = 3;
+        style.ScrollbarSize = 7;
+        style.ScrollbarRounding = 0;
     }
 
     ImGui_ImplGlfw_InitForOpenGL(WindowWrapper::window, true);
-    //ImGui_ImplGlfw_InstallCallbacks(_window);
-    //ImGui_ImplGlfw_CursorPosCallback(_window, InputManager::GetMouseOffsetX(), InputManager::GetMouseOffsetY());
     ImGui_ImplOpenGL3_Init("#version 460");
-
-    style.WindowRounding = 4;
-    style.FrameRounding = 4;
-    style.GrabRounding = 3;
-    style.ScrollbarSize = 7;
-    style.ScrollbarRounding = 0;
 }
 
 void EditorUi::BeginDockSpace()

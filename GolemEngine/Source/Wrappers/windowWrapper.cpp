@@ -40,7 +40,6 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-
 void WindowWrapper::MakeContext(GLFWwindow* _window)
 {
     glfwMakeContextCurrent(_window);

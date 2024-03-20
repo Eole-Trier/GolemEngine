@@ -44,6 +44,7 @@ void Editor::InitGraphics()
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
+	GraphicWrapper::EnableDepth();
 } 
 
 void Editor::InitUi()

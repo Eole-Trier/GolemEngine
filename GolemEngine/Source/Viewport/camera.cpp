@@ -105,6 +105,7 @@ void Camera::UpdateVectors()
 
 void Camera::ProcessMouseScroll(float _yOffset)
 {
+    std::cout << m_movementSpeed << std::endl;
     if (m_movementSpeed + _yOffset <= m_maxSpeed && m_movementSpeed + _yOffset >= m_minSpeed)
     {
         m_movementSpeed += (float)_yOffset;

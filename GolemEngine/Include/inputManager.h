@@ -44,4 +44,6 @@ public:
 
 	static Vector2 GetMousePos();
 	static float GetMouseScroll();
+
+	static void SetMouseScroll(float _value);
 };

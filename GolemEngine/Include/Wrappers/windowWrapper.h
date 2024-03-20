@@ -49,6 +49,11 @@
 #define BUTTON_1 GLFW_MOUSE_BUTTON_2
 #pragma endregion Mouse defines
 
+#pragma region Other defines
+#define INPUT_CURSOR GLFW_CURSOR
+#define OPTION_CURSOR_DISABLED GLFW_CURSOR_DISABLED
+#pragma endregion Other defines
+
 
 using Golemint = GLuint;
 

@@ -62,7 +62,6 @@ void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, dou
 {
     ImGui_ImplGlfw_ScrollCallback(_window, _xOffset, _yOffset);
     m_mouseScrollValue = _yOffset;
-
 }
 
 bool InputManager::IsKeyPressed(int _key)
@@ -83,4 +82,9 @@ Vector2 InputManager::GetMousePos()
 float InputManager::GetMouseScroll()
 {
     return m_mouseScrollValue;
+}
+
+void InputManager::SetMouseScroll(float _value)
+{
+    m_mouseScrollValue = _value;
 }

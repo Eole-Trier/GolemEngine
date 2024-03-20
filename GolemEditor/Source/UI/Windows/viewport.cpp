@@ -22,23 +22,19 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
-    GraphicWrapper::EnableDepth();
-
     ImGui::Begin(name.c_str());
     
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-
-
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
-        ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         m_lastSpacePress = true;
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMousePos(), true);
         // Update camera speed depending on scroll
         m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
+        InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change bt has a value
         m_camera->ProcessMouseInput();
     }
 
