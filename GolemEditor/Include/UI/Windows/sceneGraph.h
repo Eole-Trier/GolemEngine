@@ -8,6 +8,7 @@ class GameObject;
 class SceneGraph : public Window
 {
 public:
+	
 	SceneGraph(std::string _name);
 	~SceneGraph();
 
@@ -16,4 +17,5 @@ public:
 
 private:
 	GameObject* m_selected = nullptr;
+	GameObject* m_renaming = nullptr;
 };

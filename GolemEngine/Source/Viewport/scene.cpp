@@ -81,9 +81,8 @@ void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, 
 {
     // Temporary to test graph scene
     m_meshes[0]->transform->rotation.y += 0.01f;
-     m_meshes[1]->transform->rotation.x += 0.01f;
+    m_meshes[1]->transform->rotation.x += 0.01f;
     m_world->transform->UpdateSelfAndChilds();
-    m_meshes[0]->Draw(_width, _height, _camera);
 
     for (int i = 0; i < m_meshes.size(); i++)
     {

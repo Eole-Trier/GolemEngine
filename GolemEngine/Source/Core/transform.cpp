@@ -78,7 +78,7 @@ bool Transform::IsAParentOf(Transform* const _t)
         {
             if (child == _t)
                 return true;
-            child->IsAParentOf(_t);
+            return child->IsAParentOf(_t);
         }
     }
     else

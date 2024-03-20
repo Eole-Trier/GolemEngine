@@ -10,12 +10,12 @@ class Component;
 class GameObject
 {
 private:
-	std::string m_name;
 	std::vector<Component*> m_components;
 
 	bool selected;
 
 public:
+	std::string name;
 	Transform* transform;
 
 public:

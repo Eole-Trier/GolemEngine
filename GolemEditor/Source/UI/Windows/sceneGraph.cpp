@@ -5,6 +5,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "imgui_stdlib.h"
 
 #include "Core/gameobject.h"
 #include "Core/transform.h"
@@ -43,40 +44,64 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
+
+	if (m_renaming == _gameObject)
+	{
+		name = "##feur";
+	}
+
 	if (ImGui::TreeNodeEx(name, flags))
 	{
-		if (ImGui::BeginDragDropSource())
+		if (m_renaming == _gameObject)
 		{
-			ImGui::SetDragDropPayload("Golem", &_gameObject, sizeof(_gameObject));
-
-			ImGui::Text("%s", name); 
-			ImGui::EndDragDropSource();
-		}
-
-		if (ImGui::BeginDragDropTarget())
-		{
-			const ImGuiPayload* dragged = ImGui::AcceptDragDropPayload("Golem");
-
-			if (dragged)
+			ImGui::SameLine();
+			ImGui::SetKeyboardFocusHere();
+			if (ImGui::InputText("##input", &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
 			{
-				GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
-
-				// to do reparent
-				if (gameObjectDragged->transform->IsAParentOf(_gameObject->transform) || gameObjectDragged->transform->IsChildOf(_gameObject->transform))
+				m_renaming = nullptr;
+			}
+		}
+		else
+		{
+			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			{
+				if (ImGui::MenuItem("Rename"))
 				{
+					m_renaming = _gameObject;
 				}
-				else
-				{
-					gameObjectDragged->transform->SetParent(_gameObject->transform);
-				}
+				ImGui::EndPopup();
 			}
 
-			ImGui::EndDragDropTarget();
-		}
+			if (ImGui::BeginDragDropSource())
+			{
+				ImGui::SetDragDropPayload("Golem", &_gameObject, sizeof(_gameObject));
 
-		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-		{
-			m_selected = _gameObject;
+				ImGui::Text("%s", name); 
+				ImGui::EndDragDropSource();
+			}
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				const ImGuiPayload* dragged = ImGui::AcceptDragDropPayload("Golem");
+
+				if (dragged)
+				{
+					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
+
+					// to do reparent
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform))
+					{
+						gameObjectDragged->transform->SetParent(_gameObject->transform);
+					}
+				}
+
+				ImGui::EndDragDropTarget();
+			}
+
+			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+			{
+				m_selected = _gameObject;
+			}
 		}
 
 		for (Transform* transform : children)

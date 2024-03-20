@@ -46,6 +46,7 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
+    <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -82,7 +83,6 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
-    <ClInclude Include="Include\Resource\Light\light.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
     <ClInclude Include="Include\Components\Light\directional.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
@@ -109,5 +109,6 @@
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\inputManager.h" />
+    <ClInclude Include="External\imgui\imgui_stdlib.h" />
   </ItemGroup>
 </Project>
