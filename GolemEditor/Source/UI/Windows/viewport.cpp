@@ -9,6 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "Viewport/scene.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -28,28 +29,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
-    if (ImGui::BeginDragDropTarget())
-    {
-        m_isDragging = true;
-
-        ImGui::EndDragDropTarget();
-    }
-
-    if (m_isDragging)
-    {
-        ImVec2 itemRectMin = ImGui::GetItemRectMin();
-        ImVec2 itemRectMax = ImGui::GetItemRectMax();
-
-        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
-            std::cout << "Dropping" << std::endl;
-
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
-        {
-            std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
-            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
-            m_isDragging = false;
-        }
-    }
+    DragDropEvent();
 
     if (InputManager::IsKeyPressed(KEY_SPACE))
     {
@@ -72,6 +52,33 @@ void Viewport::Update(GolemEngine* _golemEngine)
 void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
+}
+
+void Viewport::DragDropEvent()
+{
+    if (ImGui::BeginDragDropTarget())
+    {
+        m_isDragging = true;
+
+        ImGui::EndDragDropTarget();
+    }
+
+    if (m_isDragging)
+    {
+        ImVec2 itemRectMin = ImGui::GetItemRectMin();
+        ImVec2 itemRectMax = ImGui::GetItemRectMax();
+
+        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
+            std::cout << "Dropping" << std::endl;
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
+        {
+            std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
+            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            // TODO 
+            m_isDragging = false;
+        }
+    }
 }
 
 Camera* Viewport::GetCamera()

@@ -2,8 +2,10 @@
 
 #include <filesystem>
 #include <string>
+#include <vector>
 
 #include "UI/Windows/window.h"
+#include "Wrappers/windowWrapper.h"
 
 class GolemEngine;
 
@@ -40,6 +42,11 @@ public:
 	std::string draggingFilePath;
 
 	bool isDragging = false;
+
+	Golemint Ui_Folder;
+	Golemint Ui_Cpp;
+	Golemint Ui_H;
+	Golemint Ui_Obj;
 
 	struct ButtonState
 	{

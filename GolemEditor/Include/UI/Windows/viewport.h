@@ -32,5 +32,7 @@ public:
 
 	void SetCamera(Camera* _camera);
 
+	void DragDropEvent();
+
 	Camera* GetCamera();
 };

@@ -21,7 +21,7 @@ Scene::Scene()
 
 void Scene::Init()
 {
-    CreateAndLoadResources();
+    //CreateAndLoadResources();
     InitLights();
     InitGameObjects();
 }
@@ -29,6 +29,25 @@ void Scene::Init()
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Texture* default_texture = resourceManager->Create<Texture>("default_texture");
+    default_texture->Load(Tools::FindFile("default_texture.png").c_str());
+
+    Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
+    viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
+    Model* model_viking = resourceManager->Create<Model>("model_viking");
+    model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
+
+    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
+    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+    Model* sphere = resourceManager->Create<Model>("model_sphere");
+    sphere->Load("Assets/Basics/sphere.obj");
+
+    Shader* shad = resourceManager->Create<Shader>("default");
+    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
+    /// <summary>
+    /// 
+    /// </summary>
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
@@ -40,6 +59,9 @@ void Scene::InitGameObjects()
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
     m_meshes.push_back(vikingMesh);
     m_gameObjects.push_back(vikingMesh);
+
+    // TODO
+        InitObject("viking2", "model_viking");
 
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
@@ -56,12 +78,12 @@ void Scene::InitGameObjects()
 void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* viking = resourceManager->Get<Shader>("default");
-    viking->Use();
+    Shader* shader = resourceManager->Get<Shader>("default");
+    shader->Use();
 
-    viking->SetViewPos(_camera->m_position);
+    shader->SetViewPos(_camera->m_position);
 
-    UpdateLights(viking);
+    UpdateLights(shader);
     UpdateGameObjects(_width, _height, _window, _camera);
 }
 
@@ -93,11 +115,14 @@ void Scene::InitLights()
 void Scene::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    
+
+    Texture* default_texture = resourceManager->Create<Texture>("default_texture");
+    default_texture->Load(Tools::FindFile("default_texture.png").c_str());
+
     Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
     viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
-    Model* viking_room = resourceManager->Create<Model>("model_viking");
-    viking_room->Load(Tools::FindFile("viking_room.obj").c_str());
+    Model* model_viking = resourceManager->Create<Model>("model_viking");
+    model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
 
     Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
     sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
@@ -149,4 +174,39 @@ const std::vector<GameObject*>& Scene::GetGameObjects()
 GameObject* Scene::GetWorld()
 {
     return m_world;
+}
+
+void Scene::AddObject(std::string _textureName, std::string _modelName)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Texture* texture = resourceManager->Create<Texture>(_textureName);
+    texture->Load(Tools::FindFile("default_texture.png").c_str());
+    Model* model = resourceManager->Create<Model>(_modelName);
+    model->Load(Tools::FindFile("viking_room.obj").c_str());
+}
+
+void Scene::InitObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    std::string name = _name;
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
+    Texture* texture;
+    Shader* shader;
+
+    if(_textureName.empty())
+        texture = resourceManager->Get<Texture>("default_texture");
+    else
+        texture = resourceManager->Get<Texture>(_textureName);
+    if(_shaderName.empty())
+        shader = resourceManager->Get<Shader>("default");
+    else
+        shader = resourceManager->Get<Shader>(_shaderName);
+
+    Model* model = resourceManager->Get<Model>(_modelName);
+    Mesh* mesh = new Mesh(name, transform, model, texture, shader);
+    m_meshes.push_back(mesh);
+    m_gameObjects.push_back(mesh);
+    m_world->transform->AddChild(mesh->transform);
 }
