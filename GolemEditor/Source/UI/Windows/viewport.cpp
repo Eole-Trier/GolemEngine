@@ -10,6 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "vector2.h"
+#include "vector4.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -22,16 +23,20 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
-    ImGui::Begin(name.c_str());
+    ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
+    
+    Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
+    //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
+    //std::cout << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << std::endl;
 
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
         // Update camera with mouse position
-        m_camera->ProcessMouseMovement(InputManager::GetMousePos(), true);
+        m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Update camera speed depending on scroll
         m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
         InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change bt has a value

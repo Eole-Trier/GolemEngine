@@ -3,6 +3,7 @@
 #include "dll.h"
 #include "vector2.h"
 #include "vector3.h"
+#include "vector4.h"
 #include "matrix4.h"
 
 
@@ -24,6 +25,7 @@ private:
 	float m_maxSpeed;
 
 	Vector2 m_lastMousePos = { 0, 0 };
+	bool m_isMouseTp = false;
 
 public:
 	Vector3 m_position;
@@ -35,7 +37,7 @@ public:
 	void ProcessKeyboardInput(float _deltaTime);
 	void ProcessMouseInput();
 	// Process changes on mouse position
-	void ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch);
+	void ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch, Vector4 _windowDimension, int _mousePosX, int _mousePosY);	// _mousePosX and _mousePosY are relative to the screen
 	// When mouse values changes, process these changes to move the mouse
 	void UpdateVectors();
 	// Process changes on mouse scrool

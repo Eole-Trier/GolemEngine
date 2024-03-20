@@ -1,9 +1,20 @@
 #include "Viewport/camera.h"
 
+#include <Windows.h>
+
 #include "Wrappers/windowWrapper.h" 
 #include "inputManager.h"
 #include "utils.h"
 
+
+const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 10;
+const int SCREEN_SIZE_RIGHT_X_BORDER_MARGIN = 10;
+const int TP_LEFT_X_POS_MARGIN = 10;
+const int TP_LEFT_X_RIGHT_MARGIN = 10;
+const int SCREEN_SIZE_TOP_Y_BORDER_MARGIN = 30;
+const int SCREEN_SIZE_BOTTOM_Y_BORDER_MARGIN = 10;
+const int TP_TOP_Y_POS_MARGIN = 40;
+const int TP_LEFT_Y_BOTTOM_MARGIN = 10;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
     :
@@ -56,22 +67,55 @@ void Camera::ProcessMouseInput()
     // Do stuff
 }
 
-void Camera::ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch)
+void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch, Vector4 _windowDimension, int _mousePosX, int _mousePosY)
 {
-    // Transform mouse position into an offset
-    float a = 0.0f;
-    if (_mousePos.x <= a+10.0f)
+    // Due to imgui docking branched being used, the glfw function to disable the cursor allowing to move the mouse in the viewport in inifite x directions doesn't seem to work
+    // so we need to move the mouse ourselves. To do so, the variable _windowDimension contains the x pos of the imgui window (left side) and its width to determine the x pos of the right size,
+    // and same with y pos on bottom and height to determine the y pos on at the top.
+
+    // Check if mouse got teleported on last frame to avoid new teleportation
+    if (m_isMouseTp)
     {
-        std::cout << "hi" << std::endl;
+        m_lastMousePos = _mouseWindowPos;
+        m_isMouseTp = false;
     }
+
+    // Teleport mouse 
+    if (_mousePosX <= _windowDimension.x + SCREEN_SIZE_LEFT_X_BORDER_MARGIN)   // Mouse exits from left of Viewport
+    {
+        SetCursorPos(_windowDimension.x + _windowDimension.y - SCREEN_SIZE_RIGHT_X_BORDER_MARGIN, _mousePosY);
+        m_lastMousePos = InputManager::GetMouseWindowPos();
+        m_isMouseTp = true;
+    }
+    if (_mousePosX >= _windowDimension.x + _windowDimension.y - SCREEN_SIZE_RIGHT_X_BORDER_MARGIN)  // Mouse exits from right of Viewport
+    {
+        SetCursorPos(_windowDimension.x + SCREEN_SIZE_LEFT_X_BORDER_MARGIN, _mousePosY);
+        m_lastMousePos = InputManager::GetMouseWindowPos();
+        m_isMouseTp = true;
+    }
+    if (_mousePosY <= _windowDimension.z + SCREEN_SIZE_TOP_Y_BORDER_MARGIN)   // Mouse exits from top of Viewport
+    {
+        SetCursorPos(_mousePosX, _windowDimension.z + _windowDimension.w - TP_LEFT_Y_BOTTOM_MARGIN);
+        m_lastMousePos = InputManager::GetMouseWindowPos();
+        m_isMouseTp = true;
+    }
+    if (_mousePosY >= _windowDimension.z + _windowDimension.w - SCREEN_SIZE_BOTTOM_Y_BORDER_MARGIN)  // Mouse exits from bottom of Viewport
+    {
+        SetCursorPos(_mousePosX, _windowDimension.z + TP_TOP_Y_POS_MARGIN);
+        m_lastMousePos = InputManager::GetMouseWindowPos();
+        m_isMouseTp = true;
+    }
+    
+    // Transform mouse position into an offset
     if (isFirstMouse)   // Check if it's the first click on the viewport to not teleport the camera
     {
-        m_lastMousePos = _mousePos;
+        m_lastMousePos = _mouseWindowPos;
         isFirstMouse = false;
     }
 
-    Vector2 mouseOffset = _mousePos - m_lastMousePos;
-    m_lastMousePos = _mousePos;
+    Vector2 mouseOffset = _mouseWindowPos - m_lastMousePos;
+    std::cout << mouseOffset << " " << m_lastMousePos << std::endl;
+    m_lastMousePos = _mouseWindowPos;
 
     // Use this offset to change camera vector values thus moving the camera
     float xOffset = mouseOffset.x;
@@ -83,11 +127,16 @@ void Camera::ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch)
     m_yaw += xOffset;
     m_pitch += yOffset;
 
-    if (_constrainPitch) {
+    if (_constrainPitch) 
+    {
         if (m_pitch > 89.0f)
+        {
             m_pitch = 89.0f;
+        }
         if (m_pitch < -89.0f)
+        {
             m_pitch = -89.0f;
+        }
     }
 
     UpdateVectors();
@@ -105,7 +154,6 @@ void Camera::UpdateVectors()
 
 void Camera::ProcessMouseScroll(float _yOffset)
 {
-    std::cout << m_movementSpeed << std::endl;
     if (m_movementSpeed + _yOffset <= m_maxSpeed && m_movementSpeed + _yOffset >= m_minSpeed)
     {
         m_movementSpeed += (float)_yOffset;
