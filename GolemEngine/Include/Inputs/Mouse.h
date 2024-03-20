@@ -13,6 +13,9 @@
 
 class Mouse
 {
+public :
+	std::vector<GameObject*> objects;
+
 public:
 	Mouse();
 	~Mouse();

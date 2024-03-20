@@ -37,7 +37,7 @@
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\transform.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
-    <ClCompile Include="Source\Inputs\Mouse.cpp" />
+    <ClCompile Include="Source\Inputs\mouse.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
@@ -74,7 +74,7 @@
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
-    <ClInclude Include="Include\Inputs\Mouse.h" />
+    <ClInclude Include="Include\Inputs\mouse.h" />
     <ClInclude Include="Include\Resource\Light\directional.h" />
     <ClInclude Include="Include\Resource\Light\light.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />

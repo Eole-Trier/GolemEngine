@@ -33,6 +33,11 @@ public:
 	int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	void CreateFramebuffer(int _width, int _height);
+
+	void CreateRenderBuffer(int _width, int _height);
+
+	void TextureAttachement();
+
 	// Used to clear a buffer for the next draw
 	void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
