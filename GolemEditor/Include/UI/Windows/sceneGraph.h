@@ -13,7 +13,7 @@ public:
 	~SceneGraph();
 
 	void Update(GolemEngine* _golemEngine) override;
-	void DisplayObjects(GameObject* _gameObject);
+	void DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObject);
 
 private:
 	GameObject* m_selected = nullptr;
