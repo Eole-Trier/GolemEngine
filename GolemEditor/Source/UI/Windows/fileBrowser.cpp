@@ -24,8 +24,6 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj.user" && \
     name != "imgui.ini")
 
-#define DEFAULT_SIZE 70
-
 FileBrowser::FileBrowser(std::string _name)
 	: Window(_name), m_currentDirectory(m_editorDirectory)
 {
@@ -138,7 +136,7 @@ void FileBrowser::ContentBrowser()
 			if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(DEFAULT_SIZE, DEFAULT_SIZE)))
+				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
 				{
 					double currentTime = ImGui::GetTime();
 					double clickInterval = currentTime - m_buttonState.lastClickTime;
@@ -150,7 +148,7 @@ void FileBrowser::ContentBrowser()
 					}
 				}
 				ImGui::PopStyleColor();
-				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - DEFAULT_SIZE);
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
 			}
 			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
 			{
@@ -170,29 +168,38 @@ void FileBrowser::ContentBrowser()
 			// Show UI ICON
 			if (p.is_directory())
 			{
-				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(70, 70));
 			}
 			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				auto it = std::find_if(m_loadedTextures.begin(), m_loadedTextures.end(), [&](const std::pair<std::string, GLuint>& element) {
+					return element.first == path;
+					});
+				if (it != m_loadedTextures.end()) {
+					ImGui::Image((void*)(intptr_t)it->second, ImVec2(70, 70));
+				}
+				else {
+					GLuint texture = WindowWrapper::LoadUiTexture(path.c_str());
+					ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+					m_loadedTextures.push_back(std::make_pair(path, texture)); 
+				}
 			}
 			else if (extensionFile == ".cpp")
 			{
-				ImGui::Image((void*)(intptr_t)Ui_Cpp, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				ImGui::Image((void*)(intptr_t)Ui_Cpp, ImVec2(70, 70));
 			}
 			else if (extensionFile == ".h")
 			{
-				ImGui::Image((void*)(intptr_t)Ui_H, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				ImGui::Image((void*)(intptr_t)Ui_H, ImVec2(70, 70));
 			}
 			else if (extensionFile == ".obj")
 			{
-				ImGui::Image((void*)(intptr_t)Ui_Obj, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				ImGui::Image((void*)(intptr_t)Ui_Obj, ImVec2(70, 70));
 			}
 			else
 			{
-				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
+				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(70, 70));
 			}
 			ImGui::Text(GetFileName(path.c_str()));
 			if (ImGui::BeginPopupContextItem("FolderContextMenu"))

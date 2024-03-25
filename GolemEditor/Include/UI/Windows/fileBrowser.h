@@ -50,6 +50,9 @@ public:
 	Golemint Ui_H;
 	Golemint Ui_Obj;
 
+	//std::vector<std::string> m_loadedTextures;
+	std::vector<std::pair<std::string, Golemint>> m_loadedTextures;
+
 	struct ButtonState
 	{
 		bool clicked = false;
