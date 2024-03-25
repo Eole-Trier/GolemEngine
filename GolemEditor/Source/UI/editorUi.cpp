@@ -7,11 +7,12 @@
 #include "Ui/Windows/fileBrowser.h"
 #include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
+#include "UI/Windows/inspector.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "inputManager.h"
+#include "Inputs/inputManager.h"
 #include "Wrappers/windowWrapper.h"
 
 
@@ -24,6 +25,7 @@ EditorUi::EditorUi(GolemEngine* _golemEngine)
     m_windows.push_back(new FileBrowser("File_Browser"));
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
+    m_windows.push_back(new Inspector("Inspector"));
 }
 
 void EditorUi::Init()
@@ -92,7 +94,6 @@ void EditorUi::BeginDockSpace()
 
     // Dock Control Space
     static bool init = true;
-    ImGuiID dock_id_left, dock_id_right;
     if (init)
     {
         init = false;
@@ -100,20 +101,35 @@ void EditorUi::BeginDockSpace()
         ImGui::DockBuilderAddNode(dockspace_id);
         ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
+        // Split window from [] to [dock_id_left | dock_id_right]
+        ImGuiID dock_id_left, dock_id_right;
         ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.8f, &dock_id_left, &dock_id_right);
 
+        // Split window from [dock_id_left | dock_id_right] to [              | dock_id_topRight    ]
+        //                                                     [ dock_id_left |       ---           ]
+        //                                                     [              | dock_id_bottomRight ]
         ImGuiID dock_id_topRight, dock_id_bottomRight;
-        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.8f, &dock_id_topRight, &dock_id_bottomRight);
+        ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.4f, &dock_id_topRight, &dock_id_bottomRight);
 
-        ImGuiID dock_id_topLeft, dock_id_bottomLeft;
-        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.8f, &dock_id_topLeft, &dock_id_bottomLeft);
+        // Split window from [              | dock_id_topRight    ] to [ dock_id_topLeft | dock_id_topRight    ]
+        //                   [ dock_id_left |       ---           ]    [        ---      |       ---           ]
+        //                   [              | dock_id_bottomRight ]    [ dock_id_bottom  | dock_id_bottomRight ]
+        ImGuiID dock_id_topLeft, dock_id_bottom;
+        ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Down, 0.3f, &dock_id_bottom, &dock_id_topLeft);
+
+        // Split window from [ dock_id_topLeft | dock_id_topRight    ] to [ dock_id_topLeft | dock_id_middle | dock_id_topRight    ]
+        //                   [        ---      |       ---           ]    [                ---               |       ---           ]
+        //                   [ dock_id_bottom  | dock_id_bottomRight ]    [            dock_id_bottom        | dock_id_bottomRight ]
+        ImGuiID dock_id_middle;
+        ImGui::DockBuilderSplitNode(dock_id_topLeft, ImGuiDir_Left, 0.2f, &dock_id_topLeft, &dock_id_middle);
 
         // For defining the position of the dock
-        ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topRight);
-        ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottomLeft);
-        ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_topLeft);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topLeft);
+        ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottom);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_middle);
         ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);
-        ImGui::DockBuilderDockWindow(GetWindowByName("Debug")->name.c_str(), dock_id_bottomRight);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Debug")->name.c_str(), dock_id_topRight);
+        ImGui::DockBuilderDockWindow(GetWindowByName("Inspector")->name.c_str(), dock_id_bottomRight);
 
         ImGui::DockBuilderFinish(dockspace_id);
     }
@@ -139,7 +155,6 @@ void EditorUi::UpdateWindows()
         window->Update(m_golemEngine);
     }
     ImGuiContext& g = *GImGui;
-    //std::cout << GetDockedWindowPosition("Viewport").x << std::endl;
 }
 
 Window* EditorUi::GetWindowByName(std::string _name)

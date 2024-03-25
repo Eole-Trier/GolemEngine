@@ -32,7 +32,6 @@
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
-    <ClCompile Include="Source\Inputs\Mouse.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
@@ -44,7 +43,7 @@
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
-    <ClCompile Include="Source\inputManager.cpp" />
+    <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
   </ItemGroup>
@@ -93,7 +92,6 @@
     <ClInclude Include="Include\Core\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
-    <ClInclude Include="Include\Inputs\Mouse.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
@@ -108,7 +106,8 @@
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
-    <ClInclude Include="Include\inputManager.h" />
+    <ClInclude Include="Include\Inputs\inputManager.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
+    <ClInclude Include="Include\Reflection\refl.hpp" />
   </ItemGroup>
 </Project>

@@ -2,12 +2,14 @@
 
 #include <string>
 #include <vector>
+
 #include "dll.h"
+#include "Reflection/refl.hpp"
 
 class Transform;
 class Component;
 
-class GameObject
+class GOLEM_ENGINE_API GameObject
 {
 private:
 	std::vector<Component*> m_components;
@@ -31,8 +33,13 @@ public:
 
 	void DisplayInformations();
 
-	GOLEM_ENGINE_API std::string GetName();
+	std::string GetName();
 
 	/*GameObject* Instantiate();
 	void Destroy();*/
 };
+
+REFL_AUTO(
+	type(GameObject),
+	field(name)
+)

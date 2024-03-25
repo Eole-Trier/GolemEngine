@@ -1,4 +1,4 @@
-#include "UI/Windows/basicActors.h"
+#include "UI/Windows/inspector.h"
 
 #include "Core/gameobject.h"
 #include "golemEngine.h"
@@ -9,14 +9,14 @@
 #include "Reflection/refl.hpp"
 
 
-BasicActors::BasicActors(std::string _name) 
+Inspector::Inspector(std::string _name)
 	: Window(_name)
 {}
 
 
-BasicActors::~BasicActors() {}
+Inspector::~Inspector() {}
 
-void BasicActors::Update(GolemEngine* _golemEngine)
+void Inspector::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 
