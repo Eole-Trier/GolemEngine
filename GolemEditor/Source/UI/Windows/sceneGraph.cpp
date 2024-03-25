@@ -22,12 +22,12 @@ void SceneGraph::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 
-	DisplayObjects(_golemEngine->GetScene()->GetWorld());
+	DisplayObjects(_golemEngine, _golemEngine->GetScene()->GetWorld());
 
 	ImGui::End();
 }
 
-void SceneGraph::DisplayObjects(GameObject* _gameObject)
+void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObject)
 {
 	const std::vector<Transform*>& children = _gameObject->transform->GetChildren();
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
@@ -47,10 +47,10 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 	if (m_renaming == _gameObject)
 	{
-		name = "##feur";
+		name = "##input";
 	}
 
-	if (ImGui::TreeNodeEx(name, flags))
+	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
 		if (m_renaming == _gameObject)
 		{
@@ -63,11 +63,32 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		}
 		else
 		{
+			// Rename popup
 			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
 			{
 				if (ImGui::MenuItem("Rename"))
 				{
 					m_renaming = _gameObject;
+				}
+				ImGui::EndPopup();
+			}
+
+			// Create popup
+			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			{
+				if (ImGui::MenuItem("Create"))
+				{
+					_golemEngine->GetScene()->CreateGameObject(_gameObject);
+				}
+				ImGui::EndPopup();
+			}
+
+			// Delete popup
+			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			{
+				if (ImGui::MenuItem("Delete") && _gameObject != _golemEngine->GetScene()->GetWorld())
+				{
+					_golemEngine->GetScene()->DeleteGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -88,8 +109,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
-					// to do reparent
-					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform))
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != _golemEngine->GetScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}
@@ -106,7 +126,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 		for (Transform* transform : children)
 		{
-			DisplayObjects(transform->owner);
+			DisplayObjects(_golemEngine, transform->owner);
 		}
 
 		ImGui::TreePop();
