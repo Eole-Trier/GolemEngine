@@ -36,16 +36,12 @@
     <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\transform.cpp" />
-    <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\mouse.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
-    <ClCompile Include="Source\Resource\tools.cpp" />
-    <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\inputManager.cpp" />
-    <ClCompile Include="Source\Inputs\Mouse.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
@@ -53,7 +49,6 @@
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
-    <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Viewport\scene.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
@@ -90,7 +85,6 @@
     <ClInclude Include="Include\Resource\Light\light.h" />
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\inputManager.h" />
-    <ClInclude Include="Include\Inputs\Mouse.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />

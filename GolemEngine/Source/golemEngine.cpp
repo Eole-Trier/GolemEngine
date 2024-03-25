@@ -86,13 +86,6 @@ Scene* GolemEngine::GetScene()
     return m_scene;
 }
 
-
-
-GLFWwindow* GolemEngine::GetWindow()
-{
-    return m_window;
-}
-
 float GolemEngine::GetDeltaTime()
 {
     return m_deltaTime;
