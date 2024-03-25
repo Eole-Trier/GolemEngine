@@ -33,6 +33,7 @@
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Source\Inputs\Mouse.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -74,5 +75,6 @@
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
     <ClInclude Include="Include\Inputs\Mouse.h" />
     <ClInclude Include="Include\Resource\Light\directional.h" />
+    <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
   </ItemGroup>
 </Project>
