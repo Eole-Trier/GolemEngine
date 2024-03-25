@@ -43,4 +43,8 @@ public:
 	Mesh* GetMeshByName(std::string _name);
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
+
+	void DeleteGameObject(GameObject* _gameObject);
+
+	void CreateGameObject(GameObject* _owner);
 };

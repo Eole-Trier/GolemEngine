@@ -66,7 +66,7 @@ void Scene::InitGameObjects()
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
 }
 
-void Scene::Update(float _width, float _height,Camera* _camera)
+void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
@@ -81,12 +81,11 @@ void Scene::Update(float _width, float _height,Camera* _camera)
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
     // Temporary to test graph scene
-    m_meshes[0]->transform->rotation.y += 0.01f;
-    m_meshes[1]->transform->rotation.x += 0.01f;
     m_world->transform->UpdateSelfAndChilds();
 
     for (int i = 0; i < m_meshes.size(); i++)
     {
+        m_meshes[i]->transform->rotation.y += 0.01f;
         m_meshes[i]->Draw(_width, _height, _camera);
     }
 }
@@ -165,4 +164,26 @@ const std::vector<GameObject*>& Scene::GetGameObjects()
 GameObject* Scene::GetWorld()
 {
     return m_world;
+}
+
+void Scene::DeleteGameObject(GameObject* _gameObject)
+{
+    _gameObject->transform->GetParent()->RemoveChild(_gameObject->transform);
+
+    std::erase(m_gameObjects, _gameObject);
+    if (Mesh* m = static_cast<Mesh*>(_gameObject))
+    {
+        std::erase(m_meshes, m);
+    }
+    for (Transform* go : _gameObject->transform->GetChildren())
+    {
+        DeleteGameObject(go->owner);
+    }
+}
+
+void Scene::CreateGameObject(GameObject* _owner)
+{
+    GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
+    m_gameObjects.push_back(go);
+    _owner->transform->AddChild(go->transform);
 }

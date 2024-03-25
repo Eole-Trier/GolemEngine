@@ -98,7 +98,11 @@ void Editor::MainLoop()
 	}
 }
 
-void Editor::Cleanup() {}
+void Editor::Cleanup() 
+{
+	delete m_editorUi;
+	delete m_golemEngine;
+}
 
 void Editor::Run()
 {
