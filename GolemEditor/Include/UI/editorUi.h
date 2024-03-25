@@ -1,30 +1,25 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 class GolemEngine;
-class BasicActors;
-class Viewport;
-class FileBrowser;
-class WorldActors;
-class DebugWindow;
+class Window;
 struct GLFWwindow;
 
 class EditorUi
 {
 private:
+	std::vector<Window*> m_windows;
 	GolemEngine* m_golemEngine = nullptr;
-	BasicActors* m_basicActors = nullptr;
-	Viewport* m_viewport = nullptr;
-	FileBrowser* m_fileBrowser = nullptr;
-	WorldActors* m_worldActors = nullptr;
-	DebugWindow* m_debugWindow = nullptr;
 
 public:
 	EditorUi(GolemEngine* _golemEngine);
 
-	void Init(GLFWwindow* _window);
+	void Init();
 	void BeginDockSpace();
 	void EndDockSpace();
 	void UpdateWindows();
+
+	Window* GetWindowByName(std::string _name);
 };

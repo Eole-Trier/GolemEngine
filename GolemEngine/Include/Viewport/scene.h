@@ -15,8 +15,6 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
-	ResourceManager m_resourceManager;
-
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
 	std::vector<Mesh*> m_meshes;
@@ -38,10 +36,11 @@ public:
 
 	void CreateAndLoadResources();
 
-	void Update(float _width, float _height, GLFWwindow* _window, Camera* _camera);
-	void UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera);
+	void Update(float _width, float _height, Camera* _camera);
+	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
 
 	Mesh* GetMeshByName(std::string _name);
-	std::vector<GameObject*> GetGameObjects();
+	const std::vector<GameObject*>& GetGameObjects();
+	GameObject* GetWorld();
 };

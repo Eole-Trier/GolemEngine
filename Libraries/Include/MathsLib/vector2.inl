@@ -10,7 +10,6 @@ Vector2::Vector2(float _x, float _y)
 	y = _y;
 } 
 
-
 Vector2 Vector2::Normalize() const
 {
 	float l = Length();

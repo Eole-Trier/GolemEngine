@@ -7,12 +7,16 @@
 #include "imgui_internal.h"
 
 
-BasicActors::BasicActors() {}
+BasicActors::BasicActors(std::string _name) 
+	: Window(_name)
+{
+}
+
 
 BasicActors::~BasicActors() {}
 
-void BasicActors::Update(GolemEngine* _golemEngine, const char* _name)
+void BasicActors::Update(GolemEngine* _golemEngine)
 {
-	ImGui::Begin("Basic_Actors");
+	ImGui::Begin(name.c_str());
 	ImGui::End();
 }

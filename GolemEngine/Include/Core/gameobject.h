@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "dll.h"
 
 class Transform;
 class Component;
@@ -9,12 +10,12 @@ class Component;
 class GameObject
 {
 private:
-	std::string m_name;
 	std::vector<Component*> m_components;
 
 	bool selected;
 
 public:
+	std::string name;
 	Transform* transform;
 
 public:
@@ -30,7 +31,7 @@ public:
 
 	void DisplayInformations();
 
-	std::string GetName();
+	GOLEM_ENGINE_API std::string GetName();
 
 	/*GameObject* Instantiate();
 	void Destroy();*/

@@ -1,34 +1,36 @@
 #pragma once
 
 #include "Viewport/camera.h"
+#include "UI/Windows/window.h"
 
+
+class Camera;
 class GolemEngine;
 
-class Viewport
+class Viewport : public Window
 {
 private:
-	static Camera* m_camera;
+	Camera* m_camera = nullptr;
 	double m_cursorX;
 	double m_cursorY;
 	float m_lastX;
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
-	bool m_firstMouse;
+
+	bool m_lastSpacePress = false;
 
 public:
 	int width = 0, height = 0;
 
 public:
 
-	Viewport();
+	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
+	void Update(GolemEngine* _golemEngine) override;
 
-	void MouseCallback(GolemEngine* _golemEngine, double _xposIn, double _yposIn);
-	static void ScrollCallback(GLFWwindow* _window, double _xoffset, double _yoffset);
+	void SetCamera(Camera* _camera);
 
 	Camera* GetCamera();
-	void MouseMovement(GolemEngine* _golemEngine);
 };

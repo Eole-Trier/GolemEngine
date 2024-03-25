@@ -1,12 +1,14 @@
 #pragma once
 
+#include "UI/Windows/window.h"
+
 class GolemEngine;
 
-class BasicActors 
+class BasicActors : public Window
 {
 public:
-	BasicActors();
+	BasicActors(std::string _name);
 	~BasicActors();
 
-	void Update(GolemEngine* _golemEngine, const char* _name = "default_window");
+	void Update(GolemEngine* _golemEngine) override;
 };
