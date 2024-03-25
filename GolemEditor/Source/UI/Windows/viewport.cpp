@@ -10,6 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Viewport/scene.h"
+#include "golemEngine.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -69,13 +70,16 @@ void Viewport::DragDropEvent()
         ImVec2 itemRectMax = ImGui::GetItemRectMax();
 
         if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
+        {
             std::cout << "Dropping" << std::endl;
+        }
 
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
+            GolemEngine::GetInstance()->GetScene()->testbool = true;
             m_isDragging = false;
         }
     }

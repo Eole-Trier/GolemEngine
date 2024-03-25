@@ -44,6 +44,8 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
-	void AddObject(std::string _textureName, std::string _modelName);
 	void InitObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+
+	bool testbool = false;
+	bool IsNameExists(const std::string& _name);
 };
