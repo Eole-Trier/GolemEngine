@@ -61,7 +61,7 @@ void Scene::InitGameObjects()
     m_gameObjects.push_back(vikingMesh);
 
     // TODO
-        InitObject("viking2", "model_viking");
+    InitObject("viking2", "model_viking");
 
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
@@ -196,11 +196,12 @@ void Scene::InitObject(std::string _name, std::string _modelName, std::string _t
     Shader* shader;
 
     if(_textureName.empty())
-        texture = resourceManager->Get<Texture>("default_texture");
+        texture = resourceManager->Get<Texture>("default_texture");// Get default texture
     else
         texture = resourceManager->Get<Texture>(_textureName);
+    
     if(_shaderName.empty())
-        shader = resourceManager->Get<Shader>("default");
+        shader = resourceManager->Get<Shader>("default");// Get default shader
     else
         shader = resourceManager->Get<Shader>(_shaderName);
 

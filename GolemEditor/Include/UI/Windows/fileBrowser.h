@@ -45,6 +45,7 @@ public:
 
 	bool isDragging = false;
 
+	Golemint Ui_Default;
 	Golemint Ui_Folder;
 	Golemint Ui_Cpp;
 	Golemint Ui_H;

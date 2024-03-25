@@ -54,8 +54,7 @@ void FileBrowser::Update(GolemEngine* _golemEngine)
 		ImGui::SetNextWindowPos(windowPos);
 		ImGui::Begin("Dragging Window", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
-		Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
-		ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+		ImGui::Image((void*)(intptr_t)Ui_Default, ImVec2(70, 70));
 		ImGui::End();
 	}
 	if (ImGui::IsMouseReleased(0))
@@ -115,6 +114,7 @@ void FileBrowser::ContentBrowser()
 
 	if (!isLoadUi)
 	{
+		Ui_Default = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
 		Ui_Folder = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
 		Ui_Cpp = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());;
 		Ui_H = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
@@ -199,7 +199,7 @@ void FileBrowser::ContentBrowser()
 			}
 			else
 			{
-				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Default, ImVec2(70, 70));
 			}
 			ImGui::Text(GetFileName(path.c_str()));
 			if (ImGui::BeginPopupContextItem("FolderContextMenu"))
