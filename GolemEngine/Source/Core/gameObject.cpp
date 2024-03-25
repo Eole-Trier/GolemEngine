@@ -3,7 +3,7 @@
 #include "Components/component.h"
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) :
-	m_name(_name), transform(_transform)
+	name(_name), transform(_transform)
 {
 	selected = false;
 	_transform->owner = this;
@@ -44,7 +44,7 @@ void GameObject::DisplayInformations()
 
 std::string GameObject::GetName()
 {
-	return m_name;
+	return name;
 }
 
 /*GameObject* GameObject::Instantiate()

@@ -61,6 +61,60 @@ Matrix4 Matrix4::Transpose() const
 	return Transpose;
 }
 
+float Matrix4::GetDeterminant() const
+{
+	return 
+		data[0][3] * data[1][2] * data[2][1] * data[3][0] - data[0][2] * data[1][3] * data[2][1] * data[3][0] -
+		data[0][3] * data[1][1] * data[2][2] * data[3][0] + data[0][1] * data[1][3] * data[2][2] * data[3][0] +
+		data[0][2] * data[1][1] * data[2][3] * data[3][0] - data[0][1] * data[1][2] * data[2][3] * data[3][0] -
+		data[0][3] * data[1][2] * data[2][0] * data[3][1] + data[0][2] * data[1][3] * data[2][0] * data[3][1] +
+		data[0][3] * data[1][0] * data[2][2] * data[3][1] - data[0][0] * data[1][3] * data[2][2] * data[3][1] -
+		data[0][2] * data[1][0] * data[2][3] * data[3][1] + data[0][0] * data[1][2] * data[2][3] * data[3][1] +
+		data[0][3] * data[1][1] * data[2][0] * data[3][2] - data[0][1] * data[1][3] * data[2][0] * data[3][2] -
+		data[0][3] * data[1][0] * data[2][1] * data[3][2] + data[0][0] * data[1][3] * data[2][1] * data[3][2] +
+		data[0][1] * data[1][0] * data[2][3] * data[3][2] - data[0][0] * data[1][1] * data[2][3] * data[3][2] -
+		data[0][2] * data[1][1] * data[2][0] * data[3][3] + data[0][1] * data[1][2] * data[2][0] * data[3][3] +
+		data[0][2] * data[1][0] * data[2][1] * data[3][3] - data[0][0] * data[1][2] * data[2][1] * data[3][3] -
+		data[0][1] * data[1][0] * data[2][2] * data[3][3] + data[0][0] * data[1][1] * data[2][2] * data[3][3];
+}
+
+
+Matrix4 Matrix4::Inverse() const
+{
+	Matrix4 inv;
+	float det;
+	inv.data[0][0] = data[1][1] * data[2][2] * data[3][3] - data[1][1] * data[2][3] * data[3][2] - data[2][1] * data[1][2] * data[3][3] + data[2][1] * data[1][3] * data[3][2] + data[3][1] * data[1][2] * data[2][3] - data[3][1] * data[1][3] * data[2][2];
+	inv.data[1][0] = -data[1][0] * data[2][2] * data[3][3] + data[1][0] * data[2][3] * data[3][2] + data[2][0] * data[1][2] * data[3][3] - data[2][0] * data[1][3] * data[3][2] - data[3][0] * data[1][2] * data[2][3] + data[3][0] * data[1][3] * data[2][2];
+	inv.data[2][0] = data[1][0] * data[2][1] * data[3][3] - data[1][0] * data[2][3] * data[3][1] - data[2][0] * data[1][1] * data[3][3] + data[2][0] * data[1][3] * data[3][1] + data[3][0] * data[1][1] * data[2][3] - data[3][0] * data[1][3] * data[2][1];
+	inv.data[3][0] = -data[1][0] * data[2][1] * data[3][2] + data[1][0] * data[2][2] * data[3][1] + data[2][0] * data[1][1] * data[3][2] - data[2][0] * data[1][2] * data[3][1] - data[3][0] * data[1][1] * data[2][2] + data[3][0] * data[1][2] * data[2][1];
+	inv.data[0][1] = -data[0][1] * data[2][2] * data[3][3] + data[0][1] * data[2][3] * data[3][2] + data[2][1] * data[0][2] * data[3][3] - data[2][1] * data[0][3] * data[3][2] - data[3][1] * data[0][2] * data[2][3] + data[3][1] * data[0][3] * data[2][2];
+	inv.data[1][1] = data[0][0] * data[2][2] * data[3][3] - data[0][0] * data[2][3] * data[3][2] - data[2][0] * data[0][2] * data[3][3] + data[2][0] * data[0][3] * data[3][2] + data[3][0] * data[0][2] * data[2][3] - data[3][0] * data[0][3] * data[2][2];
+	inv.data[2][1] = -data[0][0] * data[2][1] * data[3][3] + data[0][0] * data[2][3] * data[3][1] + data[2][0] * data[0][1] * data[3][3] - data[2][0] * data[0][3] * data[3][1] - data[3][0] * data[0][1] * data[2][3] + data[3][0] * data[0][3] * data[2][1];
+	inv.data[3][1] = data[0][0] * data[2][1] * data[3][2] - data[0][0] * data[2][2] * data[3][1] - data[2][0] * data[0][1] * data[3][2] + data[2][0] * data[0][2] * data[3][1] + data[3][0] * data[0][1] * data[2][2] - data[3][0] * data[0][2] * data[2][1];
+	inv.data[0][2] = data[0][1] * data[1][2] * data[3][3] - data[0][1] * data[1][3] * data[3][2] - data[1][1] * data[0][2] * data[3][3] + data[1][1] * data[0][3] * data[3][2] + data[3][1] * data[0][2] * data[1][3] - data[3][1] * data[0][3] * data[1][2];
+	inv.data[1][2] = -data[0][0] * data[1][2] * data[3][3] + data[0][0] * data[1][3] * data[3][2] + data[1][0] * data[0][2] * data[3][3] - data[1][0] * data[0][3] * data[3][2] - data[3][0] * data[0][2] * data[1][3] + data[3][0] * data[0][3] * data[1][2];
+	inv.data[2][2] = data[0][0] * data[1][1] * data[3][3] - data[0][0] * data[1][3] * data[3][1] - data[1][0] * data[0][1] * data[3][3] + data[1][0] * data[0][3] * data[3][1] + data[3][0] * data[0][1] * data[1][3] - data[3][0] * data[0][3] * data[1][1];
+	inv.data[3][2] = -data[0][0] * data[1][1] * data[3][2] + data[0][0] * data[1][2] * data[3][1] + data[1][0] * data[0][1] * data[3][2] - data[1][0] * data[0][2] * data[3][1] - data[3][0] * data[0][1] * data[1][2] + data[3][0] * data[0][2] * data[1][1];
+	inv.data[0][3] = -data[0][1] * data[1][2] * data[2][3] + data[0][1] * data[1][3] * data[2][2] + data[1][1] * data[0][2] * data[2][3] - data[1][1] * data[0][3] * data[2][2] - data[2][1] * data[0][2] * data[1][3] + data[2][1] * data[0][3] * data[1][2];
+	inv.data[1][3] = data[0][0] * data[1][2] * data[2][3] - data[0][0] * data[1][3] * data[2][2] - data[1][0] * data[0][2] * data[2][3] + data[1][0] * data[0][3] * data[2][2] + data[2][0] * data[0][2] * data[1][3] - data[2][0] * data[0][3] * data[1][2];
+	inv.data[2][3] = -data[0][0] * data[1][1] * data[2][3] + data[0][0] * data[1][3] * data[2][1] + data[1][0] * data[0][1] * data[2][3] - data[1][0] * data[0][3] * data[2][1] - data[2][0] * data[0][1] * data[1][3] + data[2][0] * data[0][3] * data[1][1];
+	inv.data[3][3] = data[0][0] * data[1][1] * data[2][2] - data[0][0] * data[1][2] * data[2][1] - data[1][0] * data[0][1] * data[2][2] + data[1][0] * data[0][2] * data[2][1] + data[2][0] * data[0][1] * data[1][2] - data[2][0] * data[0][2] * data[1][1];
+
+	det = data[0][0] * inv.data[0][0] + data[0][1] * inv.data[1][0] + data[0][2] * inv.data[2][0] + data[0][3] * inv.data[3][0];
+	if (det == 0)
+	{
+		std::cout << "The Matrix can't be inverted, determinant is 0" << std::endl;
+		return Matrix4(0);
+	}
+	det = 1.0 / det;
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			inv.data[i][j] = inv.data[i][j] * det;
+
+	return inv;
+}
+
 Matrix4 Matrix4::Translate(Vector3 _t) const
 {
 	Matrix4 translate(
@@ -96,6 +150,28 @@ Matrix4 Matrix4::Rotate(Vector3 _XYZrad) const
 	return (*this) * rotate;
 }
 
+Matrix4 Matrix4::Rotate(Quaternion _q) const
+{
+	const float_t xx = _q.x * _q.x;
+	const float_t yy = _q.y * _q.y;
+	const float_t zz = _q.z * _q.z;
+
+	const float_t xy = _q.x * _q.y;
+	const float_t wz = _q.z * _q.w;
+	const float_t xz = _q.z * _q.x;
+	const float_t wy = _q.y * _q.w;
+	const float_t yz = _q.y * _q.z;
+	const float_t wx = _q.x * _q.w;
+
+	return (*this) * Matrix4(
+		1.f - 2.f * (yy + zz), 2.f * (xy - wz), 2.f * (xz + wy), 0.f,
+		2.f * (xy + wz), 1.f - 2.f * (zz + xx), 2.f * (yz - wx), 0.f,
+		2.f * (xz - wy), 2.f * (yz + wx), 1.f - 2.f * (yy + xx), 0.f,
+		0.f, 0.f, 0.f, 1.f
+	);
+}
+
+
 Matrix4 Matrix4::Scale(Vector3 _scale) const
 {
 	Matrix4 scale(
@@ -107,13 +183,68 @@ Matrix4 Matrix4::Scale(Vector3 _scale) const
 	return (*this) * scale;
 }
 
-Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
+Vector3 Matrix4::TrsToPosition()
+{
+	return Vector3(data[0][3], data[1][3], data[2][3]);
+}
+
+Quaternion Matrix4::TrsToRotation()
+{
+	float trace = data[0][0] + data[1][1] + data[2][2];
+	Quaternion quat;
+
+	if (trace > 0)
+	{
+		float S = sqrt(trace + 1.0f) * 2.0f;
+		quat.w = 0.25f * S;
+		quat.x = (data[2][1] - data[1][2]) / S;
+		quat.y = (data[0][2] - data[2][0]) / S;
+		quat.z = (data[1][0] - data[0][1]) / S;
+	}
+	else if ((data[0][0] > data[1][1]) && (data[0][0] > data[2][2])) 
+	{
+		float S = sqrt(1.0f + data[0][0] - data[1][1] - data[2][2]) * 2.0f;
+		quat.w = (data[2][1] - data[1][2]) / S;
+		quat.x = 0.25f * S;
+		quat.y = (data[0][1] + data[1][0]) / S;
+		quat.z = (data[0][2] + data[2][0]) / S;
+	}
+	else if (data[1][1] > data[2][2]) 
+	{
+		float S = sqrt(1.0f + data[1][1] - data[0][0] - data[2][2]) * 2.0f;
+		quat.w = (data[0][2] - data[2][0]) / S;
+		quat.x = (data[0][1] + data[1][0]) / S;
+		quat.y = 0.25f * S;
+		quat.z = (data[1][2] + data[2][1]) / S;
+	}
+	else 
+	{
+		float S = sqrt(1.0f + data[2][2] - data[0][0] - data[1][1]) * 2.0f;
+		quat.w = (data[1][0] - data[0][1]) / S;
+		quat.x = (data[0][2] + data[2][0]) / S;
+		quat.y = (data[1][2] + data[2][1]) / S;
+		quat.z = 0.25f * S;
+	}
+
+	return quat;
+}
+
+Vector3 Matrix4::TrsToScaling()
+{
+	float scaleX = std::sqrt(data[0][0] * data[0][0] + data[0][1] * data[0][1] + data[0][2] * data[0][2]);
+	float scaleY = std::sqrt(data[1][0] * data[1][0] + data[1][1] * data[1][1] + data[1][2] * data[1][2]);
+	float scaleZ = std::sqrt(data[2][0] * data[2][0] + data[2][1] * data[2][1] + data[2][2] * data[2][2]);
+
+	return Vector3(scaleX, scaleY, scaleZ);
+}
+
+Matrix4 Matrix4::TRS(Vector3 _translate, Vector3 _XYZrad, Vector3 _scale)
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.data[0][3] = _t.x;
-	result.data[1][3] = _t.y;
-	result.data[2][3] = _t.z;
+	result.data[0][3] = _translate.x;
+	result.data[1][3] = _translate.y;
+	result.data[2][3] = _translate.z;
 
 	result = result.Rotate(_XYZrad);
 
@@ -121,6 +252,22 @@ Matrix4 Matrix4::TRS(Vector3 _t, Vector3 _XYZrad, Vector3 _scale)
 
 	return result;
 }
+
+Matrix4 Matrix4::TRS(Vector3 _translate, Quaternion _rotate, Vector3 _scale)
+{
+	Matrix4 result = Matrix4::Identity();
+
+	result.data[0][3] = _translate.x;
+	result.data[1][3] = _translate.y;
+	result.data[2][3] = _translate.z;
+
+	result = result.Rotate(_rotate);
+
+	result = result.Scale(_scale);
+
+	return result;
+}
+
 
 Matrix4 Matrix4::Projection(float _fov, float _aspectRatio, float _zNear, float _zFar)
 {

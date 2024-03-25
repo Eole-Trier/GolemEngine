@@ -1,4 +1,5 @@
 #include "vector3.h"
+#include "quaternion.h"
 
 Vector3::Vector3()
 {
@@ -58,6 +59,24 @@ Vector3 Vector3::Cross(Vector3 _a, Vector3 _b)
     return temp;
 }
 
+Vector3 Vector3::QuaternionToEuler(Quaternion _q)
+{
+    Vector3 angles;
+
+    float sinr_cosp = 2 * (_q.w * _q.x + _q.y * _q.z);
+    float cosr_cosp = 1 - 2 * (_q.x * _q.x + _q.y * _q.y);
+    angles.x = std::atan2(sinr_cosp, cosr_cosp);
+
+    float sinp = std::sqrt(1 + 2 * (_q.w * _q.y - _q.x * _q.z));
+    float cosp = std::sqrt(1 - 2 * (_q.w * _q.y - _q.x * _q.z));
+    angles.y = 2 * std::atan2(sinp, cosp) - M_PI / 2;
+
+    float siny_cosp = 2 * (_q.w * _q.z + _q.x * _q.y);
+    float cosy_cosp = 1 - 2 * (_q.y * _q.y + _q.z * _q.z);
+    angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+    return angles;
+}
 
 #pragma region Operators
 

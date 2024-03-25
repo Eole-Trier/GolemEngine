@@ -4,6 +4,8 @@
 
 #include "dll.h"
 
+class Quaternion;
+
 class GOLEM_ENGINE_API Vector3
 {
 public:
@@ -21,6 +23,12 @@ public:
 	Vector3 Normalize() const;
 	static float Dot(Vector3 _a, Vector3 _b);
 	static Vector3 Cross(Vector3 _a, Vector3 _b);
+
+	/*
+	- From Quaternion angles to Euler : assuming Quaternion is normalized
+	- Returns a Vector3 of angles
+	*/
+	static Vector3 QuaternionToEuler(Quaternion _q);
 
 	GOLEM_ENGINE_API friend Vector3 operator+(Vector3 _a, float b);
 	GOLEM_ENGINE_API friend Vector3 operator-(Vector3 _a, float b);
