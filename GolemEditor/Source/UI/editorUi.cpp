@@ -138,6 +138,8 @@ void EditorUi::UpdateWindows()
     {
         window->Update(m_golemEngine);
     }
+    ImGuiContext& g = *GImGui;
+    //std::cout << GetDockedWindowPosition("Viewport").x << std::endl;
 }
 
 Window* EditorUi::GetWindowByName(std::string _name)
@@ -149,4 +151,20 @@ Window* EditorUi::GetWindowByName(std::string _name)
     }
     Log::Print("No window with the name %s has been found", _name.c_str());
     return nullptr;
+}
+
+Vector2 EditorUi::GetDockedWindowPosition(std::string _dockedWindowName)
+{
+    ImGuiContext& g = *GImGui;
+    Vector2 temp;
+    for (int i = 0; i < g.Windows.Size; i++) 
+    {
+        ImGuiWindow* window = g.Windows[i];
+        if (window && window->DockNode && window->DockNode->TabBar && window->DockNode->TabBar->Tabs.Size > 0 && window->DockNode->TabBar->Tabs[0].ID == ImHashStr(_dockedWindowName.c_str()))
+        {
+            temp = { window->Pos.x, window->Pos.y };
+            return temp;
+        }
+    }
+    return { -1, -1 };
 }

@@ -7,7 +7,7 @@
 #include "imgui/backends/imgui_impl_glfw.h"
 
 
-Vector2 InputManager::m_mousePos = { 0.0f, 0.0f };
+Vector2 InputManager::m_mouseWindowPos = { 0.0f, 0.0f };
 float InputManager::m_mouseScrollValue = 0.0f;
 
 void InputManager::Init(GLFWwindow* _window)
@@ -37,7 +37,7 @@ void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int
 void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, double _yPos)
 {
     ImGui_ImplGlfw_CursorPosCallback(_window, _xPos, _yPos);
-    m_mousePos = { (float)_xPos, (float)_yPos };
+    m_mouseWindowPos = { (float)_xPos, (float)_yPos };
 }
 
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
@@ -72,9 +72,9 @@ bool InputManager::IsButtonPressed(int _button)
     return m_mouseButtons[_button];
 }
 
-Vector2 InputManager::GetMousePos()
+Vector2 InputManager::GetMouseWindowPos()
 {
-    return m_mousePos;
+    return m_mouseWindowPos;
 }
 
 float InputManager::GetMouseScroll()
