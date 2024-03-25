@@ -41,6 +41,8 @@ public:
 
 	std::string draggingFilePath;
 
+	bool isLoadUi = false;
+
 	bool isDragging = false;
 
 	Golemint Ui_Folder;

@@ -24,6 +24,8 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj.user" && \
     name != "imgui.ini")
 
+#define DEFAULT_SIZE 70
+
 FileBrowser::FileBrowser(std::string _name)
 	: Window(_name), m_currentDirectory(m_editorDirectory)
 {
@@ -113,6 +115,16 @@ void FileBrowser::ContentBrowser()
 		ImGui::Text("");
 	}
 
+	if (!isLoadUi)
+	{
+		Ui_Folder = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
+		Ui_Cpp = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());;
+		Ui_H = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
+		Ui_Obj = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
+
+		isLoadUi = true;
+	}
+
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
@@ -126,7 +138,7 @@ void FileBrowser::ContentBrowser()
 			if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
+				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(DEFAULT_SIZE, DEFAULT_SIZE)))
 				{
 					double currentTime = ImGui::GetTime();
 					double clickInterval = currentTime - m_buttonState.lastClickTime;
@@ -138,7 +150,7 @@ void FileBrowser::ContentBrowser()
 					}
 				}
 				ImGui::PopStyleColor();
-				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - DEFAULT_SIZE);
 			}
 			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
 			{
@@ -158,34 +170,29 @@ void FileBrowser::ContentBrowser()
 			// Show UI ICON
 			if (p.is_directory())
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			else if (extensionFile == ".cpp")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Cpp, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			else if (extensionFile == ".h")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_H, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			else if (extensionFile == ".obj")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Obj, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			else
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(DEFAULT_SIZE, DEFAULT_SIZE));
 			}
 			ImGui::Text(GetFileName(path.c_str()));
 			if (ImGui::BeginPopupContextItem("FolderContextMenu"))
