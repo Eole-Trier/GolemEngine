@@ -35,6 +35,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
     {
         m_lastSpacePress = true;
         m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Update camera speed depending on scroll

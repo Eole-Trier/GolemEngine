@@ -7,14 +7,14 @@
 #include "utils.h"
 
 
-const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 10;
-const int SCREEN_SIZE_RIGHT_X_BORDER_MARGIN = 10;
-const int TP_LEFT_X_POS_MARGIN = 10;
-const int TP_LEFT_X_RIGHT_MARGIN = 10;
-const int SCREEN_SIZE_TOP_Y_BORDER_MARGIN = 30;
-const int SCREEN_SIZE_BOTTOM_Y_BORDER_MARGIN = 10;
-const int TP_TOP_Y_POS_MARGIN = 40;
-const int TP_LEFT_Y_BOTTOM_MARGIN = 10;
+const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 20;
+const int SCREEN_SIZE_RIGHT_X_BORDER_MARGIN = 20;
+const int TP_LEFT_X_POS_MARGIN = 20;
+const int TP_LEFT_X_RIGHT_MARGIN = 20;
+const int SCREEN_SIZE_TOP_Y_BORDER_MARGIN = 60;
+const int SCREEN_SIZE_BOTTOM_Y_BORDER_MARGIN = 20;
+const int TP_TOP_Y_POS_MARGIN = 80;
+const int TP_LEFT_Y_BOTTOM_MARGIN = 20;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
     : 
