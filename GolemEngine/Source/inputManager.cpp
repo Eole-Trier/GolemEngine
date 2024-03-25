@@ -46,8 +46,6 @@ void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _ac
     if (_action == GLFW_PRESS)
     {
         m_mouseButtons[_button] = true;
-
-        std::cout << "Mouse button " << _button << " pressed" << std::endl;
     }
     else if (_action == KEY_RELEASED)
     {

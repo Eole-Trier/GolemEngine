@@ -62,7 +62,6 @@ void Camera::ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch)
     float a = 0.0f;
     if (_mousePos.x <= a+10.0f)
     {
-        std::cout << "hi" << std::endl;
     }
     if (isFirstMouse)   // Check if it's the first click on the viewport to not teleport the camera
     {
@@ -105,7 +104,6 @@ void Camera::UpdateVectors()
 
 void Camera::ProcessMouseScroll(float _yOffset)
 {
-    std::cout << m_movementSpeed << std::endl;
     if (m_movementSpeed + _yOffset <= m_maxSpeed && m_movementSpeed + _yOffset >= m_minSpeed)
     {
         m_movementSpeed += (float)_yOffset;
