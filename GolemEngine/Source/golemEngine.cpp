@@ -18,7 +18,6 @@ GolemEngine* GolemEngine::GetInstance()
     return m_golemInstance;
 }
 
-
 GolemEngine::GolemEngine()
     :
     m_scene(new Scene())

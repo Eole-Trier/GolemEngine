@@ -21,6 +21,7 @@ void DebugWindow::Update(GolemEngine* _golemEngine)
 	ImGui::Text("deltaTime: %f", _golemEngine->GetDeltaTime());
 	ImGui::Text("time: %f", _golemEngine->GetTime());
 	ImGui::Text("Screen size: %.0f %.0f", WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-	ImGui::Text("Mouse position: %.0f %.0f", InputManager::GetMousePos().x, InputManager::GetMousePos().y);
+	ImGui::Text("Mouse position relative to window: %.0f %.0f", InputManager::GetMouseWindowPos().x, InputManager::GetMouseWindowPos().y);
+	ImGui::Text("Mouse position relative to screen: %.0f %.0f", ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 	ImGui::End();
 }
