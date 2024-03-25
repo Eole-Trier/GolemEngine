@@ -15,7 +15,6 @@ namespace Tools
             if (file.filename().string().find(_file) != std::string::npos)
             {
                 targetFileName = file.string();
-                std::cout << targetFileName.c_str() << std::endl;
                 return targetFileName.c_str();
             }
 

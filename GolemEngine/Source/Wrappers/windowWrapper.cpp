@@ -1,22 +1,14 @@
 #include "Wrappers/windowWrapper.h"
 
-#include <GLFW/glfw3.h>
-#include "imgui/ImGuiFileDialog-master/stb/stb_image.h"
+#include <string>
+
+#include "Image/stb_image.h"
 
 
-WindowWrapper* WindowWrapper::m_instancePtr = nullptr;
+GLFWwindow* WindowWrapper::window = nullptr;
+Vector2 WindowWrapper::m_screenSize = { 0.0f, 0.0f };
 
-WindowWrapper::WindowWrapper() {}
-
-WindowWrapper* WindowWrapper::GetInstance()
-{
-    if (!m_instancePtr) {
-        m_instancePtr = new WindowWrapper();
-    }
-    return m_instancePtr;
-}
-
-void WindowWrapper::Init()
+void WindowWrapper::InitWindow()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -48,17 +40,12 @@ void WindowWrapper::SwapBuffers(GLFWwindow* _window)
     glfwSwapBuffers(_window);
 }
 
-GLFWwindow* WindowWrapper::GetCurrentWindow()
-{
-    return glfwGetCurrentContext();
-}
-
-void WindowWrapper::SetCurrentWindow(GLFWwindow* _window)
+void WindowWrapper::MakeContext(GLFWwindow* _window)
 {
     glfwMakeContextCurrent(_window);
 }
 
-GLuint WindowWrapper::LoadUITexture(const char* _filename)
+GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
     int width, height, channels;
     unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);
@@ -69,7 +56,23 @@ GLuint WindowWrapper::LoadUITexture(const char* _filename)
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+    std::string filenameStr(_filename);
+    std::string extension;
+    size_t dotIndex = filenameStr.find_last_of('.');
+    if (dotIndex != std::string::npos) {
+        extension = filenameStr.substr(dotIndex);
+    }
+
+    GLenum internalFormat = GL_RGBA;
+    if (extension == ".png") {
+        internalFormat = GL_RGBA;
+    }
+    else if (extension == ".jpg") {
+        internalFormat = GL_RGB;
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     stbi_image_free(data);
@@ -77,6 +80,12 @@ GLuint WindowWrapper::LoadUITexture(const char* _filename)
     return texture;
 }
 
-//void WindowWrapper::SetScrollCallback(ScrollCallback callback)
-//{
-//}
+Vector2 WindowWrapper::GetScreenSize()
+{
+    return m_screenSize;
+}
+
+void WindowWrapper::SetScreenSize(Vector2 _screenSize)
+{
+    m_screenSize = { _screenSize.x, _screenSize.y };
+}

@@ -4,22 +4,29 @@
 
 #include "dll.h"
 #include "Viewport/scene.h"
-#include "Inputs/Mouse.h"
+//#include "Inputs/Mouse.h"
 
 struct GLFWwindow;
 class Scene;
+class Camera;
 
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
-	GLFWwindow* m_window = nullptr;
+	static GolemEngine* m_golemInstance;
+
 	Scene* m_scene = nullptr;
-	int m_screenWidth = 0;
-	int m_screenHeight = 0;
+	Camera* m_camera = nullptr;
 	float m_deltaTime = 0.f;
 
-public:
+private:
+	GolemEngine(GolemEngine& other) = delete;
 	GolemEngine();
+
+public:
+	void operator=(const GolemEngine&) = delete;
+	static GolemEngine* GetInstance();
+
 	~GolemEngine();
 
 	void InitScene();
@@ -30,10 +37,7 @@ public:
 	void Close();
 
 	Scene* GetScene();
-	GLFWwindow* GetWindow();
+	Camera* GetCamera();
 	float GetDeltaTime();
 	float GetTime();
-
-	void SetScreenSize(int _width, int _height);
-	void SetWindow(GLFWwindow* _window);
 };

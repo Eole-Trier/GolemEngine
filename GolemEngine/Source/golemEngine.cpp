@@ -1,8 +1,23 @@
 #include "golemEngine.h"
 
 #include "Wrappers/graphicWrapper.h"
+#include "Wrappers/windowWrapper.h"
 #include "Viewport/scene.h"
+#include "Viewport/camera.h"
+#include "inputManager.h"
 #include "vector4.h"
+
+GolemEngine* GolemEngine::m_golemInstance = nullptr;
+
+GolemEngine* GolemEngine::GetInstance()
+{
+    if (m_golemInstance == nullptr) 
+    {
+        m_golemInstance = new GolemEngine();
+    }
+    return m_golemInstance;
+}
+
 
 GolemEngine::GolemEngine()
     :
@@ -16,12 +31,15 @@ void GolemEngine::InitScene()
     // Init scene objects
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GRAPHIC_INTERFACE->CreateFramebuffer(m_screenWidth, m_screenHeight);
+    
+    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
 void GolemEngine::Init()
 {
     InitScene();
+    InputManager::Init(WindowWrapper::window);
+    m_camera = new Camera();
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -33,9 +51,9 @@ void GolemEngine::UpdateDeltaTime()
 
 void GolemEngine::ProcessInput()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (InputManager::IsKeyPressed(KEY_ESCAPE))
     {
-        glfwSetWindowShouldClose(m_window, true);
+        glfwSetWindowShouldClose(WindowWrapper::window, true);
     }
 }
 
@@ -43,15 +61,15 @@ void GolemEngine::Update()
 {
     UpdateDeltaTime();
     // Bind next framebuffer to the scene buffer
-    GRAPHIC_INTERFACE->BindFramebuffer();
+    GraphicWrapper::BindFramebuffer();
     // Assign background color and clear previous scene buffers 
-    GRAPHIC_INTERFACE->SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     // Clear buffer
-    GRAPHIC_INTERFACE->ClearBuffer();
+    GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    m_scene->Update(m_screenWidth, m_screenHeight, m_window, Camera::instance);
+    m_scene->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
     // Go back to original framebuffer
-    GRAPHIC_INTERFACE->UnbindFramebuffer();
+    GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()
@@ -59,14 +77,14 @@ void GolemEngine::Close()
     glfwTerminate();
 }
 
+Camera* GolemEngine::GetCamera()
+{
+    return m_camera;
+}
+
 Scene* GolemEngine::GetScene()
 {
     return m_scene;
-}
-
-GLFWwindow* GolemEngine::GetWindow()
-{
-    return m_window;
 }
 
 float GolemEngine::GetDeltaTime()
@@ -77,15 +95,4 @@ float GolemEngine::GetDeltaTime()
 float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
-}
-
-void GolemEngine::SetScreenSize(int _width, int _height)
-{
-    m_screenWidth = _width;
-    m_screenHeight = _height;
-}
-
-void GolemEngine::SetWindow(GLFWwindow* _window)
-{
-    m_window = _window;
 }

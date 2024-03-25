@@ -1,8 +1,8 @@
 #include "Resource/Rendering/mesh.h"
 
-#include <glad/glad.h>
 #include <MathsLib/utils.h>
 
+#include "Wrappers/graphicWrapper.h"
 #include "Core/transform.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
@@ -52,7 +52,7 @@ void Mesh::Draw(float _width, float _height, Camera* _cam)
     m_shader->Use();
 
     Matrix4 view = _cam->GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->zoom), _width / _height, _cam->zNear, _cam->zFar);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->GetZoom()), _width / _height, _cam->GetNear(), _cam->GetFar());
     m_shader->SetMat4("view", view);
     m_shader->SetMat4("projection", projection);
     m_shader->SetMat4("model", transform->GetGlobalModel());

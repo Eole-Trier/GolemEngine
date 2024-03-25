@@ -1,114 +1,131 @@
-#include <MathsLib/utils.h>
-
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 #include "Viewport/camera.h"
 
-Camera* Camera::instance;
+#include "Wrappers/windowWrapper.h" 
+#include "inputManager.h"
+#include "utils.h"
+
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
-    : front(Vector3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
+    :
+    m_position(_position),
+    m_front(Vector3(0.0f, 0.0f, -1.0f)),
+    m_worldUp(_up),
+    m_yaw(_yaw),
+    m_pitch(_pitch),
+    m_movementSpeed(2.5f),
+    m_mouseSensitivity(0.1f),
+    m_zoom(45.0f),
+    m_near(0.1f),
+    m_far(1000.0f),
+    m_minSpeed(1.0f),
+    m_maxSpeed(100.0f)
 {
-    zNear = 0.1f;
-    zFar = 1000.f;
-    minSpeed = 1.0f;
-    maxSpeed = 100.0f;
-    position = _position;
-    worldUp = _up;
-    yaw = _yaw;
-    pitch = _pitch;
-    UpdateCameraVectors();
-    if (instance == nullptr)
-        instance = this;
+	UpdateVectors();
 }
 
-Camera::Camera(float _posX, float _posY, float _posZ, float _upX, float _upY, float _upZ, float _yaw, float _pitch)
-    : front(Vector3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
+void Camera::ProcessKeyboardInput(float _deltaTime)
 {
-    zNear = 0.1f;
-    zFar = 1000.f;
-    position = Vector3(_posX, _posY, _posZ);
-    worldUp = Vector3(_upX, _upY, _upZ);
-    yaw = yaw;
-    pitch = pitch;
-    UpdateCameraVectors();
-    if (instance == nullptr)
-        instance = this;
+    if (InputManager::IsKeyPressed(KEY_W))
+    {
+        m_position += m_front * m_movementSpeed * _deltaTime;
+    }
+    if (InputManager::IsKeyPressed(KEY_S))
+    {
+        m_position -= m_front * m_movementSpeed * _deltaTime;
+    }
+    if (InputManager::IsKeyPressed(KEY_A))
+    {
+        m_position -= m_right * m_movementSpeed * _deltaTime;
+    }
+    if (InputManager::IsKeyPressed(KEY_D))
+    {
+        m_position += m_right * m_movementSpeed * _deltaTime;
+    }
+    if (InputManager::IsKeyPressed(KEY_Q))
+    {
+        m_position += m_up * m_movementSpeed * _deltaTime;
+    }
+    if (InputManager::IsKeyPressed(KEY_E))
+    {
+        m_position -= m_up * m_movementSpeed * _deltaTime;
+    }
 }
 
+void Camera::ProcessMouseInput()
+{
+    // Do stuff
+}
+
+void Camera::ProcessMouseMovement(Vector2 _mousePos, bool _constrainPitch)
+{
+    // Transform mouse position into an offset
+    float a = 0.0f;
+    if (_mousePos.x <= a+10.0f)
+    {
+    }
+    if (isFirstMouse)   // Check if it's the first click on the viewport to not teleport the camera
+    {
+        m_lastMousePos = _mousePos;
+        isFirstMouse = false;
+    }
+
+    Vector2 mouseOffset = _mousePos - m_lastMousePos;
+    m_lastMousePos = _mousePos;
+
+    // Use this offset to change camera vector values thus moving the camera
+    float xOffset = mouseOffset.x;
+    float yOffset = mouseOffset.y;
+
+    xOffset *= m_mouseSensitivity;
+    yOffset *= m_mouseSensitivity;
+
+    m_yaw += xOffset;
+    m_pitch += yOffset;
+
+    if (_constrainPitch) {
+        if (m_pitch > 89.0f)
+            m_pitch = 89.0f;
+        if (m_pitch < -89.0f)
+            m_pitch = -89.0f;
+    }
+
+    UpdateVectors();
+}
+
+void Camera::UpdateVectors()
+{
+    m_front.x = cos(DegToRad(m_yaw)) * cos(DegToRad(m_pitch));
+    m_front.y = sin(DegToRad(m_pitch));
+    m_front.z = sin(DegToRad(m_yaw)) * cos(DegToRad(m_pitch));
+    m_front = m_front.Normalize();
+    m_right = Vector3::Cross(m_front, m_worldUp).Normalize();
+    m_up = Vector3::Cross(m_right, m_front).Normalize();
+}
+
+void Camera::ProcessMouseScroll(float _yOffset)
+{
+    if (m_movementSpeed + _yOffset <= m_maxSpeed && m_movementSpeed + _yOffset >= m_minSpeed)
+    {
+        m_movementSpeed += (float)_yOffset;
+    }
+}
 
 Matrix4 Camera::GetViewMatrix()
 {
-    return Matrix4::LookAt(position, position + front, up);
+    return Matrix4::LookAt(m_position, m_position + m_front, m_up);
 }
 
-void Camera::ProcessKeyboard(CameraMovement _direction, float _deltaTime)
+float Camera::GetZoom()
 {
-    float velocity = movementSpeed * _deltaTime;
-    if (_direction == FORWARD)
-        position = position + front * velocity;
-    if (_direction == BACKWARD)
-        position = position - front * velocity;
-    if (_direction == LEFT)
-        position = position - right * velocity;
-    if (_direction == RIGHT)
-        position = position + right * velocity;
-    if (_direction == UP)
-        position = position + up * velocity;
-    if (_direction == DOWN)
-        position = position - up * velocity;
+    return m_zoom;
 }
 
-void Camera::ProcessMouseMovement(float _xoffset, float _yoffset, GLboolean _constrainPitch)
+float Camera::GetNear()
 {
-    _xoffset *= mouseSensitivity;
-    _yoffset *= mouseSensitivity;
-
-    yaw += _xoffset;
-    pitch += _yoffset;
-
-    if (_constrainPitch)
-    {
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
-    }
-
-    UpdateCameraVectors();
+    return m_near;
 }
 
-void Camera::ProcessMouseScroll(float _yoffset)
+float Camera::GetFar()
 {
-    if (movementSpeed + _yoffset > maxSpeed || movementSpeed + _yoffset < minSpeed)
-        return;
-    movementSpeed += (float)_yoffset;
-}
-
-void Camera::ProcessInput(GLFWwindow* _window, float _deltaTime)
-{
-    if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::UP, _deltaTime);
-    if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS)
-        ProcessKeyboard(CameraMovement::DOWN, _deltaTime);
-}
-
-void Camera::UpdateCameraVectors()
-{
-    front.x = cos(DegToRad(yaw)) * cos(DegToRad(pitch));
-    front.y = sin(DegToRad(pitch));
-    front.z = sin(DegToRad(yaw)) * cos(DegToRad(pitch));
-    front = front.Normalize();
-    right = Vector3::Cross(front, worldUp).Normalize();
-    up = Vector3::Cross(right, front).Normalize();
+    return m_far;
 }
