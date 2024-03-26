@@ -16,6 +16,5 @@ public:
 	void DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObject);
 
 private:
-	GameObject* m_selected = nullptr;
 	GameObject* m_renaming = nullptr;
 };

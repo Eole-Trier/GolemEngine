@@ -16,20 +16,16 @@
 #include "Wrappers/windowWrapper.h"
 
 
-EditorUi::EditorUi(GolemEngine* _golemEngine)
-    :
-    m_golemEngine(_golemEngine)
+void EditorUi::Init(GolemEngine* _golemEngine)
 {
+    m_golemEngine = _golemEngine;
     m_windows.push_back(new Viewport("Viewport"));
     m_windows.push_back(new BasicActors("Basic_Actors"));
     m_windows.push_back(new FileBrowser("File_Browser"));
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
-}
 
-void EditorUi::Init()
-{
     // Setup Imgui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

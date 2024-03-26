@@ -7,6 +7,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Reflection/refl.hpp"
+#include "UI/editorUi.h"
 
 
 Inspector::Inspector(std::string _name)
@@ -32,7 +33,8 @@ void Inspector::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 
-	DisplayField(_golemEngine->GetScene()->GetWorld());
+	if (EditorUi::selected != nullptr)
+		DisplayField(EditorUi::selected);
 	
 	ImGui::End();
 }

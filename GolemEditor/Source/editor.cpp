@@ -14,10 +14,9 @@
 #include "imgui_internal.h"
 
 Editor::Editor()
-	: 
-	m_name("Golem Engine"), 
-	m_golemEngine(GolemEngine::GetInstance()), 
-	m_editorUi(new EditorUi(m_golemEngine))
+	:
+	m_name("Golem Engine"),
+	m_golemEngine(GolemEngine::GetInstance())
 {
     // Get screen dimensions
     RECT desktop;
@@ -52,7 +51,7 @@ void Editor::InitGraphics()
 
 void Editor::InitUi()
 {
-    m_editorUi->Init();
+    EditorUi::Init(m_golemEngine);
 }
 
 void Editor::Init()
@@ -75,12 +74,12 @@ void Editor::MainLoop()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		m_editorUi->BeginDockSpace();
+		EditorUi::BeginDockSpace();
 
 		m_golemEngine->ProcessInput();
 		m_golemEngine->Update();
 
-		m_editorUi->EndDockSpace();
+		EditorUi::EndDockSpace();
 
 		ImGui::Render();
 
@@ -100,7 +99,6 @@ void Editor::MainLoop()
 
 void Editor::Cleanup() 
 {
-	delete m_editorUi;
 	delete m_golemEngine;
 }
 
