@@ -68,10 +68,10 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 
 void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
-    if (testbool)
+    if (isInit)
     {
         InitObject("viking2", "model_viking");
-        testbool = false;
+        isInit = false;
     }
     // Temporary to test graph scene
     m_meshes[0]->transform->rotation.y += 0.01f;
