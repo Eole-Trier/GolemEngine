@@ -20,13 +20,5 @@ void BasicActors::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 
-	refl::descriptor::type_descriptor<GameObject> a = refl::reflect<GameObject>();
-
-	refl::util::for_each(a.members, [&]<typename T>(const T) {
-
-
-		std::cout << typeid(T::value_type).name() << std::endl;
-	});
-
 	ImGui::End();
 }

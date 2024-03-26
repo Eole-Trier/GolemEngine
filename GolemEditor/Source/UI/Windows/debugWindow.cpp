@@ -1,7 +1,7 @@
 #include "UI/Windows/debugWindow.h"
 
 #include "golemEngine.h"
-#include "inputManager.h"
+#include "Inputs/inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"

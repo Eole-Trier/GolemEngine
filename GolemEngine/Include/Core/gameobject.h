@@ -41,5 +41,6 @@ public:
 
 REFL_AUTO(
 	type(GameObject),
-	field(name)
+	field(name),
+	field(transform)
 )

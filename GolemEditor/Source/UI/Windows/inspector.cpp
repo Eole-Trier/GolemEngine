@@ -16,17 +16,23 @@ Inspector::Inspector(std::string _name)
 
 Inspector::~Inspector() {}
 
+/*
+struct Point {
+	int x;
+	int y;
+};
+
+REFL_AUTO(
+		type(Point),
+		field(x),
+		field(y)
+	)*/
+
 void Inspector::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 
-	refl::descriptor::type_descriptor<GameObject> a = refl::reflect<GameObject>();
-
-	refl::util::for_each(a.members, [&]<typename T>(const T) {
-
-
-		std::cout << typeid(T::value_type).name() << std::endl;
-	});
-
+	DisplayField(_golemEngine->GetScene()->GetWorld());
+	
 	ImGui::End();
 }

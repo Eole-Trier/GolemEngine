@@ -3,7 +3,7 @@
 #include <Windows.h>
 
 #include "Wrappers/windowWrapper.h" 
-#include "inputManager.h"
+#include "Inputs/inputManager.h"
 #include "utils.h"
 
 
@@ -114,7 +114,6 @@ void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch,
     }
 
     Vector2 mouseOffset = _mouseWindowPos - m_lastMousePos;
-    std::cout << mouseOffset << " " << m_lastMousePos << std::endl;
     m_lastMousePos = _mouseWindowPos;
 
     // Use this offset to change camera vector values thus moving the camera

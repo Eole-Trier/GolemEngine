@@ -40,5 +40,11 @@ public:
 	GOLEM_ENGINE_API Matrix4 GetLocalModel();
 
 	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
-
 };
+
+REFL_AUTO(
+	type(Transform, bases<Component>),
+	field(position),
+	field(rotation),
+	field(scaling)
+)
