@@ -23,6 +23,6 @@ void Mouse::mouse_button_callback(GLFWwindow* window, int button, int action)
         unsigned char pixel[3];
         glReadPixels(xpos, winHeight - ypos, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
 
-        selectObjectByColor(pixel[0], pixel[1], pixel[2]);
+        //selectObjectByColor(pixel[0], pixel[1], pixel[2]);
     }
 }

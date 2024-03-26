@@ -35,11 +35,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
 
-    // Create renderbuffer
-    glGenRenderbuffers(1, &m_rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    CreateRenderBuffer(_width, _height);
 
     // Check framebuffer completeness
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -51,6 +47,15 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
+}
+
+void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
+{
+    // Create renderbuffer
+    glGenRenderbuffers(1, &m_rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
 }
 
 void GraphicWrapper::ClearBuffer()

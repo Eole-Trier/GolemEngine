@@ -19,5 +19,6 @@ public :
 	~Texture();
 
 	void Load(const char* _filename);
+
 	void Use();
 };
