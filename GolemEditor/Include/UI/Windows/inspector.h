@@ -43,35 +43,35 @@ void Inspector::DisplayField(TypeT* _class)
 		}
 		else if constexpr (std::is_same_v<std::int8_t, MemberT>) // int_8
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_S8, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S8, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<std::int16_t, MemberT>) // int_16
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_S16, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S16, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<std::int32_t, MemberT>) // int_32
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_S32, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S32, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<std::uint8_t, MemberT>) // uint_8
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_U8, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U8, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<std::uint16_t, MemberT>) // uint_16
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_U16, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U16, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<std::uint32_t, MemberT>) // uint_32
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_U32, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U32, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<float, MemberT>) // float 
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_Float, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_Float, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<double, MemberT>) // double
 		{
-			ImGui::InputScalar(DescriptorT::name.c_str(), ImGuiDataType_Double, &DescriptorT::get(_class));
+			ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_Double, &DescriptorT::get(_class));
 		}
 		else if constexpr (std::is_same_v<bool, MemberT>) // bool
 		{
@@ -79,7 +79,7 @@ void Inspector::DisplayField(TypeT* _class)
 		}
 		else if constexpr (std::is_same_v<Vector3, MemberT>)
 		{
-			ImGui::InputFloat3(DescriptorT::name.c_str(), &DescriptorT::get(_class).x);
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &DescriptorT::get(_class).x, .1f);
 		}
 	});
 }

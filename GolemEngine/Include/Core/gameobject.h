@@ -5,9 +5,9 @@
 
 #include "dll.h"
 #include "Reflection/refl.hpp"
+#include "Components/component.h"
 
 class Transform;
-class Component;
 
 class GOLEM_ENGINE_API GameObject
 {
@@ -26,9 +26,6 @@ public:
 
 	void AddComponent(Component* _component);
 
-	void Selected();
-	void Deselected();
-
 	void Update();
 
 	void DisplayInformations();
@@ -43,4 +40,5 @@ REFL_AUTO(
 	type(GameObject),
 	field(name),
 	field(transform)
+	//field(m_components)
 )

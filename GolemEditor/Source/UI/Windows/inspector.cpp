@@ -14,20 +14,7 @@ Inspector::Inspector(std::string _name)
 	: Window(_name)
 {}
 
-
 Inspector::~Inspector() {}
-
-/*
-struct Point {
-	int x;
-	int y;
-};
-
-REFL_AUTO(
-		type(Point),
-		field(x),
-		field(y)
-	)*/
 
 void Inspector::Update(GolemEngine* _golemEngine)
 {
