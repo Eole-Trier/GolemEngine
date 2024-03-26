@@ -44,7 +44,11 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
+	// TODO Doing add new object in scene
+	void InitObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+	bool isInit = false;
+	bool IsNameExists(const std::string& _name);
+	
 	void DeleteGameObject(GameObject* _gameObject);
-
 	void CreateGameObject(GameObject* _owner);
 };

@@ -9,6 +9,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "Viewport/scene.h"
+#include "golemEngine.h"
 #include "vector2.h"
 #include "vector4.h"
 
@@ -31,6 +33,8 @@ void Viewport::Update(GolemEngine* _golemEngine)
     //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
     //std::cout << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << std::endl;
 
+    DragDropEvent();
+
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
@@ -52,11 +56,42 @@ void Viewport::Update(GolemEngine* _golemEngine)
     }
 
     ImGui::End();
+
 }
 
 void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
+}
+
+void Viewport::DragDropEvent()
+{
+    if (ImGui::BeginDragDropTarget())
+    {
+        m_isDragging = true;
+
+        ImGui::EndDragDropTarget();
+    }
+
+    if (m_isDragging)
+    {
+        ImVec2 itemRectMin = ImGui::GetItemRectMin();
+        ImVec2 itemRectMax = ImGui::GetItemRectMax();
+
+        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
+        {
+            std::cout << "Dropping" << std::endl;
+        }
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
+        {
+            std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
+            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            // TODO 
+            GolemEngine::GetInstance()->GetScene()->isInit = true;
+            m_isDragging = false;
+        }
+    }
 }
 
 Camera* Viewport::GetCamera()

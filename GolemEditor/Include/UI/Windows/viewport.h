@@ -17,6 +17,8 @@ private:
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
+	bool m_firstMouse;
+	bool m_isDragging = false;
 
 	bool m_lastSpacePress = false;
 
@@ -31,6 +33,8 @@ public:
 	void Update(GolemEngine* _golemEngine) override;
 
 	void SetCamera(Camera* _camera);
+
+	void DragDropEvent();
 
 	Camera* GetCamera();
 };
