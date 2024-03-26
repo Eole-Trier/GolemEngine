@@ -5,7 +5,6 @@
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
 	: name(_name), transform(_transform)
 {
-	selected = false;
 	AddComponent(_transform);
 }
 
