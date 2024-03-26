@@ -1,21 +1,19 @@
 #include "UI/Windows/sceneGraph.h"
 
 #include "golemEngine.h"
+#include "UI/editorUi.h"
+#include "Core/gameobject.h"
+#include "Core/transform.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui_stdlib.h"
 
-#include "UI/editorUi.h"
-#include "Core/gameobject.h"
-#include "Core/transform.h"
-
 
 SceneGraph::SceneGraph(std::string _name) 
 	: Window(_name)
-{
-}
+{}
 
 SceneGraph::~SceneGraph() {}
 

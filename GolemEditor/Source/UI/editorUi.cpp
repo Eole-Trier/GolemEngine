@@ -18,6 +18,7 @@
 
 void EditorUi::Init(GolemEngine* _golemEngine)
 {
+    // Add windows to be used in dockspace later
     m_golemEngine = _golemEngine;
     m_windows.push_back(new Viewport("Viewport"));
     m_windows.push_back(new BasicActors("Basic_Actors"));
@@ -158,7 +159,9 @@ Window* EditorUi::GetWindowByName(std::string _name)
     for (Window* window : m_windows)
     {
         if (window->name == _name)
+        {
             return window;
+        }
     }
     Log::Print("No window with the name %s has been found", _name.c_str());
     return nullptr;

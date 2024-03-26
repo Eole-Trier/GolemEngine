@@ -13,8 +13,7 @@ class GOLEM_ENGINE_API GameObject
 {
 private:
 	std::vector<Component*> m_components;
-
-	bool selected;
+	bool m_selected;
 
 public:
 	std::string name;
@@ -25,16 +24,11 @@ public:
 	~GameObject();
 
 	void AddComponent(Component* _component);
-
 	void Selected();
 	void Deselected();
-
 	void Update();
-
 	void DisplayInformations();
-
 	std::string GetName();
-
 	/*GameObject* Instantiate();
 	void Destroy();*/
 };

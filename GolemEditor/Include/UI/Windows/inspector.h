@@ -23,12 +23,11 @@ public:
 };
 
 
-
 template<typename TypeT>
 void Inspector::DisplayField(TypeT* _class)
 {
-	constexpr auto type = refl::reflect<TypeT>();
-	for_each(type.members, [&]<typename DescriptorT>(const DescriptorT)
+	constexpr auto type = refl::reflect<TypeT>();	// Get the reflected class
+	for_each(type.members, [&]<typename DescriptorT>(const DescriptorT)	// Loop through each member of the reflected class
 	{
 		using MemberT = DescriptorT::value_type;
 
