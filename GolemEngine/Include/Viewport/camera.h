@@ -5,6 +5,7 @@
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
+#include "Reflection/refl.hpp"
 
 
 class GOLEM_ENGINE_API Camera
@@ -47,4 +48,11 @@ public:
 	float GetZoom();
 	float GetNear();
 	float GetFar();
+
+	friend refl_impl::metadata::type_info__<Camera>;
 };
+
+REFL_AUTO(
+	type(Camera),
+	field(m_far)
+)

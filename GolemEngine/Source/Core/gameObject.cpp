@@ -2,16 +2,14 @@
 #include "Core/transform.h"
 #include "Components/component.h"
 
-GameObject::GameObject(const std::string& _name, Transform* _transform) :
-	name(_name), transform(_transform)
+GameObject::GameObject(const std::string& _name, Transform* _transform) 
+	: name(_name), transform(_transform)
 {
-	selected = false;
+	m_selected = false;
 	_transform->owner = this;
 }
 
-GameObject::~GameObject()
-{
-}
+GameObject::~GameObject() {}
 
 void GameObject::AddComponent(Component* _component)
 {
@@ -21,12 +19,12 @@ void GameObject::AddComponent(Component* _component)
 
 void GameObject::Selected()
 {
-	selected = true;
+	m_selected = true;
 }
 
 void GameObject::Deselected()
 {
-	selected = false;
+	m_selected = false;
 }
 
 void GameObject::Update()

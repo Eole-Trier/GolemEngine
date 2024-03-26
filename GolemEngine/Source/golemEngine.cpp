@@ -4,7 +4,7 @@
 #include "Wrappers/windowWrapper.h"
 #include "Viewport/scene.h"
 #include "Viewport/camera.h"
-#include "inputManager.h"
+#include "Inputs/inputManager.h"
 #include "vector4.h"
 
 GolemEngine* GolemEngine::m_golemInstance = nullptr;

@@ -1,20 +1,19 @@
 #include "UI/Windows/sceneGraph.h"
 
 #include "golemEngine.h"
+#include "UI/editorUi.h"
+#include "Core/gameobject.h"
+#include "Core/transform.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui_stdlib.h"
 
-#include "Core/gameobject.h"
-#include "Core/transform.h"
-
 
 SceneGraph::SceneGraph(std::string _name) 
 	: Window(_name)
-{
-}
+{}
 
 SceneGraph::~SceneGraph() {}
 
@@ -37,7 +36,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	}
 
-	if (_gameObject == m_selected)
+	if (_gameObject == EditorUi::selected)
 	{
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
@@ -120,7 +119,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 
 			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			{
-				m_selected = _gameObject;
+				EditorUi::selected = _gameObject;
 			}
 		}
 
@@ -135,7 +134,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 		{
-			m_selected = _gameObject;
+			EditorUi::selected = _gameObject;
 		}
 	}
 }
