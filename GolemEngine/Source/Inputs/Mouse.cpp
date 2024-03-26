@@ -1,14 +1,17 @@
-#include "..\..\Include\Inputs\Mouse.h"
+#include "..\..\Include\Inputs\mouse.h"
+#include <vector>
 
-Mouse::Mouse()
+Mouse::Mouse(const std::vector<GameObject*>& objects) :
+    gameObjects(objects)
 {
+
 }
 
 Mouse::~Mouse()
 {
 }
 
-void Mouse::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void Mouse::mouse_button_callback(GLFWwindow* window, int button, int action)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
@@ -17,11 +20,9 @@ void Mouse::mouse_button_callback(GLFWwindow* window, int button, int action, in
         int winWidth, winHeight;
         glfwGetWindowSize(window, &winWidth, &winHeight);
 
-        double x = (2.0 * xpos) / winWidth - 1.0;
-        double y = 1.0 - (2.0 * ypos) / winHeight;
-
         unsigned char pixel[3];
         glReadPixels(xpos, winHeight - ypos, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
+
+        selectObjectByColor(pixel[0], pixel[1], pixel[2]);
     }
 }
-

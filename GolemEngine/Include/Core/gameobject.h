@@ -17,6 +17,7 @@ private:
 public:
 	std::string name;
 	Transform* transform;
+	int id;
 
 public:
 	GameObject(const std::string& _name, Transform* _transform);

@@ -12,6 +12,7 @@
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/tools.h"
+#include "imgui_stdlib.h"
 
 namespace fs = std::filesystem;
 
@@ -23,9 +24,10 @@ namespace fs = std::filesystem;
     name != "imgui.ini")
 
 FileBrowser::FileBrowser(std::string _name)
-	: Window(_name), m_currentDirectory(m_editorDirectory)
-{
-}
+	:
+	Window(_name),
+	m_currentDirectory(m_editorDirectory)
+{}
 
 FileBrowser::~FileBrowser() {}
 
@@ -49,31 +51,64 @@ void FileBrowser::Update(GolemEngine* _golemEngine)
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
 {
-	std::stack<std::filesystem::path> stack;
-	stack.push(_path);
+	bool isDirectory = std::filesystem::is_directory(_path);
 
-	while (!stack.empty())
+	ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
+
+	std::string nodeNameStr = _path.filename().string();
+	const char* nodeName = nodeNameStr.c_str();
+
+	if (nodeNameStr == m_fileToRename)
 	{
-		std::filesystem::path currentPath = stack.top();
-		stack.pop();
+		nodeName = "##";
+	}
 
-		bool isDirectory = std::filesystem::is_directory(currentPath);
-
-		ImGuiTreeNodeFlags flags = isDirectory ? ImGuiTreeNodeFlags_OpenOnArrow : ImGuiTreeNodeFlags_Leaf;
-
-		if (ImGui::TreeNodeEx(currentPath.filename().string().c_str(), flags))
+	if (ImGui::TreeNodeEx(nodeName, flags))
+	{
+		if (isDirectory)
 		{
-			if (isDirectory)
+			ImGui::Indent();
+
+			for (const auto& entry : std::filesystem::directory_iterator(_path))
 			{
-				ImGui::Indent();
-				
-				for (const auto& entry : std::filesystem::directory_iterator(currentPath))
-				{
-					stack.push(entry);
-				}
+				TreeNodes(entry);
 			}
-			ImGui::TreePop();
 		}
+
+		else if (ImGui::BeginPopupContextItem("OptionsPopup"))
+		{
+			if (ImGui::Selectable("Rename"))
+			{
+				m_fileToRename = nodeNameStr;
+				renameDialogOpen = true;
+				m_string = nodeName;
+			}
+
+			ImGui::EndPopup();
+		}
+
+		if (nodeNameStr == m_fileToRename)
+		{
+			ImGui::SameLine();
+			ImGui::SetKeyboardFocusHere();
+
+			if (ImGui::InputText("##renaming", &m_string, ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				std::filesystem::path oldPath = _path;
+
+				std::filesystem::path newPath = _path.parent_path().string() + '\\' + m_string;
+
+				std::filesystem::rename(oldPath, newPath);
+				m_fileToRename = "";
+			}
+
+			if (!ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+			{
+				m_fileToRename = "";
+			}
+		}
+
+		ImGui::TreePop();
 	}
 }
 

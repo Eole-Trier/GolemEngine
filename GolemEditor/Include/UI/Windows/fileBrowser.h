@@ -10,6 +10,8 @@ class GolemEngine;
 class FileBrowser : public Window
 {
 public:
+	bool renameDialogOpen = false;
+
 	FileBrowser(std::string _name);
 	~FileBrowser();
 
@@ -38,4 +40,7 @@ private:
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
 
 	std::filesystem::path m_currentDirectory;
+
+	std::string m_fileToRename;
+	std::string m_string;
 };

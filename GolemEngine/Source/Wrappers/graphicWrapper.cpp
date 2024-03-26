@@ -1,4 +1,6 @@
 #include "Wrappers/graphicWrapper.h"
+#include "Core/gameobject.h"
+#include "Inputs/mouse.h"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
