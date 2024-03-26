@@ -21,7 +21,9 @@ void Inspector::Update(GolemEngine* _golemEngine)
 	ImGui::Begin(name.c_str());
 
 	if (EditorUi::selected != nullptr)
+	{
 		DisplayField(EditorUi::selected);
+	}
 	
 	ImGui::End();
 }

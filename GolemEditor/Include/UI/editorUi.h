@@ -6,6 +6,7 @@
 #include "vector2.h"
 #include "Core/gameobject.h"
 
+
 class GolemEngine;
 class Window;
 struct GLFWwindow;

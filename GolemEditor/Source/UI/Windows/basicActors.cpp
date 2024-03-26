@@ -13,7 +13,6 @@ BasicActors::BasicActors(std::string _name)
 	: Window(_name)
 {}
 
-
 BasicActors::~BasicActors() {}
 
 void BasicActors::Update(GolemEngine* _golemEngine)
