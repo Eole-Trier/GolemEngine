@@ -68,6 +68,7 @@ void Scene::Update(float _width, float _height, GLFWwindow* _window, Camera* _ca
 
 void Scene::UpdateGameObjects(float _width, float _height, GLFWwindow* _window, Camera* _camera)
 {
+    // Test TODO
     if (isInit)
     {
         InitObject("viking2", "model_viking");
@@ -160,6 +161,7 @@ GameObject* Scene::GetWorld()
     return m_world;
 }
 
+// To add a new gameobject in the scene
 void Scene::InitObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -170,15 +172,16 @@ void Scene::InitObject(std::string _name, std::string _modelName, std::string _t
     Shader* shader;
 
     if(_textureName.empty())
-        texture = resourceManager->Get<Texture>("default_texture");// Get default texture
+        texture = resourceManager->Get<Texture>("default_texture"); // Get default texture
     else
         texture = resourceManager->Get<Texture>(_textureName);
     
     if(_shaderName.empty())
-        shader = resourceManager->Get<Shader>("default");// Get default shader
+        shader = resourceManager->Get<Shader>("default"); // Get default shader
     else
         shader = resourceManager->Get<Shader>(_shaderName);
 
+    // Using the rename functions
     int suffix = 2;
     std::string originalName = name;
     while (IsNameExists(name))
@@ -193,6 +196,8 @@ void Scene::InitObject(std::string _name, std::string _modelName, std::string _t
     m_world->transform->AddChild(mesh->transform);
 }
 
+// Check the gameobject's name is already in the vector or not.
+// If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
     for (const auto& mesh : m_meshes)
