@@ -1,6 +1,8 @@
 #include "UI/Windows/viewport.h"
 
 #include "Viewport/camera.h"
+#include "Resource/Rendering/pickingStrategy.h"
+#include "Inputs/Mouse.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
@@ -38,6 +40,10 @@ void Viewport::Update(GolemEngine* _golemEngine)
         m_camera->ProcessMouseInput();
     }
 
+    if (Mouse::m_leftMouseButton.isPressed)
+    {
+        PickingStrategy::PickingPhase();
+    }
     // Upon space key released
     if (m_lastSpacePress && !InputManager::IsButtonPressed(BUTTON_1))
     {

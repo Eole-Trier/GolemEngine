@@ -73,11 +73,11 @@ void PickingStrategy::DisableWriting()
 
 void PickingStrategy::PickingPhase()
 {
-    /*m_pickingTexture.EnableWriting();
+    m_pickingTexture.enableWriting();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_pickingEffect.Enable();
 
-    Transform& worldTransform = ;*/
+    Transform& worldTransform = ;
 }

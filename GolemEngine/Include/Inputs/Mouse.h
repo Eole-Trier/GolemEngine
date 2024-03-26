@@ -9,14 +9,18 @@
 class Mouse
 {
 public:
-	std::vector<GameObject*> gameObjects;
+	static struct
+	{
+		bool isPressed = false;
+		int x;
+		int y;
+	} m_leftMouseButton;
 
-private:
-	Vector2 m_coordinates;
+	std::vector<GameObject*> gameObjects;
 
 public:
 	Mouse(const std::vector<GameObject*>& objects);
 	~Mouse();
 
-	void mouse_button_callback(GLFWwindow* window, int button, int action);
+	void mouse_button_callback(int button, int action, int x, int y);
 };

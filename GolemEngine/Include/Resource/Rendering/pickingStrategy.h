@@ -34,5 +34,5 @@ public:
 	PixelInfo ReadPixel(unsigned int x, unsigned int y);
 	void EnableWriting();
 	void DisableWriting();
-	void PickingPhase();
+	static void PickingPhase();
 };
