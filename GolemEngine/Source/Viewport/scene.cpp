@@ -29,7 +29,7 @@ void Scene::Init()
 
 void Scene::InitGameObjects()
 {
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
+   ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
