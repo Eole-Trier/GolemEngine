@@ -5,7 +5,6 @@
 
 
 class Camera;
-class GolemEngine;
 
 class Viewport : public Window
 {
@@ -30,7 +29,7 @@ public:
 	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine) override;
+	void Update() override;
 
 	void SetCamera(Camera* _camera);
 

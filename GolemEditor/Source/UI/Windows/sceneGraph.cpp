@@ -17,16 +17,16 @@ SceneGraph::SceneGraph(std::string _name)
 
 SceneGraph::~SceneGraph() {}
 
-void SceneGraph::Update(GolemEngine* _golemEngine)
+void SceneGraph::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	DisplayObjects(_golemEngine, _golemEngine->GetScene()->GetWorld());
+	DisplayObjects(GolemEngine::GetInstance()->GetScene()->GetWorld());
 
 	ImGui::End();
 }
 
-void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObject)
+void SceneGraph::DisplayObjects(GameObject* _gameObject)
 {
 	const std::vector<Transform*>& children = _gameObject->transform->GetChildren();
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
@@ -77,7 +77,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 			{
 				if (ImGui::MenuItem("Create"))
 				{
-					_golemEngine->GetScene()->CreateGameObject(_gameObject);
+					GolemEngine::GetInstance()->GetScene()->CreateGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -85,9 +85,9 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 			// Delete popup
 			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
 			{
-				if (ImGui::MenuItem("Delete") && _gameObject != _golemEngine->GetScene()->GetWorld())
+				if (ImGui::MenuItem("Delete") && _gameObject != GolemEngine::GetInstance()->GetScene()->GetWorld())
 				{
-					_golemEngine->GetScene()->DeleteGameObject(_gameObject);
+					GolemEngine::GetInstance()->GetScene()->DeleteGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -108,7 +108,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
-					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != _golemEngine->GetScene()->GetWorld())
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != GolemEngine::GetInstance()->GetScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}
@@ -125,7 +125,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 
 		for (Transform* transform : children)
 		{
-			DisplayObjects(_golemEngine, transform->owner);
+			DisplayObjects(transform->owner);
 		}
 
 		ImGui::TreePop();

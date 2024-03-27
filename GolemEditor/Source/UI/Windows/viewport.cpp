@@ -21,7 +21,7 @@ Viewport::Viewport(std::string _name)
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine)
+void Viewport::Update()
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
@@ -38,7 +38,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
-        m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
+        m_camera->ProcessKeyboardInput(GolemEngine::GetInstance()->GetDeltaTime());
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);

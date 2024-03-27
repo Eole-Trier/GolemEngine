@@ -7,7 +7,6 @@
 #include "UI/Windows/window.h"
 #include "Wrappers/windowWrapper.h"
 
-class GolemEngine;
 
 class FileBrowser : public Window
 {
@@ -15,7 +14,7 @@ public:
 	FileBrowser(std::string _name);
 	~FileBrowser();
 
-	void Update(GolemEngine* _golemEngine) override;
+	void Update() override;
 
 	void TreeNodes(std::filesystem::path _path);
 	// Content Browser loop

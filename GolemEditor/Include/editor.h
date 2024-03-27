@@ -2,14 +2,12 @@
 
 #include "Viewport/scene.h"
 
-class GolemEngine;
 class EditorUi;
 struct GLFWwindow;
 
 class Editor
 {
 private:
-	GolemEngine* m_golemEngine = nullptr;
 	std::string m_name;
 
 public:

@@ -34,7 +34,7 @@ FileBrowser::FileBrowser(std::string _name)
 
 FileBrowser::~FileBrowser() {}
 
-void FileBrowser::Update(GolemEngine* _golemEngine)
+void FileBrowser::Update()
 {
 	ImGui::Begin("File_Browser");
 	// Tree node

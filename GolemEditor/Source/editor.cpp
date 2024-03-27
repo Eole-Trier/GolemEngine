@@ -15,8 +15,7 @@
 
 Editor::Editor()
 	:
-	m_name("Golem Engine"),
-	m_golemEngine(GolemEngine::GetInstance())
+	m_name("Golem Engine")
 {
     // Get screen dimensions
     RECT desktop;
@@ -51,7 +50,7 @@ void Editor::InitGraphics()
 
 void Editor::InitUi()
 {
-    EditorUi::Init(m_golemEngine);
+    EditorUi::Init();
 }
 
 void Editor::Init()
@@ -59,7 +58,7 @@ void Editor::Init()
     InitWindow();
     InitGraphics();
     InitUi();
-    m_golemEngine->Init();
+    GolemEngine::GetInstance()->Init();
 }
 
 void Editor::MainLoop()
@@ -76,8 +75,8 @@ void Editor::MainLoop()
 
 		EditorUi::BeginDockSpace();
 
-		m_golemEngine->ProcessInput();
-		m_golemEngine->Update();
+		GolemEngine::GetInstance()->ProcessInput();
+		GolemEngine::GetInstance()->Update();
 
 		EditorUi::EndDockSpace();
 
@@ -99,7 +98,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup() 
 {
-	delete m_golemEngine;
+	delete GolemEngine::GetInstance();
 }
 
 void Editor::Run()

@@ -10,8 +10,7 @@ Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
 }
 
 void Transform::Update()
-{
-}
+{}
 
 void Transform::UpdateSelfAndChilds()
 {
@@ -22,7 +21,9 @@ void Transform::UpdateSelfAndChilds()
         m_globalModel = m_parent->m_globalModel * m_localModel;
     }
     else
+    {
         m_globalModel = m_localModel;
+    }
 
     for (int i = 0; i < m_children.size(); i++)
     {
