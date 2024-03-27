@@ -41,6 +41,15 @@ struct SpotLight
     float quadratic; 
 };
 
+layout (location = 0) out vec4 color;
+layout (location = 1) out vec4 color2;
+
+in vec4 Color;
+in flat float TexIndex;
+in float TilingFactor;
+
+uniform sampler2D uTextures[32];
+
 in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoord;
@@ -63,6 +72,47 @@ vec4 ProcessSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
+    vec4 texColor = Color;
+    switch(int(TexIndex))
+    {
+        case 0: texColor *= texture(uTextures[0], TexCoord * TilingFactor); break;
+        case 1: texColor *= texture(uTextures[1], TexCoord * TilingFactor); break;
+        case 2: texColor *= texture(uTextures[2], TexCoord * TilingFactor); break;
+        case 3: texColor *= texture(uTextures[3], TexCoord * TilingFactor); break;
+        case 4: texColor *= texture(uTextures[4], TexCoord * TilingFactor); break;
+        case 5: texColor *= texture(uTextures[5], TexCoord * TilingFactor); break;
+        case 6: texColor *= texture(uTextures[6], TexCoord * TilingFactor); break;
+        case 7: texColor *= texture(uTextures[7], TexCoord * TilingFactor); break;
+        case 8: texColor *= texture(uTextures[8], TexCoord * TilingFactor); break;
+        case 9: texColor *= texture(uTextures[9], TexCoord * TilingFactor); break;
+        case 10: texColor *= texture(uTextures[10], TexCoord * TilingFactor); break;
+        case 11: texColor *= texture(uTextures[11], TexCoord * TilingFactor); break;
+        case 12: texColor *= texture(uTextures[12], TexCoord * TilingFactor); break;
+        case 13: texColor *= texture(uTextures[13], TexCoord * TilingFactor); break;
+        case 14: texColor *= texture(uTextures[14], TexCoord * TilingFactor); break;
+        case 15: texColor *= texture(uTextures[15], TexCoord * TilingFactor); break;
+        case 16: texColor *= texture(uTextures[16], TexCoord * TilingFactor); break;
+        case 17: texColor *= texture(uTextures[17], TexCoord * TilingFactor); break;
+        case 18: texColor *= texture(uTextures[18], TexCoord * TilingFactor); break;
+        case 19: texColor *= texture(uTextures[19], TexCoord * TilingFactor); break;
+        case 20: texColor *= texture(uTextures[20], TexCoord * TilingFactor); break;
+        case 21: texColor *= texture(uTextures[21], TexCoord * TilingFactor); break;
+        case 22: texColor *= texture(uTextures[22], TexCoord * TilingFactor); break;
+        case 23: texColor *= texture(uTextures[23], TexCoord * TilingFactor); break;
+        case 24: texColor *= texture(uTextures[24], TexCoord * TilingFactor); break;
+        case 25: texColor *= texture(uTextures[25], TexCoord * TilingFactor); break;
+        case 26: texColor *= texture(uTextures[26], TexCoord * TilingFactor); break;
+        case 27: texColor *= texture(uTextures[27], TexCoord * TilingFactor); break;
+        case 28: texColor *= texture(uTextures[28], TexCoord * TilingFactor); break;
+        case 29: texColor *= texture(uTextures[29], TexCoord * TilingFactor); break;
+        case 30: texColor *= texture(uTextures[30], TexCoord * TilingFactor); break;
+        case 31: texColor *= texture(uTextures[31], TexCoord * TilingFactor); break;
+    }
+
+    color = texColor;
+
+    color2 = 50;
+
     // Get view direction
     vec3 viewDir = normalize(viewPos - FragPos);
 

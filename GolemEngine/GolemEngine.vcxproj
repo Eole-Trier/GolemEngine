@@ -47,7 +47,6 @@
     <ClCompile Include="Source\Resource\Rendering\pickingStrategy.cpp" />
     <ClCompile Include="Source\Resource\Rendering\pickingTexture.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\technique.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
@@ -90,9 +89,7 @@
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\Rendering\pickingStrategy.h" />
     <ClInclude Include="Include\Resource\Rendering\pickingTexture.h" />
-    <ClInclude Include="Include\Resource\Rendering\renderCallbacks.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
-    <ClInclude Include="Include\Resource\Rendering\technique.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
     <ClInclude Include="Include\Resource\resource.h" />

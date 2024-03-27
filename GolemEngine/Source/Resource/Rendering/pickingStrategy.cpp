@@ -13,6 +13,7 @@ PickingStrategy::~PickingStrategy()
 
 bool PickingStrategy::Init()
 {
+    return true;
 }
 
 void PickingStrategy::SetWVP(const Matrix4 _wvp)

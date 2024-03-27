@@ -9,12 +9,12 @@
 class Mouse
 {
 public:
-	static struct
+	struct m_leftMouseButton
 	{
 		bool isPressed = false;
 		int x;
 		int y;
-	} m_leftMouseButton;
+	};
 
 	std::vector<GameObject*> gameObjects;
 
