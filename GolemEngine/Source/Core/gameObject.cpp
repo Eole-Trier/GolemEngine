@@ -3,9 +3,10 @@
 #include "Components/component.h"
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
-	: name(_name), transform(_transform), m_selected(false)
+	: name(_name), m_selected(false)
 {
 	AddComponent(_transform);
+	transform = GetComponent<Transform>();
 }
 
 GameObject::~GameObject() {}

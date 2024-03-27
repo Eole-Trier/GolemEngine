@@ -7,6 +7,7 @@
 #include "dll.h"
 #include "Reflection/refl.hpp"
 #include "Components/component.h"
+#include "Debug/log.h"
 
 class Transform;
 
@@ -41,15 +42,18 @@ public:
 	std::vector<TypeT*> GetComponents();
 };
 
-
 template<typename TypeT>
 void GameObject::AddComponent(TypeT* _type)
 {
+	if (std::is_same_v<TypeT, Transform> && transform != nullptr)
+	{
+		Log::Print("The GameObject already have a Transform");
+		return;
+	}
 	static_assert(std::is_base_of_v<Component, TypeT>, "TypeT isn't a component");
 	m_components.push_back(_type);
 	_type->owner = this;
 }
-
 
 template<typename TypeT>
 void GameObject::AddComponent()
