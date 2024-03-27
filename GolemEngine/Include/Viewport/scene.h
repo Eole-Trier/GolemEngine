@@ -45,9 +45,12 @@ public:
 	GameObject* GetWorld();
 
 	// TODO Doing add new object in scene
-	void InitObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+	void AddNewModel(std::string _filePath, std::string _resourceName = "");
+	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	bool isInit = false;
 	bool IsNameExists(const std::string& _name);
+	std::string GetFileName(const std::string& _filePath);
+	std::string loadingObject;
 	
 	void DeleteGameObject(GameObject* _gameObject);
 	void CreateGameObject(GameObject* _owner);

@@ -88,7 +88,7 @@ void FileBrowser::TreeNodes(std::filesystem::path _path)
 void FileBrowser::ContentBrowser()
 {
 	// Make it on sameline
-	ImGui::Text(GetFileName(m_currentDirectory.string().c_str()));
+	ImGui::Text(GetFolderName(m_currentDirectory.string().c_str()));
 	ImGui::Text("");
 	if (m_currentDirectory != m_editorDirectory)
 	{
@@ -119,20 +119,20 @@ void FileBrowser::ContentBrowser()
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
 	{
 		std::string path = p.path().string();
-		std::string fileName = GetFileName(path.c_str());
+		std::string fileName = GetFolderName(path.c_str());
 		// Get the extension like .obj .cpp .h ....
 		std::string extensionFile = GetFileExtension(fileName);
 		if (EXCLUDE_FILE(fileName))
 		{
 			// Every file is a small imgui window
-			ImGui::BeginChild(GetFileName(path.c_str()), ImVec2(100, 100));
+			ImGui::BeginChild(GetFolderName(path.c_str()), ImVec2(100, 100));
 			// Check the mouse is on the UI or not
 			// if it is on the UI show the button 
 			if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 				// the UI is a button that we can click it to tigger new event
-				if (ImGui::Button(GetFileName(path.c_str()), ImVec2(70, 70)))
+				if (ImGui::Button(GetFolderName(path.c_str()), ImVec2(70, 70)))
 				{
 					double currentTime = ImGui::GetTime();
 					double clickInterval = currentTime - m_buttonState.lastClickTime;
@@ -152,7 +152,7 @@ void FileBrowser::ContentBrowser()
 				ImGui::OpenPopup("FolderContextMenu");
 				selectedFolder = path;
 			}
-
+			
 			if (ImGui::BeginDragDropSource())
 			{
 				draggingFilePath = path;
@@ -199,11 +199,16 @@ void FileBrowser::ContentBrowser()
 			}
 			// Show content menu
 			// Menu selections:
+			// Add to scene
 			// Rename
 			// Delete
-			ImGui::Text(GetFileName(path.c_str()));
+			ImGui::Text(GetFolderName(path.c_str()));
 			if (ImGui::BeginPopupContextItem("FolderContextMenu"))
 			{
+				if (ImGui::MenuItem("Add to scene"))
+				{
+					// TODO
+				}
 				if (ImGui::MenuItem("Rename"))
 				{
 					// TODO
@@ -234,7 +239,7 @@ void FileBrowser::LastPath(std::filesystem::path& _currentPath)
 	}
 }
 // Get the file name with after the last "\"
-const char* FileBrowser::GetFileName(const char* _path)
+const char* FileBrowser::GetFolderName(const char* _path)
 {
 	if (_path == nullptr)
 		return nullptr;
@@ -307,7 +312,7 @@ void FileBrowser::DeleteFolder(const std::string& _folderPath)
 {
 	try
 	{
-		const char* folderName = GetFileName(_folderPath.c_str());
+		const char* folderName = GetFolderName(_folderPath.c_str());
 		// Avoid deleting the important folders
 		const std::vector<const char*> protectedFolders = { "Assets", "Source", "Include", "Shaders" };
 
@@ -346,6 +351,6 @@ void FileBrowser::DragandDropEvent()
 	if (ImGui::IsMouseReleased(0))
 	{
 		isDragging = false;
-		std::cout << GetFileName(draggingFilePath.c_str()) << std::endl;
+		std::cout << GetFolderName(draggingFilePath.c_str()) << std::endl;
 	}
 }

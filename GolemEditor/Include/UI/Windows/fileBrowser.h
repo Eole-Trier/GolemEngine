@@ -22,7 +22,7 @@ public:
 	void ContentBrowser();
 	void LastPath(std::filesystem::path& _currentPath);
 	// Get ever file name
-	const char* GetFileName(const char* _path);
+	const char* GetFolderName(const char* _path);
 	std::string GetFileExtension(const std::string& _fileName);
 	void RightMouseClickEvent();
 	void CreateFolder();

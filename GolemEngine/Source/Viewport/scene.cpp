@@ -1,5 +1,7 @@
 #include "Viewport/scene.h"
 
+#include <filesystem>
+
 #include "utils.h"
 #include "Resource/resourceManager.h"
 #include "Resource/Rendering/mesh.h"
@@ -29,7 +31,7 @@ void Scene::Init()
 
 void Scene::InitGameObjects()
 {
-   ResourceManager* resourceManager = ResourceManager::GetInstance();
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
@@ -37,7 +39,7 @@ void Scene::InitGameObjects()
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
-    Model* viking_room = resourceManager->Get<Model>("model_viking");
+    Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
     m_meshes.push_back(vikingMesh);
     m_gameObjects.push_back(vikingMesh);
@@ -91,7 +93,7 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     // Test TODO
     if (isInit)
     {
-        InitObject("viking2", "model_viking");
+        AddNewObject(loadingObject.c_str(), loadingObject.c_str());
         isInit = false;
     }
     // Temporary to test graph scene
@@ -126,7 +128,7 @@ void Scene::CreateAndLoadResources()
 
     Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
     viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
-    Model* model_viking = resourceManager->Create<Model>("model_viking");
+    Model* model_viking = resourceManager->Create<Model>("viking_room");
     model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
 
     Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
@@ -203,8 +205,26 @@ void Scene::CreateGameObject(GameObject* _owner)
     _owner->transform->AddChild(go->transform);
 }
     
+void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    if (_resourceName == "")
+    {
+        Model* model = resourceManager->Create<Model>(GetFileName(_filePath));
+        model->Load(_filePath.c_str());
+        loadingObject = GetFileName(_filePath);
+    }
+    else
+    {
+        Model* model = resourceManager->Create<Model>(_resourceName);
+        model->Load(_filePath.c_str());
+        loadingObject = GetFileName(_filePath);
+    }
+}
+
 // To add a new gameobject in the scene
-void Scene::InitObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
+void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
@@ -250,4 +270,10 @@ bool Scene::IsNameExists(const std::string& _name)
         }
     }
     return false;
+}
+
+std::string Scene::GetFileName(const std::string& _filePath)
+{
+    std::filesystem::path path(_filePath);
+    return path.stem().string();
 }
