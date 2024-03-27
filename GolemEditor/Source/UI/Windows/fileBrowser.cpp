@@ -156,7 +156,8 @@ void FileBrowser::ContentBrowser()
 			if (ImGui::BeginDragDropSource())
 			{
 				draggingFilePath = path;
-				ImGui::SetDragDropPayload("FileDrop", draggingFilePath.c_str(), strlen(draggingFilePath.c_str()) + 1);
+				if (!p.is_directory())
+					ImGui::SetDragDropPayload("FileDrop", draggingFilePath.c_str(), strlen(draggingFilePath.c_str()) + 1);
 				isDragging = true;
 				ImGui::EndDragDropSource();
 			}

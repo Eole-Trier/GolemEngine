@@ -212,11 +212,8 @@ void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
     bool hasDuplicate = false;
     for (const auto& pair : resourceManager->GetResources())
     {
-        std::cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" << std::endl;
-        std::cout << pair.first << std::endl;
         if (pair.first == GetFileName(_filePath))
         {
-            std::cout << "FOUND SAME OBJ IN MAP" << std::endl;
             hasDuplicate = true;
             loadingObject = GetFileName(_filePath);
             break;
