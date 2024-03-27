@@ -4,10 +4,8 @@
 
 #include "dll.h"
 #include "Viewport/scene.h"
-//#include "Inputs/Mouse.h"
 
 struct GLFWwindow;
-class Scene;
 class Camera;
 
 class GOLEM_ENGINE_API GolemEngine
