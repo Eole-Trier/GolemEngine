@@ -22,7 +22,7 @@ void SceneGraph::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	// ImGui::Text("%s", )
+	ImGui::Text("%s", SceneManager::GetCurrentScene()->name.c_str());
 	DisplayObjects(SceneManager::GetCurrentScene()->GetWorld());
 
 	ImGui::End();

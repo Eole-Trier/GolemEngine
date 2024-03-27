@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include "dll.h"
 #include "Viewport/scene.h"
@@ -23,10 +24,12 @@ private:
     ~SceneManager() = delete;
 
 public:
-    static void InitScene();
     static void Init();
+    static void InitScene();
 
+    static void SaveCurrentScene();
+    static void CreateScene(std::string _sceneName);
+    static void LoadScene(int _sceneId);
+    
     static Scene* GetCurrentScene();
-
-    static void SetCurrentScene(int _sceneId);
 };

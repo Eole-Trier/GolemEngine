@@ -15,7 +15,6 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
-	std::string m_name;
 	
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
@@ -30,8 +29,8 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
+	std::string name;
 	bool isInit = false;
-	const std::vector<GameObject*>& GetGameObjects();
 	
 public:
 	Scene(std::string _name);
@@ -39,20 +38,18 @@ public:
 	void Init();
 	void InitGameObjects();
 	void InitLights();
-
 	void CreateAndLoadResources();
-
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
-
-	Mesh* GetMeshByName(std::string _name);
-	GameObject* GetWorld();
-
 	// TODO Doing add new object in scene
 	void InitObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	bool IsNameExists(const std::string& _name);
-	
 	void DeleteGameObject(GameObject* _gameObject);
 	void CreateGameObject(GameObject* _owner);
+
+	Mesh* GetMeshByName(std::string _name);
+	const std::vector<GameObject*>& GetGameObjects();
+	GameObject* GetWorld();
+
 };
