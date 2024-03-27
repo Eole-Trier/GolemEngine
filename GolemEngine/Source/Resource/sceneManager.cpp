@@ -36,7 +36,7 @@ void SceneManager::LoadScene(int _sceneId)
 
 Scene* SceneManager::GetCurrentScene()
 {
-    return  m_currentScene;
+    return m_currentScene;
 }
 
 

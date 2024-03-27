@@ -135,7 +135,6 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 
     for (int i = 0; i < m_meshes.size(); i++)
     {
-        m_meshes[i]->transform->rotation.y += 0.01f;
         m_meshes[i]->Draw(_width, _height, _camera);
     }
 }
