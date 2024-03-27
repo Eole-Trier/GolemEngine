@@ -88,6 +88,7 @@ void Viewport::DragDropEvent()
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
+            GolemEngine::GetInstance()->GetScene()->AddNewModel(droppedFilePath);
             GolemEngine::GetInstance()->GetScene()->isInit = true;
             m_isDragging = false;
         }
