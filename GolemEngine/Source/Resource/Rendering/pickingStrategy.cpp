@@ -11,73 +11,51 @@ PickingStrategy::~PickingStrategy()
 {
 }
 
-void PickingStrategy::InitPickingTexture(unsigned int _windowWidth, unsigned int _windowHeight)
+bool PickingStrategy::Init()
 {
-    glGenFramebuffers(1, &m_fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-
-    glGenTextures(1, &m_pickingTexture);
-    glBindTexture(GL_TEXTURE_2D, m_pickingTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _windowWidth, _windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pickingTexture, 0);
-
-    glGenTextures(1, &m_depthTexture);
-    glBindTexture(GL_RENDERBUFFER, m_depthTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, _windowWidth, _windowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthTexture, 0);
-
-    GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-    if (Status != GL_FRAMEBUFFER_COMPLETE)
+    if (!Technique::Init()) 
     {
-        printf("FB error, status : 0x%x\n", Status);
-        exit(1);
+        return false;
     }
 
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    if (!AddShader(GL_VERTEX_SHADER, "picking.vs")) 
+    {
+        return false;
+    }
+
+    if (!AddShader(GL_FRAGMENT_SHADER, "picking.fs")) 
+    {
+        return false;
+    }
+
+    if (!Finalize())
+    {
+        return false;
+    }
+
+    m_WVPLocation = GetUniformLocation("gWVP");
+    m_objectIndexLocation = GetUniformLocation("gObjectIndex");
+    m_drawIndexLocation = GetUniformLocation("gDrawIndex");
+
+    if (m_WVPLocation == INVALID_UNIFORM_LOCATION || m_objectIndexLocation == INVALID_UNIFORM_LOCATION || m_drawIndexLocation == INVALID_UNIFORM_LOCATION)
+    {
+        return false;
+    }
+
+    return true;
 }
 
-void PickingStrategy::InitMesh()
+void PickingStrategy::SetWVP(const Matrix4 _wvp)
 {
-
+    glUniformMatrix4fv(m_WVPLocation, 1, GL_TRUE, (const GLfloat*)_wvp.m);
 }
 
-PickingStrategy::PixelInfo PickingStrategy::ReadPixel(unsigned int x, unsigned int y)
+void PickingStrategy::SetObjectIndex(int _objectIndex)
 {
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-
-    glReadBuffer(GL_COLOR_ATTACHMENT0);
-
-    PixelInfo pixel;
-    glReadPixels(x, y, 1, 1, GL_RGB_INTEGER, GL_UNSIGNED_INT, &pixel);
-
-    glReadBuffer(GL_NONE);
-
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-
-    return pixel;
+    glUniform1ui(m_objectIndexLocation, _objectIndex);
 }
 
-void PickingStrategy::EnableWriting()
+void PickingStrategy::DrawStartCB(int _drawIndex)
 {
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo);
-}
-
-void PickingStrategy::DisableWriting()
-{
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-}
-
-void PickingStrategy::PickingPhase()
-{
-    m_pickingTexture.enableWriting();
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    m_pickingEffect.Enable();
-
-    Transform& worldTransform = ;
+    glUniform1ui(m_drawIndexLocation, _drawIndex);
 }

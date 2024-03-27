@@ -2,37 +2,35 @@
 #include <iostream>
 
 #include "Wrappers/graphicWrapper.h"
+#include "texture.h"
+#include "matrix4.h"
+#include "renderCallbacks.h"
+#include "technique.h"
 
-class PickingStrategy
+#ifndef PICKING_TECHNIQUE_H
+#define PICKING_TECHNIQUE_H
+
+class PickingStrategy : public Technique, public IRenderCallbacks
 {
 private:
 	static unsigned int m_fbo;
 	static unsigned int m_rbo;
 
+	GLuint m_WVPLocation;
+	GLuint m_drawIndexLocation;
+	GLuint m_objectIndexLocation;
+
 public:
-
-	GLuint m_pickingTexture = 0;
-	GLuint m_depthTexture = 0;
-
-	struct PixelInfo
-	{
-		int objectID = 0;
-		int drawID = 0;
-		int primID = 0;
-
-		void print()
-		{
-			printf("Objects %d draw %d prim &d\n", objectID, drawID, primID);
-		}
-	};
-
 	PickingStrategy();
 	~PickingStrategy();
 
-	void InitPickingTexture(unsigned int _windowWidth, unsigned int _windowHeight);
-	void InitMesh();
-	PixelInfo ReadPixel(unsigned int x, unsigned int y);
-	void EnableWriting();
-	void DisableWriting();
-	static void PickingPhase();
+	virtual bool Init();
+
+	void SetWVP(const Matrix4 _wvp);
+
+	void SetObjectIndex(int _objectIndex);
+
+	void DrawStartCB(int _drawIndex);
 };
+
+#endif
