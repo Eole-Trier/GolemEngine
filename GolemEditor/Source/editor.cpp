@@ -58,7 +58,7 @@ void Editor::Init()
     InitWindow();
     InitGraphics();
     InitUi();
-    GolemEngine::GetInstance()->Init();
+    GolemEngine::Init();
 }
 
 void Editor::MainLoop()
@@ -75,8 +75,8 @@ void Editor::MainLoop()
 
 		EditorUi::BeginDockSpace();
 
-		GolemEngine::GetInstance()->ProcessInput();
-		GolemEngine::GetInstance()->Update();
+		GolemEngine::ProcessInput();
+		GolemEngine::Update();
 
 		EditorUi::EndDockSpace();
 
@@ -84,7 +84,7 @@ void Editor::MainLoop()
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		if (io.ConfigFlags && ImGuiConfigFlags_ViewportsEnable)
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			GLFWwindow* backup_current_context = WindowWrapper::window;
 			ImGui::UpdatePlatformWindows();
@@ -96,9 +96,8 @@ void Editor::MainLoop()
 	}
 }
 
-void Editor::Cleanup() 
+void Editor::Cleanup()
 {
-	delete GolemEngine::GetInstance();
 }
 
 void Editor::Run()

@@ -23,7 +23,7 @@ Viewport::~Viewport() {}
 
 void Viewport::Update()
 {
-    SetCamera(GolemEngine::GetInstance()->GetCamera());
+    SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
@@ -38,7 +38,7 @@ void Viewport::Update()
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
-        m_camera->ProcessKeyboardInput(GolemEngine::GetInstance()->GetDeltaTime());
+        m_camera->ProcessKeyboardInput(GolemEngine::GetDeltaTime());
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
@@ -88,7 +88,7 @@ void Viewport::DragDropEvent()
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
-            GolemEngine::GetInstance()->GetScene()->isInit = true;
+            GolemEngine::GetCurrentScene()->isInit = true;
             m_isDragging = false;
         }
     }

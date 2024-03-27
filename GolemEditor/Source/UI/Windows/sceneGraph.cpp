@@ -21,7 +21,8 @@ void SceneGraph::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	DisplayObjects(GolemEngine::GetInstance()->GetScene()->GetWorld());
+	// ImGui::Text("%s", )
+	DisplayObjects(GolemEngine::GetCurrentScene()->GetWorld());
 
 	ImGui::End();
 }
@@ -77,7 +78,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			{
 				if (ImGui::MenuItem("Create"))
 				{
-					GolemEngine::GetInstance()->GetScene()->CreateGameObject(_gameObject);
+					GolemEngine::GetCurrentScene()->CreateGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -85,9 +86,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			// Delete popup
 			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
 			{
-				if (ImGui::MenuItem("Delete") && _gameObject != GolemEngine::GetInstance()->GetScene()->GetWorld())
+				if (ImGui::MenuItem("Delete") && _gameObject != GolemEngine::GetCurrentScene()->GetWorld())
 				{
-					GolemEngine::GetInstance()->GetScene()->DeleteGameObject(_gameObject);
+					GolemEngine::GetCurrentScene()->DeleteGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -108,7 +109,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
-					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != GolemEngine::GetInstance()->GetScene()->GetWorld())
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != GolemEngine::GetCurrentScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}

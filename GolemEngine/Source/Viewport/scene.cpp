@@ -15,7 +15,8 @@
 #include "Core/transform.h"
 #include "Wrappers/windowWrapper.h"
 
-Scene::Scene() 
+Scene::Scene(std::string _name)
+    : m_name(_name)
 {
     m_world = nullptr;
 }

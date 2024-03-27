@@ -48,7 +48,7 @@ void Transform::AddChildren(std::vector<Transform*> const _ts)
 void Transform::RemoveChild(Transform* const _t)
 {
     std::erase(m_children, _t);
-    _t->m_parent = GolemEngine::GetInstance()->GetScene()->GetWorld()->transform;
+    _t->m_parent = GolemEngine::GetCurrentScene()->GetWorld()->transform;
 }
 
 void Transform::SetParent(Transform* const _t)

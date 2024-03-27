@@ -15,6 +15,8 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
+	std::string m_name;
+	
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
 	std::vector<Mesh*> m_meshes;
@@ -28,7 +30,7 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
-	Scene();
+	Scene(std::string _name);
 
 	void Init();
 	void InitGameObjects();
