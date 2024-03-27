@@ -64,6 +64,8 @@ void Scene::InitGameObjects()
     m_world->transform->AddChild(vikingMesh->transform);
     m_world->transform->AddChild(ballBaldMesh2->transform);
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
+
+    //Transform* t = m_world->GetComponent<Transform>();
 }
 
 void Scene::Update(float _width, float _height, Camera* _camera)

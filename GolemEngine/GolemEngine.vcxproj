@@ -72,7 +72,7 @@
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\point.h" />
     <ClInclude Include="Include\Components\Light\spot.h" />
-    <ClInclude Include="Include\Core\gameobject.h" />
+    <ClInclude Include="Include\Core\gameObject.h" />
     <ClInclude Include="Include\Core\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />

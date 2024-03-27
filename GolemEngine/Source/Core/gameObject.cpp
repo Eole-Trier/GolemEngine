@@ -1,20 +1,14 @@
-#include "Core/gameobject.h"
+#include "Core/gameObject.h"
 #include "Core/transform.h"
 #include "Components/component.h"
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
-	: name(_name), transform(_transform)
+	: name(_name), transform(_transform), m_selected(false)
 {
 	AddComponent(_transform);
 }
 
 GameObject::~GameObject() {}
-
-void GameObject::AddComponent(Component* _component)
-{
-	m_components.push_back(_component);
-	_component->owner = this;
-}
 
 void GameObject::Update()
 {
@@ -27,6 +21,7 @@ void GameObject::Update()
 void GameObject::DisplayInformations()
 {
 	//to do
+
 }
 
 std::string GameObject::GetName()
@@ -34,12 +29,3 @@ std::string GameObject::GetName()
 	return name;
 }
 
-/*GameObject* GameObject::Instantiate()
-{
-	return nullptr;
-}
-
-void GameObject::Destroy()
-{
-
-}*/
