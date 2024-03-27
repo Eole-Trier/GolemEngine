@@ -15,6 +15,6 @@ public:
 	SceneGraph(std::string _name);
 	~SceneGraph();
 
-	void Update() override;
-	void DisplayObjects(GameObject* _gameObject);
+	void Update(GolemEngine* _golemEngine) override;
+	void DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObject);
 };

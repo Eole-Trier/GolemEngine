@@ -15,9 +15,9 @@
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
+#include "Wrappers/windowWrapper.h"
 
-Scene::Scene(std::string _name)
-    : name(_name)
+Scene::Scene() 
 {
     m_world = nullptr;
 }
@@ -71,40 +71,6 @@ void Scene::InitGameObjects()
     vikingMesh->transform->AddChild(ballBaldMesh->transform);
 }
 
-void Scene::InitLights()
-{
-    // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
-        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
-
-    // Add some point lights
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f),
-        Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
-}
-
-void Scene::CreateAndLoadResources()
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    Texture* default_texture = resourceManager->Create<Texture>("default_texture");
-    default_texture->Load(Tools::FindFile("default_texture.png").c_str());
-
-    Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
-    viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
-    Model* model_viking = resourceManager->Create<Model>("viking_room");
-    model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
-
-    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
-    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
-    Model* sphere = resourceManager->Create<Model>("model_sphere");
-    sphere->Load("Assets/Basics/sphere.obj");
-    
-    Shader* shad = resourceManager->Create<Shader>("default");
-    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
-}
-
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -140,6 +106,40 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     }
 }
 
+void Scene::InitLights()
+{
+    // Set up the sun
+    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
+        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
+
+    // Add some point lights
+    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
+        Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
+    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f),
+        Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
+}
+
+void Scene::CreateAndLoadResources()
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Texture* default_texture = resourceManager->Create<Texture>("default_texture");
+    default_texture->Load(Tools::FindFile("default_texture.png").c_str());
+
+    Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
+    viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
+    Model* model_viking = resourceManager->Create<Model>("viking_room");
+    model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
+
+    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
+    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+    Model* sphere = resourceManager->Create<Model>("model_sphere");
+    sphere->Load("Assets/Basics/sphere.obj");
+    
+    Shader* shad = resourceManager->Create<Shader>("default");
+    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
+}
+
 void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
@@ -162,18 +162,25 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
-// Check the gameobject's name is already in the vector or not.
-// If it exists will give a new name with a _2 at the last
-bool Scene::IsNameExists(const std::string& _name)
+Mesh* Scene::GetMeshByName(std::string _name)
 {
-    for (const auto& mesh : m_meshes)
+    for (Mesh* mesh : m_meshes)
     {
         if (mesh->GetName() == _name)
-        {
-            return true;
-        }
+            return mesh;
     }
-    return false;
+    Log::Print("No mesh with the name %s has been found", _name.c_str());
+    return nullptr;
+}
+
+const std::vector<GameObject*>& Scene::GetGameObjects()
+{
+    return m_gameObjects;
+}
+
+GameObject* Scene::GetWorld()
+{
+    return m_world;
 }
 
 void Scene::DeleteGameObject(GameObject* _gameObject)
@@ -197,42 +204,7 @@ void Scene::CreateGameObject(GameObject* _owner)
     m_gameObjects.push_back(go);
     _owner->transform->AddChild(go->transform);
 }
-
-// To add a new gameobject in the scene
-void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    std::string name = _name;
-    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
-    Texture* texture;
-    Shader* shader;
-
-    if (_textureName.empty())
-        texture = resourceManager->Get<Texture>("default_texture"); // Get default texture
-    else
-        texture = resourceManager->Get<Texture>(_textureName);
-
-    if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>("default"); // Get default shader
-    else
-        shader = resourceManager->Get<Shader>(_shaderName);
-
-    // Using the rename functions
-    int suffix = 2;
-    std::string originalName = name;
-    while (IsNameExists(name))
-    {
-        name = originalName + "_" + std::to_string(suffix++);
-    }
-
-    Model* model = resourceManager->Get<Model>(_modelName);
-    Mesh* mesh = new Mesh(name, transform, model, texture, shader);
-    m_meshes.push_back(mesh);
-    m_gameObjects.push_back(mesh);
-    m_world->transform->AddChild(mesh->transform);
-}
-
+    
 void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -268,29 +240,57 @@ void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
-Mesh* Scene::GetMeshByName(std::string _name)
+// To add a new gameobject in the scene
+void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
-    for (Mesh* mesh : m_meshes)
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    std::string name = _name;
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
+    Texture* texture;
+    Shader* shader;
+
+    if(_textureName.empty())
+        texture = resourceManager->Get<Texture>("default_texture"); // Get default texture
+    else
+        texture = resourceManager->Get<Texture>(_textureName);
+    
+    if(_shaderName.empty())
+        shader = resourceManager->Get<Shader>("default"); // Get default shader
+    else
+        shader = resourceManager->Get<Shader>(_shaderName);
+
+    // Using the rename functions
+    int suffix = 2;
+    std::string originalName = name;
+    while (IsNameExists(name))
+    {
+        name = originalName + "_" + std::to_string(suffix++);
+    }
+
+    Model* model = resourceManager->Get<Model>(_modelName);
+    Mesh* mesh = new Mesh(name, transform, model, texture, shader);
+    m_meshes.push_back(mesh);
+    m_gameObjects.push_back(mesh);
+    m_world->transform->AddChild(mesh->transform);
+}
+
+// Check the gameobject's name is already in the vector or not.
+// If it exists will give a new name with a _2 at the last
+bool Scene::IsNameExists(const std::string& _name)
+{
+    for (const auto& mesh : m_meshes)
     {
         if (mesh->GetName() == _name)
-            return mesh;
+        {
+            return true;
+        }
     }
-    Log::Print("No mesh with the name %s has been found", _name.c_str());
-    return nullptr;
+    return false;
 }
 
 std::string Scene::GetFileName(const std::string& _filePath)
 {
     std::filesystem::path path(_filePath);
     return path.stem().string();
-}
-
-const std::vector<GameObject*>& Scene::GetGameObjects()
-{
-    return m_gameObjects;
-}
-
-GameObject* Scene::GetWorld()
-{
-    return m_world;
 }

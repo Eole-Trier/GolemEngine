@@ -8,6 +8,7 @@
 #include "imgui.h"
 #include "imgui_stdlib.h"
 
+class GolemEngine;
 
 class Inspector : public Window
 {
@@ -15,7 +16,7 @@ public:
 	Inspector(std::string _name);
 	~Inspector();
 
-	void Update() override;
+	void Update(GolemEngine* _golemEngine) override;
 
 	template<typename TypeT>
 	void DisplayField(TypeT* _class);

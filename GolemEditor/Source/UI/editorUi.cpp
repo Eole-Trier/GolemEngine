@@ -16,9 +16,10 @@
 #include "Wrappers/windowWrapper.h"
 
 
-void EditorUi::Init()
+void EditorUi::Init(GolemEngine* _golemEngine)
 {
     // Add windows to be used in dockspace later
+    m_golemEngine = _golemEngine;
     m_windows.push_back(new Viewport("Viewport"));
     m_windows.push_back(new BasicActors("Basic_Actors"));
     m_windows.push_back(new FileBrowser("File_Browser"));
@@ -148,7 +149,7 @@ void EditorUi::UpdateWindows()
 {
     for (Window* window : m_windows)
     {
-        window->Update();
+        window->Update(m_golemEngine);
     }
     ImGuiContext& g = *GImGui;
 }

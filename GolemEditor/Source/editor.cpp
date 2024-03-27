@@ -15,7 +15,8 @@
 
 Editor::Editor()
 	:
-	m_name("Golem Engine")
+	m_name("Golem Engine"),
+	m_golemEngine(GolemEngine::GetInstance())
 {
     // Get screen dimensions
     RECT desktop;
@@ -50,7 +51,7 @@ void Editor::InitGraphics()
 
 void Editor::InitUi()
 {
-    EditorUi::Init();
+    EditorUi::Init(m_golemEngine);
 }
 
 void Editor::Init()
@@ -58,7 +59,7 @@ void Editor::Init()
     InitWindow();
     InitGraphics();
     InitUi();
-    GolemEngine::Init();
+    m_golemEngine->Init();
 }
 
 void Editor::MainLoop()
@@ -75,8 +76,8 @@ void Editor::MainLoop()
 
 		EditorUi::BeginDockSpace();
 
-		GolemEngine::ProcessInput();
-		GolemEngine::Update();
+		m_golemEngine->ProcessInput();
+		m_golemEngine->Update();
 
 		EditorUi::EndDockSpace();
 
@@ -84,7 +85,7 @@ void Editor::MainLoop()
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		if (io.ConfigFlags && ImGuiConfigFlags_ViewportsEnable)
 		{
 			GLFWwindow* backup_current_context = WindowWrapper::window;
 			ImGui::UpdatePlatformWindows();
@@ -96,8 +97,9 @@ void Editor::MainLoop()
 	}
 }
 
-void Editor::Cleanup()
+void Editor::Cleanup() 
 {
+	delete m_golemEngine;
 }
 
 void Editor::Run()

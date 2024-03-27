@@ -1,40 +1,43 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 #include "dll.h"
 #include "Viewport/scene.h"
-
+//#include "Inputs/Mouse.h"
 
 struct GLFWwindow;
+class Scene;
 class Camera;
 
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
-	static inline Camera* m_camera = nullptr;
-	static inline float m_deltaTime = 0.f;
+	static GolemEngine* m_golemInstance;
+
+	Scene* m_scene = nullptr;
+	Camera* m_camera = nullptr;
+	float m_deltaTime = 0.f;
 
 private:
-	// Private constructors and destructor to make static class
-	GolemEngine() = delete;
-	GolemEngine(GolemEngine& _other) = delete;
-	GolemEngine(GolemEngine&& _other) = delete;
-	GolemEngine& operator=(GolemEngine& _other) = delete;
-	GolemEngine& operator=(GolemEngine&& _other) = delete;
-	void operator=(const GolemEngine&) = delete;
-	~GolemEngine() = delete;
+	GolemEngine(GolemEngine& other) = delete;
+	GolemEngine();
 
 public:
-	static void Init();
-	static void UpdateDeltaTime();
-	static void ProcessInput();
-	static void Update();
-	static void Close();
+	void operator=(const GolemEngine&) = delete;
+	static GolemEngine* GetInstance();
 
-	static Camera* GetCamera();
-	static float GetDeltaTime();
-	static float GetTime();
+	~GolemEngine();
 
+	void InitScene();
+	void Init();
+	void UpdateDeltaTime();
+	void ProcessInput();
+	void Update();
+	void Close();
+
+	Scene* GetScene();
+	Camera* GetCamera();
+	float GetDeltaTime();
+	float GetTime();
 };

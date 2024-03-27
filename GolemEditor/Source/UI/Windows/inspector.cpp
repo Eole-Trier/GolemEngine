@@ -29,7 +29,7 @@ REFL_AUTO(
 		field(y)
 	)*/
 
-void Inspector::Update()
+void Inspector::Update(GolemEngine* _golemEngine)
 {
 	ImGui::Begin(name.c_str());
 

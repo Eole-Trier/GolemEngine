@@ -7,6 +7,7 @@
 #include "Core/gameobject.h"
 
 
+class GolemEngine;
 class Window;
 struct GLFWwindow;
 
@@ -14,13 +15,14 @@ class EditorUi
 {
 private:
 	static inline std::vector<Window*> m_windows;
+	static inline GolemEngine* m_golemEngine = nullptr;
 
 public:
 	static inline GameObject* selected = nullptr;
 
 public:
 
-	static void Init();
+	static void Init(GolemEngine* _golemEngine);
 	static void BeginDockSpace();
 	static void EndDockSpace();
 	static void UpdateWindows();
