@@ -1,6 +1,7 @@
 #include "Core/transform.h"
 #include "golemEngine.h"
 #include "Core/gameobject.h"
+#include "Resource/sceneManager.h"
 
 Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
 	: position(_position), rotation(_rotation), scaling(_scaling)
@@ -48,7 +49,7 @@ void Transform::AddChildren(std::vector<Transform*> const _ts)
 void Transform::RemoveChild(Transform* const _t)
 {
     std::erase(m_children, _t);
-    _t->m_parent = GolemEngine::GetCurrentScene()->GetWorld()->transform;
+    _t->m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;
 }
 
 void Transform::SetParent(Transform* const _t)

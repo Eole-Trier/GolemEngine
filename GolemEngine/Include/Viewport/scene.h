@@ -30,6 +30,10 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
+	bool isInit = false;
+	const std::vector<GameObject*>& GetGameObjects();
+	
+public:
 	Scene(std::string _name);
 
 	void Init();
@@ -43,12 +47,10 @@ public:
 	void UpdateLights(Shader* _shader);
 
 	Mesh* GetMeshByName(std::string _name);
-	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
 	// TODO Doing add new object in scene
 	void InitObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
-	bool isInit = false;
 	bool IsNameExists(const std::string& _name);
 	
 	void DeleteGameObject(GameObject* _gameObject);

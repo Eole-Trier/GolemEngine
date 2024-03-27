@@ -4,6 +4,7 @@
 #include "UI/editorUi.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
+#include "Resource/sceneManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -22,7 +23,7 @@ void SceneGraph::Update()
 	ImGui::Begin(name.c_str());
 
 	// ImGui::Text("%s", )
-	DisplayObjects(GolemEngine::GetCurrentScene()->GetWorld());
+	DisplayObjects(SceneManager::GetCurrentScene()->GetWorld());
 
 	ImGui::End();
 }
@@ -78,7 +79,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			{
 				if (ImGui::MenuItem("Create"))
 				{
-					GolemEngine::GetCurrentScene()->CreateGameObject(_gameObject);
+					SceneManager::GetCurrentScene()->CreateGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -86,9 +87,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			// Delete popup
 			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
 			{
-				if (ImGui::MenuItem("Delete") && _gameObject != GolemEngine::GetCurrentScene()->GetWorld())
+				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
-					GolemEngine::GetCurrentScene()->DeleteGameObject(_gameObject);
+					SceneManager::GetCurrentScene()->DeleteGameObject(_gameObject);
 				}
 				ImGui::EndPopup();
 			}
@@ -109,7 +110,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
-					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != GolemEngine::GetCurrentScene()->GetWorld())
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != SceneManager::GetCurrentScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}

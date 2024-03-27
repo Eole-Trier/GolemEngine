@@ -13,7 +13,6 @@
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
-#include "Wrappers/windowWrapper.h"
 
 Scene::Scene(std::string _name)
     : m_name(_name)

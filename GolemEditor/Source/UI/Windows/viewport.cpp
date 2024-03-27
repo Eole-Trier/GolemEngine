@@ -5,14 +5,13 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Inputs/inputManager.h"
+#include "Resource/sceneManager.h"
+#include "Viewport/scene.h"
+#include "vector4.h"
+#include "imgui_internal.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
-#include "Viewport/scene.h"
-#include "golemEngine.h"
-#include "vector2.h"
-#include "vector4.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -88,7 +87,7 @@ void Viewport::DragDropEvent()
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
-            GolemEngine::GetCurrentScene()->isInit = true;
+            SceneManager::GetCurrentScene()->isInit = true;
             m_isDragging = false;
         }
     }

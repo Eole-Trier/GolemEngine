@@ -2,24 +2,16 @@
 
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
+#include "Resource/sceneManager.h"
 #include "Viewport/scene.h"
 #include "Viewport/camera.h"
 #include "Inputs/inputManager.h"
 #include "vector4.h"
 
-void GolemEngine::InitScene()
-{
-    // Init scene objects
-    m_scenes[0]->Init();
-    // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-}
 
 void GolemEngine::Init()
 {
-    m_scenes.push_back(new Scene("Scene_1"));
-    SetCurrentScene(0);
-    InitScene();
+    SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
 }
@@ -49,7 +41,7 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    m_scenes[0]->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
+    SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }
@@ -57,11 +49,6 @@ void GolemEngine::Update()
 void GolemEngine::Close()
 {
     glfwTerminate();
-}
-
-Scene* GolemEngine::GetCurrentScene()
-{
-    return m_currentScene;
 }
 
 Camera* GolemEngine::GetCamera()
@@ -77,9 +64,4 @@ float GolemEngine::GetDeltaTime()
 float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
-}
-
-void GolemEngine::SetCurrentScene(int _sceneId)
-{
-    m_currentScene = m_scenes[_sceneId];
 }

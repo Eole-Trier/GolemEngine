@@ -23,8 +23,8 @@ private:
     ~SceneManager() = delete;
 
 public:
-    static void Init();
     static void InitScene();
+    static void Init();
 
     static Scene* GetCurrentScene();
 

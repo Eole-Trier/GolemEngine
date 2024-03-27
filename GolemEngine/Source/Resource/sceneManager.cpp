@@ -3,12 +3,6 @@
 #include "Wrappers/windowWrapper.h"
 
 
-void SceneManager::Init()
-{
-    m_scenes.push_back(new Scene("Scene_1"));
-    SetCurrentScene(0);
-}
-
 void SceneManager::InitScene()
 {
     // Init scene
@@ -17,6 +11,12 @@ void SceneManager::InitScene()
     GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
+void SceneManager::Init()
+{
+    m_scenes.push_back(new Scene("Scene_1"));
+    SetCurrentScene(0);
+    InitScene();
+}
 
 Scene* SceneManager::GetCurrentScene()
 {
