@@ -4,13 +4,11 @@
 #include "Wrappers/graphicWrapper.h"
 #include "texture.h"
 #include "matrix4.h"
-#include "renderCallbacks.h"
-#include "technique.h"
 
 #ifndef PICKING_TECHNIQUE_H
 #define PICKING_TECHNIQUE_H
 
-class PickingStrategy : public Technique, public IRenderCallbacks
+class PickingStrategy
 {
 private:
 	static unsigned int m_fbo;
