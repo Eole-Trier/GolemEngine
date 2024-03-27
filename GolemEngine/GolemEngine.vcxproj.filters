@@ -46,6 +46,8 @@
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="Source\Reflection\classManager.cpp" />
+    <ClCompile Include="Source\Reflection\displayType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -109,5 +111,7 @@
     <ClInclude Include="Include\Inputs\inputManager.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
     <ClInclude Include="Include\Reflection\refl.hpp" />
+    <ClInclude Include="Include\Reflection\classesManager.h" />
+    <ClInclude Include="Include\Reflection\displayType.h" />
   </ItemGroup>
 </Project>

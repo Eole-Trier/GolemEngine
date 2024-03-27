@@ -88,6 +88,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 				if (ImGui::MenuItem("Delete") && _gameObject != _golemEngine->GetScene()->GetWorld())
 				{
 					_golemEngine->GetScene()->DeleteGameObject(_gameObject);
+					EditorUi::selected = nullptr;
 				}
 				ImGui::EndPopup();
 			}

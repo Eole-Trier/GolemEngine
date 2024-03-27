@@ -8,6 +8,7 @@
 #include "imgui_internal.h"
 #include "Reflection/refl.hpp"
 #include "UI/editorUi.h"
+#include "Reflection/displayType.h"
 
 
 Inspector::Inspector(std::string _name)
@@ -22,8 +23,8 @@ void Inspector::Update(GolemEngine* _golemEngine)
 
 	if (EditorUi::selected != nullptr)
 	{
-		DisplayField(EditorUi::selected);
+		DisplayType::DisplayField(EditorUi::selected);
 	}
-	
+
 	ImGui::End();
 }

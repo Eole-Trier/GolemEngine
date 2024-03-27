@@ -45,6 +45,5 @@ public:
 	GameObject* GetWorld();
 
 	void DeleteGameObject(GameObject* _gameObject);
-
 	void CreateGameObject(GameObject* _owner);
 };

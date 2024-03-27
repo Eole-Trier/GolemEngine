@@ -1,5 +1,4 @@
 #include "Core/gameObject.h"
-#include "Core/transform.h"
 #include "Components/component.h"
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
@@ -15,7 +14,7 @@ void GameObject::Update()
 {
 	for (auto& component : m_components)
 	{
-		component->Update();
+		//component->Update();
 	}
 }
 

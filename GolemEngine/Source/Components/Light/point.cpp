@@ -2,6 +2,7 @@
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
+#include "Core/gameObject.h"
 
 PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, 
     const float _constant, const float _linear, const float _quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints)
@@ -24,4 +25,11 @@ void PointLight::SetPointLight(Shader* _shader)
     _shader->SetFloat("pointLights[" + std::to_string(id) + "].constant", constant);
     _shader->SetFloat("pointLights[" + std::to_string(id) + "].linear", linear);
     _shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
+}
+
+void PointLight::Update(Shader* _shader)
+{
+    if (owner)
+        position = owner->transform->position;
+    SetPointLight(_shader);
 }

@@ -2,12 +2,15 @@
 
 #include "dll.h"
 
-#include "Resource/resource.h"
-#include "Components/component.h"
-
 #include <vector4.h>
 
-class GOLEM_ENGINE_API Light : Component
+#include "Resource/resource.h"
+#include "Components/component.h"
+#include "Resource/Rendering/shader.h"
+#include "Reflection/refl.hpp"
+
+
+class GOLEM_ENGINE_API Light : public Component
 {
 public:
 	Vector4 diffuseColor;
@@ -15,5 +18,14 @@ public:
 	Vector4 specularColor;
 
 public:
+	Light() = default;
 	Light(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular);
+	virtual void Update(Shader* _shader) = 0;
 };
+
+REFL_AUTO(
+    type(Light, bases<Component>),
+    field(diffuseColor),
+	field(ambientColor),
+	field(specularColor)
+)

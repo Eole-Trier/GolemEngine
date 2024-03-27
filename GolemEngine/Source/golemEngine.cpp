@@ -6,6 +6,7 @@
 #include "Viewport/camera.h"
 #include "Inputs/inputManager.h"
 #include "vector4.h"
+#include "Reflection/classesManager.h"
 
 GolemEngine* GolemEngine::m_golemInstance = nullptr;
 
@@ -36,6 +37,7 @@ void GolemEngine::InitScene()
 
 void GolemEngine::Init()
 {
+    ClassesManager::AddAllClasses();
     InitScene();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();

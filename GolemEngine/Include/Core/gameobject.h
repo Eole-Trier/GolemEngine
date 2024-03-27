@@ -7,9 +7,9 @@
 #include "dll.h"
 #include "Reflection/refl.hpp"
 #include "Components/component.h"
+#include "transform.h"
 #include "Debug/log.h"
 
-class Transform;
 
 class GOLEM_ENGINE_API GameObject
 {
@@ -40,6 +40,8 @@ public:
 
 	template<typename TypeT>
 	std::vector<TypeT*> GetComponents();
+
+	friend refl_impl::metadata::type_info__<GameObject>; // needed to reflect private members
 };
 
 template<typename TypeT>
@@ -96,6 +98,5 @@ std::vector<TypeT*> GameObject::GetComponents()
 REFL_AUTO(
 	type(GameObject),
 	field(name),
-	field(transform)
+	field(m_components)
 )
-	//field(m_components)
