@@ -209,6 +209,26 @@ void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
+    bool hasDuplicate = false;
+    for (const auto& pair : resourceManager->GetResources())
+    {
+        std::cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" << std::endl;
+        std::cout << pair.first << std::endl;
+        if (pair.first == GetFileName(_filePath))
+        {
+            std::cout << "FOUND SAME OBJ IN MAP" << std::endl;
+            hasDuplicate = true;
+            loadingObject = GetFileName(_filePath);
+            break;
+        }
+    }
+
+    if (hasDuplicate)
+    {
+        std::cout << "Resource with name " << _resourceName << " already exists." << std::endl;
+        return;
+    }
+
     if (_resourceName == "")
     {
         Model* model = resourceManager->Create<Model>(GetFileName(_filePath));
