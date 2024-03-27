@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Reflection/refl.hpp"
+#include "Reflection/attributes.h"
 
 class GameObject;
 

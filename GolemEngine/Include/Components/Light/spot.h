@@ -7,6 +7,7 @@
 #include "dll.h"
 #include "Components/Light/Light.h"
 #include "Reflection/refl.hpp"
+#include "Reflection/attributes.h"
 
 class Shader;
 
@@ -34,9 +35,9 @@ public:
 REFL_AUTO(
     type(SpotLight, bases<Light>),
     field(direction),
-    field(constant),
-    field(linear),
-    field(quadratic),
+    field(constant, Range(0, 1)),
+    field(linear, Range(0, 1)),
+    field(quadratic, Range(0, 1)),
     field(cutOff),
     field(outerCutOff)
 )

@@ -81,6 +81,7 @@
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\Inputs\inputManager.h" />
+    <ClInclude Include="Include\Reflection\attributes.h" />
     <ClInclude Include="Include\Reflection\classesManager.h" />
     <ClInclude Include="Include\Reflection\displayType.h" />
     <ClInclude Include="Include\Reflection\refl.hpp" />

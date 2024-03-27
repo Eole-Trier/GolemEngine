@@ -9,7 +9,9 @@
 #include "imgui.h"
 #include "imgui_stdlib.h"
 
+#include "Reflection/attributes.h"
 #include "Reflection/refl.hpp"
+#include "Core/gameObject.h"
 
 class DisplayType
 {
@@ -22,6 +24,9 @@ public:
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
 	static void DisplayStdVector(MemberT* _member);
+
+	template<typename TypeT, typename MemberT, typename DescriptorT>
+	static void DisplayIntOrFloat(MemberT* _member);
 
 	GOLEM_ENGINE_API static void DisplayWithHashCode(size_t _hashCode, void* _object);
 };
@@ -39,19 +44,24 @@ template<typename TypeT>
 void DisplayType::DisplayField(TypeT* _class)
 {
 	constexpr auto type = refl::reflect<TypeT>();	// Get the reflected class
+	ImGui::Text("%s", type.name.c_str());
 	for_each(type.members, [&]<typename DescriptorT>(const DescriptorT)	// Loop through each member of the reflected class
 	{
 		using MemberT = DescriptorT::value_type;
-		if constexpr (std::is_array_v<MemberT>) // array case
+
+		if constexpr (!refl::descriptor::has_attribute<HideInInspector>(DescriptorT{}))
 		{
-		}
-		else if constexpr (is_std_vector_v<MemberT>) // std::vector case
-		{
-			DisplayStdVector<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
-		}
-		else // basic case
-		{
-			BasicsFields<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
+			if constexpr (std::is_array_v<MemberT>) // array case
+			{
+			}
+			else if constexpr (is_std_vector_v<MemberT>) // std::vector case
+			{
+				DisplayStdVector<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
+			}
+			else // basic case
+			{
+				BasicsFields<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
+			}
 		}
 	});
 }
@@ -68,41 +78,13 @@ void DisplayType::BasicsFields(MemberT* _class)
 	{
 		ImGui::InputText(DescriptorT::name.c_str(), _class);
 	}
-	else if constexpr (std::is_same_v<std::int8_t, MemberT>) // int_8
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S8, _class);
-	}
-	else if constexpr (std::is_same_v<std::int16_t, MemberT>) // int_16
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S16, _class);
-	}
-	else if constexpr (std::is_same_v<std::int32_t, MemberT>) // int_32
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_S32, _class);
-	}
-	else if constexpr (std::is_same_v<std::uint8_t, MemberT>) // uint_8
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U8, _class);
-	}
-	else if constexpr (std::is_same_v<std::uint16_t, MemberT>) // uint_16
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U16, _class);
-	}
-	else if constexpr (std::is_same_v<std::uint32_t, MemberT>) // uint_32
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_U32, _class);
-	}
-	else if constexpr (std::is_same_v<float, MemberT>) // float 
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_Float, _class);
-	}
-	else if constexpr (std::is_same_v<double, MemberT>) // double
-	{
-		ImGui::DragScalar(DescriptorT::name.c_str(), ImGuiDataType_Double, _class);
-	}
 	else if constexpr (std::is_same_v<bool, MemberT>) // bool
 	{
 		ImGui::Checkbox(DescriptorT::name.c_str(), _class);
+	}
+	else if (std::is_integral_v<MemberT> || std::is_floating_point_v<MemberT>)
+	{
+		DisplayIntOrFloat<TypeT, MemberT, DescriptorT>(_class);
 	}
 	else if constexpr (std::is_same_v<Vector3, MemberT>)
 	{
@@ -121,4 +103,47 @@ void DisplayType::DisplayStdVector(MemberT* _member)
 	{
 		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_member)[i]);
 	}
+}
+
+template<typename TypeT, typename MemberT, typename DescriptorT>
+void DisplayType::DisplayIntOrFloat(MemberT* _member)
+{
+	int type = ImGuiDataType_S8;
+	if constexpr (std::is_same_v<std::int8_t, MemberT>) // int_8
+	{
+		type = ImGuiDataType_S8;
+	}
+	else if constexpr (std::is_same_v<std::int16_t, MemberT>) // int_16
+	{
+		type = ImGuiDataType_S16;
+	}
+	else if constexpr (std::is_same_v<std::int32_t, MemberT>) // int_32
+	{
+		type = ImGuiDataType_S32;
+	}
+	else if constexpr (std::is_same_v<std::uint8_t, MemberT>) // uint_8
+	{
+		type = ImGuiDataType_U8;
+	}
+	else if constexpr (std::is_same_v<std::uint16_t, MemberT>) // uint_16
+	{
+		type = ImGuiDataType_U16;
+	}
+	else if constexpr (std::is_same_v<std::uint32_t, MemberT>) // uint_32
+	{
+		type = ImGuiDataType_U32;
+	}
+	else if constexpr (std::is_same_v<float, MemberT>) // float 
+	{
+		type = ImGuiDataType_Float;
+	}
+	else if constexpr (std::is_same_v<double, MemberT>) // double
+	{
+		type = ImGuiDataType_Double;
+	}
+
+	if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
+		ImGui::SliderScalar(DescriptorT::name.c_str(), type, _member, &refl::descriptor::get_attribute<Range>(DescriptorT{}).min, &refl::descriptor::get_attribute<Range>(DescriptorT{}).max);
+	else
+		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member);
 }

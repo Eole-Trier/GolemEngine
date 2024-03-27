@@ -113,5 +113,6 @@
     <ClInclude Include="Include\Reflection\refl.hpp" />
     <ClInclude Include="Include\Reflection\classesManager.h" />
     <ClInclude Include="Include\Reflection\displayType.h" />
+    <ClInclude Include="Include\Reflection\attributes.h" />
   </ItemGroup>
 </Project>
