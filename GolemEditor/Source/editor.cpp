@@ -12,6 +12,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "Resource/tools.h"
+#include "SFML/Audio.hpp"
 
 Editor::Editor()
 	:
@@ -64,6 +66,17 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile(Tools::FindFile("music_01.wav")))
+	{
+	}
+	sf::Sound sound;
+	sound.setBuffer(buffer);
+	sound.setLoop(true);
+	sound.play();
+	sf::Listener::setPosition(0, 0, 0);
+	sf::Vector3f listenerVelocity(0, 0, 1);
+
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -78,6 +91,15 @@ void Editor::MainLoop()
 
 		m_golemEngine->ProcessInput();
 		m_golemEngine->Update();
+
+		// Doing 3D sound
+		sf::Vector3f listenerPosition = sf::Listener::getPosition();
+		sf::Listener::setPosition(listenerPosition + listenerVelocity);
+		sf::Vector3f soundPosition = sound.getPosition();
+		sf::Vector3f distance = soundPosition - listenerPosition;
+		float distanceMagnitude = std::sqrt(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z);
+		float attenuationFactor = 1.0f / (1.0f + 0.1f * distanceMagnitude);
+		sound.setVolume(100 * attenuationFactor);
 
 		EditorUi::EndDockSpace();
 
