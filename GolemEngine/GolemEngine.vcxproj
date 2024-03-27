@@ -39,7 +39,6 @@
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\inputManager.cpp" />
-    <ClCompile Include="Source\Inputs\mouse.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
@@ -83,7 +82,6 @@
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\inputManager.h" />
-    <ClInclude Include="Include\Inputs\mouse.h" />
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />

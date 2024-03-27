@@ -32,7 +32,6 @@
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
-    <ClCompile Include="Source\Inputs\mouse.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
@@ -96,7 +95,6 @@
     <ClInclude Include="Include\Core\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
-    <ClInclude Include="Include\Inputs\mouse.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />

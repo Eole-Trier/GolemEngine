@@ -27,7 +27,21 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
+    auto viewportOffset = ImGui::GetCursorPos();
+
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
+
+    auto windowSize = ImGui::GetWindowSize();
+    ImVec2 minBound = ImGui::GetWindowPos();
+    minBound.x += viewportOffset.x;
+    minBound.y += viewportOffset.y;
+
+    ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+    m_viewportBounds[0] = { minBound.x, minBound.y };
+    m_viewportBounds[1] = { maxBound.x, maxBound.y };
+
+    Log::Print("Min bounds = %f, %f", m_viewportBounds[0].x, m_viewportBounds[0].y);
+    Log::Print("Max bounds = %f, %f", m_viewportBounds[1].x, m_viewportBounds[1].y);
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
     //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
