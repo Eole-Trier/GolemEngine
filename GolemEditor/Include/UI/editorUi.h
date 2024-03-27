@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include "vector2.h"
+
 class GolemEngine;
 class Window;
 struct GLFWwindow;
@@ -22,4 +24,5 @@ public:
 	void UpdateWindows();
 
 	Window* GetWindowByName(std::string _name);
+	Vector2 GetDockedWindowPosition(std::string _dockedWindowName);
 };

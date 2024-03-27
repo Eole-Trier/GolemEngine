@@ -10,14 +10,12 @@ class Camera;
 class GOLEM_ENGINE_API InputManager
 {
 private:
-	//static Camera* m_camera;
-
 #pragma region Keyboard variables
 	static inline bool m_keyboardKeys[LAST_KEY_INT];
 #pragma endregion Keyboard variables
 
 #pragma region Mouse variables
-	static Vector2 m_mousePos;
+	static Vector2 m_mouseWindowPos;
 	static float m_mouseScrollValue;
 	static inline int m_mouseButtons[LAST_MOUSE_BUTTON_INT];
 #pragma endregion Mouse variables
@@ -42,7 +40,8 @@ public:
 	// Check if button (see WindowWrapper defines) is pressed
 	static bool IsButtonPressed(int _button);
 
-	static Vector2 GetMousePos();
+	// Get mouse position relative to glfw window
+	static Vector2 GetMouseWindowPos();
 	static float GetMouseScroll();
 
 	static void SetMouseScroll(float _value);
