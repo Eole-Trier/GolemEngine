@@ -1,6 +1,8 @@
 #include "Wrappers/windowWrapper.h"
 
 #include <string>
+#include <unordered_map>
+#include <optional>
 
 #include "Image/stb_image.h"
 
@@ -45,8 +47,16 @@ void WindowWrapper::MakeContext(GLFWwindow* _window)
     glfwMakeContextCurrent(_window);
 }
 
+std::unordered_map<std::string, std::optional<GLuint>> textureMap;
 GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
+    if (textureMap.find(_filename) != textureMap.end()) {
+        // Check if the texture is already loaded
+        if (textureMap[_filename].has_value()) {
+            return textureMap[_filename].value();
+        }
+    }
+
     int width, height, channels;
     unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);
     if (!data) {
@@ -76,6 +86,9 @@ GLuint WindowWrapper::LoadUiTexture(const char* _filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     stbi_image_free(data);
+
+    // Store texture ID in the map
+    textureMap[_filename] = texture;
 
     return texture;
 }

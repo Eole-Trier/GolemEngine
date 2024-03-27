@@ -14,8 +14,7 @@
 #include "Resource/tools.h"
 #include "Viewport/scene.h"
 #include "Core/gameobject.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "Image/stb_image.h"
+
 
 namespace fs = std::filesystem;
 
@@ -158,39 +157,32 @@ void FileBrowser::ContentBrowser()
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
-
 			}
 			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
 			}
 			else if (extensionFile == ".cpp")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
 			}
 			else if (extensionFile == ".h")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
 			}
 			else if (extensionFile == ".obj")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
 			}
 			else
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
 				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
-				--fileCount; // Reduce the count after loading the texture
 			}
 			// Show content menu
 			// Menu selections:
