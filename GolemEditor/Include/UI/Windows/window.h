@@ -2,7 +2,6 @@
 
 #include <string>
 
-class GolemEngine;
 
 class Window
 {
@@ -11,5 +10,5 @@ public:
 
 public:
 	Window(std::string _name);
-	virtual void Update(GolemEngine* _golemEngine) = 0;
+	virtual void Update() = 0;
 };

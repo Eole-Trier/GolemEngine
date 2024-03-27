@@ -5,14 +5,13 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Inputs/inputManager.h"
+#include "Resource/sceneManager.h"
+#include "Viewport/scene.h"
+#include "vector4.h"
+#include "imgui_internal.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
-#include "Viewport/scene.h"
-#include "golemEngine.h"
-#include "vector2.h"
-#include "vector4.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -21,9 +20,9 @@ Viewport::Viewport(std::string _name)
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine)
+void Viewport::Update()
 {
-    SetCamera(GolemEngine::GetInstance()->GetCamera());
+    SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
@@ -38,7 +37,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
-        m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
+        m_camera->ProcessKeyboardInput(GolemEngine::GetDeltaTime());
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
@@ -88,8 +87,8 @@ void Viewport::DragDropEvent()
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
-            GolemEngine::GetInstance()->GetScene()->AddNewModel(droppedFilePath);
-            GolemEngine::GetInstance()->GetScene()->isInit = true;
+            SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
+            SceneManager::GetCurrentScene()->isInit = true;
             m_isDragging = false;
         }
     }
