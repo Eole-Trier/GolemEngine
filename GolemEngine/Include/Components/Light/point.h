@@ -6,7 +6,7 @@
 
 #include "dll.h"
 #include "Components/Light/Light.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 #include "Reflection/attributes.h"
 
 class Shader;

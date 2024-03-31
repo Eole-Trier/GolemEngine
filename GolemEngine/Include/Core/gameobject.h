@@ -5,7 +5,7 @@
 #include <type_traits>
 
 #include "dll.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 #include "Components/component.h"
 #include "transform.h"
 #include "Debug/log.h"

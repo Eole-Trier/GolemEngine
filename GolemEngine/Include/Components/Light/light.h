@@ -7,7 +7,7 @@
 #include "Resource/resource.h"
 #include "Components/component.h"
 #include "Resource/Rendering/shader.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 
 
 class GOLEM_ENGINE_API Light : public Component

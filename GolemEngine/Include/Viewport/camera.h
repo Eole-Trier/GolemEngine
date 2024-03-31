@@ -5,7 +5,7 @@
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 
 
 class GOLEM_ENGINE_API Camera

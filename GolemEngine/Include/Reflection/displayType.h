@@ -10,7 +10,7 @@
 #include "imgui_stdlib.h"
 
 #include "Reflection/attributes.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 #include "Core/gameObject.h"
 
 class DisplayType

@@ -6,8 +6,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "Reflection/refl.hpp"
-
+#include "Refl/refl.hpp"
 
 BasicActors::BasicActors(std::string _name) 
 	: Window(_name)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 
 struct HideInInspector : refl::attr::usage::field, refl::attr::usage::function
 {
