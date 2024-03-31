@@ -31,6 +31,6 @@ void PointLight::SetPointLight(Shader* _shader)
 void PointLight::Update(Shader* _shader)
 {
     if (owner)
-        position = owner->transform->GetGlobalModel().TrsToPosition();
+        position = owner->transform->globalPosition;
     SetPointLight(_shader);
 }

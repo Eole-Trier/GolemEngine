@@ -28,6 +28,7 @@ void Transform::UpdateSelfAndChilds()
     {
         m_children[i]->UpdateSelfAndChilds();
     }
+    globalPosition = m_globalModel.TrsToPosition();
 }
 
 void Transform::AddChild(Transform* const _t)

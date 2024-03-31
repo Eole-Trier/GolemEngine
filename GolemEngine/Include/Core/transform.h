@@ -17,6 +17,7 @@ private:
 	Matrix4 m_globalModel;
 
 public:
+	Vector3 globalPosition;
 	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;

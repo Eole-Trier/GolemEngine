@@ -35,6 +35,6 @@ void SpotLight::SetSpotLight(Shader* _shader)
 void SpotLight::Update(Shader* _shader)
 {
     if (owner)
-        position = owner->transform->GetGlobalModel().TrsToPosition();
+        position = owner->transform->globalPosition;
     SetSpotLight(_shader);
 }
