@@ -3,7 +3,7 @@
 #include "Core/gameobject.h"
 
 Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
-	: position(_position), rotation(_rotation), scaling(_scaling)
+	: localPosition(_position), rotation(_rotation), scaling(_scaling)
 {
     m_parent = nullptr;
 	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
@@ -15,7 +15,7 @@ void Transform::Update()
 
 void Transform::UpdateSelfAndChilds()
 {
-    m_localModel = Matrix4::TRS(position, Quaternion::EulerToQuaternion(rotation), scaling);
+    m_localModel = Matrix4::TRS(localPosition, Quaternion::EulerToQuaternion(rotation), scaling);
 
     if (m_parent)
     {
@@ -60,7 +60,7 @@ void Transform::SetParent(Transform* const _t)
 
     m_globalModel = _t->m_globalModel.Inverse() * m_globalModel;
 
-    position = m_globalModel.TrsToPosition();
+    localPosition = m_globalModel.TrsToPosition();
     rotation = Vector3::QuaternionToEuler(m_globalModel.TrsToRotation());
     scaling = m_globalModel.TrsToScaling();
 }

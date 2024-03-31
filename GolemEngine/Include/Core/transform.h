@@ -17,7 +17,7 @@ private:
 	Matrix4 m_globalModel;
 
 public:
-	Vector3 position;
+	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;
 
@@ -45,7 +45,7 @@ public:
 
 REFL_AUTO(
 	type(Transform, bases<Component>),
-	field(position),
+	field(localPosition),
 	field(rotation),
 	field(scaling)
 )

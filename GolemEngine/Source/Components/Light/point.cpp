@@ -3,6 +3,7 @@
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameObject.h"
+#include "matrix4.h"
 
 PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, 
     const float _constant, const float _linear, const float _quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints)
@@ -30,6 +31,6 @@ void PointLight::SetPointLight(Shader* _shader)
 void PointLight::Update(Shader* _shader)
 {
     if (owner)
-        position = owner->transform->position;
+        position = owner->transform->GetGlobalModel().TrsToPosition();
     SetPointLight(_shader);
 }
