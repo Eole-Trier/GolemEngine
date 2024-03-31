@@ -15,14 +15,13 @@ DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambi
 };
 void DirectionalLight::SetDirectionalLight(Shader* _shader)
 {
-	_shader->SetVec3("dirLight[" + std::to_string(id) + "].direction", direction);
-	_shader->SetVec4("dirLight[" + std::to_string(id) + "].ambient", ambientColor);
-	_shader->SetVec4("dirLight[" + std::to_string(id) + "].diffuse", diffuseColor);
-	_shader->SetVec4("dirLight[" + std::to_string(id) + "].specular", specularColor);
+	_shader->SetVec3("dirLights[" + std::to_string(id) + "].direction", direction);
+	_shader->SetVec4("dirLights[" + std::to_string(id) + "].ambient", ambientColor);
+	_shader->SetVec4("dirLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+	_shader->SetVec4("dirLights[" + std::to_string(id) + "].specular", specularColor);
 }
 
 void DirectionalLight::Update(Shader* _shader)
 {
-
 	SetDirectionalLight(_shader);
 }

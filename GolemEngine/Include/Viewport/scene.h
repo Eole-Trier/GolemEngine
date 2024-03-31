@@ -4,6 +4,7 @@
 #include "Resource/resourceManager.h"
 #include "Viewport/camera.h"
 #include "Debug/log.h"
+#include "Components/Light/light.h"
 
 class DirectionalLight;
 class PointLight;
@@ -44,6 +45,7 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
-	void DeleteGameObject(GameObject* _gameObject);
 	void CreateGameObject(GameObject* _owner);
+	void DeleteGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
 };

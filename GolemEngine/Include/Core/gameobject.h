@@ -9,6 +9,7 @@
 #include "Components/component.h"
 #include "transform.h"
 #include "Debug/log.h"
+#include "Components/Light/light.h"
 
 
 class GOLEM_ENGINE_API GameObject
@@ -29,6 +30,12 @@ public:
 	void Update();
 	void DisplayInformations();
 	std::string GetName();
+
+	void DeleteTransform(Transform* _t);
+	void DeleteLight(Light* _l);
+
+	void RemoveComponent(Component* _c);
+	void DeleteAllComponents();
 
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);

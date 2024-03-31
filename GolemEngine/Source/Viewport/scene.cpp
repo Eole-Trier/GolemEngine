@@ -92,8 +92,8 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
-        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
+    m_dirLights.push_back(new DirectionalLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
+        Vector3(0.0f, 0.0f, 0.0f), m_dirLights, m_maxDirLights));
 
     // Add some point lights
     m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
@@ -126,7 +126,7 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
+    _shader->SetInt("nbrDirLights", m_dirLights.size());
     _shader->SetInt("nbrPointLights", m_pointLights.size());
     _shader->SetInt("nbrSpotLights", m_spotLights.size());
 
@@ -138,7 +138,6 @@ void Scene::UpdateLights(Shader* _shader)
     {
         m_pointLights[i]->Update(_shader);
     }
-
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
         m_spotLights[i]->Update(_shader);
@@ -166,25 +165,38 @@ GameObject* Scene::GetWorld()
     return m_world;
 }
 
-void Scene::DeleteGameObject(GameObject* _gameObject)
-{
-    _gameObject->transform->GetParent()->RemoveChild(_gameObject->transform);
-
-    std::erase(m_gameObjects, _gameObject);
-    if (Mesh* m = static_cast<Mesh*>(_gameObject))
-    {
-        std::erase(m_meshes, m);
-    }
-    for (Transform* go : _gameObject->transform->GetChildren())
-    {
-        DeleteGameObject(go->owner);
-    }
-    
-}
-
 void Scene::CreateGameObject(GameObject* _owner)
 {
     GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
     m_gameObjects.push_back(go);
     _owner->transform->AddChild(go->transform);
+}
+
+void Scene::DeleteGameObject(GameObject* _gameObject)
+{
+    std::erase(m_gameObjects, _gameObject);
+    if (Mesh* m = static_cast<Mesh*>(_gameObject))
+    {
+        std::erase(m_meshes, m);
+    }
+    _gameObject->DeleteAllComponents();
+}
+
+void Scene::DeleteLight(Light* _light)
+{
+    if (PointLight* pL = static_cast<PointLight*>(_light))
+    {
+        std::erase(m_pointLights, pL);
+    }
+    else if (SpotLight* sL = static_cast<SpotLight*>(_light))
+    {
+        std::erase(m_spotLights, sL);
+    }
+    else if (DirectionalLight* dL = static_cast<DirectionalLight*>(_light))
+    {
+        std::erase(m_dirLights, dL);
+    }
+    else
+    {
+    }
 }
