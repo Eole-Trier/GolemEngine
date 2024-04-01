@@ -82,7 +82,6 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
     // Temporary to test graph scene
     m_world->transform->UpdateSelfAndChilds();
-
     for (int i = 0; i < m_meshes.size(); i++)
     {
         m_meshes[i]->Draw(_width, _height, _camera);

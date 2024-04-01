@@ -53,7 +53,6 @@ void Transform::RemoveChild(Transform* const _t)
 
 void Transform::SetParent(Transform* const _t)
 {
-
     if (m_parent)
         m_parent->RemoveChild(this);
     m_parent = _t;
@@ -79,6 +78,9 @@ bool Transform::IsAParentOf(Transform* const _t)
         {
             if (child == _t)
                 return true;
+        }
+        for (Transform* child : m_children)
+        {
             return child->IsAParentOf(_t);
         }
     }

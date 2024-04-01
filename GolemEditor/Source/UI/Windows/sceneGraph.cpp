@@ -48,7 +48,6 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 	{
 		name = "##input";
 	}
-
 	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
 		if (m_renaming == _gameObject)
@@ -93,6 +92,7 @@ void SceneGraph::DisplayObjects(GolemEngine* _golemEngine, GameObject* _gameObje
 				ImGui::EndPopup();
 			}
 
+			// Drag and Drop management
 			if (ImGui::BeginDragDropSource())
 			{
 				ImGui::SetDragDropPayload("Golem", &_gameObject, sizeof(_gameObject));
