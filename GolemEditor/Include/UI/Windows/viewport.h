@@ -5,6 +5,7 @@
 
 
 class Camera;
+extern bool g_isFromFileBrowser;
 
 class Viewport : public Window
 {
@@ -19,7 +20,6 @@ private:
 	float m_roll;
 	bool m_firstMouse;
 	bool m_isDragging = false;
-
 	bool m_lastSpacePress = false;
 
 public:

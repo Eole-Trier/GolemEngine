@@ -10,6 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
+#include "UI/Windows/viewport.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/tools.h"
 #include "Core/scene.h"
@@ -145,6 +146,8 @@ void FileBrowser::ContentBrowser()
 			
 			if (ImGui::BeginDragDropSource())
 			{
+				g_isFromFileBrowser = true;
+
 				draggingFilePath = path;
 				if (!p.is_directory())
 					ImGui::SetDragDropPayload("FileDrop", draggingFilePath.c_str(), strlen(draggingFilePath.c_str()) + 1);

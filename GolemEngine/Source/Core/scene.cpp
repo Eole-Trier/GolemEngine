@@ -110,24 +110,24 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
-    // TODO Test json (need to clean up)
-    std::string filePath = Tools::FindFile("test.json");
+    //// TODO Test json (need to clean up)
+    //std::string filePath = Tools::FindFile("test.json");
 
-    std::ifstream file(filePath);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file " << filePath << std::endl;
-        return;
-    }
-    json movie;
-    file >> movie;
-    std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
-    std::cout << "Year: " << movie["year"].get<int>() << std::endl;
+    //std::ifstream file(filePath);
+    //if (!file.is_open()) {
+    //    std::cerr << "Failed to open file " << filePath << std::endl;
+    //    return;
+    //}
+    //json movie;
+    //file >> movie;
+    //std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
+    //std::cout << "Year: " << movie["year"].get<int>() << std::endl;
 
-    std::cout << "Cast:" << std::endl;
-    for (const auto& actor : movie["cast"]) {
-        std::cout << "  " << actor.get<std::string>() << std::endl;
-    }
-    file.close();
+    //std::cout << "Cast:" << std::endl;
+    //for (const auto& actor : movie["cast"]) {
+    //    std::cout << "  " << actor.get<std::string>() << std::endl;
+    //}
+    //file.close();
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();
