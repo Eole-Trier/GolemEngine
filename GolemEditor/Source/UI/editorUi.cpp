@@ -82,8 +82,26 @@ void EditorUi::BeginDockSpace()
     }
 #pragma endregion Setup dockspace
 
+    ImGui::Begin("DockSpace_Window", &dockspaceOpen, windowFlags);
+
+    if (ImGui::BeginMenuBar())
+    {
+        // Add your toolbar items here
+        if (ImGui::BeginMenu("Save Scene"))
+        {
+            // Add menu items here
+            ImGui::EndMenu();
+        }
+        // Add more menus if needed
+        ImGui::EndMenuBar();
+    }
+    
+    if (optFullscreen)
+    {
+        ImGui::PopStyleVar(3);
+    }
+    
 #pragma region Create dockspace
-    ImGui::Begin("DockSpace Demo", &dockspaceOpen, windowFlags);
 
     ImGuiID dockspace_id = ImGui::GetID("DockSpace");
     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
@@ -130,11 +148,6 @@ void EditorUi::BeginDockSpace()
         ImGui::DockBuilderFinish(dockspace_id);
     }
 #pragma endregion Create dockspace 
-
-    if (optFullscreen)
-    {
-        ImGui::PopStyleVar(3);
-    }
 
     UpdateWindows();
 }
