@@ -1,6 +1,7 @@
 #include "Core/scene.h"
 
 #include <filesystem>
+#include <nlohmann/json.hpp>
 
 #include "utils.h"
 #include "Resource/resourceManager.h"
@@ -15,6 +16,9 @@
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
+
+using json = nlohmann::json;
+
 
 Scene::Scene(std::string _name)
     : name(_name)
@@ -107,6 +111,25 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
+    // TODO Test json (need to clean up)
+    std::string filePath = Tools::FindFile("test.json");
+
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file " << filePath << std::endl;
+        return;
+    }
+    json movie;
+    file >> movie;
+    std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
+    std::cout << "Year: " << movie["year"].get<int>() << std::endl;
+
+    std::cout << "Cast:" << std::endl;
+    for (const auto& actor : movie["cast"]) {
+        std::cout << "  " << actor.get<std::string>() << std::endl;
+    }
+    file.close();
+
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();
