@@ -1,5 +1,6 @@
 #include "UI/toolbar.h"
 
+#include "Resource/sceneManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -10,13 +11,12 @@ void Toolbar::Update()
 {
     if (ImGui::BeginMenuBar())
     {
-        // Add your toolbar items here
         if (ImGui::BeginMenu("Save Scene"))
         {
-            // Add menu items here
+            SceneManager::SaveScene();
             ImGui::EndMenu();
         }
-        // Add more menus if needed
+        
         ImGui::EndMenuBar();
     }
 }

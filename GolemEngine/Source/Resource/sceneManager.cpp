@@ -1,11 +1,16 @@
 #include "Resource/sceneManager.h"
+
+#include <nlohmann/json.hpp>
+
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
+
+using json = nlohmann::json;
 
 
 void SceneManager::Init()
 {
-    m_scenes.push_back(new Scene("Scene_1"));
+    m_scenes.push_back(new Scene("Scene_0"));
     LoadScene(0);
     InitScene();
 }
@@ -18,10 +23,9 @@ void SceneManager::InitScene()
     GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
-void SceneManager::SaveCurrentScene()
+void SceneManager::SaveScene()
 {
     // TODO
-    // Ctrl + S for saving current scene
 }
 
 void SceneManager::CreateScene(std::string _sceneName)
