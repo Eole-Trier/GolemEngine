@@ -19,7 +19,7 @@ Inspector::Inspector(std::string _name)
 
 Inspector::~Inspector() {}
 
-void Inspector::Update(GolemEngine* _golemEngine)
+void Inspector::Update()
 {
 	ImGui::Begin(name.c_str());
 

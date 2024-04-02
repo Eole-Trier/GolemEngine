@@ -9,7 +9,6 @@
 #include "imgui_stdlib.h"
 #include "vector2.h"
 
-class GolemEngine;
 
 class Inspector : public Window
 {
@@ -20,6 +19,6 @@ public:
 	Inspector(std::string _name);
 	~Inspector();
 
-	void Update(GolemEngine* _golemEngine) override;
+	void Update() override;
 };
 	

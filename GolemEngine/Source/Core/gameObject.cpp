@@ -1,6 +1,7 @@
 #include "Core/gameObject.h"
 #include "Components/component.h"
 #include "golemEngine.h"
+#include "Resource/sceneManager.h"
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
 	: name(_name), m_selected(false)
@@ -36,13 +37,13 @@ void GameObject::DeleteTransform(Transform* _t)
 
 	for (Transform* go : _t->GetChildren())
 	{
-		GolemEngine::GetInstance()->GetScene()->DeleteGameObject(go->owner);
+		SceneManager::GetCurrentScene()->DeleteGameObject(go->owner);
 	}
 }
 
 void GameObject::DeleteLight(Light* _l)
 {
-	GolemEngine::GetInstance()->GetScene()->DeleteLight(_l);
+	SceneManager::GetCurrentScene()->DeleteLight(_l);
 }
 
 void GameObject::RemoveComponent(Component* _c)

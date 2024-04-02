@@ -7,7 +7,7 @@
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 
 
 void Mesh::SetupMesh()

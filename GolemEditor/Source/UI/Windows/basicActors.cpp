@@ -14,7 +14,7 @@ BasicActors::BasicActors(std::string _name)
 
 BasicActors::~BasicActors() {}
 
-void BasicActors::Update(GolemEngine* _golemEngine)
+void BasicActors::Update()
 {
 	ImGui::Begin(name.c_str());
 

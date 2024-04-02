@@ -34,6 +34,8 @@ public:
 	template<class T>
 	T* Get(std::string _name);
 	void Delete(std::string _name);
+
+	std::unordered_map<std::string, Resource*> GetResources();
 };
 
 //static inline ResourceManager* ResourceManager::GetInstance()
@@ -64,6 +66,11 @@ inline void ResourceManager::Delete(std::string _name)
 {
 	delete m_resources[_name];
 	m_resources.erase(_name);
+}
+
+inline std::unordered_map<std::string, Resource*> ResourceManager::GetResources()
+{
+	return m_resources;
 }
 
 

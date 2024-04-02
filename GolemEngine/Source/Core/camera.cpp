@@ -1,4 +1,4 @@
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 
 #include <Windows.h>
 
@@ -54,11 +54,11 @@ void Camera::ProcessKeyboardInput(float _deltaTime)
     }
     if (InputManager::IsKeyPressed(KEY_Q))
     {
-        m_position += m_up * m_movementSpeed * _deltaTime;
+        m_position -= m_up * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_E))
     {
-        m_position -= m_up * m_movementSpeed * _deltaTime;
+        m_position += m_up * m_movementSpeed * _deltaTime;
     }
 }
 
@@ -118,7 +118,7 @@ void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch,
 
     // Use this offset to change camera vector values thus moving the camera
     float xOffset = mouseOffset.x;
-    float yOffset = mouseOffset.y;
+    float yOffset = -mouseOffset.y;
 
     xOffset *= m_mouseSensitivity;
     yOffset *= m_mouseSensitivity;
