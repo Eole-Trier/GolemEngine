@@ -13,7 +13,9 @@
 
 Inspector::Inspector(std::string _name)
 	: Window(_name)
-{}
+{
+	addComponentButtonSize = Vector2(400, 20);
+}
 
 Inspector::~Inspector() {}
 
@@ -24,7 +26,10 @@ void Inspector::Update(GolemEngine* _golemEngine)
 	if (EditorUi::selected != nullptr)
 	{
 		DisplayType::DisplayField(EditorUi::selected);
+		
+		if (ImGui::Button("Add Component", ImVec2(addComponentButtonSize.x, addComponentButtonSize.y)))
+		{
+		}
 	}
-
 	ImGui::End();
 }

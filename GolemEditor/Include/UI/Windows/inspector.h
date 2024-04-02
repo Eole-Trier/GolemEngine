@@ -7,11 +7,15 @@
 #include <iostream>
 #include "imgui.h"
 #include "imgui_stdlib.h"
+#include "vector2.h"
 
 class GolemEngine;
 
 class Inspector : public Window
 {
+private:
+	Vector2 addComponentButtonSize;
+
 public:
 	Inspector(std::string _name);
 	~Inspector();

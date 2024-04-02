@@ -17,6 +17,7 @@ private:
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
+	float m_roll;
 
 	bool m_lastSpacePress = false;
 
