@@ -8,7 +8,6 @@
 #include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
 #include "UI/Windows/inspector.h"
-#include "UI/Windows/toolBar.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -26,7 +25,6 @@ void EditorUi::Init()
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
-    m_windows.push_back(new ToolBar("ToolBar"));
 
     // Setup Imgui context
     IMGUI_CHECKVERSION();
