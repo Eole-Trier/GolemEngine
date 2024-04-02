@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\UI\toolbar.cpp" />
     <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
+    <ClInclude Include="Include\UI\toolbar.h" />
     <ClInclude Include="Include\UI\Windows\basicActors.h" />
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\Windows\fileBrowser.h" />

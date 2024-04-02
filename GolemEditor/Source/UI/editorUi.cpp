@@ -84,17 +84,7 @@ void EditorUi::BeginDockSpace()
 
     ImGui::Begin("DockSpace_Window", &dockspaceOpen, windowFlags);
 
-    if (ImGui::BeginMenuBar())
-    {
-        // Add your toolbar items here
-        if (ImGui::BeginMenu("Save Scene"))
-        {
-            // Add menu items here
-            ImGui::EndMenu();
-        }
-        // Add more menus if needed
-        ImGui::EndMenuBar();
-    }
+    m_toolbar->Update();
     
     if (optFullscreen)
     {

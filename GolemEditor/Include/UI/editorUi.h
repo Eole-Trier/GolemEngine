@@ -3,8 +3,9 @@
 #include <vector>
 #include <string>
 
-#include "vector2.h"
 #include "Core/gameobject.h"
+#include "UI/toolbar.h"
+#include "vector2.h"
 
 
 class Window;
@@ -14,6 +15,7 @@ class EditorUi
 {
 private:
 	static inline std::vector<Window*> m_windows;
+	static inline Toolbar* m_toolbar;
 
 public:
 	static inline GameObject* selected = nullptr;
