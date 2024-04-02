@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "imgui.h"
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 #include "imgui/backends/imgui_impl_glfw.h"
 
 

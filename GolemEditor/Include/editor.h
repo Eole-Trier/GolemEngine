@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Viewport/scene.h"
+#include "Core/scene.h"
 
 class EditorUi;
 struct GLFWwindow;

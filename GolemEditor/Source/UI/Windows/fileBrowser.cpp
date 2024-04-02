@@ -12,7 +12,7 @@
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/tools.h"
-#include "Viewport/scene.h"
+#include "Core/scene.h"
 #include "Core/gameobject.h"
 
 

@@ -2,7 +2,7 @@
 
 #include "dll.h"
 #include "Resource/resourceManager.h"
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 #include "Debug/log.h"
 
 class DirectionalLight;

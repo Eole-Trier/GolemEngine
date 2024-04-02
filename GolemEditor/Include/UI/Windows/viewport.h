@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 #include "UI/Windows/window.h"
 
 

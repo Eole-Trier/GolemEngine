@@ -4,7 +4,7 @@
 #include <string>
 
 #include "dll.h"
-#include "Viewport/scene.h"
+#include "Core/scene.h"
 
 
 class GOLEM_ENGINE_API SceneManager

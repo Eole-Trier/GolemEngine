@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "dll.h"
-#include "Viewport/scene.h"
+#include "Core/scene.h"
 
 
 struct GLFWwindow;

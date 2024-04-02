@@ -3,8 +3,8 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/sceneManager.h"
-#include "Viewport/scene.h"
-#include "Viewport/camera.h"
+#include "Core/scene.h"
+#include "Core/camera.h"
 #include "Inputs/inputManager.h"
 #include "vector4.h"
 
