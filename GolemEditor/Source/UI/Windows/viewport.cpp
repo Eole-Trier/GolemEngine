@@ -91,6 +91,10 @@ void Viewport::DragDropEvent()
             SceneManager::GetCurrentScene()->isInit = true;
             m_isDragging = false;
         }
+        else
+        {
+
+        }
     }
 }
 

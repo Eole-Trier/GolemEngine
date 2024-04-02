@@ -175,6 +175,7 @@
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
     <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
     <ClCompile Include="Source\UI\Windows\inspector.cpp" />
+    <ClCompile Include="Source\UI\Windows\toolBar.cpp" />
     <ClCompile Include="Source\UI\Windows\viewport.cpp" />
     <ClCompile Include="Source\UI\Windows\sceneGraph.cpp" />
     <ClCompile Include="Source\editor.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
     <ClInclude Include="Include\UI\Windows\inspector.h" />
+    <ClInclude Include="Include\UI\Windows\toolBar.h" />
     <ClInclude Include="Include\UI\Windows\viewport.h" />
     <ClInclude Include="Include\UI\Windows\sceneGraph.h" />
     <ClInclude Include="Include\UI\Windows\window.h" />

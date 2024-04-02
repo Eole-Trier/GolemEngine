@@ -20,7 +20,8 @@ void SceneManager::InitScene()
 
 void SceneManager::SaveCurrentScene()
 {
-    // TODO   
+    // TODO
+    // Ctrl + S for saving current scene
 }
 
 void SceneManager::CreateScene(std::string _sceneName)
