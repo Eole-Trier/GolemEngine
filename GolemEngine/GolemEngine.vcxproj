@@ -40,6 +40,8 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
+    <ClCompile Include="Source\Reflection\classManager.cpp" />
+    <ClCompile Include="Source\Reflection\displayType.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
@@ -73,13 +75,16 @@
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\point.h" />
     <ClInclude Include="Include\Components\Light\spot.h" />
-    <ClInclude Include="Include\Core\gameobject.h" />
+    <ClInclude Include="Include\Core\gameObject.h" />
     <ClInclude Include="Include\Core\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\Inputs\inputManager.h" />
+    <ClInclude Include="Include\Reflection\attributes.h" />
+    <ClInclude Include="Include\Reflection\classesManager.h" />
+    <ClInclude Include="Include\Reflection\displayType.h" />
     <ClInclude Include="Include\Reflection\refl.hpp" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />

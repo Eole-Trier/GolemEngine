@@ -25,8 +25,8 @@ Scene::Scene(std::string _name)
 void Scene::Init()
 {
     CreateAndLoadResources();
-    InitLights();
     InitGameObjects();
+    InitLights();
 }
 
 void Scene::InitGameObjects()
@@ -74,14 +74,14 @@ void Scene::InitGameObjects()
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
-        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
+    m_dirLights.push_back(new DirectionalLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
+        Vector3(0.0f, 0.0f, 0.0f), m_dirLights, m_maxDirLights));
 
     // Add some point lights
     m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f),
-        Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
+        Vector3(0, 0, 0), 1.f, 0.f, 0.f, m_pointLights, m_maxPointLights));
+
+    m_gameObjects[1]->AddComponent(m_pointLights[0]);
 }
 
 void Scene::CreateAndLoadResources()
@@ -144,21 +144,21 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
+    _shader->SetInt("nbrDirLights", m_dirLights.size());
+    _shader->SetInt("nbrPointLights", m_pointLights.size());
+    _shader->SetInt("nbrSpotLights", m_spotLights.size());
+
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
-        m_dirLights[i]->SetDirectionalLight(_shader);
+        m_dirLights[i]->Update(_shader);
     }
-    _shader->SetInt("nbrPointLights", m_pointLights.size());
     for (unsigned int i = 0; i < m_pointLights.size(); ++i)
     {
-        m_pointLights[i]->SetPointLight(_shader);
+        m_pointLights[i]->Update(_shader);
     }
-
-    _shader->SetInt("nbrSpotLights", m_spotLights.size());
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
-        m_spotLights[i]->SetSpotLight(_shader);
+        m_spotLights[i]->Update(_shader);
     }
 }
 
@@ -174,21 +174,6 @@ bool Scene::IsNameExists(const std::string& _name)
         }
     }
     return false;
-}
-
-void Scene::DeleteGameObject(GameObject* _gameObject)
-{
-    _gameObject->transform->GetParent()->RemoveChild(_gameObject->transform);
-
-    std::erase(m_gameObjects, _gameObject);
-    if (Mesh* m = static_cast<Mesh*>(_gameObject))
-    {
-        std::erase(m_meshes, m);
-    }
-    for (Transform* go : _gameObject->transform->GetChildren())
-    {
-        DeleteGameObject(go->owner);
-    }
 }
 
 void Scene::CreateGameObject(GameObject* _owner)

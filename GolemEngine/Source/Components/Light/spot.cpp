@@ -4,6 +4,7 @@
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
+#include "Core/gameObject.h"
 
 SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, 
     const float _linear, const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
@@ -29,4 +30,11 @@ void SpotLight::SetSpotLight(Shader* _shader)
     _shader->SetFloat("spotLights[" + std::to_string(id) + "].quadratic", quadratic);
     _shader->SetFloat("spotLights[" + std::to_string(id) + "].cutOff", cos(DegToRad(cutOff)));
     _shader->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
+}
+
+void SpotLight::Update(Shader* _shader)
+{
+    if (owner)
+        position = owner->transform->globalPosition;
+    SetSpotLight(_shader);
 }
