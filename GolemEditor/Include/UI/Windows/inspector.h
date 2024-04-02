@@ -20,8 +20,5 @@ public:
 	~Inspector();
 
 	void Update() override;
-
-	template<typename TypeT>
-	void DisplayField(TypeT* _class);
 };
 	

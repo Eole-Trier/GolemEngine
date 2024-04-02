@@ -183,6 +183,36 @@ void Scene::CreateGameObject(GameObject* _owner)
     _owner->transform->AddChild(go->transform);
 }
 
+void Scene::DeleteGameObject(GameObject* _gameObject)
+{
+    std::erase(m_gameObjects, _gameObject);
+    if (Mesh* m = static_cast<Mesh*>(_gameObject))
+    {
+        std::erase(m_meshes, m);
+    }
+    _gameObject->DeleteAllComponents();
+}
+
+void Scene::DeleteLight(Light* _light)
+{
+    if (PointLight* pL = static_cast<PointLight*>(_light))
+    {
+        std::erase(m_pointLights, pL);
+    }
+    else if (SpotLight* sL = static_cast<SpotLight*>(_light))
+    {
+        std::erase(m_spotLights, sL);
+    }
+    else if (DirectionalLight* dL = static_cast<DirectionalLight*>(_light))
+    {
+        std::erase(m_dirLights, dL);
+    }
+    else
+    {
+    }
+}
+
+
 // To add a new gameobject in the scene
 void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
