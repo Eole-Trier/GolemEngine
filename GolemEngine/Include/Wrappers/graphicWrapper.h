@@ -53,9 +53,7 @@ public:
 	// Enable a feature of OpenGl
 	static void EnableDepth();
 
-	void Bind();
-	void Unbind();
-	int ReadPixel(uint32_t _attachmentIndex, int _x, int _y);
+	static int ReadPixel(uint32_t _attachmentIndex, int _x, int _y);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();
@@ -88,6 +86,8 @@ public:
 	static void DeleteShaderObject(GLuint _shader);
 	// Use shader
 	static void UseShader(GLuint _program);
+
+	static unsigned int GetFbo();
 
 	static void SetShaderBool(GLuint _program, const std::string& _name, bool _value);
 	static void SetShaderInt(GLuint _program, const std::string& _name, int _value);

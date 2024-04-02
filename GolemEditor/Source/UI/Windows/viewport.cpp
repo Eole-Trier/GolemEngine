@@ -23,7 +23,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
-    GraphicWrapper::CreateFramebuffer(GL_RED_INTEGER, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     

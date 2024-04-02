@@ -23,7 +23,7 @@ int GraphicWrapper::Init()
 
 void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
-    // Create framebuffer
+    // Create framebuffeSr
     glGenFramebuffers(1, &m_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
@@ -56,17 +56,6 @@ void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
     glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-}
-
-void GraphicWrapper::Bind()
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-    glViewport(0, 0, m_width, m_height);
-}
-
-void GraphicWrapper::Unbind()
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
@@ -161,6 +150,11 @@ void GraphicWrapper::DeleteShaderObject(GLuint _shader)
 void GraphicWrapper::UseShader(GLuint _program)
 {
     glUseProgram(_program);
+}
+
+unsigned int GraphicWrapper::GetFbo()
+{
+    return m_fbo;
 }
 
 void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value)
