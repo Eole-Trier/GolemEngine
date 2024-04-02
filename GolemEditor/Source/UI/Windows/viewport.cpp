@@ -13,6 +13,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+bool g_isFromFileBrowser = false;
 
 Viewport::Viewport(std::string _name)
     : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0)
@@ -68,11 +69,11 @@ void Viewport::DragDropEvent()
     if (ImGui::BeginDragDropTarget())
     {
         m_isDragging = true;
-
+        
         ImGui::EndDragDropTarget();
     }
 
-    if (m_isDragging)
+    if (g_isFromFileBrowser && m_isDragging)
     {
         ImVec2 itemRectMin = ImGui::GetItemRectMin();
         ImVec2 itemRectMax = ImGui::GetItemRectMax();
@@ -90,10 +91,7 @@ void Viewport::DragDropEvent()
             SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
             SceneManager::GetCurrentScene()->isInit = true;
             m_isDragging = false;
-        }
-        else
-        {
-
+            g_isFromFileBrowser = false;
         }
     }
 }
