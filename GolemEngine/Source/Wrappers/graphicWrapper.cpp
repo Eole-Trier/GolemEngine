@@ -29,11 +29,9 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
 
     // Create texturebuffer
     glGenTextures(1, &m_textureId);
-    glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, _format, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
+    AttachTexture(_format, _width, _height, 0, m_textureId);
+
+
 
     CreateRenderBuffer(_width, _height);
 
@@ -47,6 +45,15 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
+}
+
+void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
+{
+    glBindTexture(GL_TEXTURE_2D, _id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, _format, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
 }
 
 void GraphicWrapper::CreateRenderBuffer(int _width, int _height)

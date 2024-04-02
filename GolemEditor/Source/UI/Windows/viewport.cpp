@@ -4,6 +4,7 @@
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
+#include "Resource/Rendering/texture.h"
 #include "inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -23,7 +24,7 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
-    GraphicWrapper::CreateFramebuffer(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(GL_RGB, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
@@ -41,6 +42,8 @@ void Viewport::Update(GolemEngine* _golemEngine)
 
     if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
+        Texture texture(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
+        GraphicWrapper::AttachTexture(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, 1, texture.id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         Log::Print("Pixel data = %d", pixelData);
     }
