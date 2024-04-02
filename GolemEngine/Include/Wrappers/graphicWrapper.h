@@ -39,7 +39,7 @@ public:
 	// Initialize library
 	static int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	static void CreateFramebuffer(int _width, int _height);
+	static void CreateFramebuffer(unsigned int _format, int _width, int _height);
 
 	static void CreateRenderBuffer(int _width, int _height);
 	// Used to clear a buffer for the next draw
@@ -51,6 +51,10 @@ public:
 	static void UnbindFramebuffer();
 	// Enable a feature of OpenGl
 	static void EnableDepth();
+
+	void Bind();
+	void Unbind();
+	int ReadPixel(uint32_t _attachmentIndex, int _x, int _y);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();

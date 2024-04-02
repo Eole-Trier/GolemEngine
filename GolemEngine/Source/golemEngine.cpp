@@ -31,7 +31,7 @@ void GolemEngine::InitScene()
     m_scene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     
-    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
 void GolemEngine::Init()

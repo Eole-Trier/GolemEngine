@@ -1,8 +1,6 @@
 #include "UI/Windows/viewport.h"
 
 #include "Viewport/camera.h"
-#include "Resource/Rendering/pickingStrategy.h"
-#include "Inputs/Mouse.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
@@ -25,9 +23,27 @@ void Viewport::Update(GolemEngine* _golemEngine)
 {
     SetCamera(GolemEngine::GetInstance()->GetCamera());
 
+    GraphicWrapper::CreateFramebuffer(GL_RED_INTEGER, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
     auto viewportOffset = ImGui::GetCursorPos();
+
+    auto [mx, my] = ImGui::GetMousePos();
+    mx -= m_viewportBounds[0].x;
+    my -= m_viewportBounds[0].y;
+
+    Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
+    my = viewportSize.y - my;
+
+    int mouseX = (int)mx;
+    int mouseY = (int)my;
+
+    if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+    {
+        int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
+        Log::Print("Pixel data = %d", pixelData);
+    }
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
@@ -39,9 +55,6 @@ void Viewport::Update(GolemEngine* _golemEngine)
     ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
     m_viewportBounds[0] = { minBound.x, minBound.y };
     m_viewportBounds[1] = { maxBound.x, maxBound.y };
-
-    Log::Print("Min bounds = %f, %f", m_viewportBounds[0].x, m_viewportBounds[0].y);
-    Log::Print("Max bounds = %f, %f", m_viewportBounds[1].x, m_viewportBounds[1].y);
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
     //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;

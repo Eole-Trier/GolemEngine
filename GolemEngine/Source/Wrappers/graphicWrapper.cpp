@@ -1,10 +1,10 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Core/gameobject.h"
-#include "Inputs/mouse.h"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+#include "Debug/log.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
@@ -21,7 +21,7 @@ int GraphicWrapper::Init()
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
-void GraphicWrapper::CreateFramebuffer(int _width, int _height)
+void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -30,7 +30,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     // Create texturebuffer
     glGenTextures(1, &m_textureId);
     glBindTexture(GL_TEXTURE_2D, m_textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, _format, GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
@@ -56,6 +56,25 @@ void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
     glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+}
+
+void GraphicWrapper::Bind()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glViewport(0, 0, m_width, m_height);
+}
+
+void GraphicWrapper::Unbind()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
+{
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + _attachmentIndex);
+    int pixelData;
+    glReadPixels(_x, _y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+    return pixelData;
 }
 
 void GraphicWrapper::ClearBuffer()

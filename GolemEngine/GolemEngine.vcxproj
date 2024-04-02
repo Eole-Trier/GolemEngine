@@ -43,8 +43,6 @@
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\pickingStrategy.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\pickingTexture.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
@@ -85,8 +83,6 @@
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
-    <ClInclude Include="Include\Resource\Rendering\pickingStrategy.h" />
-    <ClInclude Include="Include\Resource\Rendering\pickingTexture.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />

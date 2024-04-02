@@ -47,8 +47,6 @@
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\pickingStrategy.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\pickingTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -112,7 +110,5 @@
     <ClInclude Include="Include\inputManager.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
-    <ClInclude Include="Include\Resource\Rendering\pickingStrategy.h" />
-    <ClInclude Include="Include\Resource\Rendering\pickingTexture.h" />
   </ItemGroup>
 </Project>
