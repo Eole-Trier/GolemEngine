@@ -24,7 +24,7 @@ public:
 
 public:
 	GameObject(const std::string& _name, Transform* _transform);
-	~GameObject();
+	virtual ~GameObject();
 
 
 	void Update();
@@ -54,10 +54,13 @@ public:
 template<typename TypeT>
 void GameObject::AddComponent(TypeT* _type)
 {
-	if (std::is_same_v<TypeT, Transform> && transform != nullptr)
+	if constexpr (std::is_same_v<TypeT, Transform>)
 	{
-		Log::Print("The GameObject already have a Transform");
-		return;
+		if (transform != nullptr)
+		{
+			Log::Print("The GameObject already has a Transform");
+			return;
+		}
 	}
 	static_assert(std::is_base_of_v<Component, TypeT>, "TypeT isn't a component");
 	m_components.push_back(_type);

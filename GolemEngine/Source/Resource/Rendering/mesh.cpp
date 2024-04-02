@@ -43,6 +43,8 @@ Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &m_model->VAO);
     glDeleteBuffers(1, &m_model->VBO);
+
+    // TODO from scene std::erase(m_meshes, m);
 }
 
 void Mesh::Draw(float _width, float _height, Camera* _cam)

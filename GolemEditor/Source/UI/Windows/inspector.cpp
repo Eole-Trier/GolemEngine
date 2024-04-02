@@ -29,6 +29,7 @@ void Inspector::Update(GolemEngine* _golemEngine)
 		
 		if (ImGui::Button("Add Component", ImVec2(addComponentButtonSize.x, addComponentButtonSize.y)))
 		{
+
 		}
 	}
 	ImGui::End();
