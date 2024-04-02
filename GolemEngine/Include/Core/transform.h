@@ -17,11 +17,13 @@ private:
 	Matrix4 m_globalModel;
 
 public:
-	Vector3 position;
+	Vector3 globalPosition; // access only, modification is useless yet
+	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;
 
 public:
+	GOLEM_ENGINE_API Transform() = default;
 	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
 	GOLEM_ENGINE_API void Update() override;
 
@@ -44,7 +46,7 @@ public:
 
 REFL_AUTO(
 	type(Transform, bases<Component>),
-	field(position),
+	field(localPosition),
 	field(rotation),
 	field(scaling)
 )

@@ -4,6 +4,7 @@
 #include "Resource/resourceManager.h"
 #include "Core/camera.h"
 #include "Debug/log.h"
+#include "Components/Light/light.h"
 
 class DirectionalLight;
 class PointLight;
@@ -44,8 +45,7 @@ public:
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
 	bool IsNameExists(const std::string& _name);
-	void DeleteGameObject(GameObject* _gameObject);
-	void CreateGameObject(GameObject* _owner);
+	
 	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	
@@ -54,4 +54,7 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
+	void CreateGameObject(GameObject* _owner);
+	void DeleteGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
 };

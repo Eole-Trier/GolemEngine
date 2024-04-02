@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
+#include "Reflection/attributes.h"
 
 class GameObject;
 
@@ -10,7 +11,9 @@ public:
 	GameObject* owner;
 
 public:
-	virtual void Update() = 0;
+	virtual ~Component() = 0;
+
+	virtual void Update() {};
 }; 
 
 REFL_AUTO(

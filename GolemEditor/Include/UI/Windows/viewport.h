@@ -16,6 +16,7 @@ private:
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
+	float m_roll;
 	bool m_firstMouse;
 	bool m_isDragging = false;
 

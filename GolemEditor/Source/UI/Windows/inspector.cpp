@@ -6,28 +6,18 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "Reflection/refl.hpp"
+#include "Refl/refl.hpp"
 #include "UI/editorUi.h"
+#include "Reflection/displayType.h"
 
 
 Inspector::Inspector(std::string _name)
 	: Window(_name)
-{}
-
+{
+	addComponentButtonSize = Vector2(400, 20);
+}
 
 Inspector::~Inspector() {}
-
-/*
-struct Point {
-	int x;
-	int y;
-};
-
-REFL_AUTO(
-		type(Point),
-		field(x),
-		field(y)
-	)*/
 
 void Inspector::Update()
 {
@@ -35,8 +25,11 @@ void Inspector::Update()
 
 	if (EditorUi::selected != nullptr)
 	{
-		DisplayField(EditorUi::selected);
+		DisplayType::DisplayField(EditorUi::selected);
+		
+		if (ImGui::Button("Add Component", ImVec2(addComponentButtonSize.x, addComponentButtonSize.y)))
+		{
+		}
 	}
-	
 	ImGui::End();
 }

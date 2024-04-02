@@ -1,7 +1,6 @@
 #include "Core/scene.h"
 
 #include <filesystem>
-#include <nlohmann/json.hpp>
 
 #include "utils.h"
 #include "Resource/resourceManager.h"
@@ -17,8 +16,6 @@
 #include "Core/gameobject.h"
 #include "Core/transform.h"
 
-using json = nlohmann::json;
-
 
 Scene::Scene(std::string _name)
     : name(_name)
@@ -29,8 +26,8 @@ Scene::Scene(std::string _name)
 void Scene::Init()
 {
     CreateAndLoadResources();
-    InitLights();
     InitGameObjects();
+    InitLights();
 }
 
 void Scene::InitGameObjects()
@@ -78,14 +75,14 @@ void Scene::InitGameObjects()
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(0.4f, 0.4f, 0.4f, 0.4f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(0.5f, 0.5f, 0.5f, 0.5f),
-        Vector3(-0.2f, -1.0f, -0.3f), m_dirLights, m_maxDirLights));
+    m_dirLights.push_back(new DirectionalLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
+        Vector3(0.0f, 0.0f, 0.0f), m_dirLights, m_maxDirLights));
 
     // Add some point lights
     m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(3, 0, 0), 1.f, 2.f, 1.f, m_pointLights, m_maxPointLights));
-    m_pointLights.push_back(new PointLight(Vector4(0.8f, 0.8f, 0.8f, 0.8f), Vector4(0.05f, 0.05f, 0.05f, 0.05f), Vector4(1.0f, 1.0f, 1.0f, 1.f),
-        Vector3(0, 0, 2), 1.0f, 0.09f, 0.032f, m_pointLights, m_maxPointLights));
+        Vector3(0, 0, 0), 1.f, 0.f, 0.f, m_pointLights, m_maxPointLights));
+
+    m_gameObjects[1]->AddComponent(m_pointLights[0]);
 }
 
 void Scene::CreateAndLoadResources()
@@ -111,25 +108,6 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
-    // TODO Test json (need to clean up)
-    std::string filePath = Tools::FindFile("test.json");
-
-    std::ifstream file(filePath);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file " << filePath << std::endl;
-        return;
-    }
-    json movie;
-    file >> movie;
-    std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
-    std::cout << "Year: " << movie["year"].get<int>() << std::endl;
-
-    std::cout << "Cast:" << std::endl;
-    for (const auto& actor : movie["cast"]) {
-        std::cout << "  " << actor.get<std::string>() << std::endl;
-    }
-    file.close();
-
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();
@@ -166,21 +144,21 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->SetInt("nbrDirectionalLights", m_dirLights.size());
+    _shader->SetInt("nbrDirLights", m_dirLights.size());
+    _shader->SetInt("nbrPointLights", m_pointLights.size());
+    _shader->SetInt("nbrSpotLights", m_spotLights.size());
+
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
-        m_dirLights[i]->SetDirectionalLight(_shader);
+        m_dirLights[i]->Update(_shader);
     }
-    _shader->SetInt("nbrPointLights", m_pointLights.size());
     for (unsigned int i = 0; i < m_pointLights.size(); ++i)
     {
-        m_pointLights[i]->SetPointLight(_shader);
+        m_pointLights[i]->Update(_shader);
     }
-
-    _shader->SetInt("nbrSpotLights", m_spotLights.size());
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
-        m_spotLights[i]->SetSpotLight(_shader);
+        m_spotLights[i]->Update(_shader);
     }
 }
 
@@ -198,27 +176,42 @@ bool Scene::IsNameExists(const std::string& _name)
     return false;
 }
 
-void Scene::DeleteGameObject(GameObject* _gameObject)
-{
-    _gameObject->transform->GetParent()->RemoveChild(_gameObject->transform);
-
-    std::erase(m_gameObjects, _gameObject);
-    if (Mesh* m = static_cast<Mesh*>(_gameObject))
-    {
-        std::erase(m_meshes, m);
-    }
-    for (Transform* go : _gameObject->transform->GetChildren())
-    {
-        DeleteGameObject(go->owner);
-    }
-}
-
 void Scene::CreateGameObject(GameObject* _owner)
 {
     GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
     m_gameObjects.push_back(go);
     _owner->transform->AddChild(go->transform);
 }
+
+void Scene::DeleteGameObject(GameObject* _gameObject)
+{
+    std::erase(m_gameObjects, _gameObject);
+    if (Mesh* m = static_cast<Mesh*>(_gameObject))
+    {
+        std::erase(m_meshes, m);
+    }
+    _gameObject->DeleteAllComponents();
+}
+
+void Scene::DeleteLight(Light* _light)
+{
+    if (PointLight* pL = static_cast<PointLight*>(_light))
+    {
+        std::erase(m_pointLights, pL);
+    }
+    else if (SpotLight* sL = static_cast<SpotLight*>(_light))
+    {
+        std::erase(m_spotLights, sL);
+    }
+    else if (DirectionalLight* dL = static_cast<DirectionalLight*>(_light))
+    {
+        std::erase(m_dirLights, dL);
+    }
+    else
+    {
+    }
+}
+
 
 // To add a new gameobject in the scene
 void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)

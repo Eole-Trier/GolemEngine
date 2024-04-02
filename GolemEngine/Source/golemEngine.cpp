@@ -7,10 +7,12 @@
 #include "Core/camera.h"
 #include "Inputs/inputManager.h"
 #include "vector4.h"
+#include "Reflection/classesManager.h"
 
 
 void GolemEngine::Init()
 {
+    ClassesManager::AddAllClasses();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
