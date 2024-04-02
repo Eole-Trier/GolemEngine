@@ -23,6 +23,7 @@ class Matrix4;
 class GOLEM_ENGINE_API GraphicWrapper
 {
 private:
+
 	static unsigned int m_vao;
 	static unsigned int m_vbo;
 	static unsigned int m_rbo;
