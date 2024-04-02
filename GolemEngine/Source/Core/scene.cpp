@@ -42,21 +42,17 @@ void Scene::InitGameObjects()
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
-    m_meshes.push_back(vikingMesh);
-    m_gameObjects.push_back(vikingMesh);
 
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
     Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
-    m_meshes.push_back(ballBaldMesh);
 
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
-    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald2 = resourceManager->Get<Model>("model_sphere");
-
+    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
+    Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
     Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
 
     m_meshes.push_back(vikingMesh);
@@ -69,7 +65,7 @@ void Scene::InitGameObjects()
 
     m_world->transform->AddChild(vikingMesh->transform);
     m_world->transform->AddChild(ballBaldMesh2->transform);
-    vikingMesh->transform->AddChild(ballBaldMesh->transform);
+    m_world->transform->AddChild(ballBaldMesh->transform);
 }
 
 void Scene::InitLights()
@@ -98,9 +94,16 @@ void Scene::CreateAndLoadResources()
     model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
 
     Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
-    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg"); 
+
+    Texture* sphere1_texture = resourceManager->Create<Texture>("all_bald_texture1");
+    sphere1_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+
     Model* sphere = resourceManager->Create<Model>("model_sphere");
     sphere->Load("Assets/Basics/sphere.obj");
+
+    Model* sphere1 = resourceManager->Create<Model>("model_sphere1");
+    sphere1->Load("Assets/Basics/sphere.obj");
     
     Shader* shad = resourceManager->Create<Shader>("default");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
@@ -118,9 +121,6 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _camera);
-    // Merge
-    //UpdateLights(shader);
-    //UpdateGameObjects(_width, _height, _window, _camera);
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -186,12 +186,17 @@ void Scene::CreateGameObject(GameObject* _owner)
 void Scene::DeleteGameObject(GameObject* _gameObject)
 {
     std::erase(m_gameObjects, _gameObject);
-   
-    std::erase(m_meshes, m);
     
     _gameObject->DeleteAllComponents();
+
     delete _gameObject;
 }
+
+void Scene::DeleteMesh(Mesh* _mesh)
+{
+    std::erase(m_meshes, _mesh);
+}
+
 
 void Scene::DeleteLight(Light* _light)
 {
@@ -206,9 +211,6 @@ void Scene::DeleteLight(Light* _light)
     else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
     {
         std::erase(m_dirLights, dL);
-    }
-    else
-    {
     }
 }
 
@@ -292,6 +294,11 @@ Mesh* Scene::GetMeshByName(std::string _name)
     }
     Log::Print("No mesh with the name %s has been found", _name.c_str());
     return nullptr;
+}
+
+std::vector<Mesh*> Scene::GetMeshes()
+{
+    return m_meshes;
 }
 
 std::string Scene::GetFileName(const std::string& _filePath)

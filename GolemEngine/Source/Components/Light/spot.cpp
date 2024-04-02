@@ -5,6 +5,7 @@
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameObject.h"
+#include "Resource/sceneManager.h"
 
 SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, 
     const float _linear, const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
@@ -17,6 +18,11 @@ SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vec
         Log::Print("The Spot light %d will not be used. Spot lights limit : %d", id, _maxSpots);
     }
 };
+
+SpotLight::~SpotLight()
+{
+    SceneManager::GetCurrentScene()->DeleteLight(this);
+}
 
 void SpotLight::SetSpotLight(Shader* _shader)
 {

@@ -24,6 +24,7 @@ public:
     PointLight() = default;
     PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, 
         const float _constant, const float _linear, const float _quadratic, std::vector<PointLight*> _pointLights, size_t _maxPoints);
+    ~PointLight();
     void SetPointLight(Shader* _shader);
    
     void Update(Shader* _shader) override;

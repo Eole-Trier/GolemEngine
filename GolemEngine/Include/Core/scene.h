@@ -19,7 +19,6 @@ private:
 	
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
-	std::vector<Mesh*> m_meshes;
 
 	static constexpr size_t m_maxDirLights = 1;
 	static constexpr size_t m_maxPointLights = 10; // According to the shader
@@ -30,6 +29,7 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
+	std::vector<Mesh*> m_meshes;
 	std::string name;
 	bool isInit = false;
 	std::string loadingObject;
@@ -50,11 +50,13 @@ public:
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	
 	Mesh* GetMeshByName(std::string _name);
+	std::vector<Mesh*> GetMeshes();
 	std::string GetFileName(const std::string& _filePath);
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
 	void CreateGameObject(GameObject* _owner);
 	void DeleteGameObject(GameObject* _gameObject);
+	void DeleteMesh(Mesh* _mesh);
 	void DeleteLight(Light* _light);
 };

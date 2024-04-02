@@ -20,6 +20,7 @@ public:
 	DirectionalLight() = default;
 	DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction, 
 		const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs);
+	~DirectionalLight();
 	void SetDirectionalLight(Shader* _shader);
 	
 	void Update(Shader* _shader) override;

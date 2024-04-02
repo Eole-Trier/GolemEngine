@@ -8,15 +8,15 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Core/camera.h"
-
+#include "Resource/sceneManager.h"
 
 void Mesh::SetupMesh()
 {
     glGenVertexArrays(1, &m_model->VAO);
 
     glGenBuffers(1, &m_model->VBO);
-    glBindVertexArray(m_model->VAO);
 
+    glBindVertexArray(m_model->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_model->VBO);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_model->vertices.size(), m_model->vertices.data(), GL_STATIC_DRAW);
@@ -44,7 +44,8 @@ Mesh::~Mesh()
     glDeleteVertexArrays(1, &m_model->VAO);
     glDeleteBuffers(1, &m_model->VBO);
 
-    // TODO from scene std::erase(m_meshes, m);
+    SceneManager::GetCurrentScene()->DeleteMesh(this);
+    delete m_texture;
 }
 
 void Mesh::Draw(float _width, float _height, Camera* _cam)

@@ -2,6 +2,7 @@
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
+#include "Resource/sceneManager.h"
 
 DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction, 
 	const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs)
@@ -13,6 +14,12 @@ DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambi
 		Log::Print("The Directional light %d will not be used. Directional lights limit : %d", id, _maxDirs);
 	}
 };
+
+DirectionalLight::~DirectionalLight()
+{
+	SceneManager::GetCurrentScene()->DeleteLight(this);
+}
+
 void DirectionalLight::SetDirectionalLight(Shader* _shader)
 {
 	_shader->SetVec3("dirLights[" + std::to_string(id) + "].direction", direction);
