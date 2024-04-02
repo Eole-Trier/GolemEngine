@@ -71,14 +71,8 @@ void Scene::InitGameObjects()
 void Scene::InitLights()
 {
     // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(0.0f, 0.0f, 0.0f), m_dirLights, m_maxDirLights));
-
-    // Add some point lights
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(0, 0, 0), 1.f, 0.f, 0.f, m_pointLights, m_maxPointLights));
-
-    m_gameObjects[1]->AddComponent(m_pointLights[0]);
+    DirectionalLight* dir = new DirectionalLight;
+    m_world->AddComponent(dir);
 }
 
 void Scene::CreateAndLoadResources()
@@ -285,6 +279,23 @@ void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
+void Scene::AddLight(Light* _light)
+{
+    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
+    {
+        m_pointLights.push_back(pL);
+    }
+    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
+    {
+        m_spotLights.push_back(sL);
+
+    }
+    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
+    {
+        m_dirLights.push_back(dL);
+    }
+}
+
 Mesh* Scene::GetMeshByName(std::string _name)
 {
     for (Mesh* mesh : m_meshes)
@@ -299,6 +310,36 @@ Mesh* Scene::GetMeshByName(std::string _name)
 std::vector<Mesh*> Scene::GetMeshes()
 {
     return m_meshes;
+}
+
+std::vector<DirectionalLight*> Scene::GetDirectionalLights()
+{
+    return m_dirLights;
+}
+
+std::vector<PointLight*> Scene::GetPointLights()
+{
+    return m_pointLights;
+}
+
+std::vector<SpotLight*> Scene::GetSpotLights()
+{
+    return m_spotLights;
+}
+
+size_t Scene::GetMaxDirectionalLights()
+{
+    return m_maxDirLights;
+}
+
+size_t Scene::GetMaxPointLights()
+{
+    return m_maxPointLights;
+}
+
+size_t Scene::GetMaxSpotLights()
+{
+    return m_maxSpotLights;
 }
 
 std::string Scene::GetFileName(const std::string& _filePath)

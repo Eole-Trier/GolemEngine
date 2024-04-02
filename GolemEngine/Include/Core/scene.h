@@ -20,7 +20,7 @@ private:
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
 
-	static constexpr size_t m_maxDirLights = 1;
+	static constexpr size_t m_maxDirLights = 3;
 	static constexpr size_t m_maxPointLights = 10; // According to the shader
 	static constexpr size_t m_maxSpotLights = 10;
 
@@ -48,9 +48,17 @@ public:
 	
 	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
+	void AddLight(Light* _light);
+
 	
 	Mesh* GetMeshByName(std::string _name);
 	std::vector<Mesh*> GetMeshes();
+	std::vector<DirectionalLight*> GetDirectionalLights();
+	std::vector<PointLight*> GetPointLights();
+	std::vector<SpotLight*> GetSpotLights();
+	size_t GetMaxDirectionalLights();
+	size_t GetMaxPointLights();
+	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();

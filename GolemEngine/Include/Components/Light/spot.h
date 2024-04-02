@@ -24,9 +24,9 @@ public:
     float outerCutOff;
 
 public:
-    SpotLight() = default;
+    SpotLight();
     SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, const float _linear,
-        const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots);
+        const float _quadratic, const float _cutOff, const float _outerCutOff);
     ~SpotLight();
     void SetSpotLight(Shader* _shader);
 

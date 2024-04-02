@@ -12,9 +12,6 @@
 
 class Inspector : public Window
 {
-private:
-	Vector2 addComponentButtonSize;
-
 public:
 	Inspector(std::string _name);
 	~Inspector();
