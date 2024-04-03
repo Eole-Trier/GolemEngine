@@ -23,7 +23,7 @@ class GOLEM_ENGINE_API Scene
 {
 private:
 	
-	GameObject* m_world;
+	GameObject* m_world = nullptr;
 	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 3;
@@ -33,9 +33,9 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
+	std::vector<Mesh*> m_meshes;
 
 public:
-	std::vector<Mesh*> m_meshes;
 	std::string name;
 	bool isInit = false;
 	std::string loadingObject;
@@ -51,33 +51,25 @@ public:
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
 	bool IsNameExists(const std::string& _name);
-	
 	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
-
-	
-	Mesh* GetMeshByName(std::string _name);
-	std::vector<Mesh*> GetMeshes();
-
-	std::vector<DirectionalLight*> GetDirectionalLights();
-	std::vector<PointLight*> GetPointLights();
-	std::vector<SpotLight*> GetSpotLights();
-
-	size_t GetMaxDirectionalLights();
-	size_t GetMaxPointLights();
-	size_t GetMaxSpotLights();
-
-	std::string GetFileName(const std::string& _filePath);
-	const std::vector<GameObject*>& GetGameObjects();
-	GameObject* GetWorld();
-
 	void CreateGameObject(GameObject* _owner);
 	void DeleteGameObject(GameObject* _gameObject);
 	void DeleteMesh(Mesh* _mesh);
 	void DeleteLight(Light* _light);
-
-
+	
+	Mesh* GetMeshByName(std::string _name);
+	std::vector<Mesh*> GetMeshes();
+	std::vector<DirectionalLight*> GetDirectionalLights();
+	std::vector<PointLight*> GetPointLights();
+	std::vector<SpotLight*> GetSpotLights();
+	size_t GetMaxDirectionalLights();
+	size_t GetMaxPointLights();
+	size_t GetMaxSpotLights();
+	std::string GetFileName(const std::string& _filePath);
+	const std::vector<GameObject*>& GetGameObjects();
+	GameObject* GetWorld();
 
 	
 	// Define serialization and deserialization functions manually because the
