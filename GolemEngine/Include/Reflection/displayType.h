@@ -44,18 +44,22 @@ template<typename TypeT>
 void DisplayType::DisplayField(TypeT* _class)
 {
 	constexpr auto type = refl::reflect<TypeT>();	// Get the reflected class
-	if (dynamic_cast<Component*>(_class) && !dynamic_cast<Transform*>(_class))  // If class is component replace the name by a button that can delete (can't delete transform)
+	Component* c = dynamic_cast<Component*>(_class);
+	if (c && !dynamic_cast<Transform*>(_class))  // If class is component replace the name by a button that can delete (can't delete transform)
 	{
 		Component* c = dynamic_cast<Component*>(_class);
-		const char* removeComponentPopupId = "Remove Component";
+		const char* removeComponentPopupId = type.name.c_str();
 		if (ImGui::Button(type.name.c_str()))
+		{
 			ImGui::OpenPopup(removeComponentPopupId);
-
+		}
 		if (ImGui::BeginPopupContextItem(removeComponentPopupId))
 		{
 			if (ImGui::MenuItem("Remove Component"))
 			{
 				c->owner->RemoveComponent(c);
+				ImGui::EndPopup();
+				return;
 			}
 			ImGui::EndPopup();
 		}
