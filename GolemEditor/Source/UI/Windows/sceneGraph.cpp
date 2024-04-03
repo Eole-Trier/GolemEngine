@@ -32,7 +32,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 {
 	const std::vector<Transform*>& children = _gameObject->transform->GetChildren();
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
-
+	
 	if (children.size() == 0)
 	{
 		flags |= ImGuiTreeNodeFlags_Leaf;

@@ -64,34 +64,33 @@ public:
 	void DeleteGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
 
-
-
 	
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
 	void to_json(json& j) const
 	{
-		j = json{
+		j = json
+		{
 			{"name", name},
 			{"isInit", isInit},
 			{"loadingObject", loadingObject}
 		};
-			if (m_world != nullptr)
-			{
-				json jWorld;
-				m_world->to_json(jWorld);
-				j["world"] = jWorld;
-			}
-		if (m_gameObjects.empty())
+		if (m_world != nullptr)
 		{
-			
+			json jWorld;
+			m_world->to_json(jWorld);
+			j["world"] = jWorld;
 		}
-	}
-
-	void from_json(const json& j)
-	{
-		j.at("name").get_to(name);
-		j.at("isInit").get_to(isInit);
-		j.at("loadingObject").get_to(loadingObject);
+		if (!m_gameObjects.empty())
+		{
+			json jGameObjects;
+			for (int i = 0; i < m_gameObjects.size(); i++)
+			{
+				json jGameObjectPtr;
+				m_gameObjects[i]->to_json(jGameObjectPtr);
+				jGameObjects.push_back(jGameObjectPtr);
+			}
+			j["gameObjects"] = jGameObjects;
+		}
 	}
 };

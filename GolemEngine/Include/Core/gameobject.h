@@ -8,9 +8,10 @@
 #include "dll.h"
 #include "Refl/refl.hpp"
 #include "Components/component.h"
+#include "Components/Light/light.h"
+#include "Resource/guid.h"
 #include "transform.h"
 #include "Debug/log.h"
-#include "Components/Light/light.h"
 
 using json = nlohmann::json;
 
@@ -20,10 +21,11 @@ class GOLEM_ENGINE_API GameObject
 private:
 	std::vector<Component*> m_components;
 	bool m_selected;
+	Guid guid;
 
 public:
 	std::string name;
-	Transform* transform;
+	Transform* transform = nullptr;
 
 public:
 	GameObject(const std::string& _name, Transform* _transform);
@@ -56,9 +58,16 @@ public:
 	
 	void to_json(json& j) const
 	{
-		j = json {
+		j = json
+		{
 			{"name", name}
 		};
+		if (transform != nullptr)
+		{
+			json jTransform;
+			transform->to_json(jTransform);
+			j["transform"] = jTransform;
+		}
 	}
 
 };

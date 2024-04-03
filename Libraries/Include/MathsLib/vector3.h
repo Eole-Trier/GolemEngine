@@ -1,10 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 
 #include "dll.h"
 
+using json = nlohmann::json;
+
 class Quaternion;
+
 
 class GOLEM_ENGINE_API Vector3
 {
@@ -41,6 +45,13 @@ public:
 	GOLEM_ENGINE_API friend bool operator==(Vector3 _a, Vector3 _b);
 	
 	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);
+
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector3,
+		x,
+		y,
+		z)
+	
+	
 };
 
 
