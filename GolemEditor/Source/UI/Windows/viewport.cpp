@@ -62,12 +62,12 @@ void Viewport::Update()
 
         if (pixelData != 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            std::cout << "selected" << std::endl;
+            //std::cout << "selected" << std::endl;
         }
 
         else if (pixelData == 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            std::cout << "deselected" << std::endl;
+            //std::cout << "deselected" << std::endl;
         }
     }
 
@@ -124,13 +124,13 @@ void Viewport::DragDropEvent()
 
         if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
         {
-            std::cout << "Dropping" << std::endl;
+            //std::cout << "Dropping" << std::endl;
         }
 
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
-            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            //std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
             SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
             SceneManager::GetCurrentScene()->isInit = true;
