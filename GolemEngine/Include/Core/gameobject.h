@@ -20,7 +20,7 @@ private:
 
 public:
 	std::string name;
-	Transform* transform;
+	static Transform* transform;
 	int id;
 
 public:

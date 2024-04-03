@@ -5,6 +5,7 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/mesh.h"
 #include "Resource/sceneManager.h"
 #include "Inputs/inputManager.h"
 #include "imgui.h"
@@ -52,6 +53,7 @@ void Viewport::Update()
     if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
         GraphicWrapper::AttachTexture(GL_RED, pickingTex.m_width, pickingTex.m_height, 1, pickingTex.id);
+
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         //Log::Print("pixelID = %d", pixelData);
 
