@@ -1,4 +1,4 @@
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 
 #include <MathsLib/utils.h>
 

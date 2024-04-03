@@ -5,7 +5,7 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/texture.h"
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 #include "Resource/sceneManager.h"
 #include "Inputs/inputManager.h"
 #include "imgui_impl_glfw.h"
