@@ -1,6 +1,7 @@
 #include "Viewport/scene.h"
 
 #include <filesystem>
+#include <thread>
 
 #include "utils.h"
 #include "Resource/resourceManager.h"
@@ -12,6 +13,7 @@
 #include "Components/Light/point.h"
 #include "Components/Light/directional.h"
 #include "Components/Light/spot.h"
+#include "Components/audio.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Core/transform.h"
@@ -21,6 +23,7 @@ Scene::Scene()
 {
     m_world = nullptr;
 }
+
 
 void Scene::Init()
 {

@@ -1,11 +1,13 @@
 #include "golemEngine.h"
 
+#include <thread>
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Viewport/scene.h"
 #include "Viewport/camera.h"
 #include "Inputs/inputManager.h"
 #include "vector4.h"
+#include "Components/audio.h"
 
 GolemEngine* GolemEngine::m_golemInstance = nullptr;
 

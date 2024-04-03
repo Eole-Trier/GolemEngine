@@ -13,7 +13,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Resource/tools.h"
-#include "SFML/Audio.hpp"
 
 Editor::Editor()
 	:
@@ -66,8 +65,6 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
-
-
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -99,6 +96,7 @@ void Editor::MainLoop()
 
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
 	}
+
 }
 
 void Editor::Cleanup() 
