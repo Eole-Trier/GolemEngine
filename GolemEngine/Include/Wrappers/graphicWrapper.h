@@ -65,9 +65,11 @@ public:
 	// Used to set the viewport that will be used
 	static void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
+	static unsigned int GetFbo();
+
 #pragma region Shader functions
 	// These functions should only be used through the Shader class and not through this GraphicWrapper class
-	
+
 	// Get parameters of the shader
 	static void GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params);
 	// Get info log of shader
@@ -88,8 +90,6 @@ public:
 	static void DeleteShaderObject(GLuint _shader);
 	// Use shader
 	static void UseShader(GLuint _program);
-
-	static unsigned int GetFbo();
 
 	static void SetShaderBool(GLuint _program, const std::string& _name, bool _value);
 	static void SetShaderInt(GLuint _program, const std::string& _name, int _value);

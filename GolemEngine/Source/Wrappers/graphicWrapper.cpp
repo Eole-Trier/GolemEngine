@@ -108,7 +108,9 @@ void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsize
     glViewport(_xMin, _yMin, _xMax, _yMax);
 }
 
+
 #pragma region Shader functions
+
 void GraphicWrapper::GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params)
 {
     glGetShaderiv(_shader, _pName, _params);

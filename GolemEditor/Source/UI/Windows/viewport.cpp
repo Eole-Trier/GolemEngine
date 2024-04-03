@@ -45,15 +45,24 @@ void Viewport::Update(GolemEngine* _golemEngine)
         Texture texture(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
         GraphicWrapper::AttachTexture(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, 1, texture.id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        Log::Print("Pixel data = %d", pixelData);
+        //Log::Print("Mouse X = %d, Mouse Y = %d", mouseX, mouseY);
 
-        if(pixelData != 429496729 && )
+        if (pixelData != 429496729 && InputManager::IsButtonPressed(BUTTON_0))
+        {
+            std::cout << "selected" << std::endl;
+        }
+
+        else if (pixelData == 429496729 && InputManager::IsButtonPressed(BUTTON_0))
+        {
+            std::cout << "deselected" << std::endl;
+        }
     }
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
 
     auto windowSize = ImGui::GetWindowSize();
     ImVec2 minBound = ImGui::GetWindowPos();
+
     minBound.x += viewportOffset.x;
     minBound.y += viewportOffset.y;
 
