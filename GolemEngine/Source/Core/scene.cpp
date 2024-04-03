@@ -161,10 +161,6 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     searchFolders(currentPath, folderName, foundPaths);
     if (!foundPaths.empty()) 
     {
-        std::cout << "Found " << foundPaths.size() << " occurrences of folder \"" << folderName << "\":" << std::endl;
-        for (const auto& path : foundPaths) {
-            std::cout << path << std::endl;
-        }
     }
 
     // Test TODO
