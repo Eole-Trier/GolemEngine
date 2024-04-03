@@ -53,12 +53,15 @@ public:
 	
 	Mesh* GetMeshByName(std::string _name);
 	std::vector<Mesh*> GetMeshes();
+
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
+
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
+
 	std::string GetFileName(const std::string& _filePath);
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
