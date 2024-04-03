@@ -11,11 +11,27 @@ void Toolbar::Update()
 {
     if (ImGui::BeginMenuBar())
     {
-        if (ImGui::BeginMenu("Save Scene"))
+        if (ImGui::BeginMenu("Menu"))
         {
-            SceneManager::SaveScene();
             ImGui::EndMenu();
         }
+
+        if (ImGui::BeginMenu("Scenes"))
+        {
+            if (ImGui::MenuItem("Save Scene"))
+            {
+                SceneManager::SaveScene();
+            }
+
+            if (ImGui::MenuItem("Load Scene"))
+            {
+                SceneManager::LoadScene();
+            }
+            
+            ImGui::EndMenu();
+        }
+        
+        
         
         ImGui::EndMenuBar();
     }

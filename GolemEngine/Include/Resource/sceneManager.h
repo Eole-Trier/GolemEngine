@@ -29,7 +29,7 @@ public:
 
     static void SaveScene();
     static void CreateScene(std::string _sceneName);
-    static void LoadScene(int _sceneId);
+    static void LoadScene();
     
     static Scene* GetCurrentScene();
 };
