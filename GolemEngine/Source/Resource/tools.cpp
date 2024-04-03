@@ -17,6 +17,5 @@ namespace Tools
                 targetFileName = file.string();
                 return targetFileName.c_str();
             }
-
     }
 }
