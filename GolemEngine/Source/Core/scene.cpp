@@ -166,10 +166,6 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
             std::cout << path << std::endl;
         }
     }
-    else 
-    {
-        std::cout << "Folder \"" << folderName << "\" not found." << std::endl;
-    }
 
     // Test TODO
     if (isInit)
