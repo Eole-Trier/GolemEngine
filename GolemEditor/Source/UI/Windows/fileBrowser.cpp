@@ -349,6 +349,5 @@ void FileBrowser::DragandDropEvent()
 	{
 		g_isFromFileBrowser = false;
 		isDragging = false;
-		std::cout << GetFolderName(draggingFilePath.c_str()) << std::endl;
 	}
 }

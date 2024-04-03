@@ -1,10 +1,14 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "dll.h"
 #include "Resource/resourceManager.h"
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
+
+using json = nlohmann::json;
 
 class DirectionalLight;
 class PointLight;
@@ -12,6 +16,7 @@ class SpotLight;
 class Shader;
 class GameObject;
 class Mesh;
+
 
 class GOLEM_ENGINE_API Scene
 {
@@ -57,4 +62,8 @@ public:
 	void CreateGameObject(GameObject* _owner);
 	void DeleteGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
+
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Scene,
+		name,
+		isInit)
 };
