@@ -1,9 +1,9 @@
 # Golem Engine
----
 
 This is our game engine. It was made in 4 months by 4 people. The goal of this engine is firstly to learn more about the development of a game engine, but also to add our special touches to it and create custom features we enjoy using. 
 
-### Useful links
+
+## Useful links
 
 TDD : 
 [https://docs.google.com/document/d/1Jtf2k2K6IGrmmmKho3yW_sFI192x4ObjKjQ_ZNkWz0c/edit?usp=drive_link](https://docs.google.com/document/d/1Jtf2k2K6IGrmmmKho3yW_sFI192x4ObjKjQ_ZNkWz0c/edit?usp=drive_link)
@@ -18,3 +18,8 @@ Engine UML : 
 
 Interaction Diagram :
 [https://app.diagrams.net/#G1OdVxF9WFAIje_cibcuFsyLmjxvCg91QG](https://app.diagrams.net/#G1OdVxF9WFAIje_cibcuFsyLmjxvCg91QG)
+
+
+## Setup
+
+Clone the project. Open GolemEngine.sln in visual studio 2019. Make sure that the project settings C++ norm is 20. Set GolemEditor as start up project. Run.
