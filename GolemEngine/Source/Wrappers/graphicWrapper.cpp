@@ -23,15 +23,13 @@ int GraphicWrapper::Init()
 
 void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
-    // Create framebuffeSr
+    // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
     // Create texturebuffer
     glGenTextures(1, &m_textureId);
     AttachTexture(_format, _width, _height, 0, m_textureId);
-
-
 
     CreateRenderBuffer(_width, _height);
 

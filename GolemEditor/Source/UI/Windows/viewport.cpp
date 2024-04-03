@@ -23,11 +23,19 @@ void Viewport::Update()
 {
     SetCamera(GolemEngine::GetCamera());
 
-    GraphicWrapper::CreateFramebuffer(GL_RGB, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
     
     auto viewportOffset = ImGui::GetCursorPos();
+
+    auto windowSize = ImGui::GetWindowSize();
+    ImVec2 minBound = ImGui::GetWindowPos();
+
+    minBound.x += viewportOffset.x;
+    minBound.y += viewportOffset.y;
+
+    ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+    m_viewportBounds[0] = { minBound.x, minBound.y };
+    m_viewportBounds[1] = { maxBound.x, maxBound.y };
 
     auto [mx, my] = ImGui::GetMousePos();
     mx -= m_viewportBounds[0].x;
@@ -42,32 +50,22 @@ void Viewport::Update()
     if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
         Texture texture(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
-        GraphicWrapper::AttachTexture(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, 1, texture.id);
+        GraphicWrapper::AttachTexture(GL_RED, texture.m_width, texture.m_height, 1, texture.id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        //Log::Print("Mouse X = %d, Mouse Y = %d", mouseX, mouseY);
+        //Log::Print("pixelID = %d", pixelData);
 
-        if (pixelData != 429496729 && InputManager::IsButtonPressed(BUTTON_0))
+        if (pixelData != 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
             std::cout << "selected" << std::endl;
         }
 
-        else if (pixelData == 429496729 && InputManager::IsButtonPressed(BUTTON_0))
+        else if (pixelData == 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
             std::cout << "deselected" << std::endl;
         }
     }
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
-
-    auto windowSize = ImGui::GetWindowSize();
-    ImVec2 minBound = ImGui::GetWindowPos();
-
-    minBound.x += viewportOffset.x;
-    minBound.y += viewportOffset.y;
-
-    ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-    m_viewportBounds[0] = { minBound.x, minBound.y };
-    m_viewportBounds[1] = { maxBound.x, maxBound.y };
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
     //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
