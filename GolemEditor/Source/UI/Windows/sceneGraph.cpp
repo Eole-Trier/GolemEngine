@@ -3,7 +3,7 @@
 #include "golemEngine.h"
 #include "UI/editorUi.h"
 #include "Core/gameobject.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "Resource/sceneManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"

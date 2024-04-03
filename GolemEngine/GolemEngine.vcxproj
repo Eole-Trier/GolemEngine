@@ -78,7 +78,7 @@
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
     <ClInclude Include="Include\Core\scene.h" />
-    <ClInclude Include="Include\Core\transform.h" />
+    <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />

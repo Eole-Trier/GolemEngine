@@ -15,7 +15,7 @@
 #include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 
 using json = nlohmann::json;
 

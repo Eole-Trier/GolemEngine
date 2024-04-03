@@ -3,7 +3,7 @@
 #include <MathsLib/utils.h>
 
 #include "Wrappers/graphicWrapper.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"

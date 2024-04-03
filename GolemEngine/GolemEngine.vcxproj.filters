@@ -10,8 +10,6 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Source\Viewport\scene.cpp" />
-    <ClCompile Include="Source\Viewport\camera.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
@@ -48,6 +46,9 @@
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Source\Reflection\classManager.cpp" />
     <ClCompile Include="Source\Reflection\displayType.cpp" />
+    <ClCompile Include="Source\Core\camera.cpp" />
+    <ClCompile Include="Source\Core\scene.cpp" />
+    <ClCompile Include="Source\Resource\sceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -74,8 +75,6 @@
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
-    <ClInclude Include="Include\Viewport\camera.h" />
-    <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\golemEngine.h" />
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
@@ -91,7 +90,7 @@
     <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Components\component.h" />
     <ClInclude Include="Include\Core\gameObject.h" />
-    <ClInclude Include="Include\Core\transform.h" />
+    <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
@@ -114,5 +113,8 @@
     <ClInclude Include="Include\Reflection\classesManager.h" />
     <ClInclude Include="Include\Reflection\displayType.h" />
     <ClInclude Include="Include\Reflection\attributes.h" />
+    <ClInclude Include="Include\Core\camera.h" />
+    <ClInclude Include="Include\Core\scene.h" />
+    <ClInclude Include="Include\Resource\sceneManager.h" />
   </ItemGroup>
 </Project>
