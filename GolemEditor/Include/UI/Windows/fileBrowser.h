@@ -25,12 +25,14 @@ public:
 	std::string GetFileExtension(const std::string& _fileName);
 	void RightMouseClickEvent();
 	void CreateFolder();
+	void RenameFolder(std::string _folderPath);
 	void DeleteFolder(const std::string& _folderPath);
 	void LoadFile(const std::string& _filePath);
-	// TODO RENAME
+	
 	std::string selectedFolder;
 	std::string draggingFilePath;
 
+	bool isRenaming = false;
 	bool isLoadUi = false;
 	bool isDragging = false;
 
