@@ -314,12 +314,13 @@ void FileBrowser::RenameFolder(std::string _folderPath)
 	std::string oldFolderName = GetFolderName(oldFolderPath.c_str());
 
 	char newFileName[256] = "";
-	ImVec2 popupSize(300, 100); 
+	ImVec2 popupSize(310, 40); 
 	ImVec2 mousePos = ImGui::GetMousePos(); 
 
 	ImGui::SetNextWindowPos(mousePos, ImGuiCond_Appearing); 
 	ImGui::SetNextWindowSize(popupSize, ImGuiCond_Appearing);
-	ImGui::Begin("Rename", nullptr, ImGuiWindowFlags_NoResize);
+	ImGui::Begin("Rename", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration);
+
 	if (ImGui::InputText("New Name", newFileName, sizeof(newFileName), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
 		std::string newFolderPath = oldFolderPath;
@@ -336,6 +337,11 @@ void FileBrowser::RenameFolder(std::string _folderPath)
 		}
 
 		ImGui::CloseCurrentPopup(); 
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("[x]"))
+	{
+		isRenaming = false;
 	}
 	ImGui::End();
 }
