@@ -48,6 +48,7 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
+	std::erase(m_components, _c);
 	delete _c;
 }
 

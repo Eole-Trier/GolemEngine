@@ -339,6 +339,5 @@ void FileBrowser::DragandDropEvent()
 	if (ImGui::IsMouseReleased(0))
 	{
 		isDragging = false;
-		std::cout << GetFolderName(draggingFilePath.c_str()) << std::endl;
 	}
 }

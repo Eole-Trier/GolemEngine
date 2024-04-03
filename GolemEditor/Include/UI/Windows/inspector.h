@@ -12,10 +12,16 @@
 
 class Inspector : public Window
 {
+private:
+	const char* m_addComponentPopupId;
+	const char* m_addComponentButtonName;
+	Vector2 m_addComponentButtonSize;
+
 public:
 	Inspector(std::string _name);
 	~Inspector();
 
 	void Update() override;
+	void AddComponentHandler();
 };
 	

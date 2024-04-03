@@ -15,6 +15,7 @@ SpotLight::SpotLight()
     diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
     ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
     specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
+    direction = Vector3(1.f, 0.f, 0.f);
     constant = 1.f;
     linear = 0.f;
     quadratic = 0.f;
