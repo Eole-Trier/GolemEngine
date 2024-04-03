@@ -27,7 +27,7 @@ public:
     static void Init();
     static void InitScene();
 
-    static void SaveCurrentScene();
+    static void SaveScene();
     static void CreateScene(std::string _sceneName);
     static void LoadScene(int _sceneId);
     
