@@ -52,6 +52,12 @@ void FileBrowser::Update()
 	RightMouseClickEvent();
 	ImGui::End();
 	
+	// Rename context
+	if (isRenaming)
+	{
+		RenameFolder(selectedFolder);
+	}
+
 	// Drag and drop event
 	DragandDropEvent();
 }
@@ -204,6 +210,7 @@ void FileBrowser::ContentBrowser()
 				if (ImGui::MenuItem("Rename"))
 				{
 					// TODO
+					isRenaming = true;
 				}
 				if (ImGui::MenuItem("Delete"))
 				{
@@ -271,10 +278,6 @@ void FileBrowser::RightMouseClickEvent()
 		{
 			CreateFolder();
 		}
-		if (ImGui::MenuItem("New scene"))
-		{
-			// TODO
-		}
 		ImGui::EndPopup();
 	}
 }
@@ -302,6 +305,34 @@ void FileBrowser::CreateFolder()
 		std::cerr << "Failed to create folder: " << e.what() << std::endl;
 		return;
 	}
+}
+
+void FileBrowser::RenameFolder(std::string _folderPath)
+{
+	std::string oldFolderPath = _folderPath;
+	std::string oldFolderName = GetFolderName(oldFolderPath.c_str());
+
+	char newFileName[256] = "";
+	ImVec2 popupSize(300, 100); 
+	ImVec2 mousePos = ImGui::GetMousePos(); 
+
+	ImGui::SetNextWindowPos(mousePos, ImGuiCond_Appearing); 
+	ImGui::SetNextWindowSize(popupSize, ImGuiCond_Appearing);
+	ImGui::Begin("Rename", nullptr, ImGuiWindowFlags_NoResize);
+	if (ImGui::InputText("New Name", newFileName, sizeof(newFileName), ImGuiInputTextFlags_EnterReturnsTrue))
+	{
+		std::string newFolderPath = oldFolderPath;
+		newFolderPath.replace(newFolderPath.find(oldFolderName), oldFolderName.length(), newFileName);
+
+		if (std::filesystem::exists(oldFolderPath))
+		{
+			std::filesystem::rename(oldFolderPath, newFolderPath);
+			isRenaming = false;
+		}
+
+		ImGui::CloseCurrentPopup(); 
+	}
+	ImGui::End();
 }
 
 void FileBrowser::DeleteFolder(const std::string& _folderPath)
