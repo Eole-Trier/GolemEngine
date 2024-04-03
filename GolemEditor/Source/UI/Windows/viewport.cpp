@@ -46,6 +46,8 @@ void Viewport::Update(GolemEngine* _golemEngine)
         GraphicWrapper::AttachTexture(GL_RED, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, 1, texture.id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         Log::Print("Pixel data = %d", pixelData);
+
+        if(pixelData != 429496729 && )
     }
 
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail());
