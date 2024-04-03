@@ -11,6 +11,8 @@ class GOLEM_ENGINE_API Texture : public Resource
 {
 public:
 	unsigned int id = 0;
+	unsigned int m_width;
+	unsigned int m_height;
 	std::string name;
 	std::string path;
 
