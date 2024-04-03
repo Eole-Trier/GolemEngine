@@ -209,7 +209,6 @@ void FileBrowser::ContentBrowser()
 				}
 				if (ImGui::MenuItem("Rename"))
 				{
-					// TODO
 					isRenaming = true;
 				}
 				if (ImGui::MenuItem("Delete"))
@@ -324,9 +323,13 @@ void FileBrowser::RenameFolder(std::string _folderPath)
 		std::string newFolderPath = oldFolderPath;
 		newFolderPath.replace(newFolderPath.find(oldFolderName), oldFolderName.length(), newFileName);
 
-		if (std::filesystem::exists(oldFolderPath))
+		if (!std::filesystem::exists(newFolderPath) && newFolderPath != "")
 		{
 			std::filesystem::rename(oldFolderPath, newFolderPath);
+			isRenaming = false;
+		}
+		else
+		{
 			isRenaming = false;
 		}
 
