@@ -15,7 +15,6 @@
 #include "Viewport/scene.h"
 #include "Core/gameobject.h"
 
-
 namespace fs = std::filesystem;
 
 // Avoid deleting important files that users do not have access to
@@ -54,6 +53,7 @@ void FileBrowser::Update(GolemEngine* _golemEngine)
 	// Drag and drop event
 	DragandDropEvent();
 }
+
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
 {
@@ -103,7 +103,17 @@ void FileBrowser::ContentBrowser()
 		ImGui::Text("");
 	}
 
-	size_t fileCount = std::distance(fs::directory_iterator(m_currentDirectory), fs::directory_iterator{});
+	if (!isLoadUi)
+	{
+		// Load every file's default UI
+		Ui_Default = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
+		Ui_Folder = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
+		Ui_Cpp = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());;
+		Ui_H = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
+		Ui_Obj = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
+		// Do once
+		isLoadUi = true;
+	}
 
 	// For displaying all files in this folder path
 	for (auto& p : fs::directory_iterator(m_currentDirectory))
@@ -155,34 +165,38 @@ void FileBrowser::ContentBrowser()
 			// Show UI ICON
 			if (p.is_directory())
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Folder, ImVec2(70, 70));
 			}
 			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				auto it = std::find_if(m_loadedTextures.begin(), m_loadedTextures.end(), [&](const std::pair<std::string, GLuint>& element) {
+					return element.first == path;
+					});
+				if (it != m_loadedTextures.end()) {
+					ImGui::Image((void*)(intptr_t)it->second, ImVec2(70, 70));
+				}
+				else {
+					GLuint texture = WindowWrapper::LoadUiTexture(path.c_str());
+					ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+					m_loadedTextures.push_back(std::make_pair(path, texture)); 
+				}
 			}
 			else if (extensionFile == ".cpp")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Cpp, ImVec2(70, 70));
 			}
 			else if (extensionFile == ".h")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_H, ImVec2(70, 70));
 			}
 			else if (extensionFile == ".obj")
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Obj, ImVec2(70, 70));
 			}
 			else
 			{
-				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)Ui_Default, ImVec2(70, 70));
 			}
 			// Show content menu
 			// Menu selections:
@@ -331,8 +345,7 @@ void FileBrowser::DragandDropEvent()
 		ImGui::SetNextWindowPos(windowPos);
 		ImGui::Begin("Dragging Window", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		// Show a drop Icon UI
-		Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
-		ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+		ImGui::Image((void*)(intptr_t)Ui_Default, ImVec2(70, 70));
 		ImGui::End();
 	}
 	// If we released the mouse left button will trigger event
