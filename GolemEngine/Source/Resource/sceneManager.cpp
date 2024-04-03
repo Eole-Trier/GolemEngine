@@ -114,7 +114,7 @@ void SceneManager::SaveScene()
     json jScene;
     GetCurrentScene()->to_json(jScene);
     std::fstream sceneFile;
-    sceneFile.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\sceneFile.json)", std::ios::out);
+    sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::out);
     sceneFile << jScene.dump(2);
 
     std::cout << "Saved Scene as :\n";
@@ -126,7 +126,6 @@ void SceneManager::LoadScene()
     std::cout << "Loaded scene" << std::endl;
 
     m_currentScene = m_scenes[0];    std::cout << "Saved scene" << std::endl;
-
     // TestClass testClass2;
     //
     // std::fstream File;
