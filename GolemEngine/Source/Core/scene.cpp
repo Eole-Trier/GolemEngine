@@ -15,7 +15,7 @@
 #include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 
 using json = nlohmann::json;
 
@@ -132,23 +132,6 @@ void searchFolders(const std::filesystem::path& folderPath, const std::string& f
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
-    //// TODO Test json (need to clean up)
-    //std::string filePath = Tools::FindFile("test.json");
-    //std::ifstream file(filePath);
-    //if (!file.is_open()) {
-    //    std::cerr << "Failed to open file " << filePath << std::endl;
-    //    return;
-    //}
-    //json movie;
-    //file >> movie;
-    //std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
-    //std::cout << "Year: " << movie["year"].get<int>() << std::endl;
-    //std::cout << "Cast:" << std::endl;
-    //for (const auto& actor : movie["cast"]) {
-    //    std::cout << "  " << actor.get<std::string>() << std::endl;
-    //}
-    //std::cout << "Address" << movie["address"]["city"].get<std::string>() << std::endl;
-    //file.close();
     std::string folderName = "Saves"; 
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();

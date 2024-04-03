@@ -37,7 +37,7 @@
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
-    <ClCompile Include="Source\Core\transform.cpp" />
+    <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
@@ -78,7 +78,7 @@
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
     <ClInclude Include="Include\Core\scene.h" />
-    <ClInclude Include="Include\Core\transform.h" />
+    <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />
