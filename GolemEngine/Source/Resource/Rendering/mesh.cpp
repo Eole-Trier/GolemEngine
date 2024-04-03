@@ -45,7 +45,7 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &m_model->VBO);
 
     SceneManager::GetCurrentScene()->DeleteMesh(this);
-    delete m_texture;
+    //delete m_texture;
 }
 
 void Mesh::Draw(float _width, float _height, Camera* _cam)
