@@ -62,12 +62,12 @@ void Viewport::Update()
 
         if (pixelData != 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            std::cout << "selected" << std::endl;
+            //std::cout << "selected" << std::endl;
         }
 
         else if (pixelData == 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            std::cout << "deselected" << std::endl;
+            //std::cout << "deselected" << std::endl;
         }
     }
 
