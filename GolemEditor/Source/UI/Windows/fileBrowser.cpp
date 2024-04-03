@@ -150,8 +150,10 @@ void FileBrowser::ContentBrowser()
 
 				draggingFilePath = path;
 				if (!p.is_directory())
+				{
 					ImGui::SetDragDropPayload("FileDrop", draggingFilePath.c_str(), strlen(draggingFilePath.c_str()) + 1);
-				isDragging = true;
+					isDragging = true;
+				}
 				ImGui::EndDragDropSource();
 			}
 
@@ -341,6 +343,7 @@ void FileBrowser::DragandDropEvent()
 	// If we released the mouse left button will trigger event
 	if (ImGui::IsMouseReleased(0))
 	{
+		g_isFromFileBrowser = false;
 		isDragging = false;
 	}
 }

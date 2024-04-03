@@ -5,5 +5,11 @@
       "Mark Hamill",
       "Harrison Ford",
       "Carrie Fisher"
-    ]
+    ],
+    "address": {
+      "city": "New York",
+      "zipcode": "10001"
+    },
+
+    "Rotation": 6
   }

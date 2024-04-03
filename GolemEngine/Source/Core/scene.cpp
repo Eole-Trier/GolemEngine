@@ -110,24 +110,6 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
-    //// TODO Test json (need to clean up)
-    //std::string filePath = Tools::FindFile("test.json");
-
-    //std::ifstream file(filePath);
-    //if (!file.is_open()) {
-    //    std::cerr << "Failed to open file " << filePath << std::endl;
-    //    return;
-    //}
-    //json movie;
-    //file >> movie;
-    //std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
-    //std::cout << "Year: " << movie["year"].get<int>() << std::endl;
-
-    //std::cout << "Cast:" << std::endl;
-    //for (const auto& actor : movie["cast"]) {
-    //    std::cout << "  " << actor.get<std::string>() << std::endl;
-    //}
-    //file.close();
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();
@@ -143,8 +125,52 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     //UpdateGameObjects(_width, _height, _window, _camera);
 }
 
+void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) {
+    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
+        if (std::filesystem::is_directory(entry)) {
+            if (entry.path().filename() == folderName) {
+                foundPaths.push_back(entry.path()); 
+            }
+            searchFolders(entry, folderName, foundPaths);
+        }
+    }
+}
+
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
+    //// TODO Test json (need to clean up)
+    //std::string filePath = Tools::FindFile("test.json");
+    //std::ifstream file(filePath);
+    //if (!file.is_open()) {
+    //    std::cerr << "Failed to open file " << filePath << std::endl;
+    //    return;
+    //}
+    //json movie;
+    //file >> movie;
+    //std::cout << "Movie: " << movie["movie"].get<std::string>() << std::endl;
+    //std::cout << "Year: " << movie["year"].get<int>() << std::endl;
+    //std::cout << "Cast:" << std::endl;
+    //for (const auto& actor : movie["cast"]) {
+    //    std::cout << "  " << actor.get<std::string>() << std::endl;
+    //}
+    //std::cout << "Address" << movie["address"]["city"].get<std::string>() << std::endl;
+    //file.close();
+    std::string folderName = "Saves"; 
+    std::vector<std::filesystem::path> foundPaths;
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    searchFolders(currentPath, folderName, foundPaths);
+    if (!foundPaths.empty()) 
+    {
+        std::cout << "Found " << foundPaths.size() << " occurrences of folder \"" << folderName << "\":" << std::endl;
+        for (const auto& path : foundPaths) {
+            std::cout << path << std::endl;
+        }
+    }
+    else 
+    {
+        std::cout << "Folder \"" << folderName << "\" not found." << std::endl;
+    }
+
     // Test TODO
     if (isInit)
     {
@@ -156,6 +182,7 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 
     for (int i = 0; i < m_meshes.size(); i++)
     {
+        //m_meshes[i]->transform->rotation.y += movie["Rotation"].get<int>();
         m_meshes[i]->Draw(_width, _height, _camera);
     }
 }

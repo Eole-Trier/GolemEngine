@@ -30,6 +30,8 @@ void Viewport::Update()
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
+    //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
+    //std::cout << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << std::endl;
 
     DragDropEvent();
 
