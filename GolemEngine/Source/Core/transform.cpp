@@ -1,33 +1,42 @@
 #include "Core/transform.h"
 #include "golemEngine.h"
 #include "Core/gameobject.h"
+#include "Resource/sceneManager.h"
 
 Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
-	: position(_position), rotation(_rotation), scaling(_scaling)
+	: localPosition(_position), rotation(_rotation), scaling(_scaling)
 {
     m_parent = nullptr;
 	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
 }
 
-void Transform::Update()
+Transform::~Transform()
 {
+    owner->DeleteTransform(this);
 }
+
+
+void Transform::Update()
+{}
 
 void Transform::UpdateSelfAndChilds()
 {
-    m_localModel = Matrix4::TRS(position, Quaternion::EulerToQuaternion(rotation), scaling);
+    m_localModel = Matrix4::TRS(localPosition, Quaternion::EulerToQuaternion(rotation), scaling);
 
     if (m_parent)
     {
         m_globalModel = m_parent->m_globalModel * m_localModel;
     }
     else
+    {
         m_globalModel = m_localModel;
+    }
 
     for (int i = 0; i < m_children.size(); i++)
     {
         m_children[i]->UpdateSelfAndChilds();
     }
+    globalPosition = m_globalModel.TrsToPosition();
 }
 
 void Transform::AddChild(Transform* const _t)
@@ -47,12 +56,11 @@ void Transform::AddChildren(std::vector<Transform*> const _ts)
 void Transform::RemoveChild(Transform* const _t)
 {
     std::erase(m_children, _t);
-    _t->m_parent = GolemEngine::GetInstance()->GetScene()->GetWorld()->transform;
+    _t->m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;
 }
 
 void Transform::SetParent(Transform* const _t)
 {
-
     if (m_parent)
         m_parent->RemoveChild(this);
     m_parent = _t;
@@ -60,7 +68,7 @@ void Transform::SetParent(Transform* const _t)
 
     m_globalModel = _t->m_globalModel.Inverse() * m_globalModel;
 
-    position = m_globalModel.TrsToPosition();
+    localPosition = m_globalModel.TrsToPosition();
     rotation = Vector3::QuaternionToEuler(m_globalModel.TrsToRotation());
     scaling = m_globalModel.TrsToScaling();
 }
@@ -78,6 +86,9 @@ bool Transform::IsAParentOf(Transform* const _t)
         {
             if (child == _t)
                 return true;
+        }
+        for (Transform* child : m_children)
+        {
             return child->IsAParentOf(_t);
         }
     }

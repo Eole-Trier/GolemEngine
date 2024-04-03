@@ -1,28 +1,29 @@
 #include "UI/Windows/sceneGraph.h"
 
 #include "golemEngine.h"
+#include "UI/editorUi.h"
+#include "Core/gameobject.h"
+#include "Core/transform.h"
+#include "Resource/sceneManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui_stdlib.h"
 
-#include "Core/gameobject.h"
-#include "Core/transform.h"
-
 
 SceneGraph::SceneGraph(std::string _name) 
 	: Window(_name)
-{
-}
+{}
 
 SceneGraph::~SceneGraph() {}
 
-void SceneGraph::Update(GolemEngine* _golemEngine)
+void SceneGraph::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	DisplayObjects(_golemEngine->GetScene()->GetWorld());
+	ImGui::Text("%s", SceneManager::GetCurrentScene()->name.c_str());
+	DisplayObjects(SceneManager::GetCurrentScene()->GetWorld());
 
 	ImGui::End();
 }
@@ -37,7 +38,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	}
 
-	if (_gameObject == m_selected)
+	if (_gameObject == EditorUi::selected)
 	{
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
@@ -47,10 +48,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 	if (m_renaming == _gameObject)
 	{
-		name = "##feur";
+		name = "##input";
 	}
-
-	if (ImGui::TreeNodeEx(name, flags))
+	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
 		if (m_renaming == _gameObject)
 		{
@@ -63,6 +63,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		}
 		else
 		{
+			// Rename popup
 			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
 			{
 				if (ImGui::MenuItem("Rename"))
@@ -72,6 +73,28 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				ImGui::EndPopup();
 			}
 
+			// Create popup
+			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			{
+				if (ImGui::MenuItem("Create"))
+				{
+					SceneManager::GetCurrentScene()->CreateGameObject(_gameObject);
+				}
+				ImGui::EndPopup();
+			}
+
+			// Delete popup
+			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			{
+				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
+				{
+					SceneManager::GetCurrentScene()->DeleteGameObject(_gameObject);
+					EditorUi::selected = nullptr;
+				}
+				ImGui::EndPopup();
+			}
+
+			// Drag and Drop management
 			if (ImGui::BeginDragDropSource())
 			{
 				ImGui::SetDragDropPayload("Golem", &_gameObject, sizeof(_gameObject));
@@ -88,8 +111,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
 
-					// to do reparent
-					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform))
+					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != SceneManager::GetCurrentScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}
@@ -100,7 +122,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			{
-				m_selected = _gameObject;
+				EditorUi::selected = _gameObject;
 			}
 		}
 
@@ -115,7 +137,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 		{
-			m_selected = _gameObject;
+			EditorUi::selected = _gameObject;
 		}
 	}
 }

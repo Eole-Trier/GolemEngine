@@ -93,6 +93,8 @@ Quaternion Quaternion::RotateQuaternionAroundAxis(float _angle, Vector3 _axis)
 
 Quaternion Quaternion::EulerToQuaternion(Vector3 _xyzAngles)
 {
+	_xyzAngles = Vector3(DegToRad(_xyzAngles.x), DegToRad(_xyzAngles.y), DegToRad(_xyzAngles.z));
+
 	double cr = cos(_xyzAngles.x * 0.5);
 	double sr = sin(_xyzAngles.x * 0.5);
 	double cp = cos(_xyzAngles.y * 0.5);

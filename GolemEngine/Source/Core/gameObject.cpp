@@ -1,45 +1,29 @@
-#include "Core/gameobject.h"
-#include "Core/transform.h"
+#include "Core/gameObject.h"
 #include "Components/component.h"
+#include "golemEngine.h"
+#include "Resource/sceneManager.h"
 
-GameObject::GameObject(const std::string& _name, Transform* _transform) :
-	name(_name), transform(_transform)
+GameObject::GameObject(const std::string& _name, Transform* _transform) 
+	: name(_name), m_selected(false)
 {
-	selected = false;
-	_transform->owner = this;
+	AddComponent(_transform);
+	transform = GetComponent<Transform>();
 }
 
-GameObject::~GameObject()
-{
-}
-
-void GameObject::AddComponent(Component* _component)
-{
-	m_components.push_back(_component);
-	_component->owner = this;
-}
-
-void GameObject::Selected()
-{
-	selected = true;
-}
-
-void GameObject::Deselected()
-{
-	selected = false;
-}
+GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
 	for (auto& component : m_components)
 	{
-		component->Update();
+		//component->Update();
 	}
 }
 
 void GameObject::DisplayInformations()
 {
 	//to do
+
 }
 
 std::string GameObject::GetName()
@@ -47,12 +31,32 @@ std::string GameObject::GetName()
 	return name;
 }
 
-/*GameObject* GameObject::Instantiate()
+void GameObject::DeleteTransform(Transform* _t)
 {
-	return nullptr;
+	_t->GetParent()->RemoveChild(_t);
+
+	for (Transform* go : _t->GetChildren())
+	{
+		SceneManager::GetCurrentScene()->DeleteGameObject(go->owner);
+	}
 }
 
-void GameObject::Destroy()
+void GameObject::DeleteLight(Light* _l)
 {
+	SceneManager::GetCurrentScene()->DeleteLight(_l);
+}
 
-}*/
+void GameObject::RemoveComponent(Component* _c)
+{
+	std::erase(m_components, _c);
+	delete _c;
+}
+
+void GameObject::DeleteAllComponents()
+{
+	for (Component* c : m_components)
+	{
+		RemoveComponent(c);
+	}
+}
+

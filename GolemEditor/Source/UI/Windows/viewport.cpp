@@ -1,17 +1,16 @@
 #include "UI/Windows/viewport.h"
 
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 #include "golemEngine.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/texture.h"
-#include "inputManager.h"
+#include "Resource/sceneManager.h"
+#include "Inputs/inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "vector2.h"
-#include "vector4.h"
 
 
 Viewport::Viewport(std::string _name)
@@ -20,9 +19,9 @@ Viewport::Viewport(std::string _name)
 
 Viewport::~Viewport() {}
 
-void Viewport::Update(GolemEngine* _golemEngine)
+void Viewport::Update()
 {
-    SetCamera(GolemEngine::GetInstance()->GetCamera());
+    SetCamera(GolemEngine::GetCamera());
 
     GraphicWrapper::CreateFramebuffer(GL_RGB, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -74,10 +73,12 @@ void Viewport::Update(GolemEngine* _golemEngine)
     //std::cout << ImGui::GetWindowDockNode()->Pos.x << std::endl;
     //std::cout << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << std::endl;
 
+    DragDropEvent();
+
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
         m_lastSpacePress = true;
-        m_camera->ProcessKeyboardInput(_golemEngine->GetDeltaTime());
+        m_camera->ProcessKeyboardInput(GolemEngine::GetDeltaTime());
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
@@ -95,11 +96,43 @@ void Viewport::Update(GolemEngine* _golemEngine)
     }
 
     ImGui::End();
+
 }
 
 void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
+}
+
+void Viewport::DragDropEvent()
+{
+    if (ImGui::BeginDragDropTarget())
+    {
+        m_isDragging = true;
+
+        ImGui::EndDragDropTarget();
+    }
+
+    if (m_isDragging)
+    {
+        ImVec2 itemRectMin = ImGui::GetItemRectMin();
+        ImVec2 itemRectMax = ImGui::GetItemRectMax();
+
+        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
+        {
+            std::cout << "Dropping" << std::endl;
+        }
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
+        {
+            std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
+            std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            // TODO 
+            SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
+            SceneManager::GetCurrentScene()->isInit = true;
+            m_isDragging = false;
+        }
+    }
 }
 
 Camera* Viewport::GetCamera()

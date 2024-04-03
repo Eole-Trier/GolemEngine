@@ -7,17 +7,15 @@
 #include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
-#include "inputManager.h"
+#include "Inputs/inputManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
 Editor::Editor()
-	: 
-	m_name("Golem Engine"), 
-	m_golemEngine(GolemEngine::GetInstance()), 
-	m_editorUi(new EditorUi(m_golemEngine))
+	:
+	m_name("Golem Engine")
 {
     // Get screen dimensions
     RECT desktop;
@@ -52,7 +50,7 @@ void Editor::InitGraphics()
 
 void Editor::InitUi()
 {
-    m_editorUi->Init();
+    EditorUi::Init();
 }
 
 void Editor::Init()
@@ -60,7 +58,7 @@ void Editor::Init()
     InitWindow();
     InitGraphics();
     InitUi();
-    m_golemEngine->Init();
+    GolemEngine::Init();
 }
 
 void Editor::MainLoop()
@@ -75,18 +73,18 @@ void Editor::MainLoop()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		m_editorUi->BeginDockSpace();
+		EditorUi::BeginDockSpace();
 
-		m_golemEngine->ProcessInput();
-		m_golemEngine->Update();
+		GolemEngine::ProcessInput();
+		GolemEngine::Update();
 
-		m_editorUi->EndDockSpace();
+		EditorUi::EndDockSpace();
 
 		ImGui::Render();
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		if (io.ConfigFlags && ImGuiConfigFlags_ViewportsEnable)
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			GLFWwindow* backup_current_context = WindowWrapper::window;
 			ImGui::UpdatePlatformWindows();
@@ -98,7 +96,9 @@ void Editor::MainLoop()
 	}
 }
 
-void Editor::Cleanup() {}
+void Editor::Cleanup()
+{
+}
 
 void Editor::Run()
 {

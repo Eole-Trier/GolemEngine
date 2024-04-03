@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Viewport/camera.h"
+#include "Core/camera.h"
 #include "UI/Windows/window.h"
 
 
 class Camera;
-class GolemEngine;
 
 class Viewport : public Window
 {
@@ -17,6 +16,9 @@ private:
 	float m_lastY;
 	float m_yaw;
 	float m_pitch;
+	float m_roll;
+	bool m_firstMouse;
+	bool m_isDragging = false;
 
 	bool m_lastSpacePress = false;
 
@@ -30,9 +32,11 @@ public:
 	Viewport(std::string _name);
 	~Viewport();
 
-	void Update(GolemEngine* _golemEngine) override;
+	void Update() override;
 
 	void SetCamera(Camera* _camera);
+
+	void DragDropEvent();
 
 	Camera* GetCamera();
 };

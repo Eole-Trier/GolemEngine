@@ -1,16 +1,13 @@
 #pragma once
 
-#include "Viewport/scene.h"
+#include "Core/scene.h"
 
-class GolemEngine;
 class EditorUi;
 struct GLFWwindow;
 
 class Editor
 {
 private:
-	GolemEngine* m_golemEngine = nullptr;
-	EditorUi* m_editorUi = nullptr;
 	std::string m_name;
 
 public:

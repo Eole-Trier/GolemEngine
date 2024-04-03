@@ -4,25 +4,27 @@
 #include <string>
 
 #include "vector2.h"
+#include "Core/gameobject.h"
 
-class GolemEngine;
+
 class Window;
 struct GLFWwindow;
 
 class EditorUi
 {
 private:
-	std::vector<Window*> m_windows;
-	GolemEngine* m_golemEngine = nullptr;
+	static inline std::vector<Window*> m_windows;
 
 public:
-	EditorUi(GolemEngine* _golemEngine);
+	static inline GameObject* selected = nullptr;
 
-	void Init();
-	void BeginDockSpace();
-	void EndDockSpace();
-	void UpdateWindows();
+public:
 
-	Window* GetWindowByName(std::string _name);
-	Vector2 GetDockedWindowPosition(std::string _dockedWindowName);
+	static void Init();
+	static void BeginDockSpace();
+	static void EndDockSpace();
+	static void UpdateWindows();
+
+	static Window* GetWindowByName(std::string _name);
+	static Vector2 GetDockedWindowPosition(std::string _dockedWindowName);
 };
