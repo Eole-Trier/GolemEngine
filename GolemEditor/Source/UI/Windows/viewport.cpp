@@ -8,18 +8,12 @@
 #include "Resource/Rendering/mesh.h"
 #include "Resource/sceneManager.h"
 #include "Inputs/inputManager.h"
-#include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
-#include "Inputs/inputManager.h"
-#include "Resource/sceneManager.h"
 #include "Core/scene.h"
 #include "vector4.h"
 #include "imgui_internal.h"
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 
 bool g_isFromFileBrowser = false;
 

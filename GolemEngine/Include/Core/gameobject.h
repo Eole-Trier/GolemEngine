@@ -7,7 +7,6 @@
 
 #include "dll.h"
 #include "Refl/refl.hpp"
-#include "Components/component.h"
 #include "transform.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"

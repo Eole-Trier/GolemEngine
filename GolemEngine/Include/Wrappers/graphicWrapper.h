@@ -2,7 +2,6 @@
 
 #include <glad/glad.h>
 #include <string>
-#include "Resource/Rendering/texture.h"
 
 #include "dll.h"
 
