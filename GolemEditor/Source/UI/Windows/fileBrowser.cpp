@@ -271,6 +271,10 @@ void FileBrowser::RightMouseClickEvent()
 		{
 			CreateFolder();
 		}
+		if (ImGui::MenuItem("New scene"))
+		{
+			// TODO
+		}
 		ImGui::EndPopup();
 	}
 }
