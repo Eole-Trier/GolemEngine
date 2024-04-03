@@ -47,10 +47,11 @@ void Viewport::Update()
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
+    Texture pickingTex(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
+
     if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
-        Texture texture(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
-        GraphicWrapper::AttachTexture(GL_RED, texture.m_width, texture.m_height, 1, texture.id);
+        GraphicWrapper::AttachTexture(GL_RED, pickingTex.m_width, pickingTex.m_height, 1, pickingTex.id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         //Log::Print("pixelID = %d", pixelData);
 

@@ -38,12 +38,16 @@ void GolemEngine::Update()
     UpdateDeltaTime();
     // Bind next framebuffer to the scene buffer
     GraphicWrapper::BindFramebuffer();
-    // Assign background color and clear previous scene buffers 
+    // Assign background color and clear previous scene buffers
     GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
+    //for (int i = 0; i < texList.size(); i++)
+    //{
+        SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
+    //}
+
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }
