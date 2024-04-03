@@ -5,18 +5,57 @@
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameObject.h"
+#include "Resource/sceneManager.h"
+
+SpotLight::SpotLight()
+{
+    std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
+    size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
+
+    diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
+    ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
+    specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
+    direction = Vector3(1.f, 0.f, 0.f);
+    constant = 1.f;
+    linear = 0.f;
+    quadratic = 0.f;
+    cutOff = 1.f;
+    outerCutOff = 3.f;
+
+    id = spotLights.size();
+    if (id >= maxSpots)
+    {
+        Log::Print("The SpotLight %d will not be used. SpotLights limit : %d", id, maxSpots);
+    }
+    else
+    {
+        SceneManager::GetCurrentScene()->AddLight(this);
+    }
+}
 
 SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, const Vector3& _direction, const float _constant, 
-    const float _linear, const float _quadratic, const float _cutOff, const float _outerCutOff, std::vector<SpotLight*> _spotLights, size_t _maxSpots)
+    const float _linear, const float _quadratic, const float _cutOff, const float _outerCutOff)
     : Light(_diffuse, _ambient, _specular), position(_position), direction(_direction), constant(_constant), linear(_linear), quadratic(_quadratic), 
     cutOff(_cutOff), outerCutOff(_outerCutOff)
 {
-    id = _spotLights.size();
-    if (id >= _maxSpots)
+    std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
+    size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
+
+    id = spotLights.size();
+    if (id >= maxSpots)
     {
-        Log::Print("The Spot light %d will not be used. Spot lights limit : %d", id, _maxSpots);
+        Log::Print("The SpotLight %d will not be used. SpotLights limit : %d", id, maxSpots);
+    }
+    else
+    {
+        SceneManager::GetCurrentScene()->AddLight(this);
     }
 };
+
+SpotLight::~SpotLight()
+{
+    SceneManager::GetCurrentScene()->DeleteLight(this);
+}
 
 void SpotLight::SetSpotLight(Shader* _shader)
 {

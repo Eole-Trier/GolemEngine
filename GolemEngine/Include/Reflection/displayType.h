@@ -12,9 +12,15 @@
 #include "Reflection/attributes.h"
 #include "Refl/refl.hpp"
 #include "Core/gameObject.h"
+#include "vector2.h"
 
 class DisplayType
 {
+private:
+	static const char* m_addComponentPopupId;
+	static const char* m_addComponentButtonName;
+	static Vector2 m_addComponentButtonSize;
+
 public:
 	template<typename TypeT>
 	static void DisplayField(TypeT* _class);
@@ -29,6 +35,8 @@ public:
 	static void DisplayIntOrFloat(MemberT* _member);
 
 	GOLEM_ENGINE_API static void DisplayWithHashCode(size_t _hashCode, void* _object);
+	GOLEM_ENGINE_API static void AddComponentHandler(GameObject* _gameObject);
+
 };
 
 template<typename>
@@ -44,7 +52,31 @@ template<typename TypeT>
 void DisplayType::DisplayField(TypeT* _class)
 {
 	constexpr auto type = refl::reflect<TypeT>();	// Get the reflected class
-	ImGui::Text("%s", type.name.c_str());
+	Component* c = dynamic_cast<Component*>(_class);
+	if (c && !dynamic_cast<Transform*>(_class))  // If class is component replace the name by a button that can delete it (can't delete transform)
+	{
+		Component* c = dynamic_cast<Component*>(_class);
+		const char* removeComponentPopupId = type.name.c_str();
+		
+		if (ImGui::Button(removeComponentPopupId))
+		{
+			ImGui::OpenPopup(removeComponentPopupId);
+		}
+		if (ImGui::BeginPopupContextItem(removeComponentPopupId))
+		{
+			if (ImGui::MenuItem("Remove Component"))
+			{
+				c->owner->RemoveComponent(c);
+				ImGui::EndPopup();
+				return;
+			}
+			ImGui::EndPopup();
+		}
+	}
+	else
+	{
+		ImGui::Text("%s", type.name.c_str());
+	}
 	for_each(type.members, [&]<typename DescriptorT>(const DescriptorT)	// Loop through each member of the reflected class
 	{
 		using MemberT = DescriptorT::value_type;

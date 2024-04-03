@@ -10,11 +10,9 @@
 #include "UI/editorUi.h"
 #include "Reflection/displayType.h"
 
-
 Inspector::Inspector(std::string _name)
 	: Window(_name)
 {
-	addComponentButtonSize = Vector2(400, 20);
 }
 
 Inspector::~Inspector() {}
@@ -23,13 +21,13 @@ void Inspector::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	if (EditorUi::selected != nullptr)
+	if (EditorUi::selected)
 	{
 		DisplayType::DisplayField(EditorUi::selected);
+		DisplayType::AddComponentHandler(EditorUi::selected);
 		
-		if (ImGui::Button("Add Component", ImVec2(addComponentButtonSize.x, addComponentButtonSize.y)))
-		{
-		}
 	}
 	ImGui::End();
 }
+
+

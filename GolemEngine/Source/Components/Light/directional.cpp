@@ -2,17 +2,51 @@
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
+#include "Resource/sceneManager.h"
 
-DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction, 
-	const std::vector<DirectionalLight*>& _dirLights, size_t _maxDirs)
-	: Light(_diffuse, _ambient, _specular), direction(_direction)
+DirectionalLight::DirectionalLight()
 {
-	id = _dirLights.size();
-	if (id >= _maxDirs)
+	std::vector<DirectionalLight*> dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
+	size_t maxDirs = SceneManager::GetCurrentScene()->GetMaxDirectionalLights();
+
+	diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
+	ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
+	specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
+	direction = Vector3(0.f, 0.f, 0.f);
+
+	id = dirLights.size();
+	if (id >= maxDirs)
 	{
-		Log::Print("The Directional light %d will not be used. Directional lights limit : %d", id, _maxDirs);
+		Log::Print("The DirectionalLight %d will not be used. DirectionalLights limit : %d", id, maxDirs);
+	}
+	else
+	{
+		SceneManager::GetCurrentScene()->AddLight(this);
 	}
 };
+
+DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction)
+	: Light(_diffuse, _ambient, _specular), direction(_direction)
+{
+	std::vector<DirectionalLight*> dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
+	size_t maxDirs = SceneManager::GetCurrentScene()->GetMaxDirectionalLights();
+
+	id = dirLights.size();
+	if (id >= maxDirs)
+	{
+		Log::Print("The DirectionalLight %d will not be used. DirectionalLights limit : %d", id, maxDirs);
+	}
+	else
+	{
+		SceneManager::GetCurrentScene()->AddLight(this);
+	}
+};
+
+DirectionalLight::~DirectionalLight()
+{
+	SceneManager::GetCurrentScene()->DeleteLight(this);
+}
+
 void DirectionalLight::SetDirectionalLight(Shader* _shader)
 {
 	_shader->SetVec3("dirLights[" + std::to_string(id) + "].direction", direction);

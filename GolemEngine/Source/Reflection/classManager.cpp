@@ -7,6 +7,7 @@
 
 void ClassesManager::AddAllClasses()
 {
+	Add<GameObject>();
 	Add<Component>();
 	Add<Transform>();
 	Add<Light>();
@@ -22,9 +23,23 @@ void ClassesManager::Display(size_t _hashCode, void* _object)
 	// return if no classes linked to hash code
 	if (it == m_classes.end())
 	{
-		Log::Print("No hash code");
+		Log::Print("No class matches the hash code");
 		return;
 	}
 	// else store it in display func pointer
 	it->second.display(_object);
+}
+
+void* ClassesManager::Create(size_t _hashCode)
+{
+	auto it = m_classes.find(_hashCode);
+
+	// return if no classes linked to hash code
+	if (it == m_classes.end())
+	{
+		Log::Print("No class matches the hash code");
+		return nullptr;
+	}
+	// else store it in display func pointer
+	return it->second.create();
 }

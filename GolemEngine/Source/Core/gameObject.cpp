@@ -48,17 +48,8 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
-	if (Transform* t = dynamic_cast<Transform*>(_c))
-	{
-		DeleteTransform(t);
-	}
-	else if (Light* l = dynamic_cast<Light*>(_c))
-	{
-		DeleteLight(l);
-	}
-	else // Add more conditions and function when new component created
-	{
-	}
+	std::erase(m_components, _c);
+	delete _c;
 }
 
 void GameObject::DeleteAllComponents()

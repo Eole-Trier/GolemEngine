@@ -10,6 +10,12 @@ Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
 	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
 }
 
+Transform::~Transform()
+{
+    owner->DeleteTransform(this);
+}
+
+
 void Transform::Update()
 {}
 
