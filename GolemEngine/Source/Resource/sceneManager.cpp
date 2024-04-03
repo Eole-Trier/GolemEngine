@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 

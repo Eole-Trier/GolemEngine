@@ -5,11 +5,11 @@
 
 #include "utils.h"
 #include "Resource/resourceManager.h"
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Components/Light/point.h"
 #include "Components/Light/directional.h"
 #include "Components/Light/spot.h"
