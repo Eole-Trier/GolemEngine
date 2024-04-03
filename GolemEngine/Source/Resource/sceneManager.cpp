@@ -14,11 +14,12 @@ class TestClass
 {
 public:
     std::string name;
-    int data;
     int age;
+    std::vector<int> data; 
 
     TestClass() {}
-    TestClass(std::string _name, int _data, int _age) : name(_name), data(_data), age(_age) {}
+
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TestClass, name, age, data);
 };
 
 
@@ -41,15 +42,18 @@ void SceneManager::SaveScene()
 {
     std::cout << "Saved scene" << std::endl;
 
-    TestClass testClass1("maxime", 010, 19);
+    TestClass testClass1;
+    testClass1.name = "Maxime";
+    std::vector<int> data = {1, 2, 3};
+    testClass1.age = 19;
     
-    json jScene;
+    nlohmann::ordered_json jScene;
     jScene["name"] = testClass1.name;
     jScene["data"] = testClass1.data;
     jScene["age"] = testClass1.age;
     std::fstream File;
     File.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\file.json)", std::ios::out);
-    File << jScene;
+    File << jScene.dump(2);
 
 }
 
@@ -59,18 +63,19 @@ void SceneManager::LoadScene()
 
     m_currentScene = m_scenes[0];    std::cout << "Saved scene" << std::endl;
 
-    TestClass testClass2;
-
-    std::fstream File;
-    File.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\file.json)", std::ios::in);
-    json jScene;
-    File >> jScene;
-
-    testClass2.name = jScene["name"];
-    testClass2.data = jScene["data"];
-    testClass2.age = jScene["age"];
-    
-    std::cout << testClass2.name << " " << testClass2.data << " " << testClass2.age << std::endl;
+    // TestClass testClass2;
+    //
+    // std::fstream File;
+    // File.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\file.json)", std::ios::in);
+    // json jScene;
+    // File >> jScene;
+    // testClass2 = jScene;
+    //
+    // testClass2.name = jScene["name"];
+    // testClass2.data[0] = jScene["data"][0];
+    // testClass2.age = jScene["age"];
+    //
+    // std::cout << testClass2.name << " " << testClass2.data[0] << " " << testClass2.data[1] << " " << testClass2.data[2] << " " << testClass2.age << std::endl;
 }
 
 void SceneManager::CreateScene(std::string _sceneName)
