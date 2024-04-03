@@ -113,7 +113,7 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     Shader* shader = resourceManager->Get<Shader>("default");
     shader->Use();
 
-    shader->SetViewPos(_camera->m_position);
+    shader->SetViewPos(_camera->position);
 
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _camera);

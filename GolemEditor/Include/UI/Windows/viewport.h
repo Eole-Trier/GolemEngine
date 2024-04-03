@@ -21,7 +21,6 @@ private:
 	bool m_firstMouse;
 	bool m_isDragging = false;
 	bool m_lastSpacePress = false;
-
 	Vector2 m_viewportBounds[2];
 
 public:
