@@ -1,1 +1,3 @@
-# Golem Engine
+<p align="center">
+Golem Engine
+</p>
