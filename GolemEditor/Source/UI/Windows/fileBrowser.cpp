@@ -25,7 +25,9 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj" && \
     name != "GolemEditor.vcxproj.filters" && \
     name != "GolemEditor.vcxproj.user" && \
-    name != "imgui.ini")
+    name != "imgui.ini" && \
+    name != "Include" && \
+    name != "Source")
 
 
 FileBrowser::FileBrowser(std::string _name)
@@ -342,21 +344,22 @@ void FileBrowser::DeleteFolder(const std::string& _folderPath)
 {
 	try
 	{
-		const char* folderName = GetFolderName(_folderPath.c_str());
+		std::filesystem::path folderPath(_folderPath);
+		std::string folderName = folderPath.filename().string();
+
 		// Avoid deleting the important folders
 		const std::vector<const char*> protectedFolders = { "Assets", "Source", "Include", "Shaders" };
 
 		if (std::find(protectedFolders.begin(), protectedFolders.end(), folderName) == protectedFolders.end())
 		{
 			std::filesystem::remove_all(_folderPath);
-			std::cout << "Folder " << _folderPath << " deleted successfully." << folderName << std::endl;
+			std::cout << "Folder " << _folderPath << " deleted successfully." << std::endl;
 		}
 	}
 	catch (const std::exception& e)
 	{
 		std::cerr << "Failed to delete folder: " << e.what() << std::endl;
 	}
-
 }
 
 void FileBrowser::LoadFile(const std::string& _filePath)
