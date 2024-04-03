@@ -33,24 +33,24 @@ void Scene::Init()
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
+    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
+    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
+    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
     Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
 
     std::string ballBaldName2 = "ball_bald2";
-    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
+    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
     Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
     Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
@@ -62,10 +62,6 @@ void Scene::InitGameObjects()
     m_gameObjects.push_back(vikingMesh);
     m_gameObjects.push_back(ballBaldMesh);
     m_gameObjects.push_back(ballBaldMesh2);
-
-    m_world->transform->AddChild(vikingMesh->transform);
-    m_world->transform->AddChild(ballBaldMesh2->transform);
-    m_world->transform->AddChild(ballBaldMesh->transform);
 }
 
 void Scene::InitLights()
@@ -170,19 +166,14 @@ bool Scene::IsNameExists(const std::string& _name)
     return false;
 }
 
-void Scene::CreateGameObject(GameObject* _owner)
+void Scene::AddGameObject(GameObject* _gameObject)
 {
-    GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
-    m_gameObjects.push_back(go);
-    _owner->transform->AddChild(go->transform);
+    m_gameObjects.push_back(_gameObject);
 }
 
 void Scene::DeleteGameObject(GameObject* _gameObject)
 {
     std::erase(m_gameObjects, _gameObject);
-    
-    _gameObject->DeleteAllComponents();
-
     delete _gameObject;
 }
 
@@ -215,7 +206,7 @@ void Scene::AddNewObject(std::string _name, std::string _modelName, std::string 
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     std::string name = _name;
-    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1), m_world->transform);
     Texture* texture;
     Shader* shader;
 
@@ -241,7 +232,6 @@ void Scene::AddNewObject(std::string _name, std::string _modelName, std::string 
     Mesh* mesh = new Mesh(name, transform, model, texture, shader);
     m_meshes.push_back(mesh);
     m_gameObjects.push_back(mesh);
-    m_world->transform->AddChild(mesh->transform);
 }
 
 void Scene::AddNewModel(std::string _filePath, std::string _resourceName)

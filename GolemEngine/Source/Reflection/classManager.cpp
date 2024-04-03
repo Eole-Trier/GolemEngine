@@ -7,7 +7,6 @@
 
 void ClassesManager::AddAllClasses()
 {
-	Add<GameObject>();
 	Add<Component>();
 	Add<Transform>();
 	Add<Light>();

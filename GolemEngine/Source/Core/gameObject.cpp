@@ -3,14 +3,29 @@
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
 
+GameObject::GameObject()
+	: m_selected(false)
+{
+	name = "New GameObject";
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
+	AddComponent(new Transform);
+	transform = GetComponent<Transform>();
+	SceneManager::GetCurrentScene()->AddGameObject(this);
+}
+
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
 	: name(_name), m_selected(false)
 {
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
 	AddComponent(_transform);
 	transform = GetComponent<Transform>();
+	SceneManager::GetCurrentScene()->AddGameObject(this);
 }
 
-GameObject::~GameObject() {}
+GameObject::~GameObject() 
+{
+	DeleteAllComponents();
+}
 
 void GameObject::Update()
 {
@@ -20,15 +35,14 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::DisplayInformations()
-{
-	//to do
-
-}
-
 std::string GameObject::GetName()
 {
 	return name;
+}
+
+int GameObject::GetId()
+{
+	return m_id;
 }
 
 void GameObject::DeleteTransform(Transform* _t)

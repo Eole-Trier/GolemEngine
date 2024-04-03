@@ -46,6 +46,8 @@ Mesh::~Mesh()
 
     SceneManager::GetCurrentScene()->DeleteMesh(this);
     delete m_texture;
+
+    GameObject::~GameObject();
 }
 
 void Mesh::Draw(float _width, float _height, Camera* _cam)

@@ -66,7 +66,7 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
-	void CreateGameObject(GameObject* _owner);
+	void AddGameObject(GameObject* _gameObject);
 	void DeleteGameObject(GameObject* _gameObject);
 	void DeleteMesh(Mesh* _mesh);
 	void DeleteLight(Light* _light);

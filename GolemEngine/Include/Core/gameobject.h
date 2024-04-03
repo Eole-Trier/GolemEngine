@@ -15,21 +15,23 @@
 class GOLEM_ENGINE_API GameObject
 {
 private:
+	int m_id;
 	std::vector<Component*> m_components;
 	bool m_selected;
 
 public:
 	std::string name;
-	Transform* transform;
+	Transform* transform = nullptr;
 
 public:
+	GameObject();
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
 
 	void Update();
-	void DisplayInformations();
 	std::string GetName();
+	int GetId();
 
 	void DeleteTransform(Transform* _t);
 	void DeleteLight(Light* _l);
