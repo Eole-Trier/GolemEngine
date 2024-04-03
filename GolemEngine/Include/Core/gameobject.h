@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <type_traits>
+#include <nlohmann/json.hpp>
 
 #include "dll.h"
 #include "Refl/refl.hpp"
@@ -10,6 +11,8 @@
 #include "transform.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
+
+using json = nlohmann::json;
 
 
 class GOLEM_ENGINE_API GameObject
@@ -49,6 +52,15 @@ public:
 	std::vector<TypeT*> GetComponents();
 
 	friend refl_impl::metadata::type_info__<GameObject>; // needed to reflect private members
+
+	
+	void to_json(json& j) const
+	{
+		j = json {
+			{"name", name}
+		};
+	}
+
 };
 
 template<typename TypeT>

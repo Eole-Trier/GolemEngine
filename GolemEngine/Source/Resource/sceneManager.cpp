@@ -10,17 +10,55 @@
 using json = nlohmann::json;
 
 
-class TestClass
-{
+class TestClass {
 public:
     std::string name;
     int age;
-    std::vector<int> data; 
+    std::vector<int> data;
+    std::string words;
+    // Pointer member variable
+    int* T;
 
-    TestClass() {}
+    // Define serialization and deserialization functions manually
+    void to_json(json& j) const {
+        j = json{{"name", name}, {"age", age}, {"data", data}, {"words", words}};
+        // Serialize the pointed-to value if it's not null
+        if (T != nullptr) {
+            j["T"] = *T;
+        }
+    }
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TestClass, name, age, data);
+    void from_json(const json& j) {
+        j.at("name").get_to(name);
+        j.at("age").get_to(age);
+        j.at("data").get_to(data);
+        j.at("words").get_to(words);
+        // Deserialize the pointed-to value if it exists
+        if (j.contains("T")) {
+            T = new int(j.at("T").get<int>());
+        } else {
+            T = nullptr;
+        }
+    }
+
 };
+
+// // Custom serializer for std::vector<int>
+// void to_json(json& j, const std::vector<int>& vec) {
+//     j = json::array(); // Create a JSON array
+//     for (const auto& elem : vec) {
+//         j.push_back(elem); // Add each element of the vector to the JSON array
+//     }
+// }
+//
+// void from_json(const json& j, std::vector<int>& vec) {
+//     if (j.is_array()) {
+//         vec.clear(); // Clear the vector to avoid appending to existing data
+//         for (const auto& elem : j) {
+//             vec.push_back(elem); // Add each element of the JSON array to the vector
+//         }
+//     }
+// }
 
 
 void SceneManager::Init()
@@ -38,23 +76,49 @@ void SceneManager::InitScene()
     GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
+
+// void SceneManager::SaveScene()
+// {
+//     // Create an instance of TestClass
+//     TestClass* testClass1 = new TestClass();
+//     testClass1->name = "Maxime";
+//     testClass1->data = {1, 2, 3};
+//     testClass1->age = 19;
+//     testClass1->words = "Hello";
+//     // Assuming T is properly allocated and assigned
+//     testClass1->T = new int(42);
+//
+//     // Serialize the object pointed to by testClass1
+//     json jScene;
+//     testClass1->to_json((jScene));
+//
+//     std::fstream sceneFile;
+//     sceneFile.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\sceneFile.json)", std::ios::out);
+//     if (!sceneFile.is_open()) {
+//         std::cerr << "Error opening file." << std::endl;
+//         delete testClass1; // Cleanup memory
+//         return;
+//     }
+//     sceneFile << jScene.dump(2);
+//
+//     std::cout << "Saved Scene as :\n";
+//     std::cout << jScene.dump(2) << std::endl;
+//
+//     // Remember to delete the dynamically allocated memory
+//     delete testClass1;
+//
+// }
+
 void SceneManager::SaveScene()
 {
-    std::cout << "Saved scene" << std::endl;
+    json jScene;
+    GetCurrentScene()->to_json(jScene);
+    std::fstream sceneFile;
+    sceneFile.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\sceneFile.json)", std::ios::out);
+    sceneFile << jScene.dump(2);
 
-    TestClass testClass1;
-    testClass1.name = "Maxime";
-    std::vector<int> data = {1, 2, 3};
-    testClass1.age = 19;
-    
-    nlohmann::ordered_json jScene;
-    jScene["name"] = testClass1.name;
-    jScene["data"] = testClass1.data;
-    jScene["age"] = testClass1.age;
-    std::fstream File;
-    File.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\file.json)", std::ios::out);
-    File << jScene.dump(2);
-
+    std::cout << "Saved Scene as :\n";
+    std::cout << jScene.dump(2) << std::endl;
 }
 
 void SceneManager::LoadScene()
