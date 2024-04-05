@@ -11,14 +11,14 @@ namespace Tools
     std::string GOLEM_ENGINE_API FindFile(const std::string& _file) 
     {
         std::string targetFileName;
-        for (std::filesystem::path file : std::filesystem::recursive_directory_iterator(std::filesystem::current_path()))
-            if (file.filename().string().find(_file) != std::string::npos)
+        for (const auto& file : std::filesystem::recursive_directory_iterator(std::filesystem::current_path()))
+        {
+            if (file.path().filename().string().find(_file) != std::string::npos)
             {
-                targetFileName = file.string();
-                return targetFileName.c_str();
+                return file.path().string();
             }
-
+        }
+        std::cout << "Not found the file: " << _file << std::endl;
+        return ""; // Return an empty string
     }
-
-    
 }
