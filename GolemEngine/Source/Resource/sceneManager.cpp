@@ -74,6 +74,7 @@ void SceneManager::InitScene()
     m_currentScene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    std::cout << m_scenes.size() << std::endl;
 }
 
 
@@ -123,7 +124,6 @@ void SceneManager::SaveScene()
 
 void SceneManager::LoadScene()
 {
-    std::cout << "Loaded scene" << std::endl;
 
     m_currentScene = m_scenes[0];    std::cout << "Saved scene" << std::endl;
     // TestClass testClass2;
@@ -139,6 +139,17 @@ void SceneManager::LoadScene()
     // testClass2.age = jScene["age"];
     //
     // std::cout << testClass2.name << " " << testClass2.data[0] << " " << testClass2.data[1] << " " << testClass2.data[2] << " " << testClass2.age << std::endl;
+
+    // std::fstream sceneFile;
+    // sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::in);
+    // json jScene;
+    // sceneFile >> jScene;
+    //
+    // std::string sceneName = "scene_";
+    // sceneName.append(std::to_string(m_scenes.size()-1));
+    // CreateScene(sceneName);
+    //
+    // std::cout << "Loaded scene " << sceneName << std::endl;
 }
 
 void SceneManager::CreateScene(std::string _sceneName)
@@ -149,6 +160,25 @@ void SceneManager::CreateScene(std::string _sceneName)
 Scene* SceneManager::GetCurrentScene()
 {
     return m_currentScene;
+}
+
+Scene* SceneManager::GetScene(int _id)
+{
+    Scene* scene = nullptr;
+    for (int i = 0; i < m_scenes.size(); i++)
+    {
+        if (i == _id)
+        {
+            scene = m_scenes[i];
+        }
+    }
+    
+    return  scene;
+}
+
+int SceneManager::GetSceneCount()
+{
+    return  m_scenes.size();
 }
 
 

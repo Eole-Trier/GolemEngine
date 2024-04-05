@@ -19,9 +19,9 @@ using json = nlohmann::json;
 class GOLEM_ENGINE_API GameObject
 {
 private:
+	Guid m_guid;
 	std::vector<Component*> m_components;
 	bool m_selected;
-	Guid guid;
 
 public:
 	std::string name;
@@ -55,12 +55,14 @@ public:
 
 	friend refl_impl::metadata::type_info__<GameObject>; // needed to reflect private members
 
-	
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
 	void to_json(json& j) const
 	{
 		j = json
 		{
-			{"name", name}
+			{"name", name},
+			{"guid", m_guid.ToString()}
 		};
 		if (transform != nullptr)
 		{

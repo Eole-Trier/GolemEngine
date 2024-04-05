@@ -18,14 +18,31 @@ void Toolbar::Update()
 
         if (ImGui::BeginMenu("Scenes"))
         {
-            if (ImGui::MenuItem("Save Scene"))
+            if (ImGui::MenuItem("Save scene"))
             {
                 SceneManager::SaveScene();
             }
 
-            if (ImGui::MenuItem("Load Scene"))
+            if (ImGui::BeginMenu("Load scenes"))
             {
-                SceneManager::LoadScene();
+                
+                for (int i = 0; i < SceneManager::GetSceneCount(); i++)
+                {
+                    std::string sceneName = SceneManager::GetScene(i)->name;
+                    if (ImGui::MenuItem(sceneName.c_str()))
+                    {
+                        
+                    }
+                }
+
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::MenuItem("Create scene"))
+            {
+                std::string sceneName = "scene_";
+                sceneName.append(std::to_string(SceneManager::GetSceneCount()));
+                SceneManager::CreateScene(sceneName);
             }
             
             ImGui::EndMenu();

@@ -32,4 +32,6 @@ public:
     static void LoadScene();
     
     static Scene* GetCurrentScene();
+    static Scene* GetScene(int _id);
+    static int GetSceneCount();
 };

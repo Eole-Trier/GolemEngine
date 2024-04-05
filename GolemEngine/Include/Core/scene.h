@@ -5,6 +5,7 @@
 #include "dll.h"
 #include "gameobject.h"
 #include "Resource/resourceManager.h"
+#include "Resource/guid.h"
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
@@ -22,6 +23,7 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
+	Guid m_guid;
 	
 	GameObject* m_world;
 	std::vector<GameObject*> m_gameObjects;
@@ -72,6 +74,7 @@ public:
 		j = json
 		{
 			{"name", name},
+			{"guid", m_guid.ToString()},
 			{"isInit", isInit},
 			{"loadingObject", loadingObject}
 		};

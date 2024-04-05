@@ -8,8 +8,6 @@ GameObject::GameObject(const std::string& _name, Transform* _transform)
 {
 	AddComponent(_transform);
 	transform = GetComponent<Transform>();
-
-	std::cout << guid.ToString() << std::endl;
 }
 
 GameObject::~GameObject() {}
