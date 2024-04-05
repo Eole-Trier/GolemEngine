@@ -18,9 +18,10 @@ namespace Tools
                 return file.path().string();
             }
         }
-        std::cout << "Not found the file: " << _file << std::endl;
+        std::cout << "Didn't find the file: " << _file << std::endl;
         return ""; // Return an empty string
     }
+    
     std::string GOLEM_ENGINE_API FindFolder(const std::string& _folderName)
     {
         for (const auto& dir : std::filesystem::recursive_directory_iterator(std::filesystem::current_path()))

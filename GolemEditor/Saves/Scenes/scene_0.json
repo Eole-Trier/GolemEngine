@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "41f23f2a-7d24-e4f2-ce11-0752f2df25e9",
+      "guid": "39d0e1b7-01e8-d74a-d79d-d6b2d6dbddfb",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -9,13 +9,13 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
+        "guid": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
+        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -29,7 +29,7 @@
       }
     },
     {
-      "guid": "41f23f2a-7d24-e4f2-ce11-0752f2df25e9",
+      "guid": "39d0e1b7-01e8-d74a-d79d-d6b2d6dbddfb",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -37,13 +37,13 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
+        "guid": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
+        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -57,7 +57,7 @@
       }
     },
     {
-      "guid": "4e3cb0d7-f2b7-c3b3-417c-ee3b277e6147",
+      "guid": "8cb908bd-5530-216f-284b-744aa36f6ea5",
       "name": "ball_bald",
       "transform": {
         "globalPosition": {
@@ -65,13 +65,13 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "fcb85e78-98e7-fdb4-b87e-90b0514debcf",
+        "guid": "bf81a208-653f-7657-3986-522d007445bc",
         "localPosition": {
           "x": 3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
+        "parent": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -85,7 +85,7 @@
       }
     },
     {
-      "guid": "2468ad4d-5071-3ea1-7e4c-99e6fb27a0f3",
+      "guid": "be1c8c17-8e28-88aa-92cb-36391c91c8cc",
       "name": "ball_bald2",
       "transform": {
         "globalPosition": {
@@ -93,13 +93,13 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "a1d05ae2-1b05-86a9-4bde-8aaf00326057",
+        "guid": "241a81e6-39a2-c153-3fe3-b6b48a74ceb3",
         "localPosition": {
           "x": -3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
+        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -113,12 +113,12 @@
       }
     }
   ],
-  "guid": "e6e57cd6-fad7-200d-accd-775c617db557",
+  "guid": "32ff52b7-3a3c-37a8-34b1-a961cc077cd5",
   "isInit": false,
   "loadingObject": "",
-  "name": "Scene_0",
+  "name": "scene_0",
   "world": {
-    "guid": "3fcfa7b5-7992-e366-97e0-9e3a24e4ae3c",
+    "guid": "ac5ede37-95fe-cef9-3622-c27dcdf891f9",
     "name": "World",
     "transform": {
       "globalPosition": {
@@ -126,7 +126,7 @@
         "y": 0.0,
         "z": 0.0
       },
-      "guid": "e8302c85-7578-27b4-4d77-5b3631f75bea",
+      "guid": "df8a0259-6f48-3778-0b24-91b5f33a9174",
       "localPosition": {
         "x": 0.0,
         "y": 0.0,

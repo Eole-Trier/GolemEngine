@@ -63,7 +63,7 @@ public:
 
 void SceneManager::Init()
 {
-    m_scenes.push_back(new Scene("Scene_0"));
+    m_scenes.push_back(new Scene("scene_0"));
     LoadScene();
     InitScene();
 }
@@ -114,12 +114,21 @@ void SceneManager::SaveScene()
 {
     json jScene;
     GetCurrentScene()->to_json(jScene);
+    std::string sceneFileName = GetCurrentScene()->name;
+    sceneFileName.append(".json");
+    // std::string sceneFileName = "scene_0.json";
     std::fstream sceneFile;
-    sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::out);
+    if (Tools::FindFile(sceneFileName) == "")
+    {
+        std::cout << "Didn't find " << sceneFileName << std::endl;
+    }
+    sceneFile.open(Tools::FindFile(sceneFileName), std::ios::out);
     sceneFile << jScene.dump(2);
 
+    
+    
     std::cout << "Saved Scene as :\n";
-    std::cout << jScene.dump(2) << std::endl;
+    // std::cout << jScene.dump(2) << std::endl;
 }
 
 void SceneManager::LoadScene()
