@@ -8,6 +8,7 @@
 #include "matrix4.h"
 
 #include "Components/component.h"
+#include "Resource/guid.h"
 
 using json = nlohmann::json;
 
@@ -15,6 +16,7 @@ using json = nlohmann::json;
 class Transform : public Component
 {
 private:
+	Guid m_guid;
 	Transform* m_parent;
 	std::vector<Transform*> m_children;
 	Matrix4 m_localModel;
@@ -54,6 +56,7 @@ public:
 	{
 		j = json
 		{
+			{"guid", m_guid.ToString()},
 			{"globalPosition", globalPosition},
 			{"localPosition", localPosition},
 			{"rotation", rotation},
@@ -61,9 +64,7 @@ public:
 		};
 		if (m_parent != nullptr)
 		{
-			json jParent;
-			m_parent->to_json(jParent);
-			j["parent"] = jParent;
+			j["parent"] = m_parent->m_guid.ToString();
 		}
 	}
 };

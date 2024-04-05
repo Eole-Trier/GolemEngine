@@ -1,6 +1,7 @@
 {
   "gameObjects": [
     {
+      "guid": "41f23f2a-7d24-e4f2-ce11-0752f2df25e9",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -8,33 +9,13 @@
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": {
-          "globalPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "localPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "scaling": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
-        },
+        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -48,6 +29,7 @@
       }
     },
     {
+      "guid": "41f23f2a-7d24-e4f2-ce11-0752f2df25e9",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -55,33 +37,13 @@
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": {
-          "globalPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "localPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "scaling": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
-        },
+        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -95,6 +57,7 @@
       }
     },
     {
+      "guid": "4e3cb0d7-f2b7-c3b3-417c-ee3b277e6147",
       "name": "ball_bald",
       "transform": {
         "globalPosition": {
@@ -102,55 +65,13 @@
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "fcb85e78-98e7-fdb4-b87e-90b0514debcf",
         "localPosition": {
           "x": 3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": {
-          "globalPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "localPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "parent": {
-            "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "localPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "rotation": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "scaling": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
-            }
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "scaling": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
-        },
+        "parent": "2b0ff137-ce2d-30a2-47e4-78d5020fe0d4",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -164,6 +85,7 @@
       }
     },
     {
+      "guid": "2468ad4d-5071-3ea1-7e4c-99e6fb27a0f3",
       "name": "ball_bald2",
       "transform": {
         "globalPosition": {
@@ -171,33 +93,13 @@
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "a1d05ae2-1b05-86a9-4bde-8aaf00326057",
         "localPosition": {
           "x": -3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": {
-          "globalPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "localPosition": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "scaling": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
-        },
+        "parent": "e8302c85-7578-27b4-4d77-5b3631f75bea",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -211,10 +113,12 @@
       }
     }
   ],
+  "guid": "e6e57cd6-fad7-200d-accd-775c617db557",
   "isInit": false,
   "loadingObject": "",
   "name": "Scene_0",
   "world": {
+    "guid": "3fcfa7b5-7992-e366-97e0-9e3a24e4ae3c",
     "name": "World",
     "transform": {
       "globalPosition": {
@@ -222,6 +126,7 @@
         "y": 0.0,
         "z": 0.0
       },
+      "guid": "e8302c85-7578-27b4-4d77-5b3631f75bea",
       "localPosition": {
         "x": 0.0,
         "y": 0.0,
