@@ -31,7 +31,7 @@ void Toolbar::Update()
                     std::string sceneName = SceneManager::GetScene(i)->name;
                     if (ImGui::MenuItem(sceneName.c_str()))
                     {
-                        
+                        SceneManager::LoadScene(i);
                     }
                 }
 

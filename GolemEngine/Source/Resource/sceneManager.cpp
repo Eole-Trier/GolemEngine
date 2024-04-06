@@ -64,7 +64,7 @@ public:
 void SceneManager::Init()
 {
     m_scenes.push_back(new Scene("scene_0"));
-    LoadScene();
+    LoadScene(0);
     InitScene();
 }
 
@@ -131,24 +131,11 @@ void SceneManager::SaveScene()
     // std::cout << jScene.dump(2) << std::endl;
 }
 
-void SceneManager::LoadScene()
+void SceneManager::LoadScene(int _id)
 {
-
-    m_currentScene = m_scenes[0];    std::cout << "Saved scene" << std::endl;
-    // TestClass testClass2;
-    //
-    // std::fstream File;
-    // File.open(R"(C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Saves\Scenes\file.json)", std::ios::in);
-    // json jScene;
-    // File >> jScene;
-    // testClass2 = jScene;
-    //
-    // testClass2.name = jScene["name"];
-    // testClass2.data[0] = jScene["data"][0];
-    // testClass2.age = jScene["age"];
-    //
-    // std::cout << testClass2.name << " " << testClass2.data[0] << " " << testClass2.data[1] << " " << testClass2.data[2] << " " << testClass2.age << std::endl;
-
+    m_currentScene = m_scenes[_id];
+    m_currentScene->Init();
+    std::cout << "Loaded scene: " << m_currentScene->name << std::endl;
     // std::fstream sceneFile;
     // sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::in);
     // json jScene;

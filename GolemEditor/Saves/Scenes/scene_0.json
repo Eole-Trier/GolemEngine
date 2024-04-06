@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "39d0e1b7-01e8-d74a-d79d-d6b2d6dbddfb",
+      "guid": "2e83dd40-25bc-780b-ec47-8eecc9365556",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -9,13 +9,11 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -29,7 +27,7 @@
       }
     },
     {
-      "guid": "39d0e1b7-01e8-d74a-d79d-d6b2d6dbddfb",
+      "guid": "2e83dd40-25bc-780b-ec47-8eecc9365556",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -37,13 +35,11 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -57,7 +53,7 @@
       }
     },
     {
-      "guid": "8cb908bd-5530-216f-284b-744aa36f6ea5",
+      "guid": "1c3040cc-d0da-064b-be68-d05da81a66d4",
       "name": "ball_bald",
       "transform": {
         "globalPosition": {
@@ -65,13 +61,11 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "bf81a208-653f-7657-3986-522d007445bc",
         "localPosition": {
           "x": 3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "6f6903da-dc69-9e31-1e98-1730c3d1e77a",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -85,7 +79,7 @@
       }
     },
     {
-      "guid": "be1c8c17-8e28-88aa-92cb-36391c91c8cc",
+      "guid": "18028338-a667-9ec5-9156-d8d39fa891f4",
       "name": "ball_bald2",
       "transform": {
         "globalPosition": {
@@ -93,13 +87,11 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "241a81e6-39a2-c153-3fe3-b6b48a74ceb3",
         "localPosition": {
           "x": -3.0,
           "y": 0.0,
           "z": 0.0
         },
-        "parent": "df8a0259-6f48-3778-0b24-91b5f33a9174",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -113,12 +105,12 @@
       }
     }
   ],
-  "guid": "32ff52b7-3a3c-37a8-34b1-a961cc077cd5",
+  "guid": "c49adac9-9348-344e-edb6-ff93b544853b",
   "isInit": false,
   "loadingObject": "",
   "name": "scene_0",
   "world": {
-    "guid": "ac5ede37-95fe-cef9-3622-c27dcdf891f9",
+    "guid": "20de9434-fd38-cbb5-6c32-d80918b0cc43",
     "name": "World",
     "transform": {
       "globalPosition": {
@@ -126,7 +118,6 @@
         "y": 0.0,
         "z": 0.0
       },
-      "guid": "df8a0259-6f48-3778-0b24-91b5f33a9174",
       "localPosition": {
         "x": 0.0,
         "y": 0.0,

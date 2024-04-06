@@ -1,28 +1,24 @@
 #pragma once
 
 #include <vector>
-#include <nlohmann/json.hpp>
 
 #include "vector3.h"
 #include "quaternion.h"
 #include "matrix4.h"
-
 #include "Components/component.h"
-#include "Resource/guid.h"
-
-using json = nlohmann::json;
 
 
 class Transform : public Component
 {
 private:
-	Guid m_guid;
 	Transform* m_parent;
 	std::vector<Transform*> m_children;
 	Matrix4 m_localModel;
 	Matrix4 m_globalModel;
 
 public:
+
+	
 	Vector3 globalPosition; // access only, modification is useless yet
 	Vector3 localPosition;
 	Vector3 rotation;
@@ -48,25 +44,6 @@ public:
 	GOLEM_ENGINE_API Matrix4 GetLocalModel();
 
 	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
-
-	
-	// Define serialization and deserialization functions manually because the
-	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const
-	{
-		j = json
-		{
-			{"guid", m_guid.ToString()},
-			{"globalPosition", globalPosition},
-			{"localPosition", localPosition},
-			{"rotation", rotation},
-			{"scaling", scaling},
-		};
-		if (m_parent != nullptr)
-		{
-			j["parent"] = m_parent->m_guid.ToString();
-		}
-	}
 };
 
 REFL_AUTO(

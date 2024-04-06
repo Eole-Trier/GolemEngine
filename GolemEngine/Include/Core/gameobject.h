@@ -66,8 +66,13 @@ public:
 		};
 		if (transform != nullptr)
 		{
-			json jTransform;
-			transform->to_json(jTransform);
+			json jTransform = {
+				{"globalPosition", transform->globalPosition},
+				{"localPosition", transform->localPosition},
+				{"rotation", transform->rotation},
+				{"scaling", transform->scaling}
+			};
+			
 			j["transform"] = jTransform;
 		}
 	}

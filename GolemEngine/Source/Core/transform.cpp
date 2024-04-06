@@ -3,6 +3,7 @@
 #include "Core/gameobject.h"
 #include "Resource/sceneManager.h"
 
+
 Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
 	: localPosition(_position), rotation(_rotation), scaling(_scaling)
 {
