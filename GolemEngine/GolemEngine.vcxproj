@@ -34,6 +34,7 @@
     <ClCompile Include="Source\Components\Light\light.cpp" />
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\point.h" />
     <ClInclude Include="Include\Components\Light\spot.h" />
+    <ClInclude Include="Include\Components\meshRenderer.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
     <ClInclude Include="Include\Core\scene.h" />

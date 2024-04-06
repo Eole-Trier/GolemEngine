@@ -24,15 +24,8 @@ GameObject::GameObject(const std::string& _name, Transform* _transform)
 
 GameObject::~GameObject() 
 {
+	SceneManager::GetCurrentScene()->RemoveGameObject(this);
 	DeleteAllComponents();
-}
-
-void GameObject::Update()
-{
-	for (auto& component : m_components)
-	{
-		//component->Update();
-	}
 }
 
 std::string GameObject::GetName()
@@ -40,10 +33,17 @@ std::string GameObject::GetName()
 	return name;
 }
 
-int GameObject::GetId()
+size_t GameObject::GetId()
 {
 	return m_id;
 }
+
+void GameObject::SetId(size_t _id)
+{
+	m_id = _id;
+}
+
+
 
 void GameObject::DeleteTransform(Transform* _t)
 {
@@ -51,7 +51,7 @@ void GameObject::DeleteTransform(Transform* _t)
 
 	for (Transform* go : _t->GetChildren())
 	{
-		SceneManager::GetCurrentScene()->DeleteGameObject(go->owner);
+		delete go->owner;
 	}
 }
 

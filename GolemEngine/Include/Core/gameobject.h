@@ -15,7 +15,7 @@
 class GOLEM_ENGINE_API GameObject
 {
 private:
-	int m_id;
+	size_t m_id;
 	std::vector<Component*> m_components;
 	bool m_selected;
 
@@ -28,10 +28,9 @@ public:
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
-
-	void Update();
 	std::string GetName();
-	int GetId();
+	size_t GetId();
+	void SetId(size_t _id);
 
 	void DeleteTransform(Transform* _t);
 	void DeleteLight(Light* _l);
@@ -110,5 +109,6 @@ std::vector<TypeT*> GameObject::GetComponents()
 REFL_AUTO(
 	type(GameObject),
 	field(name),
+	field(m_id),
 	field(m_components)
 )

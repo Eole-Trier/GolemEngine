@@ -1,6 +1,7 @@
 #include "Reflection/classesManager.h"
 #include "Debug/log.h"
 #include "Core/transform.h"
+#include "Components/meshRenderer.h"
 #include "Components/Light/directional.h"
 #include "Components/Light/point.h"
 #include "Components/Light/spot.h"
@@ -9,6 +10,7 @@ void ClassesManager::AddAllClasses()
 {
 	Add<Component>();
 	Add<Transform>();
+	Add<MeshRenderer>();
 	Add<Light>();
 	Add<DirectionalLight>();
 	Add<PointLight>();

@@ -29,7 +29,6 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
-	std::vector<Mesh*> m_meshes;
 	std::string name;
 	bool isInit = false;
 	std::string loadingObject;
@@ -51,9 +50,6 @@ public:
 	void AddLight(Light* _light);
 
 	
-	Mesh* GetMeshByName(std::string _name);
-	std::vector<Mesh*> GetMeshes();
-
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
@@ -67,7 +63,6 @@ public:
 	GameObject* GetWorld();
 
 	void AddGameObject(GameObject* _gameObject);
-	void DeleteGameObject(GameObject* _gameObject);
-	void DeleteMesh(Mesh* _mesh);
+	void RemoveGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
 };

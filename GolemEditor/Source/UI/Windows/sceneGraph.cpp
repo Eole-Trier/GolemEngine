@@ -45,8 +45,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
-	int id = _gameObject->GetId();
-	const char* cid = (const char*)id;
+	size_t id = _gameObject->GetId();
+
+	const char* res = std::to_string(id).c_str();
 
 	if (m_renaming == _gameObject)
 	{
@@ -66,7 +67,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		else
 		{
 			// Rename popup
-			if (ImGui::BeginPopupContextItem(name))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Rename"))
 				{
@@ -76,7 +77,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			}
 
 			// Create popup
-			if (ImGui::BeginPopupContextItem(name))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Create"))
 				{
@@ -86,7 +87,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			}
 
 			// Delete popup
-			if (ImGui::BeginPopupContextItem(name))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
