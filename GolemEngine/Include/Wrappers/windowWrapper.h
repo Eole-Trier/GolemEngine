@@ -61,7 +61,7 @@ class GOLEM_ENGINE_API WindowWrapper
 {
 public:
 	static GLFWwindow* window;
-	static Vector2 m_screenSize;
+	static Vector2 screenSize;
 
 private:
 	// Static class
