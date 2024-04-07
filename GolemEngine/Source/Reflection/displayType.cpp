@@ -27,10 +27,6 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 			{
 				_gameObject->AddComponent(new PointLight);
 			}
-			else
-			{
-				Log::Print("The PointLight will not be Created. A GameObject can only have one PointLight. PointLights limit : %d", SceneManager::GetCurrentScene()->GetMaxPointLights());
-			}
 		}
 		ImGui::EndPopup();
 	}
@@ -42,10 +38,6 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 			{
 				_gameObject->AddComponent(new SpotLight);
 			}
-			else
-			{
-				Log::Print("The SpotLight will not be Created. A GameObject can only have one SpotLight. SpotLights limit : %d", SceneManager::GetCurrentScene()->GetMaxSpotLights());
-			}
 		}
 		ImGui::EndPopup();
 	}
@@ -56,10 +48,6 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
 			{
 				_gameObject->AddComponent(new DirectionalLight);
-			}
-			else
-			{
-				Log::Print("The DirectionalLight will not be Created. A GameObject can only have one DirectionalLight. DirectionalLights limit : %d", SceneManager::GetCurrentScene()->GetMaxDirectionalLights());
 			}
 		}
 		ImGui::EndPopup();
