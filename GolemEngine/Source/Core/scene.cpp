@@ -10,6 +10,7 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
 #include "Utils/tools.h"
+#include "Wrappers/graphicWrapper.h"
 #include "Components/Light/point.h"
 #include "Components/Light/directional.h"
 #include "Components/Light/spot.h"
@@ -107,6 +108,7 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, GraphicWrapper::GetFbo());
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();

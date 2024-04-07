@@ -4,6 +4,7 @@
 #include "Image/stb_image.h"
 #include "glad/glad.h"
 #include "Debug/log.h"
+#include "Wrappers/graphicWrapper.h"
 
 Texture::Texture()
 {

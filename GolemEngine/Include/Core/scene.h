@@ -22,7 +22,7 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
-	
+
 	GameObject* m_world = nullptr;
 	std::vector<GameObject*> m_gameObjects;
 

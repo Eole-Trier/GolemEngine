@@ -2,8 +2,10 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <vector>
 
 #include "dll.h"
+#include "Resource/Rendering/texture.h"
 
 #define OPENGL_MAJOR_VERSION GLFW_CONTEXT_VERSION_MAJOR
 #define OPENGL_MINOR_VERSION GLFW_CONTEXT_VERSION_MINOR
@@ -27,13 +29,14 @@ private:
 	static unsigned int m_vbo;
 	static unsigned int m_rbo;
 	static unsigned int m_fbo;
-	static unsigned int m_textureId;
 	static int m_width;
 	static int m_height;
-
 private:
 	// Static class
 	GraphicWrapper() = delete;
+
+public:
+	static inline std::vector<Texture> m_textures;
 
 public:
 	// Initialize library
