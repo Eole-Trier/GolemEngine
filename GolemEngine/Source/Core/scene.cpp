@@ -21,9 +21,7 @@ using json = nlohmann::json;
 
 Scene::Scene(std::string _name)
     : name(_name)
-{
-    m_world = nullptr;
-}
+{}
 
 void Scene::Init()
 {

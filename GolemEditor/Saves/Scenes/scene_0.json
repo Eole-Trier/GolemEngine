@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "2e83dd40-25bc-780b-ec47-8eecc9365556",
+      "guid": "98801bf0-0891-98dd-6df7-4ec9dad9829c",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -27,7 +27,7 @@
       }
     },
     {
-      "guid": "2e83dd40-25bc-780b-ec47-8eecc9365556",
+      "guid": "98801bf0-0891-98dd-6df7-4ec9dad9829c",
       "name": "viking",
       "transform": {
         "globalPosition": {
@@ -53,7 +53,7 @@
       }
     },
     {
-      "guid": "1c3040cc-d0da-064b-be68-d05da81a66d4",
+      "guid": "a5b1f477-1a39-6560-559f-5ec52864de9f",
       "name": "ball_bald",
       "transform": {
         "globalPosition": {
@@ -79,7 +79,7 @@
       }
     },
     {
-      "guid": "18028338-a667-9ec5-9156-d8d39fa891f4",
+      "guid": "53244f5b-cc14-7826-197c-28968e231f73",
       "name": "ball_bald2",
       "transform": {
         "globalPosition": {
@@ -105,12 +105,12 @@
       }
     }
   ],
-  "guid": "c49adac9-9348-344e-edb6-ff93b544853b",
+  "guid": "2f62b88c-7f16-99e6-39d0-b72820a19ca8",
   "isInit": false,
   "loadingObject": "",
   "name": "scene_0",
   "world": {
-    "guid": "20de9434-fd38-cbb5-6c32-d80918b0cc43",
+    "guid": "a086a536-8df2-64f4-544f-e325d772d03a",
     "name": "World",
     "transform": {
       "globalPosition": {
