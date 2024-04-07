@@ -109,6 +109,5 @@ std::vector<TypeT*> GameObject::GetComponents()
 REFL_AUTO(
 	type(GameObject),
 	field(name),
-	field(m_id),
 	field(m_components)
 )

@@ -25,8 +25,7 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 		{
 			if (SceneManager::GetCurrentScene()->GetPointLights().size() < SceneManager::GetCurrentScene()->GetMaxPointLights() && !_gameObject->GetComponent<PointLight>())
 			{
-				PointLight* pL = new PointLight;
-				_gameObject->AddComponent(pL);
+				_gameObject->AddComponent(new PointLight);
 			}
 			else
 			{
@@ -41,8 +40,7 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 		{
 			if (SceneManager::GetCurrentScene()->GetSpotLights().size() < SceneManager::GetCurrentScene()->GetMaxSpotLights() && !_gameObject->GetComponent<SpotLight>())
 			{
-				SpotLight* pL = new SpotLight;
-				_gameObject->AddComponent(pL);
+				_gameObject->AddComponent(new SpotLight);
 			}
 			else
 			{
@@ -57,8 +55,7 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 		{
 			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
 			{
-				DirectionalLight* pL = new DirectionalLight;
-				_gameObject->AddComponent(pL);
+				_gameObject->AddComponent(new DirectionalLight);
 			}
 			else
 			{

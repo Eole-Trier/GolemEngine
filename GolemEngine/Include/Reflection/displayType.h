@@ -34,9 +34,9 @@ public:
 	template<typename TypeT, typename MemberT, typename DescriptorT>
 	static void DisplayIntOrFloat(MemberT* _member);
 
+
 	GOLEM_ENGINE_API static void DisplayWithHashCode(size_t _hashCode, void* _object);
 	GOLEM_ENGINE_API static void AddComponentHandler(GameObject* _gameObject);
-
 };
 
 template<typename>
@@ -101,6 +101,7 @@ void DisplayType::DisplayField(TypeT* _class)
 template<typename TypeT, typename MemberT, typename DescriptorT>
 void DisplayType::BasicsFields(MemberT* _class)
 {
+	ImGui::PushID(_class);
 	if constexpr (std::is_pointer_v<MemberT>)
 	{
 		DisplayWithHashCode(typeid(** _class).hash_code(), *_class);
@@ -126,6 +127,8 @@ void DisplayType::BasicsFields(MemberT* _class)
 	{
 		ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, .1f);
 	}
+	ImGui::PopID();
+
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
@@ -174,8 +177,12 @@ void DisplayType::DisplayIntOrFloat(MemberT* _member)
 		type = ImGuiDataType_Double;
 	}
 
+	ImGui::PushID(_member);
+
 	if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
 		ImGui::SliderScalar(DescriptorT::name.c_str(), type, _member, &refl::descriptor::get_attribute<Range>(DescriptorT{}).min, &refl::descriptor::get_attribute<Range>(DescriptorT{}).max);
 	else
 		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member);
+
+	ImGui::PopID();
 }
