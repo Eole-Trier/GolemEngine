@@ -8,4 +8,6 @@ class GOLEM_ENGINE_API Resource
 public:
 	Resource() {};
 	virtual ~Resource() {};
+
+	const char* path = nullptr;
 };

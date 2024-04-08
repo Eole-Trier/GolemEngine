@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <iostream>
 
 #include "dll.h"
 #include "Resource.h"
@@ -30,7 +31,7 @@ public:
 	}
 
 	template<class T>
-	T* Create(std::string _name);
+	T* Create(std::string _name, const char* _path);
 	template<class T>
 	T* Get(std::string _name);
 	void Delete(std::string _name);
@@ -38,10 +39,8 @@ public:
 	std::unordered_map<std::string, Resource*> GetResources();
 };
 
-//static inline ResourceManager* ResourceManager::GetInstance()
-
 template<class T>
-inline T* ResourceManager::Create(std::string _name)
+inline T* ResourceManager::Create(std::string _name, const char* _path)
 {
 	if (m_resources[_name] != nullptr)
 	{
@@ -49,6 +48,8 @@ inline T* ResourceManager::Create(std::string _name)
 	}
 	T* resource = new T;
 	m_resources[_name] = resource;
+	m_resources[_name]->path = _path;
+	std::cout << "HERE!!!" << m_resources[_name]->path << std::endl;
 	return resource;
 }
 
