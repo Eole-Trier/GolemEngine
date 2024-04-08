@@ -10,6 +10,7 @@
 #include "Components/transform.h"
 #include "Resource/guid.h"
 #include "Debug/log.h"
+#include "Components/Light/light.h"
 
 using json = nlohmann::json;
 

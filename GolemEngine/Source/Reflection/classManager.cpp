@@ -1,6 +1,6 @@
 #include "Reflection/classesManager.h"
 #include "Debug/log.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/Light/directional.h"
 #include "Components/Light/point.h"

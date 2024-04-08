@@ -15,7 +15,7 @@
 #include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "Components/meshRenderer.h"
 
 using json = nlohmann::json;
@@ -45,7 +45,7 @@ void Scene::InitGameObjects()
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-
+    
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
@@ -53,7 +53,7 @@ void Scene::InitGameObjects()
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-
+    
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
@@ -96,61 +96,6 @@ void Scene::CreateAndLoadResources()
     
     Shader* shad = resourceManager->Create<Shader>("default");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
-}
-
-void Scene::InitGameObjects()
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
-
-    Shader* defaultShader = resourceManager->Get<Shader>("default");
-
-    // std::string vikingName = "viking";
-    // Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
-    // Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
-    // Model* viking_room = resourceManager->Get<Model>("viking_room");
-    // Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
-    // m_meshes.push_back(vikingMesh);
-    // m_gameObjects.push_back(vikingMesh);
-    //
-    // std::string ballBaldName = "ball_bald";
-    // Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
-    // Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
-    // Model* ballBald = resourceManager->Get<Model>("model_sphere");
-    // Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
-    // m_meshes.push_back(ballBaldMesh);
-    //
-    // std::string ballBaldName2 = "ball_bald2";
-    // Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
-    // Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
-    // Model* ballBald2 = resourceManager->Get<Model>("model_sphere");
-    //
-    // Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
-    //
-    // m_meshes.push_back(vikingMesh);
-    // m_meshes.push_back(ballBaldMesh);
-    // m_meshes.push_back(ballBaldMesh2);
-    //
-    // m_gameObjects.push_back(vikingMesh);
-    // m_gameObjects.push_back(ballBaldMesh);
-    // m_gameObjects.push_back(ballBaldMesh2);
-    //
-    // m_world->transform->AddChild(vikingMesh->transform);
-    // m_world->transform->AddChild(ballBaldMesh2->transform);
-    // vikingMesh->transform->AddChild(ballBaldMesh->transform);
-}
-
-void Scene::InitLights()
-{
-    // Set up the sun
-    m_dirLights.push_back(new DirectionalLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(0.0f, 0.0f, 0.0f), m_dirLights, m_maxDirLights));
-
-    // Add some point lights
-    m_pointLights.push_back(new PointLight(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f),
-        Vector3(0, 0, 0), 1.f, 0.f, 0.f, m_pointLights, m_maxPointLights));
-
-    m_gameObjects[1]->AddComponent(m_pointLights[0]);
 }
 
 void Scene::Update(float _width, float _height, Camera* _camera)

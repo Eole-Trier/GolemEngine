@@ -13,7 +13,7 @@ using json = nlohmann::json;
 void SceneManager::Init()
 {
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
     m_scenes.push_back(new Scene("scene_0"));
     LoadScene(0);
 }
