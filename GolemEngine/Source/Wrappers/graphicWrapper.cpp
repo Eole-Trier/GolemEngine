@@ -23,10 +23,8 @@ int GraphicWrapper::Init()
 
 void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
-    Texture tex1(_width, _height, GL_RGBA);
-    Texture tex2(_width, _height, GL_RED);
-    m_textures.push_back(tex1);
-    m_textures.push_back(tex2);
+    m_textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA);
+    m_textures[1] = std::make_unique<Texture>(_width, _height, GL_RED);
 
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -35,24 +33,26 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     // Create texturebuffer
     for (int i = 0; i < m_textures.size(); i++)
     {
-        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+        //glBindTexture(GL_TEXTURE_2D, m_textures[i]->id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         if (i == 0)
         {
+            AttachTexture(GL_RGBA, _width, _height, 0, m_textures[0]->id);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[0].id, 0);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[0]->id, 0);
         }
 
         else
         {
+            AttachTexture(GL_RED, _width, _height, i, m_textures[i]->id);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, _width, _height, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 1, GL_TEXTURE_2D, m_textures[i].id, 0);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
         }
     }
 
-    AttachTexture(_format, _width, _height, 0, m_textures[0].id);
+    //AttachTexture(_format, _width, _height, 0, m_textures[0]->id);
 
     CreateRenderBuffer(_width, _height);
 
@@ -113,7 +113,7 @@ void GraphicWrapper::EnableDepth()
 
 unsigned int GraphicWrapper::GetTextureId()
 {
-    return m_textures[0].id;
+    return m_textures[0]->id;
 }
 
 void GraphicWrapper::SetBackgroundColor(Vector4 _color)

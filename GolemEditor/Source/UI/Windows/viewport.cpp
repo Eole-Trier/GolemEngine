@@ -55,6 +55,7 @@ void Viewport::Update()
     {
         isDisplayed = true;
     }
+
     else
     {
         isDisplayed = false;
@@ -62,7 +63,7 @@ void Viewport::Update()
 
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
-        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1].m_width, GraphicWrapper::m_textures[1].m_height, 1, GraphicWrapper::m_textures[1].id);
+        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, 1, GraphicWrapper::m_textures[1]->id);
 
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         //Log::Print("pixelID = %d", pixelData);
@@ -80,14 +81,12 @@ void Viewport::Update()
 
     if (isDisplayed)
     {
-        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1].m_width, GraphicWrapper::m_textures[1].m_height, 1, GraphicWrapper::m_textures[1].id);
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1].id, ImGui::GetContentRegionAvail());
+        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize());
     }
 
     else
     {
-        GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0].m_width, GraphicWrapper::m_textures[0].m_height, 1, GraphicWrapper::m_textures[0].id);
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0].id, ImGui::GetContentRegionAvail());
+        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize());
     }
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);

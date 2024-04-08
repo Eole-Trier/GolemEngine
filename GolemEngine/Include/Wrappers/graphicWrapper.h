@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "dll.h"
 #include "Resource/Rendering/texture.h"
@@ -36,7 +37,7 @@ private:
 	GraphicWrapper() = delete;
 
 public:
-	static inline std::vector<Texture> m_textures;
+	static inline std::vector<std::unique_ptr<Texture>> m_textures;
 
 public:
 	// Initialize library
