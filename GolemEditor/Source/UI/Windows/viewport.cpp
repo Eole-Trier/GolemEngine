@@ -76,18 +76,13 @@ void Viewport::DragDropEvent()
         ImVec2 itemRectMin = ImGui::GetItemRectMin();
         ImVec2 itemRectMax = ImGui::GetItemRectMax();
 
-        if (ImGui::IsMouseHoveringRect(itemRectMin, itemRectMax))
-        {
-            std::cout << "Dropping" << std::endl;
-        }
-
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
             // TODO 
             SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
-            SceneManager::GetCurrentScene()->isInit = true;
+            SceneManager::GetCurrentScene()->isObjectInit = true;
             m_isDragging = false;
             g_isFromFileBrowser = false;
         }

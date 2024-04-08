@@ -12,17 +12,10 @@ using json = nlohmann::json;
 
 void SceneManager::Init()
 {
-    m_scenes.push_back(new Scene("scene_0"));
-    LoadScene(0);
-}
-
-void SceneManager::InitScene()
-{
-    // Init scene
-    m_currentScene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-    std::cout << m_scenes.size() << std::endl;
+    m_scenes.push_back(new Scene("scene_0"));
+    LoadScene(0);
 }
 
 void SceneManager::SaveScene()
@@ -44,7 +37,11 @@ void SceneManager::SaveScene()
 void SceneManager::LoadScene(int _id)
 {
     m_currentScene = m_scenes[_id];
-    InitScene();
+    if (!m_currentScene->isInit)
+    {
+        m_currentScene->Init();
+        m_currentScene->isInit = true;
+    }
     std::cout << "Loaded scene: " << m_currentScene->name << std::endl;
     // std::fstream sceneFile;
     // sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::in);

@@ -25,7 +25,6 @@ private:
 
 public:
     static void Init();
-    static void InitScene();
 
     static void SaveScene();
     static void CreateScene(std::string _sceneName);

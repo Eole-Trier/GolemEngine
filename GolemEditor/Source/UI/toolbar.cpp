@@ -28,10 +28,13 @@ void Toolbar::Update()
                 
                 for (int i = 0; i < SceneManager::GetSceneCount(); i++)
                 {
-                    std::string sceneName = SceneManager::GetScene(i)->name;
-                    if (ImGui::MenuItem(sceneName.c_str()))
+                    if (SceneManager::GetScene(i)->name != SceneManager::GetCurrentScene()->name)
                     {
-                        SceneManager::LoadScene(i);
+                        std::string sceneName = SceneManager::GetScene(i)->name;
+                        if (ImGui::MenuItem(sceneName.c_str()))
+                        {
+                            SceneManager::LoadScene(i);
+                        }
                     }
                 }
 

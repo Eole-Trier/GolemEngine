@@ -40,6 +40,7 @@ private:
 public:
 	std::string name;
 	bool isInit = false;
+	bool isObjectInit = false;
 	std::string loadingObject;
 	
 public:
@@ -75,7 +76,7 @@ public:
 		{
 			{"name", name},
 			{"guid", m_guid.ToString()},
-			{"isInit", isInit},
+			{"isObjectInit", isObjectInit},
 			{"loadingObject", loadingObject}
 		};
 		if (m_world != nullptr)
