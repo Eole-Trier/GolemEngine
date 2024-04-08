@@ -6,6 +6,7 @@
 #include "quaternion.h"
 #include "matrix4.h"
 #include "Components/component.h"
+#include "Resource/guid.h"
 
 
 class Transform : public Component
@@ -17,7 +18,7 @@ private:
 	Matrix4 m_globalModel;
 
 public:
-
+	Guid guid;
 	
 	Vector3 globalPosition; // access only, modification is useless yet
 	Vector3 localPosition;

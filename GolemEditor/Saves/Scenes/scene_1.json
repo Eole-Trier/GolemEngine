@@ -1,34 +1,90 @@
 {
   "gameObjects": [
     {
-      "guid": "aeed3e95-166b-4c85-4999-00d9acf436c5",
+      "guid": "dcbb1d0e-8e3e-81c9-9776-f91b802f9840",
       "name": "World",
       "transform": {
         "globalPosition": {
-          "x": 1.399999976158142,
+          "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "563c82c2-3c78-acb5-9475-3df991d9859b",
         "localPosition": {
-          "x": 1.399999976158142,
+          "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
         "rotation": {
           "x": 0.0,
-          "y": 3.0,
+          "y": 0.0,
           "z": 0.0
         },
         "scaling": {
           "x": 1.0,
           "y": 1.0,
-          "z": 3.0
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "guid": "14977a72-1801-c51a-6eb6-2a25cc419f4a",
+      "name": "sphere",
+      "transform": {
+        "globalPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "guid": "fd6b49f0-9c09-1270-07e4-ebabf58fc138",
+        "localPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parentGuid": "563c82c2-3c78-acb5-9475-3df991d9859b",
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scaling": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "guid": "14977a72-1801-c51a-6eb6-2a25cc419f4a",
+      "name": "sphere",
+      "transform": {
+        "globalPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "guid": "fd6b49f0-9c09-1270-07e4-ebabf58fc138",
+        "localPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parentGuid": "563c82c2-3c78-acb5-9475-3df991d9859b",
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scaling": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
         }
       }
     }
   ],
-  "guid": "c7d301d4-e007-c651-8f47-fb057bc8bb07",
-  "isObjectInit": false,
-  "loadingObject": "",
+  "guid": "7d81fa9a-3a93-26df-2a5c-5fceb12d4e9a",
+  "loadingObject": "sphere",
   "name": "scene_1"
 }

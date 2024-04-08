@@ -84,7 +84,6 @@ public:
 		{
 			{"name", name},
 			{"guid", m_guid.ToString()},
-			{"isObjectInit", isObjectInit},
 			{"loadingObject", loadingObject}
 		};
 		if (!m_gameObjects.empty())

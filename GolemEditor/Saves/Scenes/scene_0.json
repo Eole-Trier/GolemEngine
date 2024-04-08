@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "46d84120-f114-5f87-e68a-a20d4d11496e",
+      "guid": "f401683c-25d2-2c74-7525-e3f0e3422d89",
       "name": "World",
       "transform": {
         "globalPosition": {
@@ -9,6 +9,7 @@
           "y": 0.0,
           "z": 0.0
         },
+        "guid": "627118ca-df96-dd1f-d797-411a89ceb428",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
@@ -25,10 +26,65 @@
           "z": 1.0
         }
       }
+    },
+    {
+      "guid": "a5fe5b67-54f1-2c3d-4ddb-c5606125f397",
+      "name": "cube",
+      "transform": {
+        "globalPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "guid": "c02da2d8-9c3e-26e6-5c32-91e80ce37867",
+        "localPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parentGuid": "627118ca-df96-dd1f-d797-411a89ceb428",
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scaling": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "guid": "a5fe5b67-54f1-2c3d-4ddb-c5606125f397",
+      "name": "cube",
+      "transform": {
+        "globalPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "guid": "c02da2d8-9c3e-26e6-5c32-91e80ce37867",
+        "localPosition": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parentGuid": "627118ca-df96-dd1f-d797-411a89ceb428",
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scaling": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
     }
   ],
-  "guid": "82ce9d70-b2de-2ca9-fb54-a82cf34b50c9",
-  "isObjectInit": false,
-  "loadingObject": "",
+  "guid": "ff4296d2-c283-d37e-efa7-4e93f8bbb67a",
+  "loadingObject": "cube",
   "name": "scene_0"
 }
