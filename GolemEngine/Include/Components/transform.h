@@ -51,7 +51,21 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const	{}
+	void to_json(json& j) const
+	{
+		j = json
+		{
+			{"transform",
+				{
+					{"guid", guid.ToString()},
+					{"globalPosition", globalPosition},
+					{"localPosition", localPosition},
+					{"rotation", rotation},
+					{"scaling", scaling}
+				}
+			}
+		};
+	};
 };
 
 REFL_AUTO(

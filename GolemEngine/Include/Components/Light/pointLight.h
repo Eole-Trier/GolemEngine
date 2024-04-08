@@ -36,15 +36,18 @@ public:
     {
         j = json
         {
-			    {"name", "pointLight"},
-                {"id", id},
-                {"diffuseColor", diffuseColor},
-                {"ambientColor", ambientColor},
-                {"specularColor", specularColor},
-                {"position", position},
-                {"constant", constant},
-                {"linear", linear},
-                {"quadratic", quadratic},
+            {"pointLight",
+                {
+                    {"id", id},
+                    {"diffuseColor", diffuseColor},
+                    {"ambientColor", ambientColor},
+                    {"specularColor", specularColor},
+                    {"position", position},
+                    {"constant", constant},
+                    {"linear", linear},
+                    {"quadratic", quadratic}
+                }
+            }
         };
     }
 };

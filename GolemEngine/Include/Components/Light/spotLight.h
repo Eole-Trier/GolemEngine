@@ -39,17 +39,20 @@ public:
     {
         j = json
         {
-            {"name", "pointLight"},
-            {"id", id},
-            {"diffuseColor", diffuseColor},
-            {"ambientColor", ambientColor},
-            {"specularColor", specularColor},
-            {"position", position},
-            {"direction", direction},
-            {"constant", constant},
-            {"linear", linear},
-            {"cutOff", cutOff},
-            {"outerCutOff", outerCutOff},
+            {"spotLight",
+                {
+                   {"id", id},
+                   {"diffuseColor", diffuseColor},
+                   {"ambientColor", ambientColor},
+                   {"specularColor", specularColor},
+                   {"position", position},
+                   {"direction", direction},
+                   {"constant", constant},
+                   {"linear", linear},
+                   {"cutOff", cutOff},
+                   {"outerCutOff", outerCutOff},
+                }
+            }
         };
     }
 };

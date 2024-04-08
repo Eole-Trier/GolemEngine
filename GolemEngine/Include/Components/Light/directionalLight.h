@@ -30,13 +30,17 @@ public:
 	{
 		j = json
 		{
-			{"name", "directionalLight"},
-			{"id", id},
-			{"diffuseColor", diffuseColor},
-			{"ambientColor", ambientColor},
-			{"specularColor", specularColor},
-			{"direction", direction}
+			{"directionalLight",
+				{
+					{"id", id},
+					{"diffuseColor", diffuseColor},
+					{"ambientColor", ambientColor},
+					{"specularColor", specularColor},
+					{"direction", direction}
+				}
+			}
 		};
+
 	}
 };
 
