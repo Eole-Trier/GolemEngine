@@ -36,4 +36,26 @@ namespace Tools
         std::cout << "Not found the folder: " << _folderName << std::endl;
         return ""; // Return an empty string
     }
+
+    int GOLEM_ENGINE_API GetFolderSize(std::filesystem::path _pathToFolder)
+    {
+        int fileCount = 0;
+        try
+        {
+            for (const auto& entry : std::filesystem::recursive_directory_iterator(_pathToFolder))
+            {
+                if (std::filesystem::is_regular_file(entry))
+                {
+                    fileCount++;
+                }
+            }
+            std::cout << "Number of files: " << fileCount << std::endl;
+        }
+        catch (const std::exception& _e)
+        {
+            std::cerr << "Error: " << _e.what() << std::endl;
+            return 0;
+        }
+        return fileCount;
+    }
 }

@@ -66,7 +66,7 @@ void Scene::InitGameObjects()
 
 void Scene::InitLights()
 {
-    // Set up the sun
+    // Set up directional light
     DirectionalLight* dir = new DirectionalLight;
     m_world->AddComponent(dir);
 }
@@ -113,26 +113,11 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     UpdateGameObjects(_width, _height, _camera);
 }
 
-void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) {
-    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
-        if (std::filesystem::is_directory(entry)) {
-            if (entry.path().filename() == folderName) {
-                foundPaths.push_back(entry.path()); 
-            }
-            searchFolders(entry, folderName, foundPaths);
-        }
-    }
-}
-
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
     std::string folderName = "Saves"; 
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
-    searchFolders(currentPath, folderName, foundPaths);
-    if (!foundPaths.empty()) 
-    {
-    }
 
     // Test TODO
     if (isObjectInit)

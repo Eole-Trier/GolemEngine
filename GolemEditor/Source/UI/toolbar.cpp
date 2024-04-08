@@ -25,7 +25,7 @@ void Toolbar::Update()
 
             if (ImGui::BeginMenu("Load scenes"))
             {
-                
+                // Get the amount of scenes in the Scenes folder
                 for (int i = 0; i < SceneManager::GetSceneCount(); i++)
                 {
                     if (SceneManager::GetScene(i)->name != SceneManager::GetCurrentScene()->name)

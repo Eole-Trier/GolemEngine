@@ -16,6 +16,13 @@ void SceneManager::Init()
     GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
     m_scenes.push_back(new Scene("scene_0"));
     LoadScene(0);
+    SaveScene();
+
+    // Init also scenes that are already saved
+    for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
+    {
+        // CreateScene()
+    }
 }
 
 void SceneManager::SaveScene()
@@ -38,6 +45,8 @@ void SceneManager::SaveScene()
         sceneFile.open(Tools::FindFolder("Scenes").append("\\" + sceneFileName), std::ios::out);
         sceneFile << jScene.dump(2);
     }
+    // Tools::GetFolderSize(Tools::FindFolder("Scenes"));
+
 }
 
 void SceneManager::LoadScene(int _id)
@@ -49,16 +58,6 @@ void SceneManager::LoadScene(int _id)
         m_currentScene->isInit = true;
     }
     std::cout << "Loaded scene: " << m_currentScene->name << std::endl;
-    // std::fstream sceneFile;
-    // sceneFile.open(Tools::FindFile("sceneFile.json"), std::ios::in);
-    // json jScene;
-    // sceneFile >> jScene;
-    //
-    // std::string sceneName = "scene_";
-    // sceneName.append(std::to_string(m_scenes.size()-1));
-    // CreateScene(sceneName);
-    //
-    // std::cout << "Loaded scene " << sceneName << std::endl;
 }
 
 void SceneManager::CreateScene(std::string _sceneName)

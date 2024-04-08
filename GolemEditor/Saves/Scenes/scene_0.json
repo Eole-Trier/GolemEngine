@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "f401683c-25d2-2c74-7525-e3f0e3422d89",
+      "guid": "a9f38e56-4764-949a-23a2-8d54074e66af",
       "name": "World",
       "transform": {
         "globalPosition": {
@@ -9,7 +9,7 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "627118ca-df96-dd1f-d797-411a89ceb428",
+        "guid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
@@ -28,7 +28,7 @@
       }
     },
     {
-      "guid": "a5fe5b67-54f1-2c3d-4ddb-c5606125f397",
+      "guid": "f11197d9-f25b-0aa2-8d56-b4edc5430104",
       "name": "cube",
       "transform": {
         "globalPosition": {
@@ -36,13 +36,13 @@
           "y": 1.0,
           "z": 1.0
         },
-        "guid": "c02da2d8-9c3e-26e6-5c32-91e80ce37867",
+        "guid": "43d2e857-806b-acfd-4af2-dd443d6e23f5",
         "localPosition": {
           "x": 1.0,
           "y": 1.0,
           "z": 1.0
         },
-        "parentGuid": "627118ca-df96-dd1f-d797-411a89ceb428",
+        "parentGuid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -56,7 +56,7 @@
       }
     },
     {
-      "guid": "a5fe5b67-54f1-2c3d-4ddb-c5606125f397",
+      "guid": "f11197d9-f25b-0aa2-8d56-b4edc5430104",
       "name": "cube",
       "transform": {
         "globalPosition": {
@@ -64,13 +64,13 @@
           "y": 1.0,
           "z": 1.0
         },
-        "guid": "c02da2d8-9c3e-26e6-5c32-91e80ce37867",
+        "guid": "43d2e857-806b-acfd-4af2-dd443d6e23f5",
         "localPosition": {
           "x": 1.0,
           "y": 1.0,
           "z": 1.0
         },
-        "parentGuid": "627118ca-df96-dd1f-d797-411a89ceb428",
+        "parentGuid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -84,7 +84,7 @@
       }
     }
   ],
-  "guid": "ff4296d2-c283-d37e-efa7-4e93f8bbb67a",
+  "guid": "e9f4084f-ada5-985e-5ef7-982b9808b2e0",
   "loadingObject": "cube",
   "name": "scene_0"
 }
