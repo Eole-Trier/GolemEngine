@@ -64,8 +64,14 @@ public:
 	static Vector2 m_screenSize;
 
 private:
-	// Static class
+	// Private constructors and destructor to make static class
 	WindowWrapper() = delete;
+	WindowWrapper(WindowWrapper& _other) = delete;
+	WindowWrapper(WindowWrapper&& _other) = delete;
+	WindowWrapper& operator=(WindowWrapper& _other) = delete;
+	WindowWrapper& operator=(WindowWrapper&& _other) = delete;
+	void operator=(const WindowWrapper&) = delete;
+	~WindowWrapper() = delete;
 
 public:
 	// Init GLFW

@@ -21,8 +21,14 @@ private:
 #pragma endregion Mouse variables
 
 private:
-	// Static class
+	// Private constructors and destructor to make static class
 	InputManager() = delete;
+	InputManager(InputManager& _other) = delete;
+	InputManager(InputManager&& _other) = delete;
+	InputManager& operator=(InputManager& _other) = delete;
+	InputManager& operator=(InputManager&& _other) = delete;
+	void operator=(const InputManager&) = delete;
+	~InputManager() = delete;
 
 public:
 	// Set callbacks application will use

@@ -32,8 +32,14 @@ private:
 	static int m_height;
 
 private:
-	// Static class
+	// Private constructors and destructor to make static class
 	GraphicWrapper() = delete;
+	GraphicWrapper(GraphicWrapper& _other) = delete;
+	GraphicWrapper(GraphicWrapper&& _other) = delete;
+	GraphicWrapper& operator=(GraphicWrapper& _other) = delete;
+	GraphicWrapper& operator=(GraphicWrapper&& _other) = delete;
+	void operator=(const GraphicWrapper&) = delete;
+	~GraphicWrapper() = delete;
 
 public:
 	// Initialize library

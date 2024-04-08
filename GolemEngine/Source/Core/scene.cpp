@@ -22,9 +22,7 @@ using json = nlohmann::json;
 
 Scene::Scene(std::string _name)
     : name(_name)
-{
-    m_world = nullptr;
-}
+{}
 
 void Scene::Init()
 {
@@ -47,7 +45,7 @@ void Scene::InitGameObjects()
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-
+    
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
@@ -55,7 +53,7 @@ void Scene::InitGameObjects()
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-
+    
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
@@ -134,17 +132,13 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     searchFolders(currentPath, folderName, foundPaths);
     if (!foundPaths.empty()) 
     {
-        std::cout << "Found " << foundPaths.size() << " occurrences of folder \"" << folderName << "\":" << std::endl;
-        for (const auto& path : foundPaths) {
-            std::cout << path << std::endl;
-        }
     }
 
     // Test TODO
-    if (isInit)
+    if (isObjectInit)
     {
         AddNewObject(loadingObject.c_str(), loadingObject.c_str());
-        isInit = false;
+        isObjectInit = false;
     }
     // Temporary to test graph scene
     m_world->transform->UpdateSelfAndChilds();
@@ -230,7 +224,6 @@ void Scene::DeleteLight(Light* _light)
         std::erase(m_dirLights, dL);
     }
 }
-
 
 // To add a new gameobject in the scene
 void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
