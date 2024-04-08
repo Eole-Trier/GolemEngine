@@ -27,7 +27,16 @@ namespace fs = std::filesystem;
     name != "GolemEditor.vcxproj.user" && \
     name != "imgui.ini" && \
     name != "Include" && \
-    name != "Source")
+    name != "Source" && \
+    name != "GolemEditor.exe"&& \
+    name != "GolemEditor.exp"&& \
+    name != "GolemEditor.lib"&& \
+    name != "GolemEditor.pdb"&& \
+    name != "GolemEngine.dll"&& \
+    name != "GolemEngine.exp"&& \
+    name != "GolemEngine.lib"&& \
+    name != "GolemEngine.pdb")
+
 
 
 FileBrowser::FileBrowser(std::string _name)

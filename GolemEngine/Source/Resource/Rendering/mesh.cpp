@@ -3,20 +3,20 @@
 #include <MathsLib/utils.h>
 
 #include "Wrappers/graphicWrapper.h"
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Core/camera.h"
-
+#include "Resource/sceneManager.h"
 
 void Mesh::SetupMesh()
 {
     glGenVertexArrays(1, &m_model->VAO);
 
     glGenBuffers(1, &m_model->VBO);
-    glBindVertexArray(m_model->VAO);
 
+    glBindVertexArray(m_model->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_model->VBO);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_model->vertices.size(), m_model->vertices.data(), GL_STATIC_DRAW);
@@ -33,8 +33,8 @@ void Mesh::SetupMesh()
     glBindVertexArray(0);  
 }
 
-Mesh::Mesh(const std::string& _name, Transform* _transform, Model* _model, Texture* _texture, Shader* _shader)
-    : GameObject(_name, _transform), m_model(_model), m_texture(_texture), m_shader(_shader)
+Mesh::Mesh(Model* _model, Texture* _texture, Shader* _shader)
+    : m_model(_model), m_texture(_texture), m_shader(_shader)
 {
     SetupMesh();
 }
@@ -43,20 +43,22 @@ Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &m_model->VAO);
     glDeleteBuffers(1, &m_model->VBO);
+
+    delete m_texture;
 }
 
-void Mesh::Draw(float _width, float _height, Camera* _cam)
+
+Texture* Mesh::GetTexture()
 {
-    glActiveTexture(GL_TEXTURE0);
-    m_texture->Use();
-    m_shader->Use();
+    return m_texture;
+}
 
-    Matrix4 view = _cam->GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->GetZoom()), _width / _height, _cam->GetNear(), _cam->GetFar());
-    m_shader->SetMat4("view", view);
-    m_shader->SetMat4("projection", projection);
-    m_shader->SetMat4("model", transform->GetGlobalModel());
+Model* Mesh::GetModel()
+{
+    return m_model;
+}
 
-    glBindVertexArray(m_model->VAO);
-    glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());
+Shader* Mesh::GetShader()
+{
+    return m_shader;
 }

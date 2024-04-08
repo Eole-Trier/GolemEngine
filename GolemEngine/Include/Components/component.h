@@ -11,7 +11,7 @@ public:
 	GameObject* owner;
 
 public:
-	virtual ~Component() = 0;
+	virtual ~Component();
 
 	virtual void Update() {};
 }; 

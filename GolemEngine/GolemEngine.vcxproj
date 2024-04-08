@@ -34,10 +34,11 @@
     <ClCompile Include="Source\Components\Light\light.cpp" />
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
-    <ClCompile Include="Source\Core\transform.cpp" />
+    <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
@@ -149,10 +150,11 @@
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\point.h" />
     <ClInclude Include="Include\Components\Light\spot.h" />
+    <ClInclude Include="Include\Components\meshRenderer.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
     <ClInclude Include="Include\Core\scene.h" />
-    <ClInclude Include="Include\Core\transform.h" />
+    <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\dll.h" />

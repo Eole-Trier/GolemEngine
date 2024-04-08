@@ -1,15 +1,39 @@
-#include "Core/transform.h"
+#include "Components/transform.h"
 #include "golemEngine.h"
 #include "Core/gameobject.h"
 #include "Resource/sceneManager.h"
 
-
-Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling)
-	: localPosition(_position), rotation(_rotation), scaling(_scaling)
+Transform::Transform()
 {
-    m_parent = nullptr;
-	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
+    m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;
+    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
+    if (m_parent)
+        m_parent->AddChild(this);
 }
+
+Transform::Transform(Transform* _parent)
+    : m_parent(_parent)
+{
+    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
+    if (m_parent)
+        m_parent->AddChild(this);
+}
+
+
+Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling, Transform* _parent)
+	: localPosition(_position), rotation(_rotation), scaling(_scaling), m_parent(_parent)
+{
+	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
+    if (m_parent)
+      m_parent->AddChild(this);
+    
+}
+
+Transform::~Transform()
+{
+    owner->DeleteTransform(this);
+}
+
 
 void Transform::Update()
 {}
@@ -37,7 +61,7 @@ void Transform::UpdateSelfAndChilds()
 void Transform::AddChild(Transform* const _t)
 {
     m_children.push_back(_t);
-    if (_t->m_parent)
+    if (_t->m_parent && _t->m_parent != this)
         _t->m_parent->RemoveChild(_t);
     _t->m_parent = this;
 }

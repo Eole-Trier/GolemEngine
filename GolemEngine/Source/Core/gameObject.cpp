@@ -3,32 +3,44 @@
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
 
+GameObject::GameObject()
+	: m_selected(false)
+{
+	name = "New GameObject";
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
+	AddComponent(new Transform);
+	transform = GetComponent<Transform>();
+	SceneManager::GetCurrentScene()->AddGameObject(this);
+}
+
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
 	: name(_name), m_selected(false)
 {
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
 	AddComponent(_transform);
 	transform = GetComponent<Transform>();
+	SceneManager::GetCurrentScene()->AddGameObject(this);
 }
 
-GameObject::~GameObject() {}
-
-void GameObject::Update()
+GameObject::~GameObject() 
 {
-	for (auto& component : m_components)
-	{
-		//component->Update();
-	}
-}
-
-void GameObject::DisplayInformations()
-{
-	//to do
-
+	SceneManager::GetCurrentScene()->RemoveGameObject(this);
+	DeleteAllComponents();
 }
 
 std::string GameObject::GetName()
 {
 	return name;
+}
+
+size_t GameObject::GetId()
+{
+	return m_id;
+}
+
+void GameObject::SetId(size_t _id)
+{
+	m_id = _id;
 }
 
 void GameObject::DeleteTransform(Transform* _t)
@@ -37,7 +49,7 @@ void GameObject::DeleteTransform(Transform* _t)
 
 	for (Transform* go : _t->GetChildren())
 	{
-		SceneManager::GetCurrentScene()->DeleteGameObject(go->owner);
+		delete go->owner;
 	}
 }
 
@@ -48,17 +60,7 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
-	if (Transform* t = dynamic_cast<Transform*>(_c))
-	{
-		DeleteTransform(t);
-	}
-	else if (Light* l = dynamic_cast<Light*>(_c))
-	{
-		DeleteLight(l);
-	}
-	else // Add more conditions and function when new component created
-	{
-	}
+	delete _c;
 }
 
 void GameObject::DeleteAllComponents()
@@ -67,5 +69,6 @@ void GameObject::DeleteAllComponents()
 	{
 		RemoveComponent(c);
 	}
+	m_components.clear();
 }
 

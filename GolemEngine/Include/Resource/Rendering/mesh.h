@@ -11,7 +11,7 @@ class Shader;
 class Transform;
 class Camera;
 
-class GOLEM_ENGINE_API Mesh : public GameObject
+class GOLEM_ENGINE_API Mesh
 {
 private:
 	Model* m_model;
@@ -22,8 +22,10 @@ private:
 	void SetupMesh();
 
 public:
-	Mesh(const std::string& _name, Transform* _transform, Model* _model, Texture* _texture, Shader* _shader);
+	Mesh(Model* _model, Texture* _texture, Shader* _shader);
 	~Mesh();
 
-	void Draw(float _width, float _height, Camera* _cam);
+	Texture* GetTexture();
+	Model* GetModel();
+	Shader* GetShader();
 };

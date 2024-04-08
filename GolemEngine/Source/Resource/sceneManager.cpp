@@ -60,6 +60,12 @@ void SceneManager::CreateScene(std::string _sceneName)
     m_scenes.push_back(new Scene(_sceneName));
 }
 
+/*void SceneManager::LoadScene(int _sceneId)
+{
+    m_currentScene = m_scenes[_sceneId];
+}*/
+
+
 Scene* SceneManager::GetCurrentScene()
 {
     return m_currentScene;

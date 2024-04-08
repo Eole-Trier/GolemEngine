@@ -1,8 +1,10 @@
 #include "Wrappers/graphicWrapper.h"
+#include "Core/gameobject.h"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+#include "Debug/log.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
@@ -19,7 +21,7 @@ int GraphicWrapper::Init()
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
-void GraphicWrapper::CreateFramebuffer(int _width, int _height)
+void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -32,12 +34,9 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureId, 0);
+    AttachTexture(_format, _width, _height, 0, m_textureId);
 
-    // Create renderbuffer
-    glGenRenderbuffers(1, &m_rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    CreateRenderBuffer(_width, _height);
 
     // Check framebuffer completeness
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -49,6 +48,29 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
+}
+
+void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
+{
+    glBindTexture(GL_TEXTURE_2D, _id);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
+}
+
+void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
+{
+    // Create renderbuffer
+    glGenRenderbuffers(1, &m_rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+}
+
+int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
+{
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + _attachmentIndex);
+    int pixelData;
+    glReadPixels(_x, _y, 1, 1, GL_RED, GL_INT, &pixelData);
+    return pixelData;
 }
 
 void GraphicWrapper::ClearBuffer()
@@ -86,7 +108,9 @@ void GraphicWrapper::SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsize
     glViewport(_xMin, _yMin, _xMax, _yMax);
 }
 
+
 #pragma region Shader functions
+
 void GraphicWrapper::GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params)
 {
     glGetShaderiv(_shader, _pName, _params);
@@ -135,6 +159,11 @@ void GraphicWrapper::DeleteShaderObject(GLuint _shader)
 void GraphicWrapper::UseShader(GLuint _program)
 {
     glUseProgram(_program);
+}
+
+unsigned int GraphicWrapper::GetFbo()
+{
+    return m_fbo;
 }
 
 void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value)

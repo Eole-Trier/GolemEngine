@@ -25,8 +25,10 @@ public:
 	Vector3 scaling;
 
 public:
-	GOLEM_ENGINE_API Transform() = default;
-	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
+	GOLEM_ENGINE_API Transform();
+	GOLEM_ENGINE_API Transform(Transform* _parent);
+	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling, Transform* _parent);
+	GOLEM_ENGINE_API ~Transform();
 	GOLEM_ENGINE_API void Update() override;
 
 	GOLEM_ENGINE_API void UpdateSelfAndChilds();

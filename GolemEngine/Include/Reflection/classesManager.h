@@ -23,6 +23,7 @@ public:
 	static void Add();
 	GOLEM_ENGINE_API static void AddAllClasses(); // Should modify this function if a new component class appears
 	GOLEM_ENGINE_API static void Display(size_t _hashCode, void* _object);
+	GOLEM_ENGINE_API static void* Create(size_t _hashCode);
 };
 
 template<typename TypeT>

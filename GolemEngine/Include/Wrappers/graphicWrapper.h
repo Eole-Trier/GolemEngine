@@ -45,7 +45,11 @@ public:
 	// Initialize library
 	static int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	static void CreateFramebuffer(int _width, int _height);
+	static void CreateFramebuffer(unsigned int _format, int _width, int _height);
+
+	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id);
+
+	static void CreateRenderBuffer(int _width, int _height);
 	// Used to clear a buffer for the next draw
 	static void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
@@ -56,6 +60,8 @@ public:
 	// Enable a feature of OpenGl
 	static void EnableDepth();
 
+	static int ReadPixel(uint32_t _attachmentIndex, int _x, int _y);
+
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();
 
@@ -64,9 +70,11 @@ public:
 	// Used to set the viewport that will be used
 	static void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
+	static unsigned int GetFbo();
+
 #pragma region Shader functions
 	// These functions should only be used through the Shader class and not through this GraphicWrapper class
-	
+
 	// Get parameters of the shader
 	static void GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params);
 	// Get info log of shader
