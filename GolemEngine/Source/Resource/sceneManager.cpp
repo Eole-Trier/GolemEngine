@@ -21,21 +21,22 @@ void SceneManager::Init()
 void SceneManager::SaveScene()
 {
     json jScene;
+    // Get scene name and add .json type to it
     GetCurrentScene()->to_json(jScene);
     std::string sceneFileName = GetCurrentScene()->name;
     sceneFileName.append(".json");
-    // std::string sceneFileName = "scene_0.json";
+
+    // Create or find the file and save it
     std::fstream sceneFile;
     if (Tools::FindFile(sceneFileName) != "")
     {
         sceneFile.open(Tools::FindFile(sceneFileName), std::ios::out);
         sceneFile << jScene.dump(2);
-        
     }
-    else
+    else if (Tools::FindFile(sceneFileName) == "")
     {
-        Tools::FindFolder("Scenes");
-        
+        sceneFile.open(Tools::FindFolder("Scenes").append("\\" + sceneFileName), std::ios::out);
+        sceneFile << jScene.dump(2);
     }
 }
 
