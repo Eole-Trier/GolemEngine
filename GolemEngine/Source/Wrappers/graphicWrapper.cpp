@@ -49,9 +49,7 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
         {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, _width, _height, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 1, GL_TEXTURE_2D, m_textures[i].id, 0);
-
         }
-
     }
 
     AttachTexture(_format, _width, _height, 0, m_textures[0].id);

@@ -121,10 +121,14 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     UpdateGameObjects(_width, _height, _camera);
 }
 
-void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) {
-    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
-        if (std::filesystem::is_directory(entry)) {
-            if (entry.path().filename() == folderName) {
+void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) 
+{
+    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) 
+    {
+        if (std::filesystem::is_directory(entry)) 
+        {
+            if (entry.path().filename() == folderName)
+            {
                 foundPaths.push_back(entry.path()); 
             }
             searchFolders(entry, folderName, foundPaths);
