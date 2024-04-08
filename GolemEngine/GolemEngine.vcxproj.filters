@@ -47,6 +47,7 @@
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
+    <ClCompile Include="Source\Components\meshRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -112,5 +113,6 @@
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\scene.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
+    <ClInclude Include="Include\Components\meshRenderer.h" />
   </ItemGroup>
 </Project>

@@ -45,6 +45,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 
 	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
+	size_t id = _gameObject->GetId();
+
+	const char* res = std::to_string(id).c_str();
 
 	if (m_renaming == _gameObject)
 	{
@@ -56,7 +59,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		{
 			ImGui::SameLine();
 			ImGui::SetKeyboardFocusHere();
-			if (ImGui::InputText("##input", &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
+			if (ImGui::InputText(name, &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
 			{
 				m_renaming = nullptr;
 			}
@@ -64,7 +67,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		else
 		{
 			// Rename popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Rename"))
 				{
@@ -74,21 +77,21 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			}
 
 			// Create popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Create"))
 				{
-					SceneManager::GetCurrentScene()->CreateGameObject(_gameObject);
+					new GameObject("New GameObject", new Transform(_gameObject->transform));
 				}
 				ImGui::EndPopup();
 			}
 
 			// Delete popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
-					SceneManager::GetCurrentScene()->DeleteGameObject(_gameObject);
+					delete _gameObject;
 					EditorUi::selected = nullptr;
 				}
 				ImGui::EndPopup();

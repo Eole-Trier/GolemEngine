@@ -15,7 +15,8 @@
 #include "Components/Light/spot.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
-#include "Components/transform.h"
+#include "Core/transform.h"
+#include "Components/meshRenderer.h"
 
 using json = nlohmann::json;
 
@@ -35,39 +36,33 @@ void Scene::Init()
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
+    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
+    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("viking_room");
-    Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
+    Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
+    vikingGo->AddComponent(new MeshRenderer(vikingMesh));
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
+    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("model_sphere");
-    Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
+    Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
+    ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
     std::string ballBaldName2 = "ball_bald2";
-    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
+    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
     Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
     Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
-    Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
-
-    m_meshes.push_back(vikingMesh);
-    m_meshes.push_back(ballBaldMesh);
-    m_meshes.push_back(ballBaldMesh2);
-
-    m_gameObjects.push_back(vikingMesh);
-    m_gameObjects.push_back(ballBaldMesh);
-    m_gameObjects.push_back(ballBaldMesh2);
-
-    m_world->transform->AddChild(vikingMesh->transform);
-    m_world->transform->AddChild(ballBaldMesh2->transform);
-    m_world->transform->AddChild(ballBaldMesh->transform);
+    Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
+    ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
 
 void Scene::InitLights()
@@ -153,10 +148,10 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     // Temporary to test graph scene
     m_world->transform->UpdateSelfAndChilds();
 
-    for (int i = 0; i < m_meshes.size(); i++)
+    for (int i = 0; i < m_gameObjects.size(); i++)
     {
-        //m_meshes[i]->transform->rotation.y += movie["Rotation"].get<int>();
-        m_meshes[i]->Draw(_width, _height, _camera);
+        if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+            meshRenderer->Draw(_width, _height, _camera);
     }
 }
 
@@ -186,6 +181,7 @@ void Scene::UpdateLights(Shader* _shader)
 // If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
+    /*
     for (const auto& mesh : m_meshes)
     {
         if (mesh->GetName() == _name)
@@ -194,29 +190,31 @@ bool Scene::IsNameExists(const std::string& _name)
         }
     }
     return false;
+    */
+    return false;
 }
 
-void Scene::CreateGameObject(GameObject* _owner)
+void Scene::AddGameObject(GameObject* _gameObject)
 {
-    GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
-    m_gameObjects.push_back(go);
-    _owner->transform->AddChild(go->transform);
+    m_gameObjects.push_back(_gameObject);
 }
 
-void Scene::DeleteGameObject(GameObject* _gameObject)
+void Scene::RemoveGameObject(GameObject* _gameObject)
 {
+    bool removed = false;
+    for (size_t i = 0; i < m_gameObjects.size(); i++)
+    {
+        if (m_gameObjects[i] == _gameObject)
+        {
+            removed = true;
+        }
+        if (removed)
+        {
+            m_gameObjects[i]->SetId(i - 1);
+        }
+    }
     std::erase(m_gameObjects, _gameObject);
-    
-    _gameObject->DeleteAllComponents();
-
-    delete _gameObject;
 }
-
-void Scene::DeleteMesh(Mesh* _mesh)
-{
-    std::erase(m_meshes, _mesh);
-}
-
 
 void Scene::DeleteLight(Light* _light)
 {
@@ -241,7 +239,7 @@ void Scene::AddNewObject(std::string _name, std::string _modelName, std::string 
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     std::string name = _name;
-    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1), m_world->transform);
     Texture* texture;
     Shader* shader;
 
@@ -264,10 +262,10 @@ void Scene::AddNewObject(std::string _name, std::string _modelName, std::string 
     }
 
     Model* model = resourceManager->Get<Model>(_modelName);
-    Mesh* mesh = new Mesh(name, transform, model, texture, shader);
-    m_meshes.push_back(mesh);
-    m_gameObjects.push_back(mesh);
-    m_world->transform->AddChild(mesh->transform);
+    Mesh* mesh = new Mesh(model, texture, shader);
+    GameObject* go = new GameObject(name, transform);
+    go->AddComponent(new MeshRenderer(mesh));
+    m_gameObjects.push_back(go);
 }
 
 void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
@@ -320,22 +318,6 @@ void Scene::AddLight(Light* _light)
     {
         m_dirLights.push_back(dL);
     }
-}
-
-Mesh* Scene::GetMeshByName(std::string _name)
-{
-    for (Mesh* mesh : m_meshes)
-    {
-        if (mesh->GetName() == _name)
-            return mesh;
-    }
-    Log::Print("No mesh with the name %s has been found", _name.c_str());
-    return nullptr;
-}
-
-std::vector<Mesh*> Scene::GetMeshes()
-{
-    return m_meshes;
 }
 
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()
