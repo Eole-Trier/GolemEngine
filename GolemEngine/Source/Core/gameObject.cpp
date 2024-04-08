@@ -43,8 +43,6 @@ void GameObject::SetId(size_t _id)
 	m_id = _id;
 }
 
-
-
 void GameObject::DeleteTransform(Transform* _t)
 {
 	_t->GetParent()->RemoveChild(_t);
@@ -62,7 +60,6 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
-	std::erase(m_components, _c);
 	delete _c;
 }
 
@@ -72,5 +69,6 @@ void GameObject::DeleteAllComponents()
 	{
 		RemoveComponent(c);
 	}
+	m_components.clear();
 }
 
