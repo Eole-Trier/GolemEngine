@@ -26,12 +26,17 @@ void SceneManager::SaveScene()
     sceneFileName.append(".json");
     // std::string sceneFileName = "scene_0.json";
     std::fstream sceneFile;
-    if (Tools::FindFile(sceneFileName) == "")
+    if (Tools::FindFile(sceneFileName) != "")
     {
-        std::cout << "Didn't find " << sceneFileName << std::endl;
+        sceneFile.open(Tools::FindFile(sceneFileName), std::ios::out);
+        sceneFile << jScene.dump(2);
+        
     }
-    sceneFile.open(Tools::FindFile(sceneFileName), std::ios::out);
-    sceneFile << jScene.dump(2);
+    else
+    {
+        Tools::FindFolder("Scenes");
+        
+    }
 }
 
 void SceneManager::LoadScene(int _id)

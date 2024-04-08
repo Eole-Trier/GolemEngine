@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "c2706fd8-2796-0af5-f3aa-3dc868f0be59",
+      "guid": "21af9f9a-7c8a-d359-a05b-b257c028399c",
       "name": "World",
       "transform": {
         "globalPosition": {
@@ -27,34 +27,8 @@
       }
     }
   ],
-  "guid": "f26ee696-d35b-e8f0-c61a-4dddc64b5c81",
+  "guid": "b7f98698-4f18-f986-d431-14838313e629",
   "isObjectInit": false,
   "loadingObject": "",
-  "name": "scene_0",
-  "world": {
-    "guid": "c2706fd8-2796-0af5-f3aa-3dc868f0be59",
-    "name": "World",
-    "transform": {
-      "globalPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "localPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "scaling": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      }
-    }
-  }
+  "name": "scene_0"
 }

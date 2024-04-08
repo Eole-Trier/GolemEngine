@@ -87,14 +87,9 @@ public:
 			{"isObjectInit", isObjectInit},
 			{"loadingObject", loadingObject}
 		};
-		if (m_world != nullptr)
-		{
-			json jWorld;
-			m_world->to_json(jWorld);
-			j["world"] = jWorld;
-		}
 		if (!m_gameObjects.empty())
 		{
+			std::cout << "Game object size: " << m_gameObjects.size() << std::endl;
 			json jGameObjects;
 			for (int i = 0; i < m_gameObjects.size(); i++)
 			{
