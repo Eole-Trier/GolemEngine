@@ -15,6 +15,11 @@ public:
 	~MeshRenderer();
 
 	void Draw(float _width, float _height, Camera* _cam);
+
+
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
+	void to_json(json& j) const	{}
 };
 
 REFL_AUTO(

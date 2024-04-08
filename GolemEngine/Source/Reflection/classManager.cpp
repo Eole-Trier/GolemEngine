@@ -2,9 +2,9 @@
 #include "Debug/log.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
-#include "Components/Light/directional.h"
-#include "Components/Light/point.h"
-#include "Components/Light/spot.h"
+#include "..\..\Include\Components\Light\directionalLight.h"
+#include "..\..\Include\Components\Light\pointLight.h"
+#include "..\..\Include\Components\Light\spotLight.h"
 
 void ClassesManager::AddAllClasses()
 {

@@ -47,6 +47,11 @@ public:
 	GOLEM_ENGINE_API Matrix4 GetLocalModel();
 
 	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
+
+
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
+	void to_json(json& j) const	{}
 };
 
 REFL_AUTO(

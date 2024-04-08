@@ -46,12 +46,10 @@ public:
 	
 	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& os, const Vector3& _vector3);
 
+	
+	// For JSON parsing
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector3,
-		x,
-		y,
-		z)
-	
-	
+		x, y, z)
 };
 
 

@@ -146,10 +146,10 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="Include\Components\component.h" />
-    <ClInclude Include="Include\Components\Light\directional.h" />
+    <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
-    <ClInclude Include="Include\Components\Light\point.h" />
-    <ClInclude Include="Include\Components\Light\spot.h" />
+    <ClInclude Include="Include\Components\Light\pointLight.h" />
+    <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Components\meshRenderer.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />

@@ -1,9 +1,9 @@
 #include "Reflection/displayType.h"
 #include "Reflection/classesManager.h"
 #include "Resource/sceneManager.h"
-#include "Components/Light/point.h"
-#include "Components/Light/spot.h"
-#include "Components/Light/directional.h"
+#include "..\..\Include\Components\Light\pointLight.h"
+#include "..\..\Include\Components\Light\spotLight.h"
+#include "..\..\Include\Components\Light\directionalLight.h"
 
 const char* DisplayType::m_addComponentPopupId = "Components";
 const char* DisplayType::m_addComponentButtonName = "Add Component";

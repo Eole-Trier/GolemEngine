@@ -1,4 +1,4 @@
-#include "Components/Light/Spot.h"
+#include "..\..\..\Include\Components\Light\spotLight.h"
 
 #include <MathsLib/utils.h>
 

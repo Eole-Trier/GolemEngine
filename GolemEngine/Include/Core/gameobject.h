@@ -80,6 +80,18 @@ public:
 			
 			j["transform"] = jTransform;
 		}
+		if (!m_components.empty())
+		{
+			json jComponents;
+			for (int i = 0; i < m_components.size(); i++)
+			{
+				json jComponentPtr;
+				m_components[i]->to_json(jComponentPtr);
+				jComponents.push_back(jComponentPtr);
+			}
+			
+			j["components"] = jComponents;
+		}
 	}
 
 };

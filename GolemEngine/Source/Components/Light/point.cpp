@@ -1,4 +1,4 @@
-#include "Components/Light/Point.h"
+#include "..\..\..\Include\Components\Light\pointLight.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"

@@ -1,7 +1,37 @@
 {
   "gameObjects": [
     {
-      "guid": "ea058ac1-5e63-120c-8125-414e6c4cbc49",
+      "components": [
+        null,
+        {
+          "ambientColor": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "diffuseColor": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "direction": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "id": 0,
+          "name": "directionalLight",
+          "specularColor": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      ],
+      "guid": "6fe5d745-7f66-40e4-fbf5-8e15df257a24",
       "name": "World",
       "transform": {
         "globalPosition": {
@@ -9,7 +39,7 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "16a81da7-bb4c-a8de-4054-d77d446b5b40",
+        "guid": "4ee478aa-b5e6-382e-4e65-22e978824273",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
@@ -28,7 +58,7 @@
       }
     }
   ],
-  "guid": "9c23f1c8-85c7-3091-47ca-e96c17c56a70",
+  "guid": "bfa77093-f73d-b77c-0fec-1dd24ebadc9a",
   "loadingObject": "",
   "name": "scene_0"
 }
