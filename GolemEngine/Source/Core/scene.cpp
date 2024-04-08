@@ -20,6 +20,7 @@
 
 using json = nlohmann::json;
 
+
 Scene::Scene(std::string _name)
     : name(_name)
 {}
@@ -37,30 +38,30 @@ void Scene::InitGameObjects()
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
     Shader* defaultShader = resourceManager->Get<Shader>("default");
-
-    std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
-    GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
-    Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
-    Model* viking_room = resourceManager->Get<Model>("viking_room");
-    Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
-    vikingGo->AddComponent(new MeshRenderer(vikingMesh));
     
-    std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
-    GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald = resourceManager->Get<Model>("model_sphere");
-    Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
-    ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-    
-    std::string ballBaldName2 = "ball_bald2";
-    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
-    GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
-    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
-    Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
-    Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
-    ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
+    // std::string vikingName = "viking";
+    // Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    // GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
+    // Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
+    // Model* viking_room = resourceManager->Get<Model>("viking_room");
+    // Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
+    // vikingGo->AddComponent(new MeshRenderer(vikingMesh));
+    //
+    // std::string ballBaldName = "ball_bald";
+    // Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    // GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
+    // Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
+    // Model* ballBald = resourceManager->Get<Model>("model_sphere");
+    // Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
+    // ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
+    //
+    // std::string ballBaldName2 = "ball_bald2";
+    // Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    // GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
+    // Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
+    // Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
+    // Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
+    // ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
 
 void Scene::InitLights()
