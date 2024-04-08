@@ -1,7 +1,7 @@
 {
   "gameObjects": [
     {
-      "guid": "a9f38e56-4764-949a-23a2-8d54074e66af",
+      "guid": "ea058ac1-5e63-120c-8125-414e6c4cbc49",
       "name": "World",
       "transform": {
         "globalPosition": {
@@ -9,68 +9,12 @@
           "y": 0.0,
           "z": 0.0
         },
-        "guid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
+        "guid": "16a81da7-bb4c-a8de-4054-d77d446b5b40",
         "localPosition": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
-        "rotation": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "scaling": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        }
-      }
-    },
-    {
-      "guid": "f11197d9-f25b-0aa2-8d56-b4edc5430104",
-      "name": "cube",
-      "transform": {
-        "globalPosition": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        "guid": "43d2e857-806b-acfd-4af2-dd443d6e23f5",
-        "localPosition": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        "parentGuid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
-        "rotation": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "scaling": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        }
-      }
-    },
-    {
-      "guid": "f11197d9-f25b-0aa2-8d56-b4edc5430104",
-      "name": "cube",
-      "transform": {
-        "globalPosition": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        "guid": "43d2e857-806b-acfd-4af2-dd443d6e23f5",
-        "localPosition": {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        "parentGuid": "0e71f493-0c5b-4961-0f57-66bac042dca6",
         "rotation": {
           "x": 0.0,
           "y": 0.0,
@@ -84,7 +28,7 @@
       }
     }
   ],
-  "guid": "e9f4084f-ada5-985e-5ef7-982b9808b2e0",
-  "loadingObject": "cube",
+  "guid": "9c23f1c8-85c7-3091-47ca-e96c17c56a70",
+  "loadingObject": "",
   "name": "scene_0"
 }
