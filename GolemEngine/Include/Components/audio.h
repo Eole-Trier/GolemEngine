@@ -2,13 +2,13 @@
 
 #include "dll.h"
 
-#include "SFML/Audio.hpp"
-
 #include <string>
 #include <iostream>
 #include <thread>
-
-//#include <SFML/Audio.hpp>
+#include <vector>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/sndfile.h>
 
 class GOLEM_ENGINE_API Audio
 {
@@ -17,12 +17,16 @@ public:
 
     ~Audio() {}
 
-    void PlayMusic(const std::string& _fileName);
+    bool Init();
 
-    void PlaySound(const std::string& _fileName);
+    bool InitializeAudioDevice();
+
+    bool LoadAudioResource(const char* _fileName, std::vector<char>& _data, ALenum& _format, ALsizei& _frequency);
+
+    bool SetUpAudio();
+
+    void CleanUp();
     
-    void SetVolume(int _volume);
-
     void StopMusic();
 
     bool isPlaying;
@@ -30,6 +34,14 @@ public:
     std::string musicPath;
 
     std::thread audioThread;
+
+    ALCdevice* device;
+    
+    ALCcontext* context;
+    
+    ALuint source;
+    
+    ALuint buffer;
 
 private:
 };

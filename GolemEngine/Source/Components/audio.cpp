@@ -4,47 +4,118 @@
 #include "Resource/resourceManager.h"
 #include "Resource/tools.h"
 #include "Wrappers/windowWrapper.h"
-#include "SFML/Audio.hpp"
 
-void Audio::PlayMusic(const std::string& _fileName)
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/sndfile.h>
+
+bool Audio::Init()
 {
-	musicPath = Tools::FindFile(_fileName);
-	isPlaying = true;
+    if (!InitializeAudioDevice())
+    {
+        return false;
+    }
+    if (!SetUpAudio())
+    {
+        return false;
+    }
 
-	sf::Music music;
-	if (!music.openFromFile(musicPath))
-	{
-		std::cerr << "Failed to load audio file" << std::endl;
-	}
-
-	music.setLoop(true);
-	music.play();
-
-	while (music.getStatus() == sf::SoundSource::Playing && isPlaying) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
+    return true;
 }
 
-void Audio::PlaySound(const std::string& _fileName)
+bool Audio::InitializeAudioDevice()
 {
-	musicPath = Tools::FindFile(_fileName);
-	isPlaying = true;
+    device = alcOpenDevice(nullptr);
+    if (!device) 
+    {
+        std::cerr << "Failed to open OpenAL device" << std::endl;
+        return false;
+    }
 
-	sf::SoundBuffer buffer;
-	sf::Sound sound;
+    context = alcCreateContext(device, nullptr);
+    if (!context) 
+    {
+        std::cerr << "Failed to create OpenAL context" << std::endl;
+        return false;
+    }
 
-	if (!buffer.loadFromFile(musicPath))
-	{
-		std::cerr << "Failed to load audio file" << std::endl;
-	}
+    alcMakeContextCurrent(context);
 
-	sound.setBuffer(buffer);
-	//sound.setLoop(true);
-	sound.play();
+    return true;
+}
 
-	while (sound.getStatus() == sf::SoundSource::Playing && isPlaying) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
+bool Audio::LoadAudioResource(const char* _fileName, std::vector<char>& _data, ALenum& _format, ALsizei& _frequency)
+{
+    // Open the WAV file
+    SF_INFO info;
+    SNDFILE* file = sf_open(_fileName, SFM_READ, &info);
+    if (!file) 
+    {
+        std::cerr << "Failed to open WAV file: " << _fileName << std::endl;
+        return false;
+    }
+
+    // Check if the file format is supported
+    if (info.channels != 1 && info.channels != 2) 
+    {
+        std::cerr << "Unsupported number of channels: " << info.channels << std::endl;
+        sf_close(file);
+        return false;
+    }
+
+    // Determine the OpenAL format based on the number of channels
+    _format = (info.channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+
+    // Read the audio data into memory
+    const sf_count_t frameCount = info.frames * info.channels;
+    _data.resize(frameCount * sizeof(short));
+    const sf_count_t readCount = sf_read_short(file, reinterpret_cast<short*>(_data.data()), frameCount);
+    if (readCount != frameCount) 
+    {
+        std::cerr << "Failed to read WAV file data" << std::endl;
+        sf_close(file);
+        return false;
+    }
+
+    // Set the frequency
+    _frequency = info.samplerate;
+
+    // Close the file
+    sf_close(file);
+
+    return true;
+}
+
+bool Audio::SetUpAudio()
+{
+    alGenBuffers(1, &buffer);
+
+    std::vector<char> data;
+    ALenum format;
+    ALsizei frequency;
+
+    if (!LoadAudioResource(Tools::FindFile("music_01.wav").c_str(), data, format, frequency))
+    {
+        std::cerr << "Failed to load WAV file" << std::endl;
+        return false;
+    }
+
+    alBufferData(buffer, format, &data[0], static_cast<ALsizei>(data.size()), frequency);
+
+    alGenSources(1, &source);
+    alSourcei(source, AL_BUFFER, buffer);
+
+    return true;
+}
+
+void Audio::CleanUp()
+{
+    alDeleteSources(1, &source);
+    alDeleteBuffers(1, &buffer);
+
+    alcMakeContextCurrent(nullptr);
+    alcDestroyContext(context);
+    alcCloseDevice(device);
 }
 
 void Audio::StopMusic()

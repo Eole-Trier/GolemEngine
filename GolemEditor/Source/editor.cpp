@@ -13,6 +13,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Resource/tools.h"
+#include "Components/audio.h"
+
 
 Editor::Editor()
 	:
@@ -96,7 +98,6 @@ void Editor::MainLoop()
 
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
 	}
-
 }
 
 void Editor::Cleanup() 
