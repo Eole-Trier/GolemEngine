@@ -33,10 +33,6 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     // Create texturebuffer
     for (int i = 0; i < m_textures.size(); i++)
     {
-        //glBindTexture(GL_TEXTURE_2D, m_textures[i]->id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
         if (i == 0)
         {
             AttachTexture(GL_RGBA, _width, _height, 0, m_textures[0]->id);
@@ -70,6 +66,8 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
 
 void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
 {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, _id);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
 }
