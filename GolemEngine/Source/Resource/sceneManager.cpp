@@ -23,15 +23,14 @@ void SceneManager::Init()
         for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
         {
             std::cout << Tools::RemoveExtension(sceneNames[i]) << std::endl;
-            Scene* scene = new Scene(Tools::RemoveExtension(sceneNames[i]));
-            m_scenes.push_back(scene);
+            CreateScene(Tools::RemoveExtension(sceneNames[i]));
         }
         // Load the first scene to not create errors
         LoadScene(0);
     }
     else    // If there are no scenes saved, Create one
     {
-        m_scenes.push_back(new Scene("scene_0"));
+        CreateScene("scene_0");
         LoadScene(0);
         SaveScene();
     }
@@ -57,8 +56,6 @@ void SceneManager::SaveScene()
         sceneFile.open(Tools::FindFolder("Scenes").append("\\" + sceneFileName), std::ios::out);
         sceneFile << jScene.dump(2);
     }
-    // Tools::GetFolderSize(Tools::FindFolder("Scenes"));
-
 }
 
 void SceneManager::LoadScene(int _id)
@@ -68,7 +65,6 @@ void SceneManager::LoadScene(int _id)
     {
         m_currentScene->Init();
     }
-    std::cout << "Loaded scene: " << m_currentScene->name << std::endl;
 }
 
 void SceneManager::CreateScene(std::string _sceneName)

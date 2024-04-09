@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "4bda5ab0-ae7f-b582-cbe1-23af0bf2e6c9",
+            "guid": "b000c52c-8c88-d61c-c770-a779e1c1fa32",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -56,7 +56,7 @@
           }
         }
       ],
-      "guid": "eeaeca5e-ef62-af90-689e-9242ef769aa5",
+      "guid": "b7da52d5-f9a6-5985-a5db-f401e0c3318b",
       "name": "World"
     },
     {
@@ -68,7 +68,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "9625de26-3e1a-4a32-c862-6ad67b25448e",
+            "guid": "bcbb26d4-034b-60f9-5af1-d5600a059fcf",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -88,7 +88,7 @@
         },
         null
       ],
-      "guid": "ed87b7bf-db2c-b3a9-170e-e99ee4eed39d",
+      "guid": "c57f583c-d449-3120-1386-b3ba54b679f6",
       "name": "viking"
     },
     {
@@ -100,7 +100,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "c3bcca18-8def-274e-7777-a70d14229ecc",
+            "guid": "5df737fa-25f9-e032-fb5b-0b33d4acff31",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -120,7 +120,7 @@
         },
         null
       ],
-      "guid": "fe98c166-0218-8df1-e5b8-159992554069",
+      "guid": "baf4ef7a-4bbe-1ec1-f136-e0a1a1facab8",
       "name": "ball_bald"
     },
     {
@@ -132,7 +132,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "19877396-a603-a6ad-f889-dc80186bf9a3",
+            "guid": "20982518-3922-e199-1977-b1be1382fecb",
             "localPosition": {
               "x": -3.0,
               "y": 0.0,
@@ -152,11 +152,11 @@
         },
         null
       ],
-      "guid": "3a7b5f0a-8d38-2ba6-d942-a778086fbdf2",
+      "guid": "a130d915-904c-f60d-96a8-fab7ea6623fd",
       "name": "ball_bald2"
     }
   ],
-  "guid": "e8502141-f728-93b7-e9bd-4c8326f6b73c",
+  "guid": "fecadf0a-37b0-ca60-eb8b-9a36f781e7c0",
   "loadingObject": "",
   "name": "scene_1"
 }
