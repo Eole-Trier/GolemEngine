@@ -29,7 +29,7 @@ private:
 	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 3;
-	static constexpr size_t m_maxPointLights = 10; // According to the shader
+	static constexpr size_t m_maxPointLights = 10;    // According to the shader
 	static constexpr size_t m_maxSpotLights = 10;
 
 	std::vector<DirectionalLight*> m_dirLights;

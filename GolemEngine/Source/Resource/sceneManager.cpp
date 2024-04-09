@@ -14,14 +14,26 @@ void SceneManager::Init()
 {
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-    m_scenes.push_back(new Scene("scene_0"));
-    LoadScene(0);
-    SaveScene();
 
-    // Init also scenes that are already saved
-    for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
+    // Check if there are already saved scenes
+    if (Tools::GetFolderSize(Tools::FindFolder("Scenes")) != 0)
     {
-        // CreateScene()
+        // Init scenes that are already saved
+        std::vector<std::string> sceneNames = Tools::GetFolderElementsNames(Tools::FindFolder("Scenes"));
+        for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
+        {
+            std::cout << Tools::RemoveExtension(sceneNames[i]) << std::endl;
+            Scene* scene = new Scene(Tools::RemoveExtension(sceneNames[i]));
+            m_scenes.push_back(scene);
+        }
+        // Load the first scene to not create errors
+        LoadScene(0);
+    }
+    else    // If there are no scenes saved, Create one
+    {
+        m_scenes.push_back(new Scene("scene_0"));
+        LoadScene(0);
+        SaveScene();
     }
 }
 
@@ -63,12 +75,6 @@ void SceneManager::CreateScene(std::string _sceneName)
 {
     m_scenes.push_back(new Scene(_sceneName));
 }
-
-/*void SceneManager::LoadScene(int _sceneId)
-{
-    m_currentScene = m_scenes[_sceneId];
-}*/
-
 
 Scene* SceneManager::GetCurrentScene()
 {

@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "5f1584e1-74fd-81b9-f823-e471a31cda04",
+            "guid": "65eeffd3-0c65-581f-bc5e-a08cca68af3f",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -56,7 +56,7 @@
           }
         }
       ],
-      "guid": "88040c65-495e-84db-0ed3-3bf10982ce4d",
+      "guid": "0acaa7c1-0239-df6d-fdc2-8de8f6bbdfd3",
       "name": "World"
     },
     {
@@ -68,7 +68,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "abd4a53d-a275-9145-8c40-4ffd23ad4639",
+            "guid": "1e3ba461-d631-cc56-bfc5-85b1c9b7b70b",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -88,7 +88,7 @@
         },
         null
       ],
-      "guid": "648d5a49-87e0-16e9-51a0-4b18e8b59794",
+      "guid": "24d53e84-b00d-2e8a-5085-802f021b5c3c",
       "name": "viking"
     },
     {
@@ -96,11 +96,11 @@
         {
           "transform": {
             "globalPosition": {
-              "x": 0.0,
+              "x": 3.0,
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "09b3ccef-7c36-8c01-5c28-67d23c3002d6",
+            "guid": "561ce6a7-4b36-6276-e949-16bd79a26769",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -120,7 +120,7 @@
         },
         null
       ],
-      "guid": "ab0769b4-f762-2b17-ff70-a406941c92b8",
+      "guid": "45ec705b-5404-dae4-f2d1-1769b4613ac5",
       "name": "ball_bald"
     },
     {
@@ -128,11 +128,11 @@
         {
           "transform": {
             "globalPosition": {
-              "x": 0.0,
+              "x": -3.0,
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "04366132-8a17-f2e3-51ee-7960c4a23259",
+            "guid": "7f5b9be8-bc22-b201-e784-699b9bb00f63",
             "localPosition": {
               "x": -3.0,
               "y": 0.0,
@@ -152,11 +152,11 @@
         },
         null
       ],
-      "guid": "4d9c4150-b014-0134-0625-5d1d4e664102",
+      "guid": "396fa7c1-81ad-bb66-751e-6125859416b4",
       "name": "ball_bald2"
     }
   ],
-  "guid": "0f1fa670-b720-be5c-f8e4-162ce3c53609",
+  "guid": "48f2c5fb-2bc5-fae7-0704-ffc093249d30",
   "loadingObject": "",
   "name": "scene_0"
 }

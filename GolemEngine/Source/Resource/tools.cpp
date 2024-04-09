@@ -40,21 +40,38 @@ namespace Tools
     int GOLEM_ENGINE_API GetFolderSize(std::filesystem::path _pathToFolder)
     {
         int fileCount = 0;
-        try
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(_pathToFolder))
         {
-            for (const auto& entry : std::filesystem::recursive_directory_iterator(_pathToFolder))
+            if (std::filesystem::is_regular_file(entry))
             {
-                if (std::filesystem::is_regular_file(entry))
-                {
-                    fileCount++;
-                }
+                fileCount++;
             }
         }
-        catch (const std::exception& _e)
-        {
-            std::cerr << "Error: " << _e.what() << std::endl;
-            return 0;
-        }
         return fileCount;
+    }
+
+    std::vector<std::string> GetFolderElementsNames(const std::filesystem::path _pathToFolder)
+    {
+        std::vector<std::string> elements;
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(_pathToFolder))
+        {
+            if (std::filesystem::is_regular_file(entry))
+            {
+                elements.push_back(entry.path().filename().string());
+            }
+            else if (std::filesystem::is_directory(entry))
+            {
+                elements.push_back(entry.path().filename().string() + " [directory]");
+            }
+        }
+        return elements;
+    }
+
+    std::string GOLEM_ENGINE_API RemoveExtension(const std::string& _filename) {
+        size_t lastDot = _filename.find_last_of(".");
+        if (lastDot != std::string::npos) {
+            return _filename.substr(0, lastDot);
+        }
+        return _filename;
     }
 }

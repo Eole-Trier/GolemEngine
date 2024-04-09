@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "d2965f9a-df8b-8a20-5ae3-c62d96d1bc68",
+            "guid": "4bda5ab0-ae7f-b582-cbe1-23af0bf2e6c9",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -56,7 +56,7 @@
           }
         }
       ],
-      "guid": "3da91d4d-c896-a153-9c90-ec765b845e22",
+      "guid": "eeaeca5e-ef62-af90-689e-9242ef769aa5",
       "name": "World"
     },
     {
@@ -64,15 +64,15 @@
         {
           "transform": {
             "globalPosition": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
             },
-            "guid": "d695ab46-5b12-4697-bc2c-5af24eb110f5",
+            "guid": "9625de26-3e1a-4a32-c862-6ad67b25448e",
             "localPosition": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
             },
             "rotation": {
               "x": 0.0,
@@ -88,23 +88,23 @@
         },
         null
       ],
-      "guid": "6408465e-45da-3836-54e9-6fe02f432193",
-      "name": "sphere"
+      "guid": "ed87b7bf-db2c-b3a9-170e-e99ee4eed39d",
+      "name": "viking"
     },
     {
       "components": [
         {
           "transform": {
             "globalPosition": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
             },
-            "guid": "d695ab46-5b12-4697-bc2c-5af24eb110f5",
+            "guid": "c3bcca18-8def-274e-7777-a70d14229ecc",
             "localPosition": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
             },
             "rotation": {
               "x": 0.0,
@@ -120,11 +120,43 @@
         },
         null
       ],
-      "guid": "6408465e-45da-3836-54e9-6fe02f432193",
-      "name": "sphere"
+      "guid": "fe98c166-0218-8df1-e5b8-159992554069",
+      "name": "ball_bald"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": -3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "19877396-a603-a6ad-f889-dc80186bf9a3",
+            "localPosition": {
+              "x": -3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "3a7b5f0a-8d38-2ba6-d942-a778086fbdf2",
+      "name": "ball_bald2"
     }
   ],
-  "guid": "0ec33b7c-fba3-d925-898b-eac98d4e0ff3",
-  "loadingObject": "sphere",
+  "guid": "e8502141-f728-93b7-e9bd-4c8326f6b73c",
+  "loadingObject": "",
   "name": "scene_1"
 }
