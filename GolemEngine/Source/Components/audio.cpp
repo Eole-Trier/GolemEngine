@@ -1,47 +1,20 @@
 #include <iostream>
-
-#include "Components/audio.h"
-#include "Resource/resourceManager.h"
-#include "Resource/tools.h"
-#include "Wrappers/windowWrapper.h"
+#include <thread>
 
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #include <OpenAL/sndfile.h>
 
-bool Audio::Init()
+#include "Components/audio.h"
+#include "Resource/resourceManager.h"
+#include "Resource/tools.h"
+#include "Wrappers/audioWrapper.h"
+
+Audio::Audio(std::string _fileName, bool _isLooping)
+    :musicPath(Tools::FindFile(_fileName)),
+    m_isLooping(_isLooping)
 {
-    if (!InitializeAudioDevice())
-    {
-        return false;
-    }
-    if (!SetUpAudio())
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool Audio::InitializeAudioDevice()
-{
-    device = alcOpenDevice(nullptr);
-    if (!device) 
-    {
-        std::cerr << "Failed to open OpenAL device" << std::endl;
-        return false;
-    }
-
-    context = alcCreateContext(device, nullptr);
-    if (!context) 
-    {
-        std::cerr << "Failed to create OpenAL context" << std::endl;
-        return false;
-    }
-
-    alcMakeContextCurrent(context);
-
-    return true;
+    SetUpAudio();
 }
 
 bool Audio::LoadAudioResource(const char* _fileName, std::vector<char>& _data, ALenum& _format, ALsizei& _frequency)
@@ -94,7 +67,7 @@ bool Audio::SetUpAudio()
     ALenum format;
     ALsizei frequency;
 
-    if (!LoadAudioResource(Tools::FindFile("music_01.wav").c_str(), data, format, frequency))
+    if (!LoadAudioResource(musicPath.c_str(), data, format, frequency))
     {
         std::cerr << "Failed to load WAV file" << std::endl;
         return false;
@@ -105,24 +78,35 @@ bool Audio::SetUpAudio()
     alGenSources(1, &source);
     alSourcei(source, AL_BUFFER, buffer);
 
+    if(m_isLooping)
+        alSourcei(source, AL_LOOPING, AL_TRUE);
+
     return true;
+}
+
+void Audio::SetLoop(bool _isLooping)
+{
+    m_isLooping = _isLooping;
+}
+
+void Audio::SetVolume(int _volume)
+{
+    m_volume = _volume;
+}
+
+void Audio::StopMusic(bool _isPlaying)
+{
+    m_isPlaying = _isPlaying;
 }
 
 void Audio::CleanUp()
 {
+    m_thread.join();
     alDeleteSources(1, &source);
     alDeleteBuffers(1, &buffer);
-
-    alcMakeContextCurrent(nullptr);
-    alcDestroyContext(context);
-    alcCloseDevice(device);
 }
 
-void Audio::StopMusic()
+void Audio::Play()
 {
-	if (WindowWrapper::ShouldWindowClose(WindowWrapper::window))
-	{
-		isPlaying = false;
-		audioThread.join();
-	}
+    m_thread = std::thread(alSourcePlay, source);
 }
