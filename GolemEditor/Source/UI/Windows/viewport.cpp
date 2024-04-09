@@ -63,7 +63,7 @@ void Viewport::Update()
 
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
-        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, 1, GraphicWrapper::m_textures[1]->id);
+        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT1, GraphicWrapper::m_textures[1]->id);
 
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         //Log::Print("pixelID = %d", pixelData);

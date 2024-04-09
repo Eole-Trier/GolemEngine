@@ -30,27 +30,26 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     glGenFramebuffers(1, &m_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
-    // Create texturebuffer
+    // Create renderBuffer
+    CreateRenderBuffer(_width, _height);
+
+    // Create textureBuffer
     for (int i = 0; i < m_textures.size(); i++)
     {
         if (i == 0)
         {
-            AttachTexture(GL_RGBA, _width, _height, 0, m_textures[0]->id);
+            AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[0]->id, 0);
         }
 
         else
         {
-            AttachTexture(GL_RED, _width, _height, i, m_textures[i]->id);
+            AttachTexture(GL_RED, _width, _height, GL_COLOR_ATTACHMENT1, m_textures[i]->id);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, _width, _height, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
         }
     }
-
-    //AttachTexture(_format, _width, _height, 0, m_textures[0]->id);
-
-    CreateRenderBuffer(_width, _height);
 
     // Check framebuffer completeness
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -69,7 +68,7 @@ void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, _id);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, _attachment, GL_TEXTURE_2D, _id, 0);
 }
 
 void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
