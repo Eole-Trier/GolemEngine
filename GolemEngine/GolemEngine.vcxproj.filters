@@ -52,6 +52,7 @@
     <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
+    <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -123,5 +124,6 @@
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\Wrappers\audioWrapper.h" />
   </ItemGroup>
 </Project>

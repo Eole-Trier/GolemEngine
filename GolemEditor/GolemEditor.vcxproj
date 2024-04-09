@@ -87,6 +87,7 @@
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
     <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\OpenAL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -138,16 +139,25 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\SFML-2.6.1\include;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

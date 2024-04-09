@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <wtypes.h>
+#include <Wrappers/audioWrapper.h>
+#include "Components/audio.h"
 
 #include "golemEngine.h"
 #include "Ui/editorUi.h"
@@ -63,6 +65,12 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
+	AudioWrapper::GetInstance().InitDevice();
+	Audio audio1("music_01.wav"), audio2("effect_02.wav", true);
+
+	audio1.Play();
+	audio2.Play();
+
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -94,6 +102,8 @@ void Editor::MainLoop()
 
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
 	}
+	audio1.CleanUp();
+	audio2.CleanUp();
 }
 
 void Editor::Cleanup()
