@@ -8,10 +8,10 @@
 #include "Core/mesh.h"
 #include "Resource/sceneManager.h"
 #include "Inputs/inputManager.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "Core/scene.h"
 #include "vector4.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui.h"
 
@@ -31,13 +31,14 @@ void Viewport::Update()
     
     auto viewportOffset = ImGui::GetCursorPos();
 
-    auto windowSize = ImGui::GetWindowSize();
+    const float windowWidth = ImGui::GetContentRegionAvail().x;
+    const float windowHeight = ImGui::GetContentRegionAvail().y;
     ImVec2 minBound = ImGui::GetWindowPos();
 
     minBound.x += viewportOffset.x;
     minBound.y += viewportOffset.y;
 
-    ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+    ImVec2 maxBound = { minBound.x + windowWidth, minBound.y + windowHeight };
     m_viewportBounds[0] = { minBound.x, minBound.y };
     m_viewportBounds[1] = { maxBound.x, maxBound.y };
 
@@ -63,20 +64,10 @@ void Viewport::Update()
 
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
-        GraphicWrapper::AttachTexture(GL_RED, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT1, GraphicWrapper::m_textures[1]->id);
-
+        GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        //Log::Print("pixelID = %d", pixelData);
-
-        if (pixelData != 126322567 && InputManager::IsButtonPressed(BUTTON_0))
-        {
-            //std::cout << "selected" << std::endl;
-        }
-
-        else if (pixelData == 126322567 && InputManager::IsButtonPressed(BUTTON_0))
-        {
-            //std::cout << "deselected" << std::endl;
-        }
+        Log::Print("pixelID = %d", pixelData);
+        GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
     }
 
     if (isDisplayed)

@@ -1,6 +1,7 @@
 #version 460 core
 
-out vec4 FragColor;
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out int FragColor2;
 
 struct PointLight
 {
@@ -78,6 +79,8 @@ void main()
         light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
     
     FragColor = light * texture(ourTexture, TexCoord);
+    FragColor2 = 50;
+
 }
 
 vec4 ProcessDirLight(DirLight light, vec3 normal, vec3 viewDir)

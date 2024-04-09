@@ -108,7 +108,6 @@ void Scene::CreateAndLoadResources()
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, GraphicWrapper::GetFbo());
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* viking = resourceManager->Get<Shader>("default");
     viking->Use();

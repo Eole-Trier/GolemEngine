@@ -73,7 +73,7 @@ void SceneManager::InitScene()
     // Init scene
     m_currentScene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 }
 
 

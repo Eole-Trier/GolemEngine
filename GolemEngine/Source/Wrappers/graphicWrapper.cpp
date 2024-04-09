@@ -21,10 +21,9 @@ int GraphicWrapper::Init()
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
-void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
+void GraphicWrapper::CreateFramebuffer(int _width, int _height)
 {
-    m_textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA);
-    m_textures[1] = std::make_unique<Texture>(_width, _height, GL_RED);
+    unsigned int attachments[2];
 
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -38,19 +37,22 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     {
         if (i == 0)
         {
-            AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[0]->id, 0);
+            m_textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA, GL_RGBA);
         }
 
         else
         {
-            AttachTexture(GL_RED, _width, _height, GL_COLOR_ATTACHMENT1, m_textures[i]->id);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, _width, _height, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
+            m_textures[i] = std::make_unique<Texture>(_width, _height, GL_RED_INTEGER, GL_R32I);
         }
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
+        attachments[i] = GL_COLOR_ATTACHMENT0 + i;
     }
 
+    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id);
+    glDrawBuffers(2, attachments);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    
     // Check framebuffer completeness
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
@@ -65,10 +67,12 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
 
 void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glBindTexture(GL_TEXTURE_2D, _id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, _id);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, _attachment, GL_TEXTURE_2D, _id, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_INTEGER, _width, _height, 0, _format, GL_UNSIGNED_BYTE, nullptr);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
 }
 
 void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
@@ -84,7 +88,7 @@ int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
 {
     glReadBuffer(GL_COLOR_ATTACHMENT0 + _attachmentIndex);
     int pixelData;
-    glReadPixels(_x, _y, 1, 1, GL_RED, GL_INT, &pixelData);
+    glReadPixels(_x, _y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
     return pixelData;
 }
 

@@ -39,7 +39,7 @@ void GolemEngine::Update()
     // Bind next framebuffer to the scene buffer
     GraphicWrapper::BindFramebuffer();
     // Assign background color and clear previous scene buffers
-    GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
