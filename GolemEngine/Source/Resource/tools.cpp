@@ -49,7 +49,6 @@ namespace Tools
                     fileCount++;
                 }
             }
-            std::cout << "Number of files: " << fileCount << std::endl;
         }
         catch (const std::exception& _e)
         {
