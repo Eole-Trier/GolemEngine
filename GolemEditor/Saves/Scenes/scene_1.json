@@ -1,0 +1,130 @@
+{
+  "gameObjects": [
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "d2965f9a-df8b-8a20-5ae3-c62d96d1bc68",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        {
+          "directionalLight": {
+            "ambientColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "diffuseColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "id": 0,
+            "specularColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      ],
+      "guid": "3da91d4d-c896-a153-9c90-ec765b845e22",
+      "name": "World"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "guid": "d695ab46-5b12-4697-bc2c-5af24eb110f5",
+            "localPosition": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "6408465e-45da-3836-54e9-6fe02f432193",
+      "name": "sphere"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "guid": "d695ab46-5b12-4697-bc2c-5af24eb110f5",
+            "localPosition": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "6408465e-45da-3836-54e9-6fe02f432193",
+      "name": "sphere"
+    }
+  ],
+  "guid": "0ec33b7c-fba3-d925-898b-eac98d4e0ff3",
+  "loadingObject": "sphere",
+  "name": "scene_1"
+}

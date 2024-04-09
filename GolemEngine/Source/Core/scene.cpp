@@ -30,6 +30,7 @@ void Scene::Init()
     CreateAndLoadResources();
     InitGameObjects();
     InitLights();
+    isInit = true;
 }
 
 void Scene::InitGameObjects()

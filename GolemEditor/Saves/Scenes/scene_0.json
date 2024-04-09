@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "e1afcab9-1aaa-e00d-4f1b-414dc5021784",
+            "guid": "dabde0e6-88c0-6f69-7332-97ca0dde5787",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -56,11 +56,11 @@
           }
         }
       ],
-      "guid": "0913c0d2-4707-b9e6-a9ba-e778fd255066",
+      "guid": "b21530bc-9545-7fbf-07ea-ba7dde3b9596",
       "name": "World"
     }
   ],
-  "guid": "af05d809-3b98-2e4c-2b31-3be0e6362fa7",
+  "guid": "93967cc2-0c0f-58bc-8d14-e749d1715b8d",
   "loadingObject": "",
   "name": "scene_0"
 }

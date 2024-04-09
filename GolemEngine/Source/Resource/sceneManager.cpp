@@ -55,7 +55,6 @@ void SceneManager::LoadScene(int _id)
     if (!m_currentScene->isInit)
     {
         m_currentScene->Init();
-        m_currentScene->isInit = true;
     }
     std::cout << "Loaded scene: " << m_currentScene->name << std::endl;
 }

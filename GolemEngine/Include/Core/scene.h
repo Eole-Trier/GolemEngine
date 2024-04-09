@@ -52,21 +52,19 @@ public:
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
-	bool IsNameExists(const std::string& _name);
 	
+	bool IsNameExists(const std::string& _name);
+
 	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
-
 	
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
-
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
-
 	std::string GetFileName(const std::string& _filePath);
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
