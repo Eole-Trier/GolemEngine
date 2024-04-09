@@ -123,7 +123,6 @@
     <ClInclude Include="Include\Resource\guid.h" />
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
-    <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
   </ItemGroup>
 </Project>

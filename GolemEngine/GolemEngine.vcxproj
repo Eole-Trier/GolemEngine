@@ -179,7 +179,6 @@
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Resource\tools.h" />
-    <ClInclude Include="Include\Viewport\scene.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
