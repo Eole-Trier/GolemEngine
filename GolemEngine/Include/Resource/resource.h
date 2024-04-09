@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dll.h"
+#include <string>
 
 
 class GOLEM_ENGINE_API Resource
@@ -9,5 +10,5 @@ public:
 	Resource() {};
 	virtual ~Resource() {};
 
-	const char* path = nullptr;
+	std::string path;
 };

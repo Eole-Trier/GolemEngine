@@ -32,7 +32,6 @@ public:
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
-	std::string GetName();
 	size_t GetId();
 	void SetId(size_t _id);
 

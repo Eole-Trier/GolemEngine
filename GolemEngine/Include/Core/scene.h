@@ -37,6 +37,9 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
+	std::string m_defaultTexture;
+	std::string m_defaultModel;
+	std::string m_defaultShader;
 	std::string name;
 	bool isInit = false;
 	bool isObjectInit = false;
@@ -52,10 +55,11 @@ public:
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
+
 	bool IsNameExists(const std::string& _name);
-	
-	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
-	void AddNewModel(std::string _filePath, std::string _resourceName = "");
+	// To add a new gameobject in the scene
+	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
 
 	

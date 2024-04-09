@@ -28,11 +28,6 @@ GameObject::~GameObject()
 	DeleteAllComponents();
 }
 
-std::string GameObject::GetName()
-{
-	return name;
-}
-
 size_t GameObject::GetId()
 {
 	return m_id;
