@@ -32,6 +32,7 @@ public:
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
+	std::string GetName();
 	size_t GetId();
 	void SetId(size_t _id);
 
@@ -106,7 +107,7 @@ TypeT* GameObject::GetComponent()
 	for (Component* c : m_components)
 	{
 		auto t = dynamic_cast<TypeT*>(c);
-		if (t)
+		if (t != nullptr)
 		{
 			return t;
 		}
@@ -121,7 +122,7 @@ std::vector<TypeT*> GameObject::GetComponents()
 	for (Component* c : m_components)
 	{
 		auto t = dynamic_cast<TypeT*>(c);
-		if (t)
+		if (t != nullptr)
 		{
 			components.push_back(t);
 		}

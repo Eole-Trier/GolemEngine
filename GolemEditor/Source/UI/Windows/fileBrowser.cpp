@@ -15,7 +15,6 @@
 #include "Resource/tools.h"
 #include "Core/scene.h"
 #include "Core/gameobject.h"
-#include "Resource/sceneManager.h"
 
 
 namespace fs = std::filesystem;
@@ -71,7 +70,7 @@ void FileBrowser::Update()
 	}
 
 	// Drag and drop event
-	DragDropEvent();
+	DragandDropEvent();
 }
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
@@ -383,7 +382,7 @@ void FileBrowser::LoadFile(const std::string& _filePath)
 	// TODO
 }
 
-void FileBrowser::DragDropEvent()
+void FileBrowser::DragandDropEvent()
 {
 	if (isDragging)
 	{
@@ -404,4 +403,3 @@ void FileBrowser::DragDropEvent()
 		isDragging = false;
 	}
 }
-
