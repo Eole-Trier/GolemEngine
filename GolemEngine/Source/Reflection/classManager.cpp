@@ -5,6 +5,7 @@
 #include "Components/Light/directional.h"
 #include "Components/Light/point.h"
 #include "Components/Light/spot.h"
+#include "Components/audio.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -15,6 +16,7 @@ void ClassesManager::AddAllClasses()
 	Add<DirectionalLight>();
 	Add<PointLight>();
 	Add<SpotLight>();
+	Add<Audio>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

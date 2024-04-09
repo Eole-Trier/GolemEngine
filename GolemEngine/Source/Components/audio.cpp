@@ -10,9 +10,20 @@
 #include "Resource/tools.h"
 #include "Wrappers/audioWrapper.h"
 
+Audio::Audio()
+    :musicPath(Tools::FindFile("music_01.wav"))
+{
+}
+
+Audio::~Audio()
+{
+    m_thread.join();
+}
+
 Audio::Audio(std::string _fileName, bool _isLooping)
     :musicPath(Tools::FindFile(_fileName)),
-    m_isLooping(_isLooping)
+    m_isLooping(_isLooping),
+    m_isPlaying(false)
 {
     SetUpAudio();
 }
@@ -108,5 +119,29 @@ void Audio::CleanUp()
 
 void Audio::Play()
 {
+    m_isPlaying = true;
     m_thread = std::thread(alSourcePlay, source);
+}
+
+void Audio::CheckAudioState()
+{
+    while (m_isPlaying) {
+        ALint state;
+        alGetSourcei(source, AL_SOURCE_STATE, &state);
+        if (state != AL_PLAYING) {
+            CleanUp();
+            break;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+}
+
+void Audio::Update()
+{
+    std::cout << "Music playing" << std::endl;
+    if (!m_isInit)
+    {
+        Play();
+        m_isInit = true;
+    }
 }

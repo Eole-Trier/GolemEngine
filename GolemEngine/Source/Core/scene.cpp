@@ -17,6 +17,7 @@
 #include "Core/gameobject.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
+#include "Components/audio.h"
 
 using json = nlohmann::json;
 
@@ -45,6 +46,9 @@ void Scene::InitGameObjects()
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
+
+    Audio* audio1 = new Audio("music_01.wav");
+    vikingGo->AddComponent(audio1);
     
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
@@ -146,6 +150,8 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     {
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
+        if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
+            audio->Update();
     }
 }
 

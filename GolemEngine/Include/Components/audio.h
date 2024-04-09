@@ -11,11 +11,15 @@
 #include <OpenAL/alc.h>
 #include <OpenAL/sndfile.h>
 
-class GOLEM_ENGINE_API Audio
+#include "Refl/refl.hpp"
+#include "component.h"
+
+class GOLEM_ENGINE_API Audio : public Component
 {
 public:
+    Audio();
     Audio(std::string _fileName, bool _isLooping = false);
-    ~Audio() {}
+    ~Audio();
     
     std::string musicPath;
     ALuint source;
@@ -28,10 +32,21 @@ public:
     void StopMusic(bool _isPlaying);
     void CleanUp();
     void Play();
+    void CheckAudioState();
+
+    void Update() override;
 
 private:
+    bool m_isInit = false;
     int m_volume;
     bool m_isLooping = false;
     bool m_isPlaying;
     std::thread m_thread;
+
+    friend refl_impl::metadata::type_info__<Audio>;
 };
+
+REFL_AUTO(
+    type(Audio),
+    field(m_volume)
+)
