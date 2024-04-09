@@ -11,11 +11,13 @@ void Toolbar::Update()
 {
     if (ImGui::BeginMenuBar())
     {
+        // Menu widget
         if (ImGui::BeginMenu("Menu"))
         {
             ImGui::EndMenu();
         }
 
+        // Scenes widget
         if (ImGui::BeginMenu("Scenes"))
         {
             if (ImGui::MenuItem("Save scene"))
@@ -50,8 +52,6 @@ void Toolbar::Update()
             
             ImGui::EndMenu();
         }
-        
-        
         
         ImGui::EndMenuBar();
     }

@@ -64,22 +64,6 @@ public:
 			{"name", name},
 			{"guid", m_guid.ToString()}
 		};
-		if (transform != nullptr)
-		{
-			json jTransform = {
-				{"guid", transform->guid.ToString()},
-				{"globalPosition", transform->globalPosition},
-				{"localPosition", transform->localPosition},
-				{"rotation", transform->rotation},
-				{"scaling", transform->scaling},
-			};
-			if (transform->GetParent() != nullptr)
-			{
-				jTransform["parentGuid"] = transform->GetParent()->guid.ToString();
-			}
-			
-			j["transform"] = jTransform;
-		}
 		if (!m_components.empty())
 		{
 			json jComponents;
