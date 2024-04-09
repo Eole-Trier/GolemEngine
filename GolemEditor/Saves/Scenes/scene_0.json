@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "37d81d93-83df-6eb8-4c66-b90c02509c43",
+            "guid": "0bb42048-459d-00c0-2698-8e369ab8a4c3",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -56,11 +56,107 @@
           }
         }
       ],
-      "guid": "9bd08cbe-52aa-4a92-6986-28a35fed6531",
+      "guid": "84edf100-21eb-8224-4f6a-cb829cd8f653",
       "name": "World"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "20554083-6b25-3126-69f6-210acec64920",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "88718ce0-803d-a7e8-8760-641e0ace0295",
+      "name": "viking"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "b0879260-734c-4eee-0699-86b3caf93172",
+            "localPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "5d0173e0-304e-86dc-e7b6-e2c8851d8dbe",
+      "name": "ball_bald"
+    },
+    {
+      "components": [
+        {
+          "transform": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "71104584-c33f-5dff-0e55-beb1de7e7080",
+            "localPosition": {
+              "x": -3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        null
+      ],
+      "guid": "2d248735-b9fd-a0ee-4d62-fa61da3da6aa",
+      "name": "ball_bald2"
     }
   ],
-  "guid": "a827f119-9c47-32a0-f9a9-109201f9fe92",
+  "guid": "ef204d5f-8d10-d219-ab4b-2773c3ef6130",
   "loadingObject": "",
   "name": "scene_0"
 }

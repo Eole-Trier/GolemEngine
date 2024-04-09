@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <iostream>
 
 #include "dll.h"
 #include "Resource.h"
@@ -15,7 +16,6 @@ private:
 	static ResourceManager* m_instancePtr;
 
 	std::unordered_map<std::string, Resource*> m_resources;
-
 private:
 	ResourceManager() {}
 
@@ -30,7 +30,7 @@ public:
 	}
 
 	template<class T>
-	T* Create(std::string _name);
+	T* Create(std::string _name, std::string _path);
 	template<class T>
 	T* Get(std::string _name);
 	void Delete(std::string _name);
@@ -38,10 +38,8 @@ public:
 	std::unordered_map<std::string, Resource*> GetResources();
 };
 
-//static inline ResourceManager* ResourceManager::GetInstance()
-
 template<class T>
-inline T* ResourceManager::Create(std::string _name)
+inline T* ResourceManager::Create(std::string _name, std::string _path)
 {
 	if (m_resources[_name] != nullptr)
 	{
@@ -49,15 +47,17 @@ inline T* ResourceManager::Create(std::string _name)
 	}
 	T* resource = new T;
 	m_resources[_name] = resource;
+	m_resources[_name]->path = _path;
 	return resource;
 }
 
 template<class T>
 inline T* ResourceManager::Get(std::string _name)
 {
-	if (m_resources[_name] == nullptr)
+	if (!m_resources[_name])
 	{
-		Log::Print("No resource of this name exists");
+		Log::Print("No resource of name '%s' exists", _name.c_str());
+		return nullptr;
 	}
 	return dynamic_cast<T*>(m_resources[_name]);
 }

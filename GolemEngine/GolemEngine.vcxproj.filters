@@ -48,6 +48,11 @@
     <ClCompile Include="Source\Core\scene.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
+    <ClCompile Include="Source\Components\audio.cpp" />
+    <ClCompile Include="Source\Resource\guid.cpp" />
+    <ClCompile Include="Source\Resource\sceneManager.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
+    <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -114,5 +119,11 @@
     <ClInclude Include="Include\Core\scene.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Components\meshRenderer.h" />
+    <ClInclude Include="Include\Components\audio.h" />
+    <ClInclude Include="Include\Resource\guid.h" />
+    <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
+    <ClInclude Include="Include\Resource\sceneManager.h" />
+    <ClInclude Include="Include\Viewport\scene.h" />
+    <ClInclude Include="Include\Wrappers\audioWrapper.h" />
   </ItemGroup>
 </Project>
