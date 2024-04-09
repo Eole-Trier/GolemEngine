@@ -115,6 +115,7 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     shader->Use();
 
     shader->SetViewPos(_camera->position);
+    shader->SetEntityID(5);
 
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _camera);

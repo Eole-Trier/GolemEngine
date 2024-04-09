@@ -40,4 +40,5 @@ public:
     void SetVec4(const std::string& _name, float _x, float _y, float _z, float _w) const;
     void SetMat4(const std::string& _name, const Matrix4& _mat) const;
     void SetViewPos(Vector3& _viewPos);
+    void SetEntityID(int _entityID);
 };

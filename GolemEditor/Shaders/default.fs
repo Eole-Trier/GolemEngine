@@ -50,6 +50,8 @@ uniform sampler2D ourTexture;
 
 uniform vec3 viewPos;
 
+uniform int entityID;
+
 uniform int nbrDirLights;
 uniform int nbrPointLights;
 uniform int nbrSpotLights;
@@ -79,7 +81,7 @@ void main()
         light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
     
     FragColor = light * texture(ourTexture, TexCoord);
-    FragColor2 = 50;
+    FragColor2 = entityID;
 
 }
 
