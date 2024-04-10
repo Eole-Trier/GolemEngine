@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -13,7 +14,7 @@
 
 Audio::Audio()
     :musicPath(Tools::FindFile("music_01.wav")),
-    m_position(owner->transform->globalPosition),
+    m_position(0, 0, 0),
     m_isLooping(false),
     m_isPlaying(false)
 {
@@ -26,7 +27,7 @@ Audio::~Audio()
 
 Audio::Audio(std::string _fileName, bool _isLooping)
     :musicPath(Tools::FindFile(_fileName)),
-    m_position(owner->transform->globalPosition),
+    m_position(0, 0, 0),
     m_isLooping(_isLooping),
     m_isPlaying(false)
 {
@@ -94,6 +95,8 @@ bool Audio::SetUpAudio()
     alGenSources(1, &source);
     alSourcei(source, AL_BUFFER, buffer);
 
+    alDistanceModel(AL_INVERSE_DISTANCE);
+
     if(m_isLooping)
         alSourcei(source, AL_LOOPING, AL_TRUE);
 
@@ -123,17 +126,16 @@ void Audio::SetPositon()
         m_sourcePos[0] = m_position.x;
         m_sourcePos[1] = m_position.y;
         m_sourcePos[2] = m_position.z;
-
         alSourcefv(source, AL_POSITION, m_sourcePos);
         alSourcefv(source, AL_VELOCITY, m_sourceVel);
-        alSourcei(source, AL_LOOPING, AL_FALSE);
+        alSourcei(source, AL_LOOPING, AL_TRUE);
         alSourcef(source, AL_MAX_DISTANCE, 10.0f);
     }
 }
 
 void Audio::CleanUp()
 {
-    m_thread.join();
+    //m_thread.join();
     alDeleteSources(1, &source);
     alDeleteBuffers(1, &buffer);
 }
@@ -141,12 +143,17 @@ void Audio::CleanUp()
 void Audio::Play()
 {
     m_isPlaying = true;
-    m_thread = std::thread(alSourcePlay, source);
+    //m_thread = std::thread(alSourcePlay, source);
+    alSourcePlay(source);
 }
 
 void Audio::Update()
 {
+    ALint state;
+    alGetSourcei(source, AL_SOURCE_STATE, &state);
+    alSourcef(source, AL_GAIN, m_volume);
     SetPositon();
+    
     if (!m_isInit)
     {
         Play();

@@ -39,13 +39,13 @@ public:
 
 private:
     bool m_isInit = false;
-    int m_volume;
+    float m_volume = 1.0f;
     bool m_isLooping = false;
     bool m_isPlaying;
     std::thread m_thread;
     Vector3 m_position;
-    float m_sourcePos[3] = { 0.0f, 0.0f, 0.0f };
-    float m_sourceVel[3] = { 0.0f, 0.0f, 0.0f };
+    ALfloat m_sourcePos[3] = { 0.0f, 0.0f, 0.0f };
+    ALfloat m_sourceVel[3] = { 0.0f, 0.0f, 0.0f };
 
     friend refl_impl::metadata::type_info__<Audio>;
 };
