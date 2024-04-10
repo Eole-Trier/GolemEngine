@@ -192,6 +192,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\UI\editorUi.cpp" />
     <ClCompile Include="Source\UI\Windows\window.cpp" />
+    <ClCompile Include="Source\UI\Windows\worldBuilderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Include\UI\Windows\viewport.h" />
     <ClInclude Include="Include\UI\Windows\sceneGraph.h" />
     <ClInclude Include="Include\UI\Windows\window.h" />
+    <ClInclude Include="Include\UI\Windows\worldBuilderWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

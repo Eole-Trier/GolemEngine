@@ -3,6 +3,7 @@
 #include "golemEngine.h"
 #include "UI/Windows/window.h"
 #include "Ui/Windows/basicActors.h"
+#include "Ui/Windows/worldBuilderWindow.h"
 #include "Ui/Windows/viewport.h"
 #include "Ui/Windows/fileBrowser.h"
 #include "Ui/Windows/sceneGraph.h"
@@ -21,12 +22,13 @@ void EditorUi::Init()
     // Add windows to be used in dockspace later
     m_windows.push_back(new Viewport("Viewport"));
     m_windows.push_back(new BasicActors("Basic_Actors"));
+    m_windows.push_back(new WorldBuilderWindow("World_Builder"));
     m_windows.push_back(new FileBrowser("File_Browser"));
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
 
-    // Setup Imgui context
+    // Setup ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
