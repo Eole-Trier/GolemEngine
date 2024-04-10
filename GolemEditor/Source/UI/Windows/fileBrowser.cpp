@@ -15,6 +15,7 @@
 #include "Resource/tools.h"
 #include "Core/scene.h"
 #include "Core/gameobject.h"
+#include "Inputs/inputManager.h"
 #include "Resource/sceneManager.h"
 
 
@@ -156,7 +157,8 @@ void FileBrowser::ContentBrowser()
 				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
 			}
 			// Right click to open content menu
-			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
+			// if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
+			if (InputManager::IsButtonPressed(BUTTON_1) && ImGui::IsItemHovered())
 			{
 				ImGui::OpenPopup("FolderContextMenu");
 				selectedFolder = path;
@@ -278,7 +280,7 @@ std::string FileBrowser::GetFileExtension(const std::string& _fileName)
 // Right click in file viewer
 void FileBrowser::RightMouseClickEvent()
 {
-	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(1))
+	if (ImGui::IsItemHovered() && InputManager::IsButtonPressed(BUTTON_1))
 	{
 		ImGui::OpenPopup("Context Menu");
 	}
@@ -402,6 +404,7 @@ void FileBrowser::DragDropEvent()
 	{
 		g_isFromFileBrowser = false;
 		isDragging = false;
+		std::cout << "hiii" << std::endl;
 	}
 }
 

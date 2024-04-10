@@ -8,7 +8,7 @@
 #include "vector2.h"
 
 #pragma region Keyboard defines
-#define LAST_KEY_INT GLFW_KEY_LAST
+#define LAST_KEY_INT GLFW_KEY_LAST    // To get last keybaord key to define size of array of all keybard keys
 #define KEY_PRESSED GLFW_PRESS
 #define KEY_RELEASED GLFW_RELEASE
 
@@ -43,7 +43,9 @@
 #pragma endregion Keyboard defines
 
 #pragma region Mouse defines
-#define LAST_MOUSE_BUTTON_INT GLFW_MOUSE_BUTTON_LAST
+#define LAST_MOUSE_BUTTON_INT GLFW_MOUSE_BUTTON_LAST    // To get last mouse button to define size of array of all mouse buttons
+#define BUTTON_PRESSED GLFW_PRESS
+#define BUTTON_RELEASED GLFW_RELEASE
 
 #define BUTTON_0 GLFW_MOUSE_BUTTON_1
 #define BUTTON_1 GLFW_MOUSE_BUTTON_2

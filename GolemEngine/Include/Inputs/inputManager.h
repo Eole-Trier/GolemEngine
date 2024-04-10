@@ -45,6 +45,8 @@ public:
 	static bool IsKeyPressed(int _key);
 	// Check if button (see WindowWrapper defines) is pressed
 	static bool IsButtonPressed(int _button);
+	// Check if button (see WindowWrapper defines) is released
+	static bool IsButtonReleased(int _button);
 
 	// Get mouse position relative to glfw window
 	static Vector2 GetMouseWindowPos();
