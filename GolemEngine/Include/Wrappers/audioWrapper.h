@@ -22,6 +22,11 @@ public:
     ALCdevice* device;
     ALCcontext* context;
 
+    float listenerPos[3] = { 0.0f, 0.0f, 0.0f };
+    float listenerVel[3] = { 0.0f, 0.0f, 0.0f };
+
+    void UpdatePosition();
+
 private:
     AudioWrapper();
     ~AudioWrapper();

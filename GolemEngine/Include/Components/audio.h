@@ -7,6 +7,7 @@
 #include <thread>
 #include <vector>
 #include <string>
+#include <vector3.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #include <OpenAL/sndfile.h>
@@ -30,9 +31,9 @@ public:
     void SetLoop(bool _isLooping);
     void SetVolume(int _volume);
     void StopMusic(bool _isPlaying);
+    void SetPositon();
     void CleanUp();
     void Play();
-    void CheckAudioState();
 
     void Update() override;
 
@@ -42,6 +43,9 @@ private:
     bool m_isLooping = false;
     bool m_isPlaying;
     std::thread m_thread;
+    Vector3 m_position;
+    float m_sourcePos[3] = { 0.0f, 0.0f, 0.0f };
+    float m_sourceVel[3] = { 0.0f, 0.0f, 0.0f };
 
     friend refl_impl::metadata::type_info__<Audio>;
 };
