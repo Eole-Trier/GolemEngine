@@ -34,10 +34,10 @@ Accept everything.
 OpenAL should be correctly installed now.  
   
 - Download the engine  
-Clone the project. 
-Open GolemEngine.sln in visual studio 2019. 
-Make sure that the project settings C++ norm is 20. 
-Set GolemEditor project as start up project. 
+Clone the project.  
+Open GolemEngine.sln in visual studio 2019.  
+Make sure that the project settings C++ norm is 20.  
+Set GolemEditor project as start up project.  
 Run.  
 
 ## Functionalities
