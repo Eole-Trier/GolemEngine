@@ -22,35 +22,35 @@ Interaction Diagram :
 
 ## Setup
 
-- Download OpenAL
-GolemEngine uses OpenAL library so it is necessary to download it on your device. GolemEngine already has OpenAL setup inside it but won't detect it if it isn't installed on your device.
+- Download OpenAL  
+GolemEngine uses OpenAL library so it is necessary to download it on your device. GolemEngine already has OpenAL setup inside it but won't detect it if it isn't installed on your device.  
 To Download it, go to [https://www.openal.org/downloads/]
 ![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_1.png)
 Download the Windows Installer (zip) :
 ![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_2.png)
-Open the .zip file and run the oalinst.exe file.
-Accept everything.
-![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_3.png)]
-OpenAL should be correctly installed now.
-
+Open the .zip file and run the oalinst.exe file.  
+Accept everything.  
+![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_3.png)
+OpenAL should be correctly installed now.  
+  
+- Download the engine  
 Clone the project. 
 Open GolemEngine.sln in visual studio 2019. 
 Make sure that the project settings C++ norm is 20. 
 Set GolemEditor project as start up project. 
-Run.
+Run.  
 
 ## Functionalities
 
 Golem Engine includes classical game engine features such as a docked imgui space for a basic actors, viewport, scene graph, debug, inspector and file browser window. 
 You can navigate in the viewport using WASD and right click + mouse. 
-Inspector allows (for now) to modify the transform of various objects and add light components.
-
+Inspector allows (for now) to modify the transform of various objects and add light components.  
 
 ## Special Features
 
 We plan to have several features : 
-Map making tool.
-Toon Shading tool.
-Particle System.
+Map making tool.  
+Toon Shading tool.  
+Particle System.  
 
 These special features will be developed later in development. 
