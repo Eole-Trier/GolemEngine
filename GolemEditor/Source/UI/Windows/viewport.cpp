@@ -31,14 +31,13 @@ void Viewport::Update()
     
     auto viewportOffset = ImGui::GetCursorPos();
 
-    const float windowWidth = ImGui::GetContentRegionAvail().x;
-    const float windowHeight = ImGui::GetContentRegionAvail().y;
+    auto windowSize = ImGui::GetWindowSize();
     ImVec2 minBound = ImGui::GetWindowPos();
 
     minBound.x += viewportOffset.x;
     minBound.y += viewportOffset.y;
 
-    ImVec2 maxBound = { minBound.x + windowWidth, minBound.y + windowHeight };
+    ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
     m_viewportBounds[0] = { minBound.x, minBound.y };
     m_viewportBounds[1] = { maxBound.x, maxBound.y };
 
@@ -47,10 +46,13 @@ void Viewport::Update()
     my -= m_viewportBounds[0].y;
 
     Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
-    my = viewportSize.y - my;
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
+
+    //Log::Print("window size x : %d\n, window size y : %d", mouseX, mouseY);
+
+    //Log::Print("window size x : %f\n, window size y : %f", ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y);
 
     if (ImGui::IsKeyDown(ImGuiKey_V))
     {
@@ -145,6 +147,11 @@ void Viewport::DragDropEvent()
             g_isFromFileBrowser = false;
         }
     }
+}
+
+Vector2 Viewport::GetViewportSize()
+{
+    return Vector2();
 }
 
 Camera* Viewport::GetCamera()

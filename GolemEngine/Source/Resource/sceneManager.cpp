@@ -7,6 +7,11 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
+#include "imgui.h"
+
 using json = nlohmann::json;
 
 
@@ -73,7 +78,7 @@ void SceneManager::InitScene()
     // Init scene
     m_currentScene->Init();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(1613, 945);
 }
 
 
