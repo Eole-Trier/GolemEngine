@@ -94,12 +94,13 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
 
-    // Test TODO dragndrop
-    if (isObjectInit)
+    // Dragndrop
+    if (isDropNewObject)
     {
         CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
-        isObjectInit = false;
+        isDropNewObject = false;
     }
+
     m_world->transform->UpdateSelfAndChilds();
 
     for (int i = 0; i < m_gameObjects.size(); i++)
