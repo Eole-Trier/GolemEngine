@@ -12,9 +12,11 @@
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "UI/Windows/viewport.h"
 #include "Wrappers/windowWrapper.h"
-#include "Utils/tools.h"
+#include "Resource/tools.h"
 #include "Core/scene.h"
 #include "Core/gameobject.h"
+#include "Inputs/inputManager.h"
+#include "Resource/sceneManager.h"
 
 
 namespace fs = std::filesystem;
@@ -37,6 +39,8 @@ namespace fs = std::filesystem;
     name != "GolemEngine.lib"&& \
     name != "GolemEngine.pdb")
 
+#define UI_SIZE 70
+#define SMALL_WINDOW_SIZE 100
 
 FileBrowser::FileBrowser(std::string _name)
 	: 
@@ -69,7 +73,7 @@ void FileBrowser::Update()
 	}
 
 	// Drag and drop event
-	DragandDropEvent();
+	DragDropEvent();
 }
 
 void FileBrowser::TreeNodes(std::filesystem::path _path)
@@ -128,18 +132,18 @@ void FileBrowser::ContentBrowser()
 		std::string path = p.path().string();
 		std::string fileName = GetFolderName(path.c_str());
 		// Get the extension like .obj .cpp .h ....
-		std::string extensionFile = GetFileExtension(fileName);
+		std::string extensionFile = Tools::GetFileExtension(fileName);
 		if (EXCLUDE_FILE(fileName))
 		{
 			// Every file is a small imgui window
-			ImGui::BeginChild(GetFolderName(path.c_str()), ImVec2(100, 100));
+			ImGui::BeginChild(GetFolderName(path.c_str()), ImVec2(SMALL_WINDOW_SIZE, SMALL_WINDOW_SIZE));
 			// Check the mouse is on the UI or not
 			// if it is on the UI show the button 
 			if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y)))
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 				// the UI is a button that we can click it to tigger new event
-				if (ImGui::Button(GetFolderName(path.c_str()), ImVec2(70, 70)))
+				if (ImGui::Button(GetFolderName(path.c_str()), ImVec2(UI_SIZE, UI_SIZE)))
 				{
 					double currentTime = ImGui::GetTime();
 					double clickInterval = currentTime - m_buttonState.lastClickTime;
@@ -151,10 +155,11 @@ void FileBrowser::ContentBrowser()
 					}
 				}
 				ImGui::PopStyleColor();
-				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 70);
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() - UI_SIZE);
 			}
 			// Right click to open content menu
-			if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
+			// if (ImGui::IsMouseReleased(ImGuiMouseButton_Right) && ImGui::IsItemHovered())
+			if (InputManager::IsButtonPressed(BUTTON_1) && ImGui::IsItemHovered())
 			{
 				ImGui::OpenPopup("FolderContextMenu");
 				selectedFolder = path;
@@ -177,33 +182,33 @@ void FileBrowser::ContentBrowser()
 			if (p.is_directory())
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("File_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			// Show Texture image
 			else if (extensionFile == ".jpg" || extensionFile == ".png")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(path.c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			else if (extensionFile == ".cpp")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("cpp_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			else if (extensionFile == ".h")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("h_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			else if (extensionFile == ".obj")
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("obj_Icon.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			else
 			{
 				Golemint texture = WindowWrapper::LoadUiTexture(Tools::FindFile("default_Ui.png").c_str());
-				ImGui::Image((void*)(intptr_t)texture, ImVec2(70, 70));
+				ImGui::Image((void*)(intptr_t)texture, ImVec2(UI_SIZE, UI_SIZE));
 			}
 			// Show content menu
 			// Menu selections:
@@ -263,20 +268,10 @@ const char* FileBrowser::GetFolderName(const char* _path)
 	return _path + index + 1;
 }
 
-// Get the file extentension like .obj .cpp .h ......
-std::string FileBrowser::GetFileExtension(const std::string& _fileName) 
-{
-	size_t dotPosition = _fileName.find_last_of('.');
-	if (dotPosition != std::string::npos) {
-		return _fileName.substr(dotPosition);
-	}
-	return "";
-}
-
 // Right click in file viewer
 void FileBrowser::RightMouseClickEvent()
 {
-	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(1))
+	if (ImGui::IsItemHovered() && InputManager::IsButtonPressed(BUTTON_1))
 	{
 		ImGui::OpenPopup("Context Menu");
 	}
@@ -381,7 +376,7 @@ void FileBrowser::LoadFile(const std::string& _filePath)
 	// TODO
 }
 
-void FileBrowser::DragandDropEvent()
+void FileBrowser::DragDropEvent()
 {
 	if (isDragging)
 	{
@@ -400,5 +395,6 @@ void FileBrowser::DragandDropEvent()
 	{
 		g_isFromFileBrowser = false;
 		isDragging = false;
+		std::cout << "hiii" << std::endl;
 	}
 }

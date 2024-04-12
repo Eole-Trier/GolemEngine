@@ -8,6 +8,7 @@
 #include "dll.h"
 #include "Refl/refl.hpp"
 #include "Components/transform.h"
+#include "Resource/guid.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
 
@@ -17,22 +18,23 @@ using json = nlohmann::json;
 class GOLEM_ENGINE_API GameObject
 {
 private:
+	Guid m_guid;
+	size_t m_id;
 	std::vector<Component*> m_components;
 	bool m_selected;
 
 public:
 	std::string name;
-	Transform* transform;
-	int id;
+	Transform* transform = nullptr;
 
 public:
+	GameObject();
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
-
-	void Update();
-	void DisplayInformations();
 	std::string GetName();
+	size_t GetId();
+	void SetId(size_t _id);
 
 	void DeleteTransform(Transform* _t);
 	void DeleteLight(Light* _l);
@@ -53,12 +55,27 @@ public:
 
 	friend refl_impl::metadata::type_info__<GameObject>; // needed to reflect private members
 
-	
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
 	void to_json(json& j) const
 	{
-		j = json {
-			{"name", name}
+		j = json
+		{
+			{"name", name},
+			{"guid", m_guid.ToString()}
 		};
+		if (!m_components.empty())
+		{
+			json jComponents;
+			for (int i = 0; i < m_components.size(); i++)
+			{
+				json jComponentPtr;
+				m_components[i]->to_json(jComponentPtr);
+				jComponents.push_back(jComponentPtr);
+			}
+			
+			j["components"] = jComponents;
+		}
 	}
 
 };
@@ -66,13 +83,10 @@ public:
 template<typename TypeT>
 void GameObject::AddComponent(TypeT* _type)
 {
-	if constexpr (std::is_same_v<TypeT, Transform>)
+	if (GetComponent<TypeT>())
 	{
-		if (transform != nullptr)
-		{
-			Log::Print("The GameObject already has a Transform");
-			return;
-		}
+		Log::Print("The GameObject already has a Component of type TypeT");
+		return;
 	}
 	static_assert(std::is_base_of_v<Component, TypeT>, "TypeT isn't a component");
 	m_components.push_back(_type);

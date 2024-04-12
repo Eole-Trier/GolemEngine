@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include <vector3.h>
 
 #include "dll.h"
@@ -23,6 +22,26 @@ public:
 	void SetDirectionalLight(Shader* _shader);
 	
 	void Update(Shader* _shader) override;
+
+
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
+	void to_json(json& j) const
+	{
+		j = json
+		{
+			{"directionalLight",
+				{
+					{"id", id},
+					{"diffuseColor", diffuseColor},
+					{"ambientColor", ambientColor},
+					{"specularColor", specularColor},
+					{"direction", direction}
+				}
+			}
+		};
+
+	}
 };
 
 REFL_AUTO(

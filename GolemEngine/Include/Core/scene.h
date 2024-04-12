@@ -5,6 +5,7 @@
 #include "dll.h"
 #include "gameobject.h"
 #include "Resource/resourceManager.h"
+#include "Resource/guid.h"
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
@@ -22,12 +23,13 @@ class Mesh;
 class GOLEM_ENGINE_API Scene
 {
 private:
-
+	Guid m_guid;
+	
 	GameObject* m_world = nullptr;
 	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 3;
-	static constexpr size_t m_maxPointLights = 10; // According to the shader
+	static constexpr size_t m_maxPointLights = 10;    // According to the shader
 	static constexpr size_t m_maxSpotLights = 10;
 
 	std::vector<DirectionalLight*> m_dirLights;
@@ -38,6 +40,7 @@ private:
 public:
 	std::string name;
 	bool isInit = false;
+	bool isObjectInit = false;
 	std::string loadingObject;
 	
 public:
@@ -54,13 +57,7 @@ public:
 	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
-	void CreateGameObject(GameObject* _owner);
-	void DeleteGameObject(GameObject* _gameObject);
-	void DeleteMesh(Mesh* _mesh);
-	void DeleteLight(Light* _light);
 	
-	Mesh* GetMeshByName(std::string _name);
-	std::vector<Mesh*> GetMeshes();
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
@@ -71,32 +68,32 @@ public:
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
+	void AddGameObject(GameObject* _gameObject);
+	void RemoveGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
+
 	
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
 	void to_json(json& j) const
 	{
-		j = json{
+		j = json
+		{
 			{"name", name},
-			{"isInit", isInit},
+			{"guid", m_guid.ToString()},
 			{"loadingObject", loadingObject}
 		};
-			if (m_world != nullptr)
-			{
-				json jWorld;
-				m_world->to_json(jWorld);
-				j["world"] = jWorld;
-			}
-		if (m_gameObjects.empty())
+		if (!m_gameObjects.empty())
 		{
-			
+			std::cout << "Game object size: " << m_gameObjects.size() << std::endl;
+			json jGameObjects;
+			for (int i = 0; i < m_gameObjects.size(); i++)
+			{
+				json jGameObjectPtr;
+				m_gameObjects[i]->to_json(jGameObjectPtr);
+				jGameObjects.push_back(jGameObjectPtr);
+			}
+			j["gameObjects"] = jGameObjects;
 		}
-	}
-
-	void from_json(const json& j)
-	{
-		j.at("name").get_to(name);
-		j.at("isInit").get_to(isInit);
-		j.at("loadingObject").get_to(loadingObject);
 	}
 };

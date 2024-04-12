@@ -1,18 +1,22 @@
 #include "Reflection/classesManager.h"
 #include "Debug/log.h"
 #include "Components/transform.h"
-#include "Components/Light/directional.h"
-#include "Components/Light/point.h"
-#include "Components/Light/spot.h"
+#include "Components/meshRenderer.h"
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/spotLight.h"
+#include "Components/audio.h"
 
 void ClassesManager::AddAllClasses()
 {
 	Add<Component>();
 	Add<Transform>();
+	Add<MeshRenderer>();
 	Add<Light>();
 	Add<DirectionalLight>();
 	Add<PointLight>();
 	Add<SpotLight>();
+	Add<Audio>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

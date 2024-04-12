@@ -32,19 +32,22 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 {
 	const std::vector<Transform*>& children = _gameObject->transform->GetChildren();
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
-
+	
 	if (children.size() == 0)
 	{
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	}
-
+	
 	if (_gameObject == EditorUi::selected)
 	{
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
-
+	
 	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
+	size_t id = _gameObject->GetId();
+
+	const char* res = std::to_string(id).c_str();
 
 	if (m_renaming == _gameObject)
 	{
@@ -56,7 +59,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		{
 			ImGui::SameLine();
 			ImGui::SetKeyboardFocusHere();
-			if (ImGui::InputText("##input", &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
+			if (ImGui::InputText(name, &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
 			{
 				m_renaming = nullptr;
 			}
@@ -64,7 +67,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		else
 		{
 			// Rename popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Rename"))
 				{
@@ -72,65 +75,65 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				}
 				ImGui::EndPopup();
 			}
-
+	
 			// Create popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Create"))
 				{
-					SceneManager::GetCurrentScene()->CreateGameObject(_gameObject);
+					new GameObject("New GameObject", new Transform(_gameObject->transform));
 				}
 				ImGui::EndPopup();
 			}
-
+	
 			// Delete popup
-			if (ImGui::BeginPopupContextItem("Manage Gameobjects"))
+			if (ImGui::BeginPopupContextItem(std::to_string(id).c_str()))
 			{
 				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
-					SceneManager::GetCurrentScene()->DeleteGameObject(_gameObject);
+					delete _gameObject;
 					EditorUi::selected = nullptr;
 				}
 				ImGui::EndPopup();
 			}
-
+	
 			// Drag and Drop management
 			if (ImGui::BeginDragDropSource())
 			{
 				ImGui::SetDragDropPayload("Golem", &_gameObject, sizeof(_gameObject));
-
+	
 				ImGui::Text("%s", name); 
 				ImGui::EndDragDropSource();
 			}
-
+	
 			if (ImGui::BeginDragDropTarget())
 			{
 				const ImGuiPayload* dragged = ImGui::AcceptDragDropPayload("Golem");
-
+	
 				if (dragged)
 				{
 					GameObject* gameObjectDragged = *(GameObject**)dragged->Data;
-
+	
 					if (!gameObjectDragged->transform->IsAParentOf(_gameObject->transform) && gameObjectDragged != SceneManager::GetCurrentScene()->GetWorld())
 					{
 						gameObjectDragged->transform->SetParent(_gameObject->transform);
 					}
 				}
-
+	
 				ImGui::EndDragDropTarget();
 			}
-
+	
 			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			{
 				EditorUi::selected = _gameObject;
 			}
 		}
-
+	
 		for (Transform* transform : children)
 		{
 			DisplayObjects(transform->owner);
 		}
-
+	
 		ImGui::TreePop();
 	}
 	else

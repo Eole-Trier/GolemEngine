@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "dll.h"
-
 #include "vector3.h"
 #include "quaternion.h"
+
 
 class GOLEM_ENGINE_API Matrix4
 {

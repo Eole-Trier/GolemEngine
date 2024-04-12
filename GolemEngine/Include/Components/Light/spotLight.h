@@ -31,6 +31,30 @@ public:
     void SetSpotLight(Shader* _shader);
 
     void Update(Shader* _shader) override;
+
+
+    // Define serialization and deserialization functions manually because the
+    // macro is not used due to the pointer member variable.
+    void to_json(json& j) const
+    {
+        j = json
+        {
+            {"spotLight",
+                {
+                   {"id", id},
+                   {"diffuseColor", diffuseColor},
+                   {"ambientColor", ambientColor},
+                   {"specularColor", specularColor},
+                   {"position", position},
+                   {"direction", direction},
+                   {"constant", constant},
+                   {"linear", linear},
+                   {"cutOff", cutOff},
+                   {"outerCutOff", outerCutOff},
+                }
+            }
+        };
+    }
 };
 
 REFL_AUTO(

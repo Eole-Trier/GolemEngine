@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <wtypes.h>
+#include <Wrappers/audioWrapper.h>
+#include "Components/audio.h"
 
 #include "golemEngine.h"
 #include "Ui/editorUi.h"
@@ -23,6 +25,7 @@ Editor::Editor()
     GetWindowRect(hDesktop, &desktop);
 
 	WindowWrapper::SetScreenSize({ (float)desktop.right, (float)desktop.bottom });
+	AudioWrapper::GetInstance().InitDevice();
 }
 
 Editor::~Editor() {}
@@ -93,6 +96,7 @@ void Editor::MainLoop()
 		}
 
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
+		AudioWrapper::GetInstance().UpdatePosition();
 	}
 }
 
