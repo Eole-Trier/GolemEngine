@@ -10,6 +10,7 @@
 #include "Utils/tools.h"
 #include "Inputs/inputManager.h"
 #include "Core/scene.h"
+#include "../include/UI/EditorUi.h"
 #include "vector4.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -65,6 +66,9 @@ void Viewport::Update()
     {
         isDisplayed = false;
     }
+
+     EditorUi::selected->GameObject::DisplayGizmo();
+
 
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {

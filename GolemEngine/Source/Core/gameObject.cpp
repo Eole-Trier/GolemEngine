@@ -79,6 +79,12 @@ void GameObject::DeleteAllComponents()
 
 void GameObject::DisplayGizmo()
 {
-	
+	ImGuizmo::SetOrthographic(false);
+	ImGuizmo::SetDrawlist();
+	float windowWidth = 1636;
+	float windowHeight = 908;
+	ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+	//camera = getcamera
 }
 
