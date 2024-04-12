@@ -10,10 +10,6 @@
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Inputs/inputManager.h"
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_internal.h"
 #include "ImGuizmo.h"
 
 Editor::Editor()
