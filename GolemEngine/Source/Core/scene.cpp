@@ -48,7 +48,7 @@ void Scene::InitGameObjects()
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
-    Shader* defaultShader = resourceManager->Get<Shader>(SceneManager::m_defaultShader);
+    Shader* defaultShader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
 
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
@@ -79,7 +79,7 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
    
-    Shader* shader = resourceManager->Get<Shader>(SceneManager::m_defaultShader);
+    Shader* shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
     shader->Use();
 
     shader->SetViewPos(_camera->m_position);
@@ -197,7 +197,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
 
     if (_textureName.empty())
     {
-        texture = resourceManager->Get<Texture>(SceneManager::m_defaultTexture);
+        texture = resourceManager->Get<Texture>(SceneManager::GetDefaultTexture());
     }
     else
     {
@@ -205,7 +205,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
     }
 
     if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>(SceneManager::m_defaultShader); // Get default shader
+        shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
     else
         shader = resourceManager->Get<Shader>(_shaderName);
 
@@ -248,7 +248,7 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
 
     if (_resourceName == "")
     {
-        Model* model = resourceManager->Get<Model>(SceneManager::m_defaultModel);
+        Model* model = resourceManager->Get<Model>(SceneManager::GetDefaultModel());
         loadingObject = GetFileName(_filePath);
     }
     else

@@ -3,12 +3,12 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-#include "Resource/tools.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/mesh.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
+#include "Resource/tools.h"
 
 using json = nlohmann::json;
 
@@ -19,8 +19,7 @@ void SceneManager::Init()
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
-    // Check if there are already saved scenes
-    if (Tools::GetFolderSize(Tools::FindFolder("Scenes")) != 0)
+    if (Tools::GetFolderSize(Tools::FindFolder("Scenes")) != 0)    // Check if there are already saved scenes
     {
         // Init scenes that are already saved
         std::vector<std::string> sceneNames = Tools::GetFolderElementsNames(Tools::FindFolder("Scenes"));
@@ -29,13 +28,12 @@ void SceneManager::Init()
             std::cout << Tools::RemoveExtension(sceneNames[i]) << std::endl;
             CreateScene(Tools::RemoveExtension(sceneNames[i]));
         }
-        // Load the first scene to not create errors
+        // Load the first scene
         LoadScene(0);
     }
     else    // If there are no scenes saved, Create one
     {
         CreateScene("scene_0");
-        LoadScene(0);
     }
 }
 
@@ -69,13 +67,10 @@ void SceneManager::LoadScene(int _id)
 void SceneManager::CreateScene(std::string _sceneName)
 {
     m_scenes.push_back(new Scene(_sceneName));
-    
 }
 
 void SceneManager::CreateAndLoadResources()
 {
-    // TODO set default model and texture to cube and default texture
-
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
@@ -125,6 +120,21 @@ Scene* SceneManager::GetScene(int _id)
 int SceneManager::GetSceneCount()
 {
     return  m_scenes.size();
+}
+
+std::string SceneManager::GetDefaultShader()
+{
+    return  m_defaultShader;
+}
+
+std::string SceneManager::GetDefaultTexture()
+{
+    return m_defaultTexture;
+}
+
+std::string SceneManager::GetDefaultModel()
+{
+    return m_defaultModel;
 }
 
 

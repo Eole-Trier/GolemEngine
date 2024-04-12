@@ -24,7 +24,6 @@ class GOLEM_ENGINE_API Scene
 {
 private:
 	Guid m_guid;
-	
 	GameObject* m_world = nullptr;
 	std::vector<GameObject*> m_gameObjects;
 

@@ -14,7 +14,7 @@ class GOLEM_ENGINE_API GolemEngine
 {
 private:
 	static inline Camera* m_camera = nullptr;
-	static inline float m_deltaTime = 0.f;
+	static inline float m_deltaTime = 0.0f;
 
 private:
 	// Private constructors and destructor to make static class
