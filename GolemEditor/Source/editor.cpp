@@ -25,6 +25,7 @@ Editor::Editor()
     GetWindowRect(hDesktop, &desktop);
 
 	WindowWrapper::SetScreenSize({ (float)desktop.right, (float)desktop.bottom });
+	AudioWrapper::GetInstance().InitDevice();
 }
 
 Editor::~Editor() {}
@@ -65,12 +66,6 @@ void Editor::Init()
 
 void Editor::MainLoop()
 {
-	AudioWrapper::GetInstance().InitDevice();
-	Audio audio1("music_01.wav"), audio2("effect_02.wav", true);
-
-	audio1.Play();
-	audio2.Play();
-
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -101,9 +96,8 @@ void Editor::MainLoop()
 		}
 
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
+		AudioWrapper::GetInstance().UpdatePosition();
 	}
-	audio1.CleanUp();
-	audio2.CleanUp();
 }
 
 void Editor::Cleanup()

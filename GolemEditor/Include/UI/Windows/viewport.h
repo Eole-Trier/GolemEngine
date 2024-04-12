@@ -19,8 +19,8 @@ private:
 	float m_pitch;
 	float m_roll;
 	bool m_firstMouse;
-	bool m_lastSpacePress = false;
 	bool m_isDragging = false;
+	bool m_lastSpacePress = false;
 
 	Vector2 m_viewportBounds[2];
 
@@ -36,8 +36,7 @@ public:
 
 	void SetCamera(Camera* _camera);
 
+	void DragDropEvent();
+
 	Camera* GetCamera();
-
-	void DragDropModel();
-
 };

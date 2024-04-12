@@ -15,6 +15,7 @@ public:
 	unsigned int m_width;
 	unsigned int m_height;
 	std::string name;
+	std::string path;
 
 public :
 	Texture();

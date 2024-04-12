@@ -43,6 +43,8 @@ Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &m_model->VAO);
     glDeleteBuffers(1, &m_model->VBO);
+
+    delete m_texture;
 }
 
 

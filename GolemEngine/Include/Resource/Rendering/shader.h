@@ -19,6 +19,7 @@ class GOLEM_ENGINE_API Shader : public Resource
 {
 public:
 	unsigned int id = 0;
+
 private:
 	void CheckCompileErrors(unsigned int _shader, std::string _type);
 

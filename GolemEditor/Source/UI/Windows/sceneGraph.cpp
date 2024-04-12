@@ -43,7 +43,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
 	
-	std::string n = _gameObject->name;
+	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
 	size_t id = _gameObject->GetId();
 
