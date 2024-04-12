@@ -37,11 +37,7 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 
 public:
-	std::string m_defaultTexture;
-	std::string m_defaultModel;
-	std::string m_defaultShader;
 	std::string name;
-	bool isInit = false;
 	bool isObjectInit = false;
 	std::string loadingObject;
 	

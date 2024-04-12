@@ -17,20 +17,30 @@
 #include "Core/gameobject.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
+#include "Resource/sceneManager.h"
 
 using json = nlohmann::json;
 
 
 Scene::Scene(std::string _name)
     : name(_name)
-{}
+{
+    SceneManager::m_currentScene = this;
+    Init();
+}
 
 void Scene::Init()
 {
-    CreateAndLoadResources();
+    //CreateAndLoadResources();
     InitGameObjects();
     InitLights();
-    isInit = true;
+}
+
+void Scene::InitLights()
+{
+    // Set up directional light
+    DirectionalLight* dir = new DirectionalLight;
+    m_world->AddComponent(dir);
 }
 
 void Scene::InitGameObjects()
@@ -38,7 +48,7 @@ void Scene::InitGameObjects()
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
-    Shader* defaultShader = resourceManager->Get<Shader>(m_defaultShader);
+    Shader* defaultShader = resourceManager->Get<Shader>(SceneManager::m_defaultShader);
 
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
@@ -65,53 +75,11 @@ void Scene::InitGameObjects()
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
 
-void Scene::InitLights()
-{
-    // Set up directional light
-    DirectionalLight* dir = new DirectionalLight;
-    m_world->AddComponent(dir);
-}
-
-void Scene::CreateAndLoadResources()
-{
-    m_defaultTexture = "default_texture";
-    m_defaultModel = "default_model";
-    m_defaultShader = "default_shader";
-    // TODO set default model and texture to cube and default texture
-
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
-    defaultTexture->Load(defaultTexture->path.c_str());
-
-    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
-    vikingTexture->Load(vikingTexture->path.c_str());
-
-    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
-    allBaldTexture->Load(allBaldTexture->path.c_str());
-
-    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
-    vikingModel->Load(vikingModel->path.c_str());
-
-    Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
-    defaultModel->Load(defaultModel->path.c_str());
-
-    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
-    sphereModel->Load(sphereModel->path.c_str());
-
-    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
-    cubeModel->Load(cubeModel->path.c_str());
-
-    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
-    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
-
-}
-
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
    
-    Shader* shader = resourceManager->Get<Shader>(m_defaultShader);
+    Shader* shader = resourceManager->Get<Shader>(SceneManager::m_defaultShader);
     shader->Use();
 
     shader->SetViewPos(_camera->m_position);
@@ -126,7 +94,7 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
 
-    // Test TODO
+    // Test TODO dragndrop
     if (isObjectInit)
     {
         CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
@@ -137,7 +105,9 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     for (int i = 0; i < m_gameObjects.size(); i++)
     {
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+        {
             meshRenderer->Draw(_width, _height, _camera);
+        }
     }
 }
 
@@ -227,7 +197,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
 
     if (_textureName.empty())
     {
-        texture = resourceManager->Get<Texture>(m_defaultTexture);
+        texture = resourceManager->Get<Texture>(SceneManager::m_defaultTexture);
     }
     else
     {
@@ -235,7 +205,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
     }
 
     if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>(m_defaultShader); // Get default shader
+        shader = resourceManager->Get<Shader>(SceneManager::m_defaultShader); // Get default shader
     else
         shader = resourceManager->Get<Shader>(_shaderName);
 
@@ -278,7 +248,7 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
 
     if (_resourceName == "")
     {
-        Model* model = resourceManager->Get<Model>(m_defaultModel);
+        Model* model = resourceManager->Get<Model>(SceneManager::m_defaultModel);
         loadingObject = GetFileName(_filePath);
     }
     else

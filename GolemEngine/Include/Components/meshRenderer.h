@@ -14,7 +14,7 @@ public:
 	MeshRenderer(Mesh* _mesh);
 	~MeshRenderer();
 
-	void Draw(float _width, float _height, Camera* _cam);
+	void Draw(float _width, float _height, Camera* _camera);
 
 
 	// Define serialization and deserialization functions manually because the

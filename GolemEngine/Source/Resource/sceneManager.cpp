@@ -6,12 +6,16 @@
 #include "Resource/tools.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
+#include "Resource/Rendering/mesh.h"
+#include "Resource/Rendering/model.h"
+#include "Resource/Rendering/texture.h"
 
 using json = nlohmann::json;
 
 
 void SceneManager::Init()
 {
+    CreateAndLoadResources();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -32,7 +36,6 @@ void SceneManager::Init()
     {
         CreateScene("scene_0");
         LoadScene(0);
-        SaveScene();
     }
 }
 
@@ -61,15 +64,43 @@ void SceneManager::SaveScene()
 void SceneManager::LoadScene(int _id)
 {
     m_currentScene = m_scenes[_id];
-    if (!m_currentScene->isInit)
-    {
-        m_currentScene->Init();
-    }
 }
 
 void SceneManager::CreateScene(std::string _sceneName)
 {
     m_scenes.push_back(new Scene(_sceneName));
+    
+}
+
+void SceneManager::CreateAndLoadResources()
+{
+    // TODO set default model and texture to cube and default texture
+
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
+    defaultTexture->Load(defaultTexture->path.c_str());
+
+    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
+    vikingTexture->Load(vikingTexture->path.c_str());
+
+    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
+    allBaldTexture->Load(allBaldTexture->path.c_str());
+
+    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
+    vikingModel->Load(vikingModel->path.c_str());
+
+    Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
+    defaultModel->Load(defaultModel->path.c_str());
+
+    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
+    sphereModel->Load(sphereModel->path.c_str());
+
+    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
+    cubeModel->Load(cubeModel->path.c_str());
+
+    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
+    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 }
 
 Scene* SceneManager::GetCurrentScene()
