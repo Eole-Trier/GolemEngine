@@ -129,7 +129,7 @@ void Viewport::DragDropModel()
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
             SceneManager::GetCurrentScene()->CreateNewModel(droppedFilePath);
-            SceneManager::GetCurrentScene()->isObjectInit = true;
+            SceneManager::GetCurrentScene()->isNewObjectDropped = true;
             m_isDragging = false;
             g_isFromFileBrowser = false;
         }

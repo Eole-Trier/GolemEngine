@@ -41,4 +41,6 @@ public:
     static std::string GetDefaultShader();
     static std::string GetDefaultTexture();
     static std::string GetDefaultModel();
+    
+    static void SetCurrentScene(Scene* _scene);
 };

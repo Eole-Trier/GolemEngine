@@ -137,4 +137,9 @@ std::string SceneManager::GetDefaultModel()
     return m_defaultModel;
 }
 
+void SceneManager::SetCurrentScene(Scene* _scene)
+{
+    m_currentScene = _scene;
+}
+
 

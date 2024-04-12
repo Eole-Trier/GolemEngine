@@ -25,7 +25,7 @@ using json = nlohmann::json;
 Scene::Scene(std::string _name)
     : name(_name)
 {
-    SceneManager::m_currentScene = this;
+    SceneManager::SetCurrentScene(this);
     Init();
 }
 
@@ -94,11 +94,11 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
 
-    // Dragndrop
-    if (isDropNewObject)
+    // Drag and drop
+    if (isNewObjectDropped)
     {
         CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
-        isDropNewObject = false;
+        isNewObjectDropped = false;
     }
 
     m_world->transform->UpdateSelfAndChilds();

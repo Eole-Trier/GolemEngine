@@ -37,7 +37,7 @@ private:
 
 public:
 	std::string name;
-	bool isObjectInit = false;
+	bool isNewObjectDropped = false;
 	std::string loadingObject;
 	
 public:
