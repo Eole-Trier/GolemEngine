@@ -46,13 +46,14 @@ void Viewport::Update()
     my -= m_viewportBounds[0].y;
 
     Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
+    //my = viewportSize.y - my; 
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
     //Log::Print("window size x : %d\n, window size y : %d", mouseX, mouseY);
 
-    //Log::Print("window size x : %f\n, window size y : %f", ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y);
+    //Log::Print("window size x : %f\n, window size y : %f", ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 
     if (ImGui::IsKeyDown(ImGuiKey_V))
     {
