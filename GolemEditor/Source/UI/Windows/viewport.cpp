@@ -7,7 +7,7 @@
 #include "Resource/Rendering/texture.h"
 #include "Core/mesh.h"
 #include "Resource/sceneManager.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Inputs/inputManager.h"
 #include "Core/scene.h"
 #include "vector4.h"
@@ -72,6 +72,16 @@ void Viewport::Update()
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
         Log::Print("pixelID = %d", pixelData);
         GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
+
+        if(pixelData == 5)
+        {
+            //GameObject::m_selected = true;
+        }
+
+        if (pixelData != 5)
+        {
+            //GameObject::m_selected = false;
+        }
     }
 
     if (isDisplayed)

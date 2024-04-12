@@ -47,6 +47,8 @@ public:
 	template<typename TypeT>
 	void AddComponent();
 
+	void DisplayGizmo();
+
 	template<typename TypeT>
 	TypeT* GetComponent(); 
 

@@ -15,9 +15,7 @@
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
-    <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
-    <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
@@ -30,12 +28,10 @@
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
-    <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
@@ -51,8 +47,9 @@
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
+    <ClCompile Include="Source\Core\mesh.cpp" />
+    <ClCompile Include="Source\Utils\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -77,10 +74,8 @@
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
-    <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
     <ClInclude Include="Include\golemEngine.h" />
-    <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
@@ -88,10 +83,7 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
-    <ClInclude Include="Include\Components\Light\directional.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
-    <ClInclude Include="Include\Components\Light\point.h" />
-    <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Components\component.h" />
     <ClInclude Include="Include\Core\gameObject.h" />
     <ClInclude Include="Include\Components\transform.h" />
@@ -124,5 +116,9 @@
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
+    <ClInclude Include="Include\Components\Light\directionalLight.h" />
+    <ClInclude Include="Include\Components\Light\pointLight.h" />
+    <ClInclude Include="Include\Components\Light\spotLight.h" />
+    <ClInclude Include="Include\Core\mesh.h" />
   </ItemGroup>
 </Project>

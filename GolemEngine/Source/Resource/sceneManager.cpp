@@ -18,7 +18,7 @@ using json = nlohmann::json;
 void SceneManager::Init()
 {
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(1636, 908);
 
     // Check if there are already saved scenes
     if (Tools::GetFolderSize(Tools::FindFolder("Scenes")) != 0)

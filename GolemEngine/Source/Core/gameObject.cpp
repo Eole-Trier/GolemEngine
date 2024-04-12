@@ -2,6 +2,7 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
+#include "ImGuizmo.h"
 
 GameObject::GameObject()
 	: m_selected(false)
@@ -74,5 +75,10 @@ void GameObject::DeleteAllComponents()
 	{
 		std::erase(m_components, c);
 	}
+}
+
+void GameObject::DisplayGizmo()
+{
+	
 }
 

@@ -38,6 +38,7 @@
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
+    <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
     <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
@@ -120,14 +121,12 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
-    <ClCompile Include="Source\Resource\tools.cpp" />
+    <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
@@ -157,6 +156,7 @@
     <ClInclude Include="Include\Components\meshRenderer.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
+    <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="Include\Core\scene.h" />
     <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
