@@ -37,7 +37,7 @@ public:
 
 	std::unordered_map<std::string, Resource*> GetResources();
 };
-
+// MERGE
 //static inline ResourceManager* ResourceManager::GetInstance()
 
 template<class T>
