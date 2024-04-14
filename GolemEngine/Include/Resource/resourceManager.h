@@ -38,6 +38,8 @@ public:
 	std::unordered_map<std::string, Resource*> GetResources();
 };
 
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
 template<class T>
 inline T* ResourceManager::Create(std::string _name, std::string _path)
 {
