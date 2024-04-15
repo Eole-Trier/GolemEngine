@@ -30,8 +30,9 @@ public:
     static void Init();
 
     static void SaveScene();
-    static void CreateScene(std::string _sceneName);
     static void LoadScene(int _id);
+    static void CreateScene(std::string _sceneName);
+    static void CreateSceneFromFile(std::string _sceneFileName);
     static void CreateAndLoadResources();
 
     

@@ -22,11 +22,18 @@
 using json = nlohmann::json;
 
 
-Scene::Scene(std::string _name)
+Scene::Scene(std::string _name, bool _isEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
-    Init();
+    
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
+    
+    if (!_isEmpty)
+    { 
+        Init();
+    }
 }
 
 void Scene::Init()
@@ -46,10 +53,7 @@ void Scene::InitLights()
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
-
     Shader* defaultShader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
-
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
@@ -84,16 +88,12 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     shader->SetViewPos(_camera->m_position);
 
-    UpdateLights(shader);
     UpdateGameObjects(_width, _height, _camera);
+    UpdateLights(shader);
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
-    std::string folderName = "Saves"; 
-    std::vector<std::filesystem::path> foundPaths;
-    std::filesystem::path currentPath = std::filesystem::current_path();
-
     // Drag and drop
     if (isNewObjectDropped)
     {
@@ -103,9 +103,9 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 
     m_world->transform->UpdateSelfAndChilds();
 
-    for (int i = 0; i < m_gameObjects.size(); i++)
+    for (int i = 0; i < gameObjects.size(); i++)
     {
-        if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+        if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
         {
             meshRenderer->Draw(_width, _height, _camera);
         }
@@ -134,52 +134,11 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
-
-
-void Scene::AddGameObject(GameObject* _gameObject)
-{
-    // TODO maybe remove and put it in gamobject constructor
-    m_gameObjects.push_back(_gameObject);
-}
-
-void Scene::RemoveGameObject(GameObject* _gameObject)
-{
-    bool removed = false;
-    for (size_t i = 0; i < m_gameObjects.size(); i++)
-    {
-        if (m_gameObjects[i] == _gameObject)
-        {
-            removed = true;
-        }
-        if (removed)
-        {
-            m_gameObjects[i]->SetId(i - 1);
-        }
-    }
-    std::erase(m_gameObjects, _gameObject);
-}
-
-void Scene::DeleteLight(Light* _light)
-{
-    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
-    {
-        std::erase(m_pointLights, pL);
-    }
-    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
-    {
-        std::erase(m_spotLights, sL);
-    }
-    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
-    {
-        std::erase(m_dirLights, dL);
-    }
-}
-
 bool Scene::IsNameExists(const std::string& _name)
 {
-    for (int i = 0; i < m_gameObjects.size(); i++)
+    for (int i = 0; i < gameObjects.size(); i++)
     {
-        if (m_gameObjects[i]->name == _name)
+        if (gameObjects[i]->name == _name)
             return true;
     }
     return false;
@@ -277,6 +236,45 @@ void Scene::AddLight(Light* _light)
     }
 }
 
+void Scene::AddGameObject(GameObject* _gameObject)
+{
+    // TODO maybe remove and put it in gamobject constructor
+    gameObjects.push_back(_gameObject);
+}
+
+void Scene::RemoveGameObject(GameObject* _gameObject)
+{
+    bool removed = false;
+    for (size_t i = 0; i < gameObjects.size(); i++)
+    {
+        if (gameObjects[i] == _gameObject)
+        {
+            removed = true;
+        }
+        if (removed)
+        {
+            gameObjects[i]->SetId(i - 1);
+        }
+    }
+    std::erase(gameObjects, _gameObject);
+}
+
+void Scene::DeleteLight(Light* _light)
+{
+    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
+    {
+        std::erase(m_pointLights, pL);
+    }
+    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
+    {
+        std::erase(m_spotLights, sL);
+    }
+    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
+    {
+        std::erase(m_dirLights, dL);
+    }
+}
+
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()
 {
     return m_dirLights;
@@ -313,12 +311,19 @@ std::string Scene::GetFileName(const std::string& _filePath)
     return path.stem().string();
 }
 
-const std::vector<GameObject*>& Scene::GetGameObjects()
-{
-    return m_gameObjects;
-}
-
 GameObject* Scene::GetWorld()
 {
     return m_world;
 }
+
+Guid Scene::GetGuid()
+{
+    return  m_guid;
+}
+
+void Scene::SetGuid(Guid _guid)
+{
+    m_guid = _guid;
+}
+
+

@@ -18,12 +18,12 @@ using json = nlohmann::json;
 class GOLEM_ENGINE_API GameObject
 {
 private:
-	Guid m_guid;
 	size_t m_id;
 	std::vector<Component*> m_components;
 	bool m_selected;
 
 public:
+	Guid guid;
 	std::string name;
 	Transform* transform = nullptr;
 
@@ -61,7 +61,7 @@ public:
 		j = json
 		{
 			{"name", name},
-			{"guid", m_guid.ToString()}
+			{"guid", guid.ToString()}
 		};
 		if (!m_components.empty())
 		{

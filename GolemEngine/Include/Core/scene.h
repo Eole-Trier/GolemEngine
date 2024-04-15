@@ -25,7 +25,6 @@ class GOLEM_ENGINE_API Scene
 private:
 	Guid m_guid;
 	GameObject* m_world = nullptr;
-	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 3;
 	static constexpr size_t m_maxPointLights = 10;    // According to the shader
@@ -37,16 +36,18 @@ private:
 
 public:
 	std::string name;
+	std::vector<GameObject*> gameObjects;
 	bool isNewObjectDropped = false;
 	std::string loadingObject;
 	
 public:
-	Scene(std::string _name);
+	// Create a scene by giving it a name and setting _isEmpty to 0 or 1. 0 means the scene will be a default
+	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
+	Scene(std::string _name, bool _isEmpty);
 
 	void Init();
 	void InitGameObjects();
 	void InitLights();
-	void CreateAndLoadResources();
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
@@ -56,6 +57,9 @@ public:
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
+	void AddGameObject(GameObject* _gameObject);
+	void RemoveGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
 	
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
@@ -64,12 +68,10 @@ public:
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
-	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
+	Guid GetGuid();
 
-	void AddGameObject(GameObject* _gameObject);
-	void RemoveGameObject(GameObject* _gameObject);
-	void DeleteLight(Light* _light);
+	void SetGuid(Guid _guid);
 
 	
 	// Define serialization and deserialization functions manually because the
@@ -80,16 +82,15 @@ public:
 		{
 			{"name", name},
 			{"guid", m_guid.ToString()},
-			{"loadingObject", loadingObject}
 		};
-		if (!m_gameObjects.empty())
+		if (!gameObjects.empty())
 		{
-			std::cout << "Game object size: " << m_gameObjects.size() << std::endl;
+			std::cout << "Game object size: " << gameObjects.size() << std::endl;
 			json jGameObjects;
-			for (int i = 0; i < m_gameObjects.size(); i++)
+			for (int i = 0; i < gameObjects.size(); i++)
 			{
 				json jGameObjectPtr;
-				m_gameObjects[i]->to_json(jGameObjectPtr);
+				gameObjects[i]->to_json(jGameObjectPtr);
 				jGameObjects.push_back(jGameObjectPtr);
 			}
 			j["gameObjects"] = jGameObjects;

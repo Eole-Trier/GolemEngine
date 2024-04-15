@@ -25,8 +25,8 @@ void SceneManager::Init()
         std::vector<std::string> sceneNames = Tools::GetFolderElementsNames(Tools::FindFolder("Scenes"));
         for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
         {
-            std::cout << Tools::RemoveExtension(sceneNames[i]) << std::endl;
-            CreateScene(Tools::RemoveExtension(sceneNames[i]));
+            CreateSceneFromFile(Tools::RemoveExtension(sceneNames[i]));
+            
         }
         // Load the first scene
         LoadScene(0);
@@ -66,12 +66,69 @@ void SceneManager::LoadScene(int _id)
 
 void SceneManager::CreateScene(std::string _sceneName)
 {
-    m_scenes.push_back(new Scene(_sceneName));
+    m_scenes.push_back(new Scene(_sceneName, 0));
+}
+
+void SceneManager::CreateSceneFromFile(std::string _sceneName)
+{
+    // Get the name pf the scene and append .json
+    std::string sceneFileName = _sceneName;
+    sceneFileName.append(".json");
+    // Open the corresponding folder
+    std::fstream sceneFile;
+    sceneFile.open(Tools::FindFile(sceneFileName), std::ios::in);
+    // Parse the json doc to a json variable here
+    json jScene{json::parse(sceneFile)};
+    
+    Scene* scene = new Scene(_sceneName, 1);
+    scene->name = jScene["name"];
+    // scene.
+    // Initialize the scene gameObjects corresponding to the json doc
+    for (int i = 0; i < jScene["gameObjects"].size(); i++)
+    {
+        // Check if the gameObject being created is not the World because World is created already on Scene constructor
+        if (jScene["gameObjects"][i]["name"] != "World")
+        {
+            GameObject* gameObject = new GameObject();
+            gameObject->name = jScene["gameObjects"][i]["name"];
+            Guid gameObjectGuid;
+            gameObjectGuid.FromString(jScene["gameObjects"][i]["guid"]);
+            gameObject->guid = gameObjectGuid;
+            
+            // Setup components
+            for (int j = 0; j < jScene["gameObjects"][i]["components"].size(); j++)
+            {
+                // gameObject->AddComponent()
+            }
+            
+        }
+        else if (jScene["gameObjects"][i]["name"] == "World")
+        {
+            Guid worldGuid;
+            worldGuid.FromString(jScene["gameObjects"][i]["guid"]);
+            scene->GetWorld()->guid = worldGuid;
+            Guid worldTransformGuid;
+            worldTransformGuid.FromString(jScene["gameObjects"][i]["components"][0]["data"]["guid"]);
+            scene->GetWorld()->transform->guid = worldTransformGuid;
+            
+            scene->GetWorld()->transform->localPosition = jScene["gameObjects"][i]["components"][0]["data"]["localPosition"];
+            scene->GetWorld()->transform->rotation = jScene["gameObjects"][i]["components"][0]["data"]["rotation"];
+            scene->GetWorld()->transform->scaling = jScene["gameObjects"][i]["components"][0]["data"]["scaling"];
+        }
+        
+    }
+
+    // std::cout << jScene.dump(2) << std::endl;
+    
+    m_scenes.push_back(scene);    
 }
 
 void SceneManager::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
+    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
@@ -93,9 +150,6 @@ void SceneManager::CreateAndLoadResources()
 
     Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
     cubeModel->Load(cubeModel->path.c_str());
-
-    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
-    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 }
 
 Scene* SceneManager::GetCurrentScene()

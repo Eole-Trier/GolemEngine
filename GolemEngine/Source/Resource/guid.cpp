@@ -42,3 +42,27 @@ std::string Guid::ToString() const
     }
     return oss.str();
 }
+
+void Guid::FromString(const std::string& _guidStr)
+{
+    std::istringstream iss(_guidStr);
+
+    char dummy;
+    iss >> std::hex >> data1 >> dummy
+        >> std::hex >> data2 >> dummy
+        >> std::hex >> data3 >> dummy;
+
+    for (int i = 0; i < 2; ++i) {
+        int temp;
+        iss >> std::hex >> temp;
+        data4[i] = static_cast<unsigned char>(temp);
+    }
+
+    iss >> dummy;
+
+    for (int i = 2; i < 8; ++i) {
+        int temp;
+        iss >> std::hex >> temp;
+        data4[i] = static_cast<unsigned char>(temp);
+    }
+}

@@ -55,7 +55,8 @@ public:
 	{
 		j = json
 		{
-			{"transform",
+			{"name", "transform"},
+			{"data",
 				{
 					{"guid", guid.ToString()},
 					{"globalPosition", globalPosition},
