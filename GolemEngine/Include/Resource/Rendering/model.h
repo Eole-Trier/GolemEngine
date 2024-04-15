@@ -6,11 +6,13 @@
 #include "Resource/resource.h"
 #include "vertex.h"
 
+
 class GOLEM_ENGINE_API Model : public Resource
 {
 public:
 	unsigned int VAO, VBO;
 	std::vector<Vertex> vertices;
+	const char* modelPath;
 
 public:
 
