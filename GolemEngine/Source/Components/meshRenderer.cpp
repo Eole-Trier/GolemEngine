@@ -6,14 +6,17 @@
 #include "Resource/Rendering/model.h"
 
 MeshRenderer::MeshRenderer()
-{}
+{
+}
 
 MeshRenderer::MeshRenderer(Mesh* _mesh)
     : m_mesh(_mesh)
-{}
+{
+}
 
 MeshRenderer::~MeshRenderer()
-{}
+{
+}
 
 void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
 {   

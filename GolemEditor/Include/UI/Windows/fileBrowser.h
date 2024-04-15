@@ -7,6 +7,7 @@
 #include "UI/Windows/window.h"
 #include "Wrappers/windowWrapper.h"
 
+
 // Check the button state for realizing double click
 struct ButtonState
 {
@@ -16,12 +17,24 @@ struct ButtonState
 
 class FileBrowser : public Window
 {
-private:
-	ButtonState m_buttonState;
-	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
-	std::filesystem::path m_currentDirectory;
-
 public:
+	FileBrowser(std::string _name);
+	~FileBrowser();
+
+	void Update() override;
+
+	void TreeNodes(std::filesystem::path _path);
+	// Content Browser loop
+	void ContentBrowser();
+	void LastPath(std::filesystem::path& _currentPath);
+	// Get ever file name
+	const char* GetFolderName(const char* _path);
+	void RightMouseClickEvent();
+	void CreateFolder();
+	void RenameFolder(std::string _folderPath);
+	void DeleteFolder(const std::string& _folderPath);
+	void LoadFile(const std::string& _filePath);
+	
 	std::string selectedFolder;
 	std::string draggingFilePath;
 
@@ -38,22 +51,10 @@ public:
 	//std::vector<std::string> m_loadedTextures;
 	std::vector<std::pair<std::string, Golemint>> m_loadedTextures;
 
-public:
-	FileBrowser(std::string _name);
-	~FileBrowser();
-
-	void Update() override;
-	void TreeNodes(std::filesystem::path _path);
-	// Content Browser loop
-	void ContentBrowser();
-	void LastPath(std::filesystem::path& _currentPath);
-	// Get ever file name
-	const char* GetFolderName(const char* _path);
-	std::string GetFileExtension(const std::string& _fileName);
-	void RightMouseClickEvent();
-	void CreateFolder();
-	void RenameFolder(std::string _folderPath);
-	void DeleteFolder(const std::string& _folderPath);
-	void LoadFile(const std::string& _filePath);
 	void DragDropEvent();
+
+private:
+	ButtonState m_buttonState;
+	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
+	std::filesystem::path m_currentDirectory;
 };

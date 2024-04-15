@@ -7,6 +7,7 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/mesh.h"
 #include "Resource/sceneManager.h"
+#include "Resource/tools.h"
 #include "Inputs/inputManager.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -105,6 +106,8 @@ void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
 }
+
+
 
 Camera* Viewport::GetCamera()
 {

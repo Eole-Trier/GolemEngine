@@ -1,4 +1,16 @@
 #include "Wrappers/audioWrapper.h"
+#include "golemEngine.h"
+#include "Resource/tools.h"
+
+void AudioWrapper::UpdatePosition()
+{
+    listenerPos[0] = GolemEngine::GetCamera()->m_position.x;
+    listenerPos[1] = GolemEngine::GetCamera()->m_position.y;
+    listenerPos[2] = GolemEngine::GetCamera()->m_position.z;
+
+    alListenerfv(AL_POSITION, listenerPos);
+    alListenerfv(AL_VELOCITY, listenerVel);
+}
 
 AudioWrapper::AudioWrapper()
 {

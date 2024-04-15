@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <string>
 #include <iostream>
+#include <stack>
 
 #include "dll.h"
 
@@ -35,6 +36,16 @@ namespace Tools
         // If the folder is not found, output a message
         std::cout << "Not found the folder: " << _folderName << std::endl;
         return ""; // Return an empty string
+    }
+
+    std::string GOLEM_ENGINE_API GetFileExtension(const std::string& _fileName)
+    {
+        size_t dotPosition = _fileName.find_last_of('.');
+        if (dotPosition != std::string::npos)
+        {
+            return _fileName.substr(dotPosition);
+        }
+        return "";
     }
 
     int GOLEM_ENGINE_API GetFolderSize(std::filesystem::path _pathToFolder)

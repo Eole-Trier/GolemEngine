@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <unordered_map>
@@ -72,5 +73,3 @@ inline std::unordered_map<std::string, Resource*> ResourceManager::GetResources(
 {
 	return m_resources;
 }
-
-

@@ -45,7 +45,7 @@ PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const V
     {
         SceneManager::GetCurrentScene()->AddLight(this);
         //SceneManager::GetCurrentScene()->GetPointLights().push_back(this);
-        // TODO maybe for all lights
+       // TODO maybe for all lights
     }
 }
 

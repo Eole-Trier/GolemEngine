@@ -45,7 +45,6 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &m_model->VBO);
 }
 
-
 Texture* Mesh::GetTexture()
 {
     return m_texture;

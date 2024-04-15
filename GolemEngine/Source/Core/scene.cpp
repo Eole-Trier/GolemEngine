@@ -18,6 +18,7 @@
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Resource/sceneManager.h"
+#include "Components/audio.h"
 
 using json = nlohmann::json;
 
@@ -43,13 +44,6 @@ void Scene::Init()
     InitLights();
 }
 
-void Scene::InitLights()
-{
-    // Set up directional light
-    DirectionalLight* dir = new DirectionalLight;
-    m_world->AddComponent(dir);
-}
-
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -61,7 +55,10 @@ void Scene::InitGameObjects()
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-    
+
+    Audio* audio1 = new Audio("music_01.wav");
+    vikingGo->AddComponent(audio1);
+
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
@@ -69,7 +66,7 @@ void Scene::InitGameObjects()
     Model* ballBald = resourceManager->Get<Model>("sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-    
+
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
@@ -79,10 +76,16 @@ void Scene::InitGameObjects()
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
 
+void Scene::InitLights()
+{
+    // Set up directional light
+    DirectionalLight* dir = new DirectionalLight;
+    m_world->AddComponent(dir);
+}
+
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-   
     Shader* shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
     shader->Use();
 
@@ -109,6 +112,11 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
         {
             meshRenderer->Draw(_width, _height, _camera);
         }
+        
+        if (Audio* audio = gameObjects[i]->GetComponent<Audio>())
+        {
+            audio->Update();
+        }
     }
 }
 
@@ -134,88 +142,19 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
+// Check the gameobject's name is already in the vector or not.
+// If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
     for (int i = 0; i < gameObjects.size(); i++)
     {
         if (gameObjects[i]->name == _name)
+        {
             return true;
+        }
     }
     return false;
 
-}
-
-void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    std::string name = _name;
-    Transform* transform = new Transform(Vector3(0), Vector3(0), Vector3(1), m_world->transform);
-
-    Texture* texture;
-    Shader* shader;
-
-    if (_textureName.empty())
-    {
-        texture = resourceManager->Get<Texture>(SceneManager::GetDefaultTexture());
-    }
-    else
-    {
-        texture = resourceManager->Get<Texture>(_textureName);
-    }
-
-    if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
-    else
-        shader = resourceManager->Get<Shader>(_shaderName);
-
-    // Using the rename functions
-    int suffix = 2;    // start at 2 because of two objects having the same name
-    std::string originalName = name;
-    while (IsNameExists(name))
-    {
-        name = originalName + "_" + std::to_string(suffix++);
-    }
-
-    Model* model = resourceManager->Get<Model>(_modelName);
-
-    Mesh* mesh = new Mesh(model, texture, shader);
-    GameObject* go = new GameObject(name, transform);
-    go->AddComponent(new MeshRenderer(mesh));
-    AddGameObject(go);
-}
-
-void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    bool hasDuplicate = false;
-    for (const auto& pair : resourceManager->GetResources())
-    {
-        if (pair.first == GetFileName(_filePath))
-        {
-            hasDuplicate = true;
-            loadingObject = GetFileName(_filePath);
-            break;
-        }
-    }
-
-    if (hasDuplicate)
-    {
-        std::cout << "Resource with name " << _resourceName << " already exists." << std::endl;
-        return;
-    }
-
-    if (_resourceName == "")
-    {
-        Model* model = resourceManager->Get<Model>(SceneManager::GetDefaultModel());
-        loadingObject = GetFileName(_filePath);
-    }
-    else
-    {
-        Model* model = resourceManager->Get<Model>(_resourceName);
-        loadingObject = GetFileName(_filePath);
-    }
 }
 
 void Scene::AddLight(Light* _light)
@@ -272,6 +211,76 @@ void Scene::DeleteLight(Light* _light)
     else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
     {
         std::erase(m_dirLights, dL);
+    }
+}
+
+// To add a new gameobject in the scene
+void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    std::string name = _name;
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1), m_world->transform);
+    Texture* texture;
+    Shader* shader;
+
+    if (_textureName.empty())
+    {
+        texture = resourceManager->Get<Texture>(SceneManager::GetDefaultTexture());
+    }
+    else
+        texture = resourceManager->Get<Texture>(_textureName);
+
+    if (_shaderName.empty())
+        shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
+    else
+        shader = resourceManager->Get<Shader>(_shaderName);
+
+    // Using the rename functions
+    int suffix = 2; // start at 2 because of two objects having the same name
+    std::string originalName = name;
+    while (IsNameExists(name))
+    {
+        name = originalName + "_" + std::to_string(suffix++);
+    }
+
+    Model* model = resourceManager->Get<Model>(_modelName);
+    Mesh* mesh = new Mesh(model, texture, shader);
+    GameObject* go = new GameObject(name, transform);
+    go->AddComponent(new MeshRenderer(mesh));
+    AddGameObject(go);
+}
+
+void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    bool hasDuplicate = false;
+    for (const auto& pair : resourceManager->GetResources())
+    {
+        if (pair.first == GetFileName(_filePath))
+        {
+            hasDuplicate = true;
+            loadingObject = GetFileName(_filePath);
+            break;
+        }
+    }
+
+    if (hasDuplicate)
+    {
+        std::cout << "Resource with name " << _resourceName << " already exists." << std::endl;
+        return;
+    }
+
+    if (_resourceName == "")
+    {
+        Model* model = resourceManager->Get<Model>(SceneManager::GetDefaultModel());
+        loadingObject = GetFileName(_filePath);
+    }
+    else
+    {
+        Model* model = resourceManager->Get<Model>(_resourceName);
+        loadingObject = GetFileName(_filePath);
     }
 }
 
