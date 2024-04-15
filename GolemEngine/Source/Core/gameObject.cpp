@@ -28,11 +28,6 @@ GameObject::~GameObject()
 	DeleteAllComponents();
 }
 
-std::string GameObject::GetName()
-{
-	return name;
-}
-
 size_t GameObject::GetId()
 {
 	return m_id;
@@ -60,8 +55,8 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
-	delete _c;
 	std::erase(m_components, _c);
+	delete _c;
 }
 
 void GameObject::DeleteAllComponents()

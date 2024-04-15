@@ -59,4 +59,3 @@ void Texture::Use()
 {
     glBindTexture(GL_TEXTURE_2D, id);
 }
-

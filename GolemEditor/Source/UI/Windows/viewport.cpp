@@ -76,9 +76,7 @@ void Viewport::Update()
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 
-    DragDropEvent();
-
-    DragDropEvent();
+    DragDropModel();
 
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
@@ -109,12 +107,19 @@ void Viewport::SetCamera(Camera* _camera)
     m_camera = _camera;
 }
 
-void Viewport::DragDropEvent()
+
+
+Camera* Viewport::GetCamera()
+{
+    return m_camera;
+}
+
+void Viewport::DragDropModel()
 {
     if (ImGui::BeginDragDropTarget())
     {
         m_isDragging = true;
-        
+
         ImGui::EndDragDropTarget();
     }
 
@@ -126,17 +131,10 @@ void Viewport::DragDropEvent()
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
-            //std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
-            // TODO 
-            SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
+            SceneManager::GetCurrentScene()->CreateNewModel(droppedFilePath);
             SceneManager::GetCurrentScene()->isObjectInit = true;
             m_isDragging = false;
             g_isFromFileBrowser = false;
         }
     }
-}
-
-Camera* Viewport::GetCamera()
-{
-    return m_camera;
 }

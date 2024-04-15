@@ -8,6 +8,13 @@
 #include "Wrappers/windowWrapper.h"
 
 
+// Check the button state for realizing double click
+struct ButtonState
+{
+	bool clicked = false;
+	double lastClickTime = -1.0;
+};
+
 class FileBrowser : public Window
 {
 public:
@@ -44,17 +51,9 @@ public:
 	//std::vector<std::string> m_loadedTextures;
 	std::vector<std::pair<std::string, Golemint>> m_loadedTextures;
 
-	// Check the button state for realizing double click
-	struct ButtonState
-	{
-		bool clicked = false;
-		double lastClickTime = -1.0;
-	};
-
 	void DragDropEvent();
 
 private:
-
 	ButtonState m_buttonState;
 	const std::string m_editorDirectory = std::filesystem::current_path().string().c_str();
 	std::filesystem::path m_currentDirectory;

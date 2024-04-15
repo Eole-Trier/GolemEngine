@@ -16,7 +16,6 @@ MeshRenderer::MeshRenderer(Mesh* _mesh)
 
 MeshRenderer::~MeshRenderer()
 {
-    delete m_mesh;
 }
 
 void MeshRenderer::Draw(float _width, float _height, Camera* _cam)

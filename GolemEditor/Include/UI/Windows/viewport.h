@@ -36,7 +36,7 @@ public:
 
 	void SetCamera(Camera* _camera);
 
-	void DragDropEvent();
+	void DragDropModel();
 
 	Camera* GetCamera();
 };
