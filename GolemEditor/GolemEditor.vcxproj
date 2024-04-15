@@ -139,14 +139,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)RCCPP\RuntimeObjectSystem;$(SolutionDir)RCCPP\RuntimeCompiler;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;RuntimeCompiler_VS2010.lib;RuntimeObjectSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -181,6 +181,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\rccppMainLoop.cpp" />
+    <ClCompile Include="Source\StdioLogSystem.cpp" />
     <ClCompile Include="Source\UI\toolbar.cpp" />
     <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
@@ -195,6 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
+    <ClInclude Include="Source\rccppMainLoop.h" />
+    <ClInclude Include="Include\StdioLogSystem.h" />
+    <ClInclude Include="Source\systemTable.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\toolbar.h" />
     <ClInclude Include="Include\UI\Windows\basicActors.h" />
