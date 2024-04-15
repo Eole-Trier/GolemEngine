@@ -67,9 +67,6 @@ void Viewport::Update()
         isDisplayed = false;
     }
 
-     EditorUi::selected->GameObject::DisplayGizmo();
-
-
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
         GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
@@ -122,6 +119,11 @@ void Viewport::Update()
     {
         m_lastSpacePress = false;
         m_camera->isFirstMouse = true;  // Important so the next time you move in the viewport, it doesn't teleport the camera to the cursor
+    }
+
+    if (EditorUi::selected)
+    {
+        EditorUi::selected->GameObject::DisplayGizmo();
     }
 
     ImGui::End();

@@ -133,6 +133,10 @@
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="External\glm\platform.h" />
+    <ClInclude Include="External\glm\qualifier.hpp" />
+    <ClInclude Include="External\glm\setup.hpp" />
+    <ClInclude Include="External\glm\_fixes.hpp" />
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="External\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="External\imgui\backends\imgui_impl_opengl3_loader.h" />

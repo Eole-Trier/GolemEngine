@@ -122,5 +122,9 @@
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="External\imgui\ImGuizmo.h" />
+    <ClInclude Include="External\glm\qualifier.hpp" />
+    <ClInclude Include="External\glm\setup.hpp" />
+    <ClInclude Include="External\glm\_fixes.hpp" />
+    <ClInclude Include="External\glm\platform.h" />
   </ItemGroup>
 </Project>
