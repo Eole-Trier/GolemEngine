@@ -41,3 +41,8 @@ void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
         glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
     }
 }
+
+Mesh* MeshRenderer::GetMesh()
+{
+    return  m_mesh;
+}

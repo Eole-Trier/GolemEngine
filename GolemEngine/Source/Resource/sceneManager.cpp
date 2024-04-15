@@ -3,6 +3,8 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
+#include "Components/audio.h"
+#include "Components/meshRenderer.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
@@ -103,7 +105,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
             {
                 // Setup each component
                 
-                // Setup transform
+                // Setup transform component
                 if (jScene["gameObjects"][i]["components"][j]["name"] == "transform")
                 {
                     Guid gameObjectGuid;
@@ -113,7 +115,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                     gameObject->transform->rotation = jScene["gameObjects"][i]["components"][j]["data"]["rotation"];
                     gameObject->transform->scaling = jScene["gameObjects"][i]["components"][j]["data"]["scaling"];
                 }
-                // Setup directionalLight
+                // Setup directionalLight component
                 if (jScene["gameObjects"][i]["components"][j]["name"] == "directionalLight")
                 {
                     gameObject->GetComponent<DirectionalLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
@@ -123,7 +125,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                     gameObject->GetComponent<DirectionalLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
                 }
 
-                // Setup pointLight
+                // Setup pointLight component
                 if (jScene["gameObjects"][i]["components"][j]["name"] == "pointLight")
                 {
                     gameObject->GetComponent<PointLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
@@ -136,7 +138,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                     gameObject->GetComponent<PointLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
                 }
 
-                // Setup spotLight
+                // Setup spotLight component
                 if (jScene["gameObjects"][i]["components"][j]["name"] == "spotLight")
                 {
                     gameObject->GetComponent<SpotLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
@@ -150,6 +152,24 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                     gameObject->GetComponent<SpotLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
                     gameObject->GetComponent<SpotLight>()->cutOff = jScene["gameObjects"][i]["components"][j]["data"]["cutOff"];
                     gameObject->GetComponent<SpotLight>()->outerCutOff = jScene["gameObjects"][i]["components"][j]["data"]["outerCutOff"];
+                }
+
+                // Setup audio component
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "audio")
+                {
+                    std::cout << jScene["gameObjects"][i]["components"][j]["data"]["musicPath"] << std::endl;
+                    gameObject->GetComponent<Audio>()->musicPath = jScene["gameObjects"][i]["components"][j]["data"]["musicPath"];
+                    // gameObject->GetComponent<Audio>()->SetVolume(jScene["gameObjects"][i]["components"][j]["data"]["volume"]);
+                    // gameObject->GetComponent<Audio>()->SetLoop(jScene["gameObjects"][i]["components"][j]["data"]["isLooping"]);
+                    // gameObject->GetComponent<Audio>()->StopMusic(jScene["gameObjects"][i]["components"][j]["data"]["isPlaying"]);
+                }
+
+                // Setup meshRenderer component
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "meshRenderer")
+                {
+                    // std::cout << jScene["gameObjects"][i]["components"][j] << std::endl;
+                    // gameObject->GetComponent<MeshRenderer>()->GetMesh()->GetTexture()->path = jScene["gameObjects"][i]["components"][j]["texturePath"];
+                    // gameObject->GetComponent<MeshRenderer>()->GetMesh()->GetModel()->path = jScene["gameObjects"][i]["components"][j]["modelPath"];
                 }
             }
         }

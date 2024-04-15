@@ -9,6 +9,7 @@ class MeshRenderer : public Component
 {
 private:
 	Mesh* m_mesh = nullptr;
+	
 public:
 	MeshRenderer();
 	MeshRenderer(Mesh* _mesh);
@@ -16,10 +17,20 @@ public:
 
 	void Draw(float _width, float _height, Camera* _camera);
 
+	Mesh* GetMesh();
+
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const	{}
+	void to_json(json& j) const
+	{
+		if (m_mesh != nullptr)
+		{
+			json jMesh;
+			m_mesh->to_json(jMesh);
+			j["meshRenderer"] = jMesh;
+		}
+	}
 };
 
 REFL_AUTO(

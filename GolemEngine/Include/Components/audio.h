@@ -56,7 +56,15 @@ private:
     {
         j = json
         {
-            {"audio", "audio component"}
+            {"name", "audio"},
+            {"data",
+                {
+                    {"musicPath", musicPath},
+                    {"volume", m_volume},
+                    {"isLooping", m_isLooping},
+                    {"isPlaying", m_isPlaying},
+                }
+            }
         };
 
     }

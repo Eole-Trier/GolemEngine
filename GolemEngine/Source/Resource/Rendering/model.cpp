@@ -30,8 +30,6 @@ void Model::Load(const char* _modelPath)
         return;
     }
 
-    modelPath = _modelPath;
-
     while (!file.eof())
     {
         std::getline(file, line);
