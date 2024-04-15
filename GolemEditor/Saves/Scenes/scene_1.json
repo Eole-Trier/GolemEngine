@@ -1,0 +1,135 @@
+{
+  "gameObjects": [
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "518ed71e-1140-83c0-6184-9b33c179fe6f",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "directionalLight": {
+            "ambientColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "diffuseColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "id": 0,
+            "specularColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      ],
+      "guid": "53c3e255-55d0-6a99-6c56-e856df864fa7",
+      "name": "World"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 1.899999976158142,
+              "z": 0.0
+            },
+            "guid": "b32fa96f-a070-da29-15e9-798642d3a361",
+            "localPosition": {
+              "x": 0.0,
+              "y": 1.899999976158142,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        null,
+        {
+          "audio": "audio component"
+        }
+      ],
+      "guid": "c4c6587a-7d30-7696-262b-9696e4d9a3ff",
+      "name": "viking"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "49f699d2-2f8f-ec39-8420-152055601f22",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        null
+      ],
+      "guid": "95adff91-44ef-f15a-38bb-3c573221db46",
+      "name": "ball_bald"
+    }
+  ],
+  "guid": "23b27013-e5b5-7b37-8801-ab5c162a44a4",
+  "name": "scene_1"
+}
