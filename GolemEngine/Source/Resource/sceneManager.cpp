@@ -3,6 +3,9 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/spotLight.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/mesh.h"
@@ -98,11 +101,59 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
             // Setup components
             for (int j = 0; j < jScene["gameObjects"][i]["components"].size(); j++)
             {
-                // gameObject->AddComponent()
+                // Setup each component
+                
+                // Setup transform
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "transform")
+                {
+                    Guid gameObjectGuid;
+                    gameObjectGuid.FromString(jScene["gameObjects"][i]["components"][j]["data"]["guid"]);
+                    gameObject->transform->guid = gameObjectGuid;
+                    gameObject->transform->localPosition = jScene["gameObjects"][i]["components"][j]["data"]["localPosition"];
+                    gameObject->transform->rotation = jScene["gameObjects"][i]["components"][j]["data"]["rotation"];
+                    gameObject->transform->scaling = jScene["gameObjects"][i]["components"][j]["data"]["scaling"];
+                }
+                // Setup directionalLight
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "directionalLight")
+                {
+                    gameObject->GetComponent<DirectionalLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<DirectionalLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<DirectionalLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<DirectionalLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<DirectionalLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
+                }
+
+                // Setup pointLight
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "pointLight")
+                {
+                    gameObject->GetComponent<PointLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<PointLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<PointLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<PointLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<PointLight>()->position = jScene["gameObjects"][i]["components"][j]["data"]["position"];
+                    gameObject->GetComponent<PointLight>()->constant = jScene["gameObjects"][i]["components"][j]["data"]["constant"];
+                    gameObject->GetComponent<PointLight>()->linear = jScene["gameObjects"][i]["components"][j]["data"]["linear"];
+                    gameObject->GetComponent<PointLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
+                }
+
+                // Setup spotLight
+                if (jScene["gameObjects"][i]["components"][j]["name"] == "spotLight")
+                {
+                    gameObject->GetComponent<SpotLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<SpotLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<SpotLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<SpotLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<SpotLight>()->position = jScene["gameObjects"][i]["components"][j]["data"]["position"];
+                    gameObject->GetComponent<SpotLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
+                    gameObject->GetComponent<SpotLight>()->constant = jScene["gameObjects"][i]["components"][j]["data"]["constant"];
+                    gameObject->GetComponent<SpotLight>()->linear = jScene["gameObjects"][i]["components"][j]["data"]["linear"];
+                    gameObject->GetComponent<SpotLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
+                    gameObject->GetComponent<SpotLight>()->cutOff = jScene["gameObjects"][i]["components"][j]["data"]["cutOff"];
+                    gameObject->GetComponent<SpotLight>()->outerCutOff = jScene["gameObjects"][i]["components"][j]["data"]["outerCutOff"];
+                }
             }
-            
         }
-        else if (jScene["gameObjects"][i]["name"] == "World")
+        else if (jScene["gameObjects"][i]["name"] == "World")    // Setup World seperatly
         {
             Guid worldGuid;
             worldGuid.FromString(jScene["gameObjects"][i]["guid"]);

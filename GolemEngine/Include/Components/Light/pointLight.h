@@ -36,7 +36,8 @@ public:
     {
         j = json
         {
-            {"pointLight",
+            {"name", "pointLight"},
+            {"data",
                 {
                     {"id", id},
                     {"diffuseColor", diffuseColor},

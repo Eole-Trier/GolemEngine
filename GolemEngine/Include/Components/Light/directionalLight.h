@@ -30,7 +30,8 @@ public:
 	{
 		j = json
 		{
-			{"directionalLight",
+			{"name", "directionalLight"},
+			{"data",
 				{
 					{"id", id},
 					{"diffuseColor", diffuseColor},
@@ -40,7 +41,6 @@ public:
 				}
 			}
 		};
-
 	}
 };
 

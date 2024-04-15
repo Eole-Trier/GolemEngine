@@ -39,7 +39,8 @@ public:
     {
         j = json
         {
-            {"spotLight",
+            {"name", "spotLight"},
+            {"data",
                 {
                    {"id", id},
                    {"diffuseColor", diffuseColor},
@@ -49,6 +50,7 @@ public:
                    {"direction", direction},
                    {"constant", constant},
                    {"linear", linear},
+                   {"quadratic", quadratic},
                    {"cutOff", cutOff},
                    {"outerCutOff", outerCutOff},
                 }

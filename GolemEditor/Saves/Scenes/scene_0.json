@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "22beea3c-2e5c-a053-de00-cccccccccccc",
+            "guid": "0fe2b462-3cee-485c-f765-76ed946ad124",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -27,9 +27,37 @@
             }
           },
           "name": "transform"
+        },
+        {
+          "directionalLight": {
+            "ambientColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "diffuseColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "id": 0,
+            "specularColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
         }
       ],
-      "guid": "2c895689-6b34-95a7-e900-cccccccccccc",
+      "guid": "1855d638-28fc-b917-aa06-01d9373912cf",
       "name": "World"
     },
     {
@@ -37,14 +65,14 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
+              "x": -1.100000023841858,
+              "y": 1.899999976158142,
               "z": 0.0
             },
-            "guid": "372c0f79-e710-a1b4-2300-f0b4a5d17136",
+            "guid": "9ac784ab-d388-6a39-986f-20e9e6517327",
             "localPosition": {
-              "x": 0.0,
-              "y": 0.0,
+              "x": -1.100000023841858,
+              "y": 1.899999976158142,
               "z": 0.0
             },
             "rotation": {
@@ -53,15 +81,19 @@
               "z": 0.0
             },
             "scaling": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
             }
           },
           "name": "transform"
+        },
+        null,
+        {
+          "audio": "audio component"
         }
       ],
-      "guid": "4376e643-08bd-b648-0a00-cccccccccccc",
+      "guid": "f4ff7e4a-c803-f256-3b99-b963c630d9a6",
       "name": "viking"
     },
     {
@@ -69,31 +101,32 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
+              "x": 3.0,
               "y": 0.0,
-              "z": 0.0
+              "z": -2.4000000953674316
             },
-            "guid": "a6259ffb-1634-a850-bfc6-8577e5c3ccb7",
+            "guid": "5c297c26-dbce-8d1c-4286-e2230cf7bd29",
             "localPosition": {
-              "x": 0.0,
+              "x": 3.0,
               "y": 0.0,
-              "z": 0.0
+              "z": -2.4000000953674316
             },
             "rotation": {
-              "x": 0.0,
+              "x": 22.899999618530273,
               "y": 0.0,
               "z": 0.0
             },
             "scaling": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.0,
+              "y": 5.599999904632568,
+              "z": 1.0
             }
           },
           "name": "transform"
-        }
+        },
+        null
       ],
-      "guid": "5abf7c84-9455-96cb-4500-cccccccccccc",
+      "guid": "0eaef146-6dc5-56fe-f455-97f6ac40e595",
       "name": "ball_bald"
     },
     {
@@ -101,34 +134,35 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
+              "x": -3.0,
+              "y": 0.800000011920929,
               "z": 0.0
             },
-            "guid": "783fd7d3-20bf-b33c-0db6-608b7eb9bbb2",
+            "guid": "dfc61eee-dc46-a0f0-edc9-1db721184056",
             "localPosition": {
-              "x": 0.0,
-              "y": 0.0,
+              "x": -3.0,
+              "y": 0.800000011920929,
               "z": 0.0
             },
             "rotation": {
-              "x": 0.0,
-              "y": 0.0,
+              "x": 28.399999618530273,
+              "y": 10.0,
               "z": 0.0
             },
             "scaling": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 2.299999952316284,
+              "y": 1.0,
+              "z": 1.0
             }
           },
           "name": "transform"
-        }
+        },
+        null
       ],
-      "guid": "1288d9cf-1831-63d5-6d00-cccccccccccc",
+      "guid": "a786c769-1df9-31e9-2cd0-7741e4e216fd",
       "name": "ball_bald2"
     }
   ],
-  "guid": "a9cbbb94-a5ab-8446-576a-f18f96321f7e",
+  "guid": "0189cc4d-d9ef-9586-5e02-e31d8b72bde2",
   "name": "scene_0"
 }
