@@ -10,124 +10,118 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
 #include "Utils/tools.h"
-#include "Components/Light/point.h"
-#include "Components/Light/directional.h"
-#include "Components/Light/spot.h"
+#include "Components\Light\pointLight.h"
+#include "Components\Light\directionalLight.h"
+#include "Components\Light\spotLight.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Components/transform.h"
+#include "Components/meshRenderer.h"
+#include "Components/audio.h"
+#include "Components/Physic/rigidBody.h"
 
 using json = nlohmann::json;
 
 Scene::Scene(std::string _name)
     : name(_name)
-{
-    m_world = nullptr;
-}
+{}
 
 void Scene::Init()
 {
     CreateAndLoadResources();
     InitGameObjects();
     InitLights();
+    isInit = true;
 }
 
 void Scene::InitGameObjects()
 {
+    RigidBody* rigidbody = new RigidBody();
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
+    m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 
-    Shader* defaultShader = resourceManager->Get<Shader>("default");
+    Shader* defaultShader = resourceManager->Get<Shader>(m_defaultShader);
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1));
+    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("viking_room");
-    Mesh* vikingMesh = new Mesh(vikingName, vikingTransform, viking_room, viking_text, defaultShader);
+    Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
+    vikingGo->AddComponent(new MeshRenderer(vikingMesh));
+
+    Audio* audio1 = new Audio("music_01.wav");
+    vikingGo->AddComponent(audio1);
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1));
+    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald = resourceManager->Get<Model>("model_sphere");
-    Mesh* ballBaldMesh = new Mesh(ballBaldName, ballBaldTransform, ballBald, ballBaldTexture, defaultShader);
+    Model* ballBald = resourceManager->Get<Model>("sphere");
+    Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
+    ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
     std::string ballBaldName2 = "ball_bald2";
-    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1));
-    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture1");
-    Model* ballBald2 = resourceManager->Get<Model>("model_sphere1");
-    Mesh* ballBaldMesh2 = new Mesh(ballBaldName2, ballBaldTransform2, ballBald2, ballBaldTexture2, defaultShader);
-
-    m_meshes.push_back(vikingMesh);
-    m_meshes.push_back(ballBaldMesh);
-    m_meshes.push_back(ballBaldMesh2);
-
-    m_gameObjects.push_back(vikingMesh);
-    m_gameObjects.push_back(ballBaldMesh);
-    m_gameObjects.push_back(ballBaldMesh2);
-
-    m_world->transform->AddChild(vikingMesh->transform);
-    m_world->transform->AddChild(ballBaldMesh2->transform);
-    m_world->transform->AddChild(ballBaldMesh->transform);
+    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
+    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
+    Model* ballBald2 = resourceManager->Get<Model>("sphere");
+    Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
+    ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
 
 void Scene::InitLights()
 {
-    // Set up the sun
+    // Set up directional light
     DirectionalLight* dir = new DirectionalLight;
     m_world->AddComponent(dir);
 }
 
 void Scene::CreateAndLoadResources()
 {
+    m_defaultTexture = "default_texture";
+    m_defaultModel = "default_model";
+    m_defaultShader = "default_shader";
+    // TODO set default model and texture to cube and default texture
+
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-    Texture* default_texture = resourceManager->Create<Texture>("default_texture");
-    default_texture->Load(Tools::FindFile("default_texture.png").c_str());
+    Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
+    defaultTexture->Load(defaultTexture->path.c_str());
 
-    Texture* viking_texture = resourceManager->Create<Texture>("viking_texture");
-    viking_texture->Load(Tools::FindFile("viking_room.jpg").c_str());
-    Model* model_viking = resourceManager->Create<Model>("viking_room");
-    model_viking->Load(Tools::FindFile("viking_room.obj").c_str());
+    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
+    vikingTexture->Load(vikingTexture->path.c_str());
 
-    Texture* sphere_texture = resourceManager->Create<Texture>("all_bald_texture");
-    sphere_texture->Load("Assets/One_For_All/Textures/all_bald.jpg"); 
+    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
+    allBaldTexture->Load(allBaldTexture->path.c_str());
 
-    Texture* sphere1_texture = resourceManager->Create<Texture>("all_bald_texture1");
-    sphere1_texture->Load("Assets/One_For_All/Textures/all_bald.jpg");
+    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
+    vikingModel->Load(vikingModel->path.c_str());
 
-    Model* sphere = resourceManager->Create<Model>("model_sphere");
-    sphere->Load("Assets/Basics/sphere.obj");
+    Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
+    defaultModel->Load(defaultModel->path.c_str());
 
-    Model* sphere1 = resourceManager->Create<Model>("model_sphere1");
-    sphere1->Load("Assets/Basics/sphere.obj");
-    
-    Shader* shad = resourceManager->Create<Shader>("default");
-    shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
+    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
+    sphereModel->Load(sphereModel->path.c_str());
+
+    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
+    cubeModel->Load(cubeModel->path.c_str());
+
+    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
+    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
+
 }
 
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* viking = resourceManager->Get<Shader>("default");
-    viking->Use();
-    Shader* shader = resourceManager->Get<Shader>("default");
+    Shader* shader = resourceManager->Get<Shader>(m_defaultShader);
     shader->Use();
 
     shader->SetViewPos(_camera->position);
 
-    UpdateLights(viking);
+    UpdateLights(shader);
     UpdateGameObjects(_width, _height, _camera);
-}
-
-void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) {
-    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
-        if (std::filesystem::is_directory(entry)) {
-            if (entry.path().filename() == folderName) {
-                foundPaths.push_back(entry.path()); 
-            }
-            searchFolders(entry, folderName, foundPaths);
-        }
-    }
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -135,28 +129,21 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     std::string folderName = "Saves"; 
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
-    searchFolders(currentPath, folderName, foundPaths);
-    if (!foundPaths.empty()) 
-    {
-        std::cout << "Found " << foundPaths.size() << " occurrences of folder \"" << folderName << "\":" << std::endl;
-        for (const auto& path : foundPaths) {
-            std::cout << path << std::endl;
-        }
-    }
 
     // Test TODO
-    if (isInit)
+    if (isObjectInit)
     {
-        AddNewObject(loadingObject.c_str(), loadingObject.c_str());
-        isInit = false;
+        CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
+        isObjectInit = false;
     }
-    // Temporary to test graph scene
     m_world->transform->UpdateSelfAndChilds();
 
-    for (int i = 0; i < m_meshes.size(); i++)
+    for (int i = 0; i < m_gameObjects.size(); i++)
     {
-        //m_meshes[i]->transform->rotation.y += movie["Rotation"].get<int>();
-        m_meshes[i]->Draw(_width, _height, _camera);
+        if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+            meshRenderer->Draw(_width, _height, _camera);
+        if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
+            audio->Update();
     }
 }
 
@@ -186,37 +173,37 @@ void Scene::UpdateLights(Shader* _shader)
 // If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
-    for (const auto& mesh : m_meshes)
+    for (int i = 0; i < m_gameObjects.size(); i++)
     {
-        if (mesh->GetName() == _name)
-        {
+        if (m_gameObjects[i]->name == _name)
             return true;
-        }
     }
     return false;
+
 }
 
-void Scene::CreateGameObject(GameObject* _owner)
+void Scene::AddGameObject(GameObject* _gameObject)
 {
-    GameObject* go = new GameObject("New GameObject", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1)));
-    m_gameObjects.push_back(go);
-    _owner->transform->AddChild(go->transform);
+    // TODO maybe remove and put it in gamobject constructor
+    m_gameObjects.push_back(_gameObject);
 }
 
-void Scene::DeleteGameObject(GameObject* _gameObject)
+void Scene::RemoveGameObject(GameObject* _gameObject)
 {
+    bool removed = false;
+    for (size_t i = 0; i < m_gameObjects.size(); i++)
+    {
+        if (m_gameObjects[i] == _gameObject)
+        {
+            removed = true;
+        }
+        if (removed)
+        {
+            m_gameObjects[i]->SetId(i - 1);
+        }
+    }
     std::erase(m_gameObjects, _gameObject);
-    
-    _gameObject->DeleteAllComponents();
-
-    delete _gameObject;
 }
-
-void Scene::DeleteMesh(Mesh* _mesh)
-{
-    std::erase(m_meshes, _mesh);
-}
-
 
 void Scene::DeleteLight(Light* _light)
 {
@@ -234,29 +221,28 @@ void Scene::DeleteLight(Light* _light)
     }
 }
 
-
 // To add a new gameobject in the scene
-void Scene::AddNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
+void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     std::string name = _name;
-    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1));
+    Transform* transform = new Transform(Vector3(1), Vector3(0), Vector3(1), m_world->transform);
     Texture* texture;
     Shader* shader;
 
     if (_textureName.empty())
-        texture = resourceManager->Get<Texture>("default_texture"); // Get default texture
+        texture = resourceManager->Get<Texture>(m_defaultTexture); // Get default texture
     else
         texture = resourceManager->Get<Texture>(_textureName);
 
     if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>("default"); // Get default shader
+        shader = resourceManager->Get<Shader>(m_defaultShader); // Get default shader
     else
         shader = resourceManager->Get<Shader>(_shaderName);
 
     // Using the rename functions
-    int suffix = 2;
+    int suffix = 2; // start at 2 because of two objects having the same name
     std::string originalName = name;
     while (IsNameExists(name))
     {
@@ -264,13 +250,13 @@ void Scene::AddNewObject(std::string _name, std::string _modelName, std::string 
     }
 
     Model* model = resourceManager->Get<Model>(_modelName);
-    Mesh* mesh = new Mesh(name, transform, model, texture, shader);
-    m_meshes.push_back(mesh);
-    m_gameObjects.push_back(mesh);
-    m_world->transform->AddChild(mesh->transform);
+    Mesh* mesh = new Mesh(model, texture, shader);
+    GameObject* go = new GameObject(name, transform);
+    go->AddComponent(new MeshRenderer(mesh));
+    AddGameObject(go);
 }
 
-void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
+void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
@@ -293,20 +279,19 @@ void Scene::AddNewModel(std::string _filePath, std::string _resourceName)
 
     if (_resourceName == "")
     {
-        Model* model = resourceManager->Create<Model>(GetFileName(_filePath));
-        model->Load(_filePath.c_str());
+        Model* model = resourceManager->Get<Model>(m_defaultModel);
         loadingObject = GetFileName(_filePath);
     }
     else
     {
-        Model* model = resourceManager->Create<Model>(_resourceName);
-        model->Load(_filePath.c_str());
+        Model* model = resourceManager->Get<Model>(_resourceName);
         loadingObject = GetFileName(_filePath);
     }
 }
 
 void Scene::AddLight(Light* _light)
 {
+    // TODO remove and put in lights
     if (PointLight* pL = dynamic_cast<PointLight*>(_light))
     {
         m_pointLights.push_back(pL);
@@ -320,22 +305,6 @@ void Scene::AddLight(Light* _light)
     {
         m_dirLights.push_back(dL);
     }
-}
-
-Mesh* Scene::GetMeshByName(std::string _name)
-{
-    for (Mesh* mesh : m_meshes)
-    {
-        if (mesh->GetName() == _name)
-            return mesh;
-    }
-    Log::Print("No mesh with the name %s has been found", _name.c_str());
-    return nullptr;
-}
-
-std::vector<Mesh*> Scene::GetMeshes()
-{
-    return m_meshes;
 }
 
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()

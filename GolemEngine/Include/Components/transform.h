@@ -5,8 +5,9 @@
 #include "vector3.h"
 #include "quaternion.h"
 #include "matrix4.h"
-
 #include "Components/component.h"
+#include "Resource/guid.h"
+
 
 class Transform : public Component
 {
@@ -17,15 +18,18 @@ private:
 	Matrix4 m_globalModel;
 
 public:
+	Guid guid;
+	
 	Vector3 globalPosition; // access only, modification is useless yet
 	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;
 
 public:
-	GOLEM_ENGINE_API Transform() = default;
+	GOLEM_ENGINE_API Transform();
+	GOLEM_ENGINE_API Transform(Transform* _parent);
+	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling, Transform* _parent);
 	GOLEM_ENGINE_API ~Transform();
-	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling);
 	GOLEM_ENGINE_API void Update() override;
 
 	GOLEM_ENGINE_API void UpdateSelfAndChilds();
@@ -43,6 +47,25 @@ public:
 	GOLEM_ENGINE_API Matrix4 GetLocalModel();
 
 	GOLEM_ENGINE_API const std::vector<Transform*>& GetChildren() const;
+
+
+	// Define serialization and deserialization functions manually because the
+	// macro is not used due to the pointer member variable.
+	void to_json(json& j) const
+	{
+		j = json
+		{
+			{"transform",
+				{
+					{"guid", guid.ToString()},
+					{"globalPosition", globalPosition},
+					{"localPosition", localPosition},
+					{"rotation", rotation},
+					{"scaling", scaling}
+				}
+			}
+		};
+	};
 };
 
 REFL_AUTO(

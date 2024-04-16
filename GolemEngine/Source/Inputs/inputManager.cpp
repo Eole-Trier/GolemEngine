@@ -43,13 +43,12 @@ void InputManager::MousePositionCallback(GLFWwindow* _window, double _xPos, doub
 void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
 {
     ImGui_ImplGlfw_MouseButtonCallback(_window, _button, _action, _mods);
-    if (_action == GLFW_PRESS)
+    if (_action == BUTTON_PRESSED)
     {
         m_mouseButtons[_button] = true;
     }
-    else if (_action == KEY_RELEASED)
+    else if (m_mouseButtons[_button] && _action == BUTTON_RELEASED)
     {
-        if (m_mouseButtons[_button] == true)
         {
             m_mouseButtons[_button] = false;
         }
@@ -70,6 +69,11 @@ bool InputManager::IsKeyPressed(int _key)
 bool InputManager::IsButtonPressed(int _button)
 {
     return m_mouseButtons[_button];
+}
+
+bool InputManager::IsButtonReleased(int _button)
+{
+    return !m_mouseButtons[_button];
 }
 
 Vector2 InputManager::GetMouseWindowPos()

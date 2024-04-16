@@ -1,10 +1,13 @@
 #pragma once
 
-#include <iostream>
+#include <nlohmann/json.hpp>
 
 #include "dll.h"
 
+using json = nlohmann::json;
+
 class Matrix4;
+
 
 class GOLEM_ENGINE_API Vector4
 {
@@ -31,6 +34,11 @@ public:
 	GOLEM_ENGINE_API friend Vector4 operator*(Matrix4 _a, Vector4 _b);
 
 	GOLEM_ENGINE_API friend std::ostream& operator<<(std::ostream& _os, const Vector4& _Vector4);
+
+
+	// For JSON parsing
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector4,
+		x, y, z, w)
 };
 
 

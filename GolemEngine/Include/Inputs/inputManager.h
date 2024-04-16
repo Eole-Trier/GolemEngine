@@ -21,8 +21,14 @@ private:
 #pragma endregion Mouse variables
 
 private:
-	// Static class
+	// Private constructors and destructor to make static class
 	InputManager() = delete;
+	InputManager(InputManager& _other) = delete;
+	InputManager(InputManager&& _other) = delete;
+	InputManager& operator=(InputManager& _other) = delete;
+	InputManager& operator=(InputManager&& _other) = delete;
+	void operator=(const InputManager&) = delete;
+	~InputManager() = delete;
 
 public:
 	// Set callbacks application will use
@@ -39,6 +45,8 @@ public:
 	static bool IsKeyPressed(int _key);
 	// Check if button (see WindowWrapper defines) is pressed
 	static bool IsButtonPressed(int _button);
+	// Check if button (see WindowWrapper defines) is released
+	static bool IsButtonReleased(int _button);
 
 	// Get mouse position relative to glfw window
 	static Vector2 GetMouseWindowPos();

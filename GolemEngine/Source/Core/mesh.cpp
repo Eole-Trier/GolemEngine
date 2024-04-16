@@ -33,8 +33,8 @@ void Mesh::SetupMesh()
     glBindVertexArray(0);  
 }
 
-Mesh::Mesh(const std::string& _name, Transform* _transform, Model* _model, Texture* _texture, Shader* _shader)
-    : GameObject(_name, _transform), m_model(_model), m_texture(_texture), m_shader(_shader)
+Mesh::Mesh(Model* _model, Texture* _texture, Shader* _shader)
+    : m_model(_model), m_texture(_texture), m_shader(_shader)
 {
     SetupMesh();
 }
@@ -43,23 +43,19 @@ Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &m_model->VAO);
     glDeleteBuffers(1, &m_model->VBO);
-
-    SceneManager::GetCurrentScene()->DeleteMesh(this);
-    //delete m_texture;
 }
 
-void Mesh::Draw(float _width, float _height, Camera* _cam)
+Texture* Mesh::GetTexture()
 {
-    glActiveTexture(GL_TEXTURE0);
-    m_texture->Use();
-    m_shader->Use();
+    return m_texture;
+}
 
-    Matrix4 view = _cam->GetViewMatrix();
-    Matrix4 projection = Matrix4::Projection(DegToRad(_cam->GetZoom()), _width / _height, _cam->GetNear(), _cam->GetFar());
-    m_shader->SetMat4("view", view);
-    m_shader->SetMat4("projection", projection);
-    m_shader->SetMat4("model", transform->GetGlobalModel());
+Model* Mesh::GetModel()
+{
+    return m_model;
+}
 
-    glBindVertexArray(m_model->VAO);
-    glDrawArrays(GL_TRIANGLES, 0, m_model->vertices.size());
+Shader* Mesh::GetShader()
+{
+    return m_shader;
 }

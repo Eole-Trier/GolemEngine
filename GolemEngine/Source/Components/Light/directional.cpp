@@ -1,4 +1,4 @@
-#include "Components/Light/Directional.h"
+#include "..\..\..\Include\Components\Light\directionalLight.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"

@@ -33,6 +33,8 @@ public:
 
 	void Update() override;
 	void SetCamera(Camera* _camera);
-	void DragDropEvent();
+
+	void DragDropModel();
+
 	Camera* GetCamera();
 };
