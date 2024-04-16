@@ -42,7 +42,8 @@ public:
 		j = json
 		{
 			{"texturePath", m_texture->path},
-			{"modelPath", m_model->path}
+			{"modelPath", m_model->path},
+			{"shaderPath", m_shader->path}
 		};
 	}
 };

@@ -18,4 +18,7 @@ namespace Tools
 
 	int GOLEM_ENGINE_API GetFolderSize(std::filesystem::path _pathToFolder);
 	std::vector<std::string> GOLEM_ENGINE_API GetFolderElementsNames(const std::filesystem::path _pathToFolder);
+
+	// Get the string of a saved path because saving a path to json modifies it so we need to re write it correctly
+	std::string GOLEM_ENGINE_API GetPathFromJsonString(std::string _savedJsonPath);
 }

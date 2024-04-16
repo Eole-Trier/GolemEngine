@@ -26,9 +26,10 @@ public:
 	{
 		if (m_mesh != nullptr)
 		{
+			j["name"] = "meshRenderer";
 			json jMesh;
 			m_mesh->to_json(jMesh);
-			j["meshRenderer"] = jMesh;
+			j["data"] = jMesh;
 		}
 	}
 };

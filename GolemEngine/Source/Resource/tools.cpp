@@ -4,8 +4,12 @@
 #include <string>
 #include <iostream>
 #include <stack>
+#include <nlohmann/json.hpp>
 
 #include "dll.h"
+
+using json = nlohmann::json;
+
 
 namespace Tools
 {
@@ -78,11 +82,22 @@ namespace Tools
         return elements;
     }
 
-    std::string GOLEM_ENGINE_API RemoveExtension(const std::string& _filename) {
+    std::string GOLEM_ENGINE_API RemoveExtension(const std::string& _filename)
+    {
         size_t lastDot = _filename.find_last_of(".");
         if (lastDot != std::string::npos) {
             return _filename.substr(0, lastDot);
         }
         return _filename;
+    }
+
+    std::string GOLEM_ENGINE_API GetPathFromJsonString(std::string _savedJsonPath)
+    {
+        json p;
+        p["path"] = _savedJsonPath;
+        std::string jsonString = p.dump();
+        json jParsed = json::parse(jsonString);
+        std::string parsedPath = jParsed["path"];
+        return parsedPath;
     }
 }
