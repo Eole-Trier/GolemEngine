@@ -15,6 +15,6 @@ public:
 	Log() {};
 	~Log();
 
-	static void OpenFile(std::filesystem::path const& _filename);
+	//static void OpenFile(std::filesystem::path const& _filename);
 	static void Print(const char* _format, ...);
 };

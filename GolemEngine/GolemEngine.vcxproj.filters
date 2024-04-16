@@ -53,6 +53,8 @@
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
+    <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
+    <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -88,10 +90,7 @@
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
-    <ClInclude Include="Include\Components\Light\directional.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
-    <ClInclude Include="Include\Components\Light\point.h" />
-    <ClInclude Include="Include\Components\Light\spot.h" />
     <ClInclude Include="Include\Components\component.h" />
     <ClInclude Include="Include\Core\gameObject.h" />
     <ClInclude Include="Include\Components\transform.h" />
@@ -124,5 +123,11 @@
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
+    <ClInclude Include="Include\Components\Light\directionalLight.h" />
+    <ClInclude Include="Include\Components\Light\pointLight.h" />
+    <ClInclude Include="Include\Components\Light\spotLight.h" />
+    <ClInclude Include="GameClasses\rccppMainLoop.h" />
+    <ClInclude Include="GameClasses\StdioLogSystem.h" />
+    <ClInclude Include="GameClasses\systemTable.h" />
   </ItemGroup>
 </Project>

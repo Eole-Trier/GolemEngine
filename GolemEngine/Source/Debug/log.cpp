@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdarg>
+#include <filesystem>
 
 std::fstream Log::m_file;
 
@@ -10,17 +11,17 @@ Log::~Log()
     m_file.close();
 }
 
-void Log::OpenFile(std::filesystem::path const& _filename)
-{
-    m_file.open(_filename, std::fstream::out);
-
-    if (m_file.is_open())
-    {
-        std::cout << "Open file: " << _filename << std::endl;
-    }
-    else 
-        std::cout << "Cannot open the file: " << _filename << std::endl;
-}
+//void Log::OpenFile(std::filesystem::path const& _filename)
+//{
+//    m_file.open(_filename, std::fstream::out);
+//
+//    if (m_file.is_open())
+//    {
+//        std::cout << "Open file: " << _filename << std::endl;
+//    }
+//    else 
+//        std::cout << "Cannot open the file: " << _filename << std::endl;
+//}
 
 void Log::Print(const char* _format, ...)
 {

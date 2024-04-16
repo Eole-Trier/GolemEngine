@@ -181,8 +181,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\rccppMainLoop.cpp" />
-    <ClCompile Include="Source\StdioLogSystem.cpp" />
     <ClCompile Include="Source\UI\toolbar.cpp" />
     <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
@@ -197,9 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\editor.h" />
-    <ClInclude Include="Source\rccppMainLoop.h" />
-    <ClInclude Include="Include\StdioLogSystem.h" />
-    <ClInclude Include="Source\systemTable.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\toolbar.h" />
     <ClInclude Include="Include\UI\Windows\basicActors.h" />
