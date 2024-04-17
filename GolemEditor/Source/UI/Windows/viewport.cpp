@@ -16,7 +16,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui.h"
-#include "../External/imgui/ImGuizmo.h"
+#include "ImGuizmo.h"
 #include "MathsLib/utils.h"
 #include "Components/transform.h"
 
@@ -122,7 +122,7 @@ void Viewport::Update()
 
     if (EditorUi::selected)
     {
-        EditorUi::selected->transform->EditTransform();
+        EditorUi::selected->transform->EditTransformGizmo();
     }
 
     ImGui::End();

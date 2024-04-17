@@ -50,6 +50,15 @@
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
+    <ClCompile Include="External\imguizmo\GraphEditor.cpp" />
+    <ClCompile Include="External\imguizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="External\imguizmo\ImGradient.cpp" />
+    <ClCompile Include="External\imguizmo\ImGuizmo.cpp" />
+    <ClCompile Include="External\imguizmo\ImSequencer.cpp" />
+    <ClCompile Include="External\imgui\ImGradient.cpp" />
+    <ClCompile Include="External\imgui\ImCurveEdit.cpp" />
+    <ClCompile Include="External\imgui\GraphEditor.cpp" />
+    <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="External\imgui\ImGuizmo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -121,10 +130,21 @@
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Core\mesh.h" />
-    <ClInclude Include="External\imgui\ImGuizmo.h" />
     <ClInclude Include="External\glm\qualifier.hpp" />
     <ClInclude Include="External\glm\setup.hpp" />
     <ClInclude Include="External\glm\_fixes.hpp" />
     <ClInclude Include="External\glm\platform.h" />
+    <ClInclude Include="External\imguizmo\GraphEditor.h" />
+    <ClInclude Include="External\imguizmo\ImCurveEdit.h" />
+    <ClInclude Include="External\imguizmo\ImGradient.h" />
+    <ClInclude Include="External\imguizmo\ImGuizmo.h" />
+    <ClInclude Include="External\imguizmo\ImSequencer.h" />
+    <ClInclude Include="External\imguizmo\ImZoomSlider.h" />
+    <ClInclude Include="External\imgui\ImGradient.h" />
+    <ClInclude Include="External\imgui\ImCurveEdit.h" />
+    <ClInclude Include="External\imgui\GraphEditor.h" />
+    <ClInclude Include="External\imgui\ImSequencer.h" />
+    <ClInclude Include="External\imgui\ImGuizmo.h" />
+    <ClInclude Include="External\imgui\ImZoomSlider.h" />
   </ItemGroup>
 </Project>
