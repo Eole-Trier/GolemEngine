@@ -16,6 +16,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "imgui.h"
+#include "../External/imgui/ImGuizmo.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -52,10 +53,6 @@ void Viewport::Update()
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
-
-    //Log::Print("window size x : %d\n, window size y : %d", mouseX, mouseY);
-
-    //Log::Print("window size x : %f\n, window size y : %f", ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 
     if (ImGui::IsKeyDown(ImGuiKey_V))
     {
@@ -127,7 +124,6 @@ void Viewport::Update()
     }
 
     ImGui::End();
-
 }
 
 void Viewport::SetCamera(Camera* _camera)

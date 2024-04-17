@@ -3,6 +3,8 @@
 #include "Core/gameobject.h"
 #include "Resource/sceneManager.h"
 
+Transform* Transform::singleton;
+
 Transform::Transform()
 {
     m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;

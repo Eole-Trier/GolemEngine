@@ -4,6 +4,7 @@
 #include "Resource/sceneManager.h"
 #include "ImGuizmo.h"
 #include "golemEngine.h"
+#include "MathsLib/utils.h"
 
 GameObject::GameObject()
 	: m_selected(false)
@@ -80,19 +81,20 @@ void GameObject::DeleteAllComponents()
 
 void GameObject::DisplayGizmo()
 {
-	auto camera = GolemEngine::GetCamera();
-	Matrix4 cameraView = camera->GetViewMatrix();
-	Matrix4 cameraProjection = Matrix4::Projection(90, 1, camera->Camera::GetNear(), camera->Camera::GetFar());
-
 	ImGuizmo::SetOrthographic(false);
+	ImGuizmo::Enable(true);
 	ImGuizmo::SetDrawlist();
-	float windowWidth = 1636;
-	float windowHeight = 908;
+	ImGuizmo::BeginFrame();
+
+	float windowWidth = (float)ImGui::GetWindowWidth();
+	float windowHeight = (float)ImGui::GetWindowHeight();
 	ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
+	auto camera = GolemEngine::GetCamera();
+	Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar());
+	Matrix4 cameraView = camera->GetViewMatrix().Inverse();
 	Matrix4 transformTest = transform->GetGlobalModel();
 
-	ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], 
-		ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, &transformTest.data[0][0]);
+	ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::WORLD, &transformTest.data[0][0], NULL, NULL);
 }
 

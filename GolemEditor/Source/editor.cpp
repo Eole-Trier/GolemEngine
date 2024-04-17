@@ -6,11 +6,13 @@
 #include "Components/audio.h"
 
 #include "golemEngine.h"
+#include "Components/transform.h"
 #include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Inputs/inputManager.h"
 #include "ImGuizmo.h"
+#include "MathsLib/utils.h"
 
 Editor::Editor()
 	:
@@ -72,7 +74,6 @@ void Editor::MainLoop()
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGuizmo::BeginFrame();
 
 		EditorUi::BeginDockSpace();
 

@@ -20,6 +20,8 @@ private:
 public:
 	Guid guid;
 	
+	static Transform* singleton;
+
 	Vector3 globalPosition; // access only, modification is useless yet
 	Vector3 localPosition;
 	Vector3 rotation;
