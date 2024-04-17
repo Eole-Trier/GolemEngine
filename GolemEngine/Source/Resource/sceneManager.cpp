@@ -210,7 +210,6 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                 }
             }
         }
-        
     }
 
     // std::cout << jScene.dump(2) << std::endl;
