@@ -1,3 +1,5 @@
+![golem_engine_logo_1](./Images/Logo/golem_engine_logo_1.png)
+
 # Golem Engine
 
 This is our game engine. It was made in 4 months by 4 people. The goal of this engine is firstly to learn more about the development of a game engine, but also to add our special touches to it and create custom features we enjoy using and creating. 
@@ -20,15 +22,16 @@ Interaction Diagram : https://app.diagrams.net/#G1OdVxF9WFAIje_cibcuFsyLmjxvCg91
 
 - **Download OpenAL**  
 GolemEngine uses OpenAL library so it is necessary to download it on your device. GolemEngine already has OpenAL setup inside it but won't detect it if it isn't installed on your device.  
-To Download it, go to [https://www.openal.org/downloads/]
-![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_1.png)
-Download the Windows Installer (zip) :
-![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_2.png)
+To Download it, go to https://www.openal.org/downloads/  
+![OpenAl1_Image](./Images/Readme/Screenshot_OpenAL_installation_1.png)  
+Download the Windows Installer (zip) :  
+![OpenAl2_Image](./Images/Readme/Screenshot_OpenAL_installation_2.png)  
 Open the .zip file and run the oalinst.exe file.  
 Accept everything.  
-![Example Image](./Screenshots/Readme/Screenshot_OpenAL_installation_3.png)
-OpenAL should be correctly installed now.  
-  
+![OpenAl3_Imagee](./Images/Readme/Screenshot_OpenAL_installation_3.png)  
+OpenAL should be correctly installed now.
+
+
 - **Download the engine**  
 Clone the project.  
 Open GolemEngine.sln in visual studio 2019.  
