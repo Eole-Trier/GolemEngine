@@ -132,6 +132,7 @@ void EditorUi::BeginDockSpace()
 
             // For defining the position of the dock
             ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topLeft);
+            ImGui::DockBuilderDockWindow(GetWindowByName("World_Builder")->name.c_str(), dock_id_topLeft);
             ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottom);
             ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_middle);
             ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);

@@ -10,7 +10,7 @@ class WorldBuilder
 private:
     std::vector<Terrain*> m_terrains;
 
-public:
+private:
     // Private constructors and destructor to make static class
     WorldBuilder() = delete;
     WorldBuilder(WorldBuilder& _other) = delete;
@@ -19,4 +19,7 @@ public:
     WorldBuilder& operator=(WorldBuilder&& _other) = delete;
     void operator=(const WorldBuilder&) = delete;
     ~WorldBuilder() = delete;
+
+public:
+    void Init();
 };
