@@ -13,9 +13,7 @@
 class RigidBody : public Component
 {
 private:
-	JPH::Body* m_body = nullptr;
-	JPH::BodyCreationSettings* m_bodyCreationSettings = nullptr;
-	JPH::BodyManager* m_bodyManager = nullptr;
+	
 	
 public:
 	RigidBody();

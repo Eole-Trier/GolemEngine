@@ -52,7 +52,12 @@
     <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Components\Physic\rigidBody.cpp" />
     <ClCompile Include="Source\Physic\bodiesManager.cpp" />
-    <ClCompile Include="Source\Physic\physicInitializer.cpp" />
+    <ClCompile Include="Source\Physic\physicSystem.cpp" />
+    <ClCompile Include="Source\Physic\contactManager.cpp" />
+    <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
+    <ClCompile Include="Source\Physic\objectLayerVsBroadPhaseLayerFilter.cpp" />
+    <ClCompile Include="Source\Physic\objectLayerVsObjectLayer.cpp" />
+    <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -123,6 +128,12 @@
     <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Components\Physic\rigidBody.h" />
     <ClInclude Include="Include\Physic\bodiesManager.h" />
-    <ClInclude Include="Include\Physic\physicInitializer.h" />
+    <ClInclude Include="Include\Physic\physicSystem.h" />
+    <ClInclude Include="Include\Physic\contactManager.h" />
+    <ClInclude Include="Include\Physic\bodyActivationManager.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
+    <ClInclude Include="Include\Physic\layers.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
+    <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
   </ItemGroup>
 </Project>

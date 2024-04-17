@@ -18,7 +18,7 @@
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
-#include "Physic/physicInitializer.h"
+#include "Physic/physicSystem.h"
 
 using json = nlohmann::json;
 
@@ -29,7 +29,7 @@ Scene::Scene(std::string _name)
 void Scene::Init()
 {
     CreateAndLoadResources();
-    PhysicInitializer* physicInitializer = new PhysicInitializer();
+    PhysicSystem* physicInitializer = new PhysicSystem();
     InitGameObjects();
     InitLights();
 
