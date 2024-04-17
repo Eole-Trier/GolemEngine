@@ -7,7 +7,7 @@
 #include "matrix4.h"
 #include "Components/component.h"
 #include "Resource/guid.h"
-
+#include "Core/camera.h"
 
 class Transform : public Component
 {
@@ -33,6 +33,7 @@ public:
 	GOLEM_ENGINE_API void Update() override;
 
 	GOLEM_ENGINE_API void UpdateSelfAndChilds();
+	GOLEM_ENGINE_API void EditTransform();
 	GOLEM_ENGINE_API void AddChild(Transform* const _t);
 	GOLEM_ENGINE_API void AddChildren(std::vector<Transform*> const _ts);
 	GOLEM_ENGINE_API void RemoveChild(Transform* const _t);

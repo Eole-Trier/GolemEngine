@@ -122,7 +122,7 @@ void Viewport::Update()
 
     if (EditorUi::selected)
     {
-        EditorUi::selected->GameObject::DisplayGizmo();
+        EditorUi::selected->transform->EditTransform();
     }
 
     ImGui::End();

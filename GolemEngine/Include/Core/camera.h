@@ -7,7 +7,6 @@
 #include "matrix4.h"
 #include "Refl/refl.hpp"
 
-
 class GOLEM_ENGINE_API Camera
 {
 private:

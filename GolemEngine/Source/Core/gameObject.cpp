@@ -2,9 +2,7 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
-#include "ImGuizmo.h"
 #include "golemEngine.h"
-#include "MathsLib/utils.h"
 
 GameObject::GameObject()
 	: m_selected(false)
@@ -77,22 +75,5 @@ void GameObject::DeleteAllComponents()
 	{
 		std::erase(m_components, c);
 	}
-}
-
-void GameObject::DisplayGizmo()
-{
-	ImGuizmo::SetOrthographic(false);
-	ImGuizmo::SetDrawlist();
-
-	float windowWidth = (float)ImGui::GetWindowWidth();
-	float windowHeight = (float)ImGui::GetWindowHeight();
-	ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-
-	auto camera = GolemEngine::GetCamera();
-	Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar());
-	Matrix4 cameraView = camera->GetViewMatrix().Inverse();
-	Matrix4 transformTest = transform->GetGlobalModel();
-
-	ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::WORLD, &transformTest.data[0][0], NULL, NULL);
 }
 
