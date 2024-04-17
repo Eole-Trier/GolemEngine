@@ -17,6 +17,8 @@
 #include "imgui_internal.h"
 #include "imgui.h"
 #include "../External/imgui/ImGuizmo.h"
+#include "MathsLib/utils.h"
+#include "Components/transform.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -130,6 +132,7 @@ void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
 }
+
 
 void Viewport::DragDropEvent()
 {

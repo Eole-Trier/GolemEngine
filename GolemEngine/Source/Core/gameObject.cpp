@@ -82,9 +82,7 @@ void GameObject::DeleteAllComponents()
 void GameObject::DisplayGizmo()
 {
 	ImGuizmo::SetOrthographic(false);
-	ImGuizmo::Enable(true);
 	ImGuizmo::SetDrawlist();
-	ImGuizmo::BeginFrame();
 
 	float windowWidth = (float)ImGui::GetWindowWidth();
 	float windowHeight = (float)ImGui::GetWindowHeight();

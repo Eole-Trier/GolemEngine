@@ -25,7 +25,7 @@ private:
 
 public:
 	std::string name;
-	Transform* transform = nullptr;	
+	Transform* transform = nullptr;
 
 public:
 	GameObject();
