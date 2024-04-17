@@ -2,7 +2,7 @@
 
 # Golem Engine
 
-This is our game engine. It was made in 4 months by 4 people. The goal of this engine is firstly to learn more about the development of a game engine, but also to add our special touches to it and create custom features we enjoy using and creating. 
+This is our game engine. It was made in 4 months by 4 people. The goal of this engine is firstly to learn more about the development of a game engine, but also to add our special touches to it and create custom features we enjoy using and creating. Special thanks to **Ziyi Wang** for creating the wonderful logo you can see right above. 
 
 **Current version : *BETA***
 
