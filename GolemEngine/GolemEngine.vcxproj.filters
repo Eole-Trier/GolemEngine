@@ -52,6 +52,7 @@
     <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Components\Physic\rigidBody.cpp" />
     <ClCompile Include="Source\Physic\bodiesManager.cpp" />
+    <ClCompile Include="Source\Physic\physicInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -122,5 +123,6 @@
     <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Components\Physic\rigidBody.h" />
     <ClInclude Include="Include\Physic\bodiesManager.h" />
+    <ClInclude Include="Include\Physic\physicInitializer.h" />
   </ItemGroup>
 </Project>

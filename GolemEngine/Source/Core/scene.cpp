@@ -18,7 +18,7 @@
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
-#include "Components/Physic/rigidBody.h"
+#include "Physic/physicInitializer.h"
 
 using json = nlohmann::json;
 
@@ -29,14 +29,15 @@ Scene::Scene(std::string _name)
 void Scene::Init()
 {
     CreateAndLoadResources();
+    PhysicInitializer* physicInitializer = new PhysicInitializer();
     InitGameObjects();
     InitLights();
+
     isInit = true;
 }
 
 void Scene::InitGameObjects()
 {
-    RigidBody* rigidbody = new RigidBody();
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
 

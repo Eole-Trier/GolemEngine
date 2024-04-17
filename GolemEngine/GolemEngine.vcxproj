@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
+    <ClCompile Include="Source\Physic\physicInitializer.cpp" />
     <ClCompile Include="Source\Components\Physic\rigidBody.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Components\meshRenderer.h" />
+    <ClInclude Include="Include\Physic\physicInitializer.h" />
     <ClInclude Include="Include\Physic\bodiesManager.h" />
     <ClInclude Include="Include\Components\Physic\rigidBody.h" />
     <ClInclude Include="Include\Core\camera.h" />
@@ -301,7 +303,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT;JPH_SHARED_LIBRARY;JPH_DEBUG_RENDERER;JPH_DISABLE_CUSTOM_ALLOCATOR;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_PROFILE_ENABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -310,11 +312,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\e.trier\Projects\GolemEngine\Libraries\Libs\OpenAL;C:\Users\e.trier\Projects\GolemEngine\Libraries\Libs\Jolt</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;Jolt.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(SolutionDir)Libraries\Libs\Jolt</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)" &amp; xcopy /y /d "$(SolutionDir)Libraries\Libs\Jolt\Jolt.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
