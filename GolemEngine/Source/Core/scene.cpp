@@ -10,15 +10,16 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/tools.h"
-#include "..\..\Include\Components\Light\pointLight.h"
-#include "..\..\Include\Components\Light\directionalLight.h"
-#include "..\..\Include\Components\Light\spotLight.h"
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/spotLight.h"
 #include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Resource/sceneManager.h"
 #include "Components/audio.h"
+#include "WorldBuilder/worldBuilder.h"
 
 using json = nlohmann::json;
 
@@ -28,7 +29,6 @@ Scene::Scene(std::string _name, bool _isEmpty)
 {
     SceneManager::SetCurrentScene(this);
     
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     
     if (!_isEmpty)
@@ -93,6 +93,10 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     UpdateGameObjects(_width, _height, _camera);
     UpdateLights(shader);
+    if (WorldBuilder::GetTerrain() != nullptr)
+    {
+        UpdateTerrain(WorldBuilder::GetTerrain());
+    }
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -141,6 +145,12 @@ void Scene::UpdateLights(Shader* _shader)
         m_spotLights[i]->Update(_shader);
     }
 }
+
+void Scene::UpdateTerrain(Terrain* _terrain)
+{
+    
+}
+
 
 // Check the gameobject's name is already in the vector or not.
 // If it exists will give a new name with a _2 at the last

@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "d594907b-8436-2ab8-ca19-850aca04bd05",
+            "guid": "534c448d-7710-3e62-db6e-8ecd6229e57d",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "c18fab1b-eaa2-f9dd-7378-94dcb0165d6f",
+      "guid": "c31c354d-9f49-69f4-f0e4-0dd21f0aded6",
       "name": "World"
     },
     {
@@ -70,7 +70,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "f0124a70-bdfa-8a66-c1ce-510a2c6f0e16",
+            "guid": "eca84423-2d9e-326a-c413-5fc5b1985383",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -96,18 +96,9 @@
             "texturePath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
           },
           "name": "meshRenderer"
-        },
-        {
-          "data": {
-            "isLooping": false,
-            "isPlaying": true,
-            "musicPath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Audio\\music_01.wav",
-            "volume": 1.0
-          },
-          "name": "audio"
         }
       ],
-      "guid": "33f45bec-1d02-1c91-7d46-efec6d07024c",
+      "guid": "1f14158e-7062-e395-3f81-1755956cf61e",
       "name": "viking"
     },
     {
@@ -119,7 +110,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "2f504680-a81e-1b30-55cd-8a1179847fd4",
+            "guid": "84d65c88-963d-d83b-d580-56db30c9a271",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -147,7 +138,7 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "7385afae-1dd0-e3cf-3ee9-e2182aba1399",
+      "guid": "78e174f3-e8a0-dc42-be6a-0bda96f6514b",
       "name": "ball_bald"
     },
     {
@@ -159,7 +150,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "8a1c7737-db7d-7650-5095-8ae475b9cc59",
+            "guid": "354b9d62-53c0-d449-74cc-39a4cf2b683e",
             "localPosition": {
               "x": -3.0,
               "y": 0.0,
@@ -187,10 +178,10 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "8d32626a-59ba-0714-f0aa-d4d8ba151f3e",
+      "guid": "071038cd-4412-ee7b-ba27-5e4595de2fb7",
       "name": "ball_bald2"
     }
   ],
-  "guid": "5afb4889-864f-667d-68ae-27efd9070c6d",
+  "guid": "fad2b3e1-1738-64b0-16e9-0356ccf9bafd",
   "name": "scene_0"
 }

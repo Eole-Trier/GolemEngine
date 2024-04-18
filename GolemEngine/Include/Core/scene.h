@@ -9,6 +9,7 @@
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
+#include "WorldBuilder/terrain.h"
 
 using json = nlohmann::json;
 
@@ -33,6 +34,7 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
+	
 
 public:
 	std::string name;
@@ -51,6 +53,7 @@ public:
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
+	void UpdateTerrain(Terrain* _terrain);
 	bool IsNameExists(const std::string& _name);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");

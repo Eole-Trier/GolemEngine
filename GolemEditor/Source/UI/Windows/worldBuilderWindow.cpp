@@ -15,6 +15,6 @@ WorldBuilderWindow::~WorldBuilderWindow() {}
 void WorldBuilderWindow::Update()
 {
     ImGui::Begin(name.c_str());
-
+    
     ImGui::End();
 }

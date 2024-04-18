@@ -3,6 +3,7 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/sceneManager.h"
+#include "WorldBuilder/worldBuilder.h"
 #include "Core/scene.h"
 #include "Core/camera.h"
 #include "Inputs/inputManager.h"
@@ -14,6 +15,7 @@ void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
     SceneManager::Init();
+    WorldBuilder::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
 }

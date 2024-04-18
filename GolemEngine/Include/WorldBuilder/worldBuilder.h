@@ -2,13 +2,14 @@
 
 #include <vector>
 
+#include "dll.h"
 #include "terrain.h"
 
 
-class WorldBuilder
+class GOLEM_ENGINE_API WorldBuilder
 {
 private:
-    std::vector<Terrain*> m_terrains;
+    static inline Terrain* m_terrain = nullptr;
 
 private:
     // Private constructors and destructor to make static class
@@ -21,5 +22,7 @@ private:
     ~WorldBuilder() = delete;
 
 public:
-    void Init();
+    static void Init();
+
+    static Terrain* GetTerrain();
 };
