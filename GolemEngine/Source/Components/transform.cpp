@@ -70,17 +70,20 @@ void Transform::EditTransformGizmo()
     ImGuizmo::SetOrthographic(false);
     ImGuizmo::SetDrawlist();
 
+    static ImGuizmo::OPERATION currentOperation(ImGuizmo::TRANSLATE);
+    static ImGuizmo::MODE currentMode(ImGuizmo::WORLD);
+
     float windowWidth = (float)ImGui::GetWindowWidth();
     float windowHeight = (float)ImGui::GetWindowHeight();
 
     auto camera = GolemEngine::GetCamera();
-    Matrix4 cameraProjection = Matrix4::Projection(camera->GetZoom() * (M_PI / 180), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar());
+    Matrix4 cameraProjection = Matrix4::Projection(camera->GetZoom() * (M_PI / 180.f), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar());
     Matrix4 cameraView = camera->GetViewMatrix().Inverse();
-    Matrix4 transformTest = GetGlobalModel();
+    Matrix4 transformTest = GetLocalModel();
 
     ImGuizmo::Enable(true);
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-    ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::WORLD, &transformTest.data[0][0]);
+    ImGuizmo::Manipulate(&cameraView.data[0][3], &cameraProjection.data[0][3], currentOperation, currentMode, &transformTest.data[0][3]);
 }
 
 void Transform::AddChild(Transform* const _t)

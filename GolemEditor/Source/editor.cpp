@@ -106,6 +106,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
+	ImGui::EndFrame();
 }
 
 void Editor::Run()
