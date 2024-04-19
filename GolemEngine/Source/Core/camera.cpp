@@ -5,6 +5,7 @@
 #include "Wrappers/windowWrapper.h" 
 #include "Inputs/inputManager.h"
 #include "utils.h"
+#include "Debug/log.h"
 
 
 const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 20;
