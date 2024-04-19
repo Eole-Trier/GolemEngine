@@ -23,6 +23,8 @@ private:
 
 public:
     static void Init();
+    static void RenderTerrainData();
+    static void RenderTerrain();
 
     static Terrain* GetTerrain();
 };

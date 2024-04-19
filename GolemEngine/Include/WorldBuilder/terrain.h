@@ -36,6 +36,10 @@ public:
     float lowestPoint = 0.0f;
     float highestPoint = 0.0f;
 
+    unsigned int vao;
+    unsigned int vbo;
+    unsigned int ebo;
+
 public:
     Terrain(const char* _imagePath);
 

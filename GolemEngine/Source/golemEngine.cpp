@@ -16,6 +16,7 @@ void GolemEngine::Init()
     ClassesManager::AddAllClasses();
     SceneManager::Init();
     WorldBuilder::Init();
+    WorldBuilder::RenderTerrainData();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
 }
@@ -44,6 +45,9 @@ void GolemEngine::Update()
     GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     // Clear buffer
     GraphicWrapper::ClearBuffer();
+
+    WorldBuilder::RenderTerrain();
+    
     // Render the scene to the framebuffer
     SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
     // Go back to original framebuffer
