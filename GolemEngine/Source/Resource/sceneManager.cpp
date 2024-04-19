@@ -224,6 +224,9 @@ void SceneManager::CreateAndLoadResources()
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 
+    Shader* defaultHeightmapShader = resourceManager->Create<Shader>(m_defaultHeightmapShader, Tools::FindFile("heightmap.vs"));
+    defaultHeightmapShader->SetVertexAndFragmentShader(defaultHeightmapShader->path.c_str(), Tools::FindFile("heightmap.fs").c_str());
+    
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
 
@@ -273,6 +276,11 @@ int SceneManager::GetSceneCount()
 std::string SceneManager::GetDefaultShader()
 {
     return  m_defaultShader;
+}
+
+std::string SceneManager::GetHeightmapShader()
+{
+    return m_defaultHeightmapShader;
 }
 
 std::string SceneManager::GetDefaultTexture()

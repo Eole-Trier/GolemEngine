@@ -41,7 +41,6 @@ void WorldBuilder::RenderTerrain()
     glDrawElements(GL_TRIANGLES, (m_terrain->rows - 1) * (m_terrain->columns -1) * 6, GL_UNSIGNED_INT, 0);
 }
 
-
 Terrain* WorldBuilder::GetTerrain()
 {
     return m_terrain;

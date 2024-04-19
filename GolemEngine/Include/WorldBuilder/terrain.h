@@ -5,6 +5,8 @@
 #include <vector3.h>
 
 #include "dll.h"
+#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/texture.h"
 
 
 struct Pixel
@@ -35,6 +37,9 @@ public:
     int columns;
     float lowestPoint = 0.0f;
     float highestPoint = 0.0f;
+
+    Shader* shader;
+    Texture* texture;
 
     unsigned int vao;
     unsigned int vbo;

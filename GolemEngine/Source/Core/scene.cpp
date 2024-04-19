@@ -91,12 +91,19 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     shader->SetViewPos(_camera->m_position);
 
-    UpdateGameObjects(_width, _height, _camera);
-    UpdateLights(shader);
     if (WorldBuilder::GetTerrain() != nullptr)
     {
+        
+        Shader* heightmapShader = resourceManager->Get<Shader>(SceneManager::GetHeightmapShader());
+        heightmapShader->Use();
+        heightmapShader->SetViewPos(_camera->m_position);
+        heightmapShader->SetFloat("maxHeight", WorldBuilder::GetTerrain()->highestPoint);
         UpdateTerrain(WorldBuilder::GetTerrain());
     }
+
+    UpdateGameObjects(_width, _height, _camera);
+    UpdateLights(shader);
+    
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -150,7 +157,6 @@ void Scene::UpdateTerrain(Terrain* _terrain)
 {
     
 }
-
 
 // Check the gameobject's name is already in the vector or not.
 // If it exists will give a new name with a _2 at the last
