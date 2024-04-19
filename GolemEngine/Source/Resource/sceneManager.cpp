@@ -7,6 +7,13 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 
+#include "ObjectInterfacePerModule.h"
+#include "IObject.h"
+#include "rccppMainLoop.h"
+#include "systemTable.h"
+#include "RuntimeLinkLibrary.h"
+RUNTIME_COMPILER_LINKLIBRARY("GolemEngine.lib");
+
 using json = nlohmann::json;
 
 

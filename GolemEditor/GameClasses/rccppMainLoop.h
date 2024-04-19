@@ -7,4 +7,5 @@ RUNTIME_MODIFIABLE_INCLUDE; //recompile runtime files when this changes
 struct RCCppMainLoopI
 {
     virtual void MainLoop() = 0;
+    virtual int GetInt() = 0;
 };

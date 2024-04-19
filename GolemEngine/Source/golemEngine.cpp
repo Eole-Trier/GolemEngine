@@ -8,58 +8,10 @@
 #include "Inputs/inputManager.h"
 #include "vector4.h"
 #include "Reflection/classesManager.h"
-
-#include "SystemTable.h"
-#include "RuntimeObjectSystem.h"
-#include "StdioLogSystem.h"
-#include "rccppMainLoop.h"
-
-static IRuntimeObjectSystem* g_pRuntimeObjectSystem;
-static StdioLogSystem           g_Logger;
-static SystemTable              g_SystemTable;
-
-bool RCCppInit()
-{
-    g_pRuntimeObjectSystem = new RuntimeObjectSystem;
-    if (!g_pRuntimeObjectSystem->Initialise(&g_Logger, &g_SystemTable))
-    {
-        delete g_pRuntimeObjectSystem;
-        g_pRuntimeObjectSystem = NULL;
-        return false;
-    }
-
-    // ensure include directories are set - use location of this file as starting point
-    FileSystemUtils::Path basePath = g_pRuntimeObjectSystem->FindFile(__FILE__).ParentPath();
-    FileSystemUtils::Path imguiIncludeDir = basePath / "imgui";
-    g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
-    g_pRuntimeObjectSystem->AddIncludeDir("C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\GameClasses");
-    return true;
-}
-
-void RCCppUpdate()
-{
-    //check status of any compile
-    if (g_pRuntimeObjectSystem->GetIsCompiledComplete())
-    {
-        // load module when compile complete
-        g_pRuntimeObjectSystem->LoadCompiledModule();
-    }
-
-    if (!g_pRuntimeObjectSystem->GetIsCompiling())
-    {
-        float deltaTime = 1.0f / ImGui::GetIO().Framerate;
-        g_pRuntimeObjectSystem->GetFileChangeNotifier()->Update(deltaTime);
-    }
-}
-
-void RCCppCleanup()
-{
-    delete g_pRuntimeObjectSystem;
-}
+#include "Resource/tools.h"
 
 void GolemEngine::Init()
 {
-    RCCppInit();
     ClassesManager::AddAllClasses();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
@@ -83,9 +35,6 @@ void GolemEngine::ProcessInput()
 
 void GolemEngine::Update()
 {
-    RCCppUpdate();
-    g_SystemTable.pRCCppMainLoopI->MainLoop();
-
     UpdateDeltaTime();
     // Bind next framebuffer to the scene buffer
     GraphicWrapper::BindFramebuffer();
@@ -106,7 +55,6 @@ void GolemEngine::Update()
 void GolemEngine::Close()
 {
     glfwTerminate();
-    RCCppCleanup();
 }
 
 Camera* GolemEngine::GetCamera()

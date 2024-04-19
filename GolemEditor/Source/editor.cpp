@@ -15,6 +15,55 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
+#include "SystemTable.h"
+#include "RuntimeObjectSystem.h"
+#include "StdioLogSystem.h"
+#include "rccppMainLoop.h"
+
+
+static IRuntimeObjectSystem* g_pRuntimeObjectSystem;
+static StdioLogSystem           g_Logger;
+static SystemTable              g_SystemTable;
+
+bool RCCppInit()
+{
+    g_pRuntimeObjectSystem = new RuntimeObjectSystem;
+    if (!g_pRuntimeObjectSystem->Initialise(&g_Logger, &g_SystemTable))
+    {
+        delete g_pRuntimeObjectSystem;
+        g_pRuntimeObjectSystem = NULL;
+        return false;
+    }
+
+    // ensure include directories are set - use location of this file as starting point
+    FileSystemUtils::Path basePath = g_pRuntimeObjectSystem->FindFile(__FILE__).ParentPath();
+    FileSystemUtils::Path imguiIncludeDir = basePath / "imgui";
+    g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
+    //g_pRuntimeObjectSystem->AddIncludeDir(Tools::FindFolder("GameClasses").c_str());
+    return true;
+}
+
+void RCCppUpdate()
+{
+    //check status of any compile
+    if (g_pRuntimeObjectSystem->GetIsCompiledComplete())
+    {
+        // load module when compile complete
+        g_pRuntimeObjectSystem->LoadCompiledModule();
+    }
+
+    if (!g_pRuntimeObjectSystem->GetIsCompiling())
+    {
+        float deltaTime = 1.0f / ImGui::GetIO().Framerate;
+        g_pRuntimeObjectSystem->GetFileChangeNotifier()->Update(deltaTime);
+    }
+}
+
+void RCCppCleanup()
+{
+    delete g_pRuntimeObjectSystem;
+}
+
 Editor::Editor()
 	:
 	m_name("Golem Engine")

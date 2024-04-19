@@ -34,6 +34,7 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <optional>
 #include "FileSystemUtils.h"
 
 #include "assert.h"

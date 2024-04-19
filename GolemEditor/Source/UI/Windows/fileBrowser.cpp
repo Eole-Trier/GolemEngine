@@ -268,6 +268,41 @@ const char* FileBrowser::GetFolderName(const char* _path)
 	return _path + index + 1;
 }
 
+void CreateGameClassFiles(const std::string& _folderPath)
+{
+	// Bind folder path
+	std::string cppFilePath = _folderPath + "/class.cpp";
+	std::string hFilePath = _folderPath + "/class.h";
+
+	// Create and open class.cpp
+	std::ofstream cppFile(cppFilePath);
+	if (cppFile.is_open())
+	{
+		// Write class.cpp content
+		cppFile << "// Implementation of the GameClass\n";
+		cppFile.close();
+		std::cout << "Created file: " << cppFilePath << std::endl;
+	}
+	else
+	{
+		std::cerr << "Failed to create file: " << cppFilePath << std::endl;
+	}
+
+	// Create and open class.h
+	std::ofstream hFile(hFilePath);
+	if (hFile.is_open())
+	{
+		// Write class.h content
+		hFile << "// Declaration of the GameClass\n";
+		hFile.close();
+		std::cout << "Created file: " << hFilePath << std::endl;
+	}
+	else
+	{
+		std::cerr << "Failed to create file: " << hFilePath << std::endl;
+	}
+}
+
 // Right click in file viewer
 void FileBrowser::RightMouseClickEvent()
 {
@@ -281,6 +316,11 @@ void FileBrowser::RightMouseClickEvent()
 		if (ImGui::MenuItem("New Folder"))
 		{
 			CreateFolder();
+		}
+		if (ImGui::MenuItem("New GameClass"))
+		{
+			std::string folderPath = Tools::FindFolder("GameClasses");
+			CreateGameClassFiles(folderPath);
 		}
 		ImGui::EndPopup();
 	}

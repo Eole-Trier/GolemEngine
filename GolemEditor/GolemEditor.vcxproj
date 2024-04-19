@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)RCCPP\RuntimeObjectSystem;$(SolutionDir)RCCPP\RuntimeCompiler;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\GameClasses;$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)RCCPP\RuntimeObjectSystem;$(SolutionDir)RCCPP\RuntimeCompiler;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -181,6 +181,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
+    <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
     <ClCompile Include="Source\UI\toolbar.cpp" />
     <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
@@ -194,6 +196,9 @@
     <ClCompile Include="Source\UI\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameClasses\rccppMainLoop.h" />
+    <ClInclude Include="GameClasses\StdioLogSystem.h" />
+    <ClInclude Include="GameClasses\systemTable.h" />
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\toolbar.h" />

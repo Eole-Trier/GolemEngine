@@ -2,7 +2,7 @@
 #include "IObject.h"
 #include "rccppMainLoop.h"
 #include "systemTable.h"
-#include "player.h"
+//#include "player.h"
 #include <iostream>
 
 // RCC++ uses interface Id's to distinguish between different classes
@@ -21,11 +21,13 @@ struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
     {
         PerModuleInterface::g_pSystemTable->pRCCppMainLoopI = this;
     }
-
-    Eole eole;
     void MainLoop() override
     {
-        eole.Maxime();
+    }
+
+    int GetInt() override
+    {
+        return 1;
     }
 };
 

@@ -53,8 +53,6 @@
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
-    <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
-    <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -126,8 +124,5 @@
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
-    <ClInclude Include="GameClasses\rccppMainLoop.h" />
-    <ClInclude Include="GameClasses\StdioLogSystem.h" />
-    <ClInclude Include="GameClasses\systemTable.h" />
   </ItemGroup>
 </Project>
