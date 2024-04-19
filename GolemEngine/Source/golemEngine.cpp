@@ -9,12 +9,12 @@
 #include "vector4.h"
 #include "Reflection/classesManager.h"
 
-
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
+    m_physicSystem = new PhysicSystem();
     m_camera = new Camera();
 }
 
@@ -54,6 +54,7 @@ void GolemEngine::Update()
 
 void GolemEngine::Close()
 {
+    delete m_physicSystem;
     glfwTerminate();
 }
 

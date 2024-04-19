@@ -19,6 +19,7 @@
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
 #include "Physic/physicSystem.h"
+#include "Components/Physic/sphereCollider.h"
 
 using json = nlohmann::json;
 
@@ -29,7 +30,6 @@ Scene::Scene(std::string _name)
 void Scene::Init()
 {
     CreateAndLoadResources();
-    PhysicSystem* physicInitializer = new PhysicSystem();
     InitGameObjects();
     InitLights();
 
@@ -60,6 +60,7 @@ void Scene::InitGameObjects()
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
+    SphereCollider* sc = new SphereCollider(ballBaldGo, 1.f);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
     std::string ballBaldName2 = "ball_bald2";
@@ -139,12 +140,17 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     }
     m_world->transform->UpdateSelfAndChilds();
 
+
+    PhysicSystem::Update();
+
     for (int i = 0; i < m_gameObjects.size(); i++)
     {
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
         if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
             audio->Update();
+        if (SphereCollider* sc = m_gameObjects[i]->GetComponent<SphereCollider>())
+            sc->Update();
     }
 }
 
