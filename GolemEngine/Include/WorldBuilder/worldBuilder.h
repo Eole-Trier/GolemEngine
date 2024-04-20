@@ -1,16 +1,8 @@
-#pragma once
-
-#include <vector>
-
-#include "dll.h"
-#include "terrain.h"
+﻿#pragma once
 
 
-class GOLEM_ENGINE_API WorldBuilder
+class WorldBuilder
 {
-private:
-    static inline Terrain* m_terrain = nullptr;
-
 private:
     // Private constructors and destructor to make static class
     WorldBuilder() = delete;
@@ -23,8 +15,5 @@ private:
 
 public:
     static void Init();
-    static void RenderTerrainData();
-    static void RenderTerrain();
-
-    static Terrain* GetTerrain();
+    static void CreateTerrain(int _xSzie, int _zSize);
 };

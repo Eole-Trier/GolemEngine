@@ -19,7 +19,6 @@
 #include "Components/meshRenderer.h"
 #include "Resource/sceneManager.h"
 #include "Components/audio.h"
-#include "WorldBuilder/worldBuilder.h"
 
 using json = nlohmann::json;
 
@@ -88,22 +87,10 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
     shader->Use();
-
     shader->SetViewPos(_camera->m_position);
-
-    if (WorldBuilder::GetTerrain() != nullptr)
-    {
-        
-        Shader* heightmapShader = resourceManager->Get<Shader>(SceneManager::GetHeightmapShader());
-        heightmapShader->Use();
-        heightmapShader->SetViewPos(_camera->m_position);
-        heightmapShader->SetFloat("maxHeight", WorldBuilder::GetTerrain()->highestPoint);
-        UpdateTerrain(WorldBuilder::GetTerrain());
-    }
 
     UpdateGameObjects(_width, _height, _camera);
     UpdateLights(shader);
-    
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -151,11 +138,6 @@ void Scene::UpdateLights(Shader* _shader)
     {
         m_spotLights[i]->Update(_shader);
     }
-}
-
-void Scene::UpdateTerrain(Terrain* _terrain)
-{
-    
 }
 
 // Check the gameobject's name is already in the vector or not.
