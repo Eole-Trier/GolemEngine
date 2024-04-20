@@ -13,8 +13,8 @@ Terrain::Terrain(int _xSize, int _zSize)
         {
             // Set the vertex position
             t_Vertex vertex;
-            vertex.position.x = i / xSize;
-            vertex.position.z = i / zSize;
+            vertex.position.x = 30 + i / (float)xSize;
+            vertex.position.z = -50 + j / (float)zSize;
             vertex.position.y = 0.0f;
             // Set the vertex texture postion
             vertex.textureCoords.x = (1.0f / zSize * j);
@@ -45,13 +45,13 @@ void Terrain::SetupMesh()
     glBindVertexArray(m_vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(t_Vertex), m_vertices.data(), GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(t_Vertex), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
