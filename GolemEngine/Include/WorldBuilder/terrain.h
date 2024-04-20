@@ -6,18 +6,13 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/vertex.h"
 
-struct t_Vertex
-{
-    Vector3 position;
-    Vector2 textureCoords;
-};
 
 class Terrain
 {
 private:
     Texture* m_texture = nullptr;
     Shader* m_shader = nullptr;
-    std::vector<t_Vertex> m_vertices;
+    std::vector<Vertex> m_vertices;
     std::vector<int> m_indices;
     
     unsigned int m_vao;
