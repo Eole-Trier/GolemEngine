@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "Components/transform.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/vertex.h"
