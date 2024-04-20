@@ -12,9 +12,10 @@ Terrain::Terrain(int _xSize, int _zSize)
         for (int j = 0; j < zSize; j++)
         {
             // Set the vertex position
-            Vertex vertex;
+            t_Vertex vertex;
             vertex.position.x = i / xSize;
             vertex.position.z = i / zSize;
+            vertex.position.y = 0.0f;
             // Set the vertex texture postion
             vertex.textureCoords.x = (1.0f / zSize * j);
             vertex.textureCoords.y = (1.0f - i / xSize);
