@@ -13,7 +13,7 @@ private:
 public:
 	MeshRenderer();
 	MeshRenderer(Mesh* _mesh);
-	~MeshRenderer();
+	~MeshRenderer() override;
 
 	void Draw(float _width, float _height, Camera* _camera);
 
@@ -22,7 +22,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& j) const
+	void ToJson(json& j) const override
 	{
 		if (m_mesh != nullptr)
 		{

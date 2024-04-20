@@ -16,19 +16,23 @@ private:
 	// Static pointer which points to the only instance of this class
 	static ResourceManager* m_instancePtr;
 
+	static inline std::string m_defaultShader = "default_shader";
+	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
+	static inline std::string m_defaultTexture = "default_texture";
+	static inline std::string m_defaultModel = "default_model";
+
 	std::unordered_map<std::string, Resource*> m_resources;
 private:
 	ResourceManager() {}
 
 public:
-	static ResourceManager* GetInstance()
-	{
-		if (!m_instancePtr) 
-		{
-			m_instancePtr = new ResourceManager();
-		}
-		return m_instancePtr;
-	}
+	static ResourceManager* GetInstance();
+	static void CreateAndLoadResources();
+
+	static std::string GetDefaultShader();
+	static std::string GetDefaultTerrainShader();
+	static std::string GetDefaultTexture();
+	static std::string GetDefaultModel();
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);

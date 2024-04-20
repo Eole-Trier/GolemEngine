@@ -11,14 +11,14 @@
 class Terrain
 {
 private:
-    Texture* m_texture = nullptr;
-    Shader* m_shader = nullptr;
     std::vector<Vertex> m_vertices;
     std::vector<int> m_indices;
     
     unsigned int m_vao;
     unsigned int m_vbo;
     unsigned int m_ebo;
+
+    Shader* m_shader = nullptr;
     
 public:
     int xResolution;

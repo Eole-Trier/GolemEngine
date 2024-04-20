@@ -31,7 +31,6 @@ Audio::Audio(std::string _fileName, bool _isLooping)
     m_isLooping(_isLooping),
     m_isPlaying(false)
 {
-    std::cout << "correct: " << Tools::FindFile(_fileName) << std::endl;
     SetUpAudio();
 }
 

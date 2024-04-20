@@ -4,15 +4,13 @@
 #include <nlohmann/json.hpp>
 
 #include "dll.h"
-#include "model.h"
+#include "shader.h"
 #include "texture.h"
+#include "model.h"
 #include "Core/gameobject.h"
 
 using json = nlohmann::json;
 
-class Model;
-class Texture;
-class Shader;
 class Transform;
 class Camera;
 

@@ -4,20 +4,19 @@
 #include <nlohmann/json.hpp>
 
 #include "utils.h"
-#include "Resource/resourceManager.h"
+#include "Core/gameobject.h"
 #include "Resource/Rendering/mesh.h"
-#include "Resource/Rendering/model.h"
-#include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/model.h"
+#include "Resource/resourceManager.h"
+#include "Resource/sceneManager.h"
 #include "Resource/tools.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
-#include "Resource/Rendering/shader.h"
-#include "Core/gameobject.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
-#include "Resource/sceneManager.h"
 #include "Components/audio.h"
 
 using json = nlohmann::json;
@@ -45,13 +44,14 @@ void Scene::Init()
 void Scene::InitGameObjects()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* defaultShader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
+    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+    
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
-    Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
-    Model* viking_room = resourceManager->Get<Model>("viking_room");
-    Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
+    Texture* vikingText = resourceManager->Get<Texture>("viking_texture");
+    Model* vikingRoom = resourceManager->Get<Model>("viking_room");
+    Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
 
     Audio* audio1 = new Audio("music_01.wav");
@@ -84,16 +84,16 @@ void Scene::InitLights()
 void Scene::Update(float _width, float _height, Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
-    shader->Use();
-    shader->SetViewPos(_camera->m_position);
+    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+    defaultShader->Use();
+    defaultShader->SetViewPos(_camera->m_position);
 
     if (!m_terrains.empty())
     {
         UpdateTerrains(); 
     }
     UpdateGameObjects(_width, _height, _camera);
-    UpdateLights(shader);
+    UpdateLights(defaultShader);
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
@@ -228,7 +228,6 @@ void Scene::AddTerrain(Terrain* _terrain)
     m_terrains.push_back(_terrain);
 }
 
-
 // To add a new gameobject in the scene
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
@@ -241,15 +240,21 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
 
     if (_textureName.empty())
     {
-        texture = resourceManager->Get<Texture>(SceneManager::GetDefaultTexture());
+        texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
     }
     else
+    {
         texture = resourceManager->Get<Texture>(_textureName);
+    }
 
     if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>(SceneManager::GetDefaultShader());
+    {
+        shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+    }
     else
+    {
         shader = resourceManager->Get<Shader>(_shaderName);
+    }
 
     // Using the rename functions
     int suffix = 2; // start at 2 because of two objects having the same name
@@ -289,7 +294,7 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
 
     if (_resourceName == "")
     {
-        Model* model = resourceManager->Get<Model>(SceneManager::GetDefaultModel());
+        Model* model = resourceManager->Get<Model>(ResourceManager::GetDefaultModel());
         loadingObject = GetFileName(_filePath);
     }
     else
@@ -318,7 +323,6 @@ std::vector<Terrain*> Scene::GetTerrains()
 {
     return  m_terrains;
 }
-
 
 size_t Scene::GetMaxDirectionalLights()
 {

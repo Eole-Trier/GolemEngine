@@ -21,7 +21,7 @@ using json = nlohmann::json;
 
 void SceneManager::Init()
 {
-    CreateAndLoadResources();
+    ResourceManager::CreateAndLoadResources();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
@@ -173,9 +173,9 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                 // Setup meshRenderer component
                 if (jScene["gameObjects"][i]["components"][j]["name"] == "meshRenderer")
                 {
-                    Shader* shader = resourceManager->Get<Shader>(m_defaultShader);
-                    Texture* texture = resourceManager->Get<Texture>(m_defaultTexture);
-                    Model* model = resourceManager->Get<Model>(m_defaultModel);
+                    Shader* shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+                    Texture* texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
+                    Model* model = resourceManager->Get<Model>(ResourceManager::GetDefaultModel());
                     gameObject->AddComponent(new MeshRenderer(new Mesh(model, texture, shader)));
                 }
             }
@@ -211,42 +211,8 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
             }
         }
     }
-
-    // std::cout << jScene.dump(2) << std::endl;
     
     m_scenes.push_back(scene);    
-}
-
-void SceneManager::CreateAndLoadResources()
-{
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-
-    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
-    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
-
-    Shader* defaultHeightmapShader = resourceManager->Create<Shader>(m_defaultHeightmapShader, Tools::FindFile("heightmap.vs"));
-    defaultHeightmapShader->SetVertexAndFragmentShader(defaultHeightmapShader->path.c_str(), Tools::FindFile("heightmap.fs").c_str());
-    
-    Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
-    defaultTexture->Load(defaultTexture->path.c_str());
-
-    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
-    vikingTexture->Load(vikingTexture->path.c_str());
-
-    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
-    allBaldTexture->Load(allBaldTexture->path.c_str());
-
-    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
-    vikingModel->Load(vikingModel->path.c_str());
-
-    Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
-    defaultModel->Load(defaultModel->path.c_str());
-
-    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
-    sphereModel->Load(sphereModel->path.c_str());
-
-    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
-    cubeModel->Load(cubeModel->path.c_str());
 }
 
 Scene* SceneManager::GetCurrentScene()
@@ -271,26 +237,6 @@ Scene* SceneManager::GetScene(int _id)
 int SceneManager::GetSceneCount()
 {
     return  m_scenes.size();
-}
-
-std::string SceneManager::GetDefaultShader()
-{
-    return  m_defaultShader;
-}
-
-std::string SceneManager::GetHeightmapShader()
-{
-    return m_defaultHeightmapShader;
-}
-
-std::string SceneManager::GetDefaultTexture()
-{
-    return m_defaultTexture;
-}
-
-std::string SceneManager::GetDefaultModel()
-{
-    return m_defaultModel;
 }
 
 void SceneManager::SetCurrentScene(Scene* _scene)

@@ -1,11 +1,16 @@
 #include "WorldBuilder/terrain.h"
 
 #include "Wrappers/graphicWrapper.h"
+#include "Resource/resourceManager.h"
 
 
 Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
     : xResolution(_xResolution), zResolution(_zResolution)
 {
+    // Set shader
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
+    
     // Make a grid of vertices using the terrain's dimensions
     for (int i = 0; i < xResolution; i++)
     {
@@ -64,6 +69,7 @@ void Terrain::SetupMesh()
 
 void Terrain::Draw()
 {
+    // m_shader->Use();
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }
