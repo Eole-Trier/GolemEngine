@@ -1,12 +1,11 @@
 #include "..\..\..\Include\Resource\Rendering\framebuffer.h"
 
+
 Framebuffer::Framebuffer()
-{
-}
+{}
 
 Framebuffer::~Framebuffer()
-{
-}
+{}
 
 void Framebuffer::Bind()
 {

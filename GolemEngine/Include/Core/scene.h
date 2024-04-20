@@ -9,6 +9,7 @@
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
+#include "WorldBuilder/terrain.h"
 
 using json = nlohmann::json;
 
@@ -33,7 +34,8 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
-	
+
+	std::vector<Terrain*> m_terrains;
 
 public:
 	std::string name;
@@ -51,6 +53,7 @@ public:
 	void InitLights();
 	void Update(float _width, float _height, Camera* _camera);
 	void UpdateGameObjects(float _width, float _height, Camera* _camera);
+	void UpdateTerrains();
 	void UpdateLights(Shader* _shader);
 	bool IsNameExists(const std::string& _name);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
@@ -59,10 +62,12 @@ public:
 	void AddGameObject(GameObject* _gameObject);
 	void RemoveGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
+	void AddTerrain(Terrain* _terrain);
 	
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
+	std::vector<Terrain*> GetTerrains();
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
@@ -75,9 +80,9 @@ public:
 	
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const
+	void ToJson(json& _j) const
 	{
-		j = json
+		_j = json
 		{
 			{"name", name},
 			{"guid", m_guid.ToString()},
@@ -89,10 +94,10 @@ public:
 			for (int i = 0; i < gameObjects.size(); i++)
 			{
 				json jGameObjectPtr;
-				gameObjects[i]->to_json(jGameObjectPtr);
+				gameObjects[i]->ToJson(jGameObjectPtr);
 				jGameObjects.push_back(jGameObjectPtr);
 			}
-			j["gameObjects"] = jGameObjects;
+			_j["gameObjects"] = jGameObjects;
 		}
 	}
 };

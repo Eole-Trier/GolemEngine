@@ -56,7 +56,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const
+	void ToJson(json& j) const
 	{
 		j = json
 		{
@@ -69,7 +69,7 @@ public:
 			for (int i = 0; i < m_components.size(); i++)
 			{
 				json jComponentPtr;
-				m_components[i]->to_json(jComponentPtr);
+				m_components[i]->ToJson(jComponentPtr);
 				jComponents.push_back(jComponentPtr);
 			}
 			

@@ -21,7 +21,7 @@ public:
 	virtual void Update() {};
 
 	
-	virtual void to_json(json& j) const = 0;    // Virtual function to serialize component to JSON
+	virtual void ToJson(json& j) const = 0;    // Virtual function to serialize component to JSON
 }; 
 
 REFL_AUTO(

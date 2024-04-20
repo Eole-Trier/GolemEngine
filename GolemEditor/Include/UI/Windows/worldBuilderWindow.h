@@ -6,7 +6,8 @@
 class WorldBuilderWindow : public Window
 {
 private:
-    bool m_showCreateTerrainPopup = false;
+    bool m_isCreateTerrainPopupActive = false;
+    int v1 = 0, v2 = 0;
 
 public:
     WorldBuilderWindow(std::string _name);

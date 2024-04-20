@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+#include "dll.h"
 
-class WorldBuilder
+
+class GOLEM_ENGINE_API WorldBuilder
 {
 private:
     // Private constructors and destructor to make static class
@@ -15,5 +17,5 @@ private:
 
 public:
     static void Init();
-    static void CreateTerrain(int _xSzie, int _zSize);
+    static void CreateTerrain(int _xSize, int _zSize);
 };

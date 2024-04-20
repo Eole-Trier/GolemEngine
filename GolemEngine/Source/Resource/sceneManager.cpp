@@ -47,7 +47,7 @@ void SceneManager::SaveScene()
 {
     json jScene;
     // Get scene name and add .json type to it
-    GetCurrentScene()->to_json(jScene);
+    GetCurrentScene()->ToJson(jScene);
     std::string sceneFileName = GetCurrentScene()->name;
     sceneFileName.append(".json");
 

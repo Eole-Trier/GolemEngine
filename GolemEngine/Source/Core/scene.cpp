@@ -38,7 +38,6 @@ Scene::Scene(std::string _name, bool _isEmpty)
 
 void Scene::Init()
 {
-    //CreateAndLoadResources();
     InitGameObjects();
     InitLights();
 }
@@ -89,6 +88,10 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     shader->Use();
     shader->SetViewPos(_camera->m_position);
 
+    if (!m_terrains.empty())
+    {
+        UpdateTerrains(); 
+    }
     UpdateGameObjects(_width, _height, _camera);
     UpdateLights(shader);
 }
@@ -137,6 +140,14 @@ void Scene::UpdateLights(Shader* _shader)
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
         m_spotLights[i]->Update(_shader);
+    }
+}
+
+void Scene::UpdateTerrains()
+{
+    for (int i = 0; i < m_terrains.size(); i++)
+    {
+        m_terrains[i]->Draw();
     }
 }
 
@@ -211,6 +222,12 @@ void Scene::DeleteLight(Light* _light)
         std::erase(m_dirLights, dL);
     }
 }
+
+void Scene::AddTerrain(Terrain* _terrain)
+{
+    m_terrains.push_back(_terrain);
+}
+
 
 // To add a new gameobject in the scene
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
@@ -296,6 +313,12 @@ std::vector<SpotLight*> Scene::GetSpotLights()
 {
     return m_spotLights;
 }
+
+std::vector<Terrain*> Scene::GetTerrains()
+{
+    return  m_terrains;
+}
+
 
 size_t Scene::GetMaxDirectionalLights()
 {

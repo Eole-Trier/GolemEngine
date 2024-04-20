@@ -22,13 +22,13 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void to_json(json& j) const
+	void ToJson(json& j) const
 	{
 		if (m_mesh != nullptr)
 		{
 			j["name"] = "meshRenderer";
 			json jMesh;
-			m_mesh->to_json(jMesh);
+			m_mesh->ToJson(jMesh);
 			j["data"] = jMesh;
 		}
 	}
