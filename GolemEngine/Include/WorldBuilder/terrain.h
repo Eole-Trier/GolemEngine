@@ -21,11 +21,12 @@ private:
     unsigned int m_ebo;
     
 public:
-    int xSize;
-    int zSize;
+    int xResolution;
+    int zResolution;
+    float generationScale;
 
 public:
-    Terrain(int _xSize, int _zSize);
+    Terrain(int _xResolution, int _zResolution, float _generationScale);
 
     void SetupMesh();
     void Draw();

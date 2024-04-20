@@ -17,5 +17,5 @@ private:
 
 public:
     static void Init();
-    static void CreateTerrain(int _xSize, int _zSize);
+    static void CreateTerrain(int _xResolution, int _zResolution, float _generationScale);
 };

@@ -10,8 +10,8 @@ void WorldBuilder::Init()
     
 }
 
-void WorldBuilder::CreateTerrain(int _xSize, int _zSize)
+void WorldBuilder::CreateTerrain(int _xResolution, int _zResolution, float _generationScale)
 {
-    SceneManager::GetCurrentScene()->AddTerrain(new Terrain(_xSize, _zSize));
+    SceneManager::GetCurrentScene()->AddTerrain(new Terrain(_xResolution, _zResolution, _generationScale));
 }
 

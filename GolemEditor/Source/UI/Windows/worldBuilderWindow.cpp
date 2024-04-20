@@ -7,9 +7,11 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
+const std::string CREATE_TERRAIN_POPUP_TITLE = "Specify new terrain dimensions";
 const std::string CREATE_TERRAIN_POPUP_MESSAGE = "Enter terrain dimensions";
 
-void UpdateCreateTerrainPopup(bool* _isPopupOpen, int* _xSize, int* _zSize);
+
+void UpdateCreateTerrainPopup(bool* _isPopupOpen, int* _xResolution, int* _zResolution, float* _generationScale);
 
 
 WorldBuilderWindow::WorldBuilderWindow(std::string _name) 
@@ -29,40 +31,45 @@ void WorldBuilderWindow::Update()
         m_isCreateTerrainPopupActive = true;
     }
 
-    UpdateCreateTerrainPopup(&m_isCreateTerrainPopupActive, &v1, &v2);
+    UpdateCreateTerrainPopup(&m_isCreateTerrainPopupActive, &m_newTerrainResolutionX, &m_newTerrainResolutionZ, &m_newTerrainGenerationScale);
 
     ImGui::End();
 }
 
-void UpdateCreateTerrainPopup(bool* _isPopupOpen, int* _xSize, int* _zSize)
+void UpdateCreateTerrainPopup(bool* _isPopupOpen, int* _xResolution, int* _zResolution, float* _generationScale)
 {
     // Check if the popup should open and if true, open it
     if (*_isPopupOpen)
     {
-        ImGui::OpenPopup("Specify new terrain dimensions");
+        ImGui::OpenPopup(CREATE_TERRAIN_POPUP_TITLE.c_str());
     }
-
+    
     // Popup content
-    if (ImGui::BeginPopupModal("Specify new terrain dimensions", _isPopupOpen))
+    if (ImGui::BeginPopupModal(CREATE_TERRAIN_POPUP_TITLE.c_str(), _isPopupOpen))
     {
         ImGui::Text(CREATE_TERRAIN_POPUP_MESSAGE.c_str());
 
-        ImGui::InputInt("x ", _xSize, 0, 0);
-        ImGui::InputInt("z ", _zSize, 0, 0);
+        ImGui::InputInt("x resolution", _xResolution, 0, 0);
+        ImGui::InputInt("z resolution", _zResolution, 0, 0);
+        ImGui::InputFloat("generation scale", _generationScale, 0, 0);
 
-        if (*_xSize > 0 && *_zSize > 0)    // Check if the user hasn't given negative or null values to the size of the terrain
+        bool isUserInputValid = true;
+        if (*_xResolution < 2 || *_zResolution < 2)    // Minimum terrain dimension
         {
-            if (ImGui::Button("OK"))
-            {
-                WorldBuilder::CreateTerrain(*_xSize, *_zSize);
-                *_isPopupOpen = false;
-                ImGui::CloseCurrentPopup();
-            }
-            
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Minimum terrain resolution are 2 by 2.");
+            isUserInputValid = false;
         }
-        else
+        if (*_generationScale == 0.0f)    // Minimum terrain dimension
         {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Values can't be negative or null.");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Terrain generation scale can't be 0.");
+            isUserInputValid = false;
+        }
+        
+        if (isUserInputValid && ImGui::Button("OK"))
+        {
+            WorldBuilder::CreateTerrain(*_xResolution, *_zResolution, *_generationScale);
+            *_isPopupOpen = false;
+            ImGui::CloseCurrentPopup();
         }
 
         ImGui::EndPopup();

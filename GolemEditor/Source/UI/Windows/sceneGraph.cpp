@@ -52,6 +52,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	{
 		name = "##input";
 	}
+	
 	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
 		if (m_renaming == _gameObject)

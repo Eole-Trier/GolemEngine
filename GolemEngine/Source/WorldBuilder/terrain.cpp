@@ -2,36 +2,41 @@
 
 #include "Wrappers/graphicWrapper.h"
 
-const int TERRAIN_SIZE_MULTIPLIER = 7;
 
-
-Terrain::Terrain(int _xSize, int _zSize)
-    : xSize(_xSize), zSize(_zSize)
+Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
+    : xResolution(_xResolution), zResolution(_zResolution)
 {
     // Make a grid of vertices using the terrain's dimensions
-    for (int i = 0; i < xSize; i++)
+    for (int i = 0; i < xResolution; i++)
     {
-        for (int j = 0; j < zSize; j++)
+        for (int j = 0; j < zResolution; j++)
         {
             // Set the vertex position
             Vertex vertex;
-            vertex.position.x = i * TERRAIN_SIZE_MULTIPLIER / (float)xSize;
-            vertex.position.z = -20 + j * TERRAIN_SIZE_MULTIPLIER/ (float)zSize;    // -20 for offset but remove later
+            // vertex.position.x = i;
+            // vertex.position.z = j;
+            vertex.position.x = (i / (float)xResolution) * _generationScale;
+            vertex.position.z = -10 + (j / (float)zResolution) * _generationScale;    // -10 for offset but remove later
             vertex.position.y = 0.0f;
             // Set the vertex texture postion
-            vertex.textureCoords.x = (1.0f / zSize * j);
-            vertex.textureCoords.y = (1.0f - i / xSize);
+            vertex.textureCoords.x = (j / (float)zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
             
             m_vertices.push_back(vertex);
+        }
+    }
+    // Setup indices
+    for (int i = 0; i < xResolution; i++)
+    {
+        for (int j = 0; j < zResolution - 1; j++)    // - 1 because of range error
+        {
+            m_indices.push_back(i * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back(i * zResolution + j + 1);
 
-            // Do indices
-            m_indices.push_back((i - 1) * zSize + j - 1);
-            m_indices.push_back((i - 1) * zSize + j);
-            m_indices.push_back(i * zSize + j - 1);
-            
-            m_indices.push_back(i * zSize + j - 1);
-            m_indices.push_back((i - 1) * zSize + j);
-            m_indices.push_back(i * zSize + j);
+            m_indices.push_back(i * zResolution + j + 1);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j + 1);
         }
     }
 
@@ -60,5 +65,5 @@ void Terrain::SetupMesh()
 void Terrain::Draw()
 {
     glBindVertexArray(m_vao);
-    glDrawElements(GL_TRIANGLES, (xSize - 1) * (zSize - 1) * 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }
