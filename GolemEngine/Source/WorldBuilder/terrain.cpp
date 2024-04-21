@@ -1,7 +1,11 @@
 #include "WorldBuilder/terrain.h"
 
+#include <utils.h>
+
 #include "Wrappers/graphicWrapper.h"
 #include "Resource/resourceManager.h"
+#include "Resource/sceneManager.h"
+#include "Wrappers/windowWrapper.h"
 
 
 Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
@@ -70,6 +74,9 @@ void Terrain::SetupMesh()
 void Terrain::Draw(Camera* _camera)
 {
     m_shader->Use();
+    m_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
+    m_shader->SetMat4("view", _camera->GetViewMatrix());
+    m_shader->SetMat4("projection",  Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }

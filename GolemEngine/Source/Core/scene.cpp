@@ -18,6 +18,7 @@
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
+#include "Wrappers/windowWrapper.h"
 
 using json = nlohmann::json;
 
@@ -81,7 +82,7 @@ void Scene::InitLights()
     m_world->AddComponent(dir);
 }
 
-void Scene::Update(float _width, float _height, Camera* _camera)
+void Scene::Update(Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
@@ -92,11 +93,11 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     {
         UpdateTerrains(_camera); 
     }
-    UpdateGameObjects(_width, _height, _camera);
+    UpdateGameObjects(_camera);
     UpdateLights(defaultShader);
 }
 
-void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
+void Scene::UpdateGameObjects(Camera* _camera)
 {
     // Drag and drop
     if (isNewObjectDropped)
@@ -111,7 +112,7 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     {
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
         {
-            meshRenderer->Draw(_width, _height, _camera);
+            meshRenderer->Draw(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, _camera);
         }
         
         if (Audio* audio = gameObjects[i]->GetComponent<Audio>())

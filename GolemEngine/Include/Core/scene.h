@@ -51,9 +51,9 @@ public:
 	void Init();
 	void InitGameObjects();
 	void InitLights();
-	void Update(float _width, float _height, Camera* _camera);
-	void UpdateGameObjects(float _width, float _height, Camera* _camera);
-	void UpdateTerrains();
+	void Update(Camera* _camera);
+	void UpdateGameObjects(Camera* _camera);
+	void UpdateTerrains(Camera* _camera);
 	void UpdateLights(Shader* _shader);
 	bool IsNameExists(const std::string& _name);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");

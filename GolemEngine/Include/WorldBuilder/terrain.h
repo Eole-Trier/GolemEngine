@@ -6,6 +6,7 @@
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/vertex.h"
+#include "Core/camera.h"
 
 
 class Terrain

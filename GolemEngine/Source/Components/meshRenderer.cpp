@@ -30,9 +30,9 @@ void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
 
         Matrix4 view = _camera->GetViewMatrix();
         Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
+        shader->SetMat4("model", owner->transform->GetGlobalModel());
         shader->SetMat4("view", view);
         shader->SetMat4("projection", projection);
-        shader->SetMat4("model", owner->transform->GetGlobalModel());
 
         glBindVertexArray(model->VAO);
         glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
