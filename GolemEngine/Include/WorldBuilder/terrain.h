@@ -30,7 +30,7 @@ public:
 
 public:
     Terrain(int _xResolution, int _zResolution, float _generationScale);
-    Terrain(const char* _noisemapPath);
+    Terrain(const char* _noisemapPath, float _generationScale);
 
     void SetupMesh();
     void Draw(Camera* _camera);
