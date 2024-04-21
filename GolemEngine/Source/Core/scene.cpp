@@ -84,6 +84,14 @@ void Scene::Update(Camera* _camera)
     }
 }
 
+void Scene::UpdateTerrains(Camera* _camera)
+{
+    for (int i = 0; i < m_terrains.size(); i++)
+    {
+        m_terrains[i]->Draw(_camera);
+    }
+}
+
 void Scene::UpdateGameObjects(Camera* _camera)
 {
     // Drag and drop
@@ -131,16 +139,6 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
-void Scene::UpdateTerrains(Camera* _camera)
-{
-    for (int i = 0; i < m_terrains.size(); i++)
-    {
-        m_terrains[i]->Draw(_camera);
-    }
-}
-
-// Check the gameobject's name is already in the vector or not.
-// If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
     for (int i = 0; i < gameObjects.size(); i++)
@@ -150,59 +148,8 @@ bool Scene::IsNameExists(const std::string& _name)
             return true;
         }
     }
+
     return false;
-
-}
-
-void Scene::AddLight(Light* _light)
-{
-    // TODO remove and put in lights
-    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
-    {
-        m_pointLights.push_back(pL);
-    }
-    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
-    {
-        m_spotLights.push_back(sL);
-
-    }
-    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
-    {
-        m_dirLights.push_back(dL);
-    }
-}
-
-void Scene::RemoveGameObject(GameObject* _gameObject)
-{
-    bool removed = false;
-    for (size_t i = 0; i < gameObjects.size(); i++)
-    {
-        if (gameObjects[i] == _gameObject)
-        {
-            removed = true;
-        }
-        if (removed)
-        {
-            gameObjects[i]->SetId(i - 1);
-        }
-    }
-    std::erase(gameObjects, _gameObject);
-}
-
-void Scene::DeleteLight(Light* _light)
-{
-    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
-    {
-        std::erase(m_pointLights, pL);
-    }
-    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
-    {
-        std::erase(m_spotLights, sL);
-    }
-    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
-    {
-        std::erase(m_dirLights, dL);
-    }
 }
 
 void Scene::AddTerrain(Terrain* _terrain)
@@ -210,7 +157,6 @@ void Scene::AddTerrain(Terrain* _terrain)
     m_terrains.push_back(_terrain);
 }
 
-// To add a new gameobject in the scene
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -241,7 +187,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
     // Using the rename functions
     int suffix = 2; // start at 2 because of two objects having the same name
     std::string originalName = name;
-    while (IsNameExists(name))
+    while (IsNameExists(name))    // If an object already has the same name, add "_[suffix]" to it to make new name
     {
         name = originalName + "_" + std::to_string(suffix++);
     }
@@ -286,6 +232,63 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
+void Scene::RemoveGameObject(GameObject* _gameObject)
+{
+    bool removed = false;
+    for (size_t i = 0; i < gameObjects.size(); i++)
+    {
+        if (gameObjects[i] == _gameObject)
+        {
+            removed = true;
+        }
+        if (removed)
+        {
+            gameObjects[i]->SetId(i - 1);
+        }
+    }
+    
+    std::erase(gameObjects, _gameObject);
+}
+
+void Scene::AddLight(Light* _light)
+{
+    // TODO remove and put in lights
+    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
+    {
+        m_pointLights.push_back(pL);
+    }
+    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
+    {
+        m_spotLights.push_back(sL);
+
+    }
+    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
+    {
+        m_dirLights.push_back(dL);
+    }
+}
+
+void Scene::DeleteLight(Light* _light)
+{
+    if (PointLight* pL = dynamic_cast<PointLight*>(_light))
+    {
+        std::erase(m_pointLights, pL);
+    }
+    else if (SpotLight* sL = dynamic_cast<SpotLight*>(_light))
+    {
+        std::erase(m_spotLights, sL);
+    }
+    else if (DirectionalLight* dL = dynamic_cast<DirectionalLight*>(_light))
+    {
+        std::erase(m_dirLights, dL);
+    }
+}
+
+std::vector<Terrain*> Scene::GetTerrains()
+{
+    return  m_terrains;
+}
+
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()
 {
     return m_dirLights;
@@ -299,11 +302,6 @@ std::vector<PointLight*> Scene::GetPointLights()
 std::vector<SpotLight*> Scene::GetSpotLights()
 {
     return m_spotLights;
-}
-
-std::vector<Terrain*> Scene::GetTerrains()
-{
-    return  m_terrains;
 }
 
 size_t Scene::GetMaxDirectionalLights()

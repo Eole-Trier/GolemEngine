@@ -2,6 +2,7 @@
 
 #include <utils.h>
 
+#include "ImGuiFileDialog-master/stb/stb_image.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
@@ -22,11 +23,53 @@ Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
         {
             // Set the vertex position
             Vertex vertex;
-            // vertex.position.x = i;
-            // vertex.position.z = j;
             vertex.position.x = (i / (float)xResolution) * _generationScale;
             vertex.position.z = -10 + (j / (float)zResolution) * _generationScale;    // -10 for offset but remove later
             vertex.position.y = 0.0f;
+            // Set the vertex texture postion
+            vertex.textureCoords.x = (j / (float)zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
+            
+            m_vertices.push_back(vertex);
+        }
+    }
+    // Setup indices
+    for (int i = 0; i < xResolution; i++)
+    {
+        for (int j = 0; j < zResolution - 1; j++)    // - 1 because of range error
+        {
+            m_indices.push_back(i * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back(i * zResolution + j + 1);
+
+            m_indices.push_back(i * zResolution + j + 1);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j + 1);
+        }
+    }
+
+    SetupMesh();
+}
+
+Terrain::Terrain(const char* _noisemapPath)
+{
+    // Set shader
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
+
+    // Load noisemap
+    unsigned char* noisemap = stbi_load(_noisemapPath, &m_width, &m_height, &m_nChannel, STBI_grey);
+
+    // Make a grid of vertices using the terrain's dimensions
+    for (int i = 0; i < xResolution; i++)
+    {
+        for (int j = 0; j < zResolution; j++)
+        {
+            // Set the vertex position
+            Vertex vertex;
+            vertex.position.x = (i / (float)xResolution) * 3.0f;
+            vertex.position.z = -10 + (j / (float)zResolution) * 3.0f;    // -10 for offset but remove later
+            vertex.position.y = (noisemap + (i + xResolution * j))[0] / 255.0f;
             // Set the vertex texture postion
             vertex.textureCoords.x = (j / (float)zResolution);
             vertex.textureCoords.y = 1.0f - (i / (float)xResolution);

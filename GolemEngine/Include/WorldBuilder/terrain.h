@@ -20,6 +20,8 @@ private:
     unsigned int m_ebo;
 
     Shader* m_shader = nullptr;
+
+    int m_width, m_height, m_nChannel;
     
 public:
     int xResolution;
@@ -28,6 +30,7 @@ public:
 
 public:
     Terrain(int _xResolution, int _zResolution, float _generationScale);
+    Terrain(const char* _noisemapPath);
 
     void SetupMesh();
     void Draw(Camera* _camera);

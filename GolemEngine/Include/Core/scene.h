@@ -50,21 +50,23 @@ public:
 
 	void InitDefaultScene();
 	void Update(Camera* _camera);
-	void UpdateGameObjects(Camera* _camera);
 	void UpdateTerrains(Camera* _camera);
+	void UpdateGameObjects(Camera* _camera);
 	void UpdateLights(Shader* _shader);
+	// Check the gameobject's name is already in the vector or not.
 	bool IsNameExists(const std::string& _name);
+	// To add a new gameobject in the scene
+	void AddTerrain(Terrain* _terrain);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
-	void AddLight(Light* _light);
 	void RemoveGameObject(GameObject* _gameObject);
+	void AddLight(Light* _light);
 	void DeleteLight(Light* _light);
-	void AddTerrain(Terrain* _terrain);
 	
+	std::vector<Terrain*> GetTerrains();
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
-	std::vector<Terrain*> GetTerrains();
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();

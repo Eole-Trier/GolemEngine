@@ -6,6 +6,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "Resource/tools.h"
 
 const std::string CREATE_TERRAIN_POPUP_TITLE = "Specify new terrain dimensions";
 const std::string CREATE_TERRAIN_POPUP_MESSAGE = "Enter terrain dimensions";
@@ -32,6 +33,12 @@ void WorldBuilderWindow::Update()
     }
 
     UpdateCreateTerrainPopup(&m_isCreateTerrainPopupActive, &m_newTerrainResolutionX, &m_newTerrainResolutionZ, &m_newTerrainGenerationScale);
+
+    if (ImGui::Button("Create new noisemap terrain"))
+    {
+        WorldBuilder::CreateTerrainNoisemap(Tools::FindFile("heightmap.png").c_str());
+    }
+
 
     ImGui::End();
 }
