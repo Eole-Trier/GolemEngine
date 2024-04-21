@@ -29,5 +29,5 @@ public:
     Terrain(int _xResolution, int _zResolution, float _generationScale);
 
     void SetupMesh();
-    void Draw();
+    void Draw(Camera* _camera);
 };

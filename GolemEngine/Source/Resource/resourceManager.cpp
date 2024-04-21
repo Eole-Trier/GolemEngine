@@ -26,7 +26,7 @@ void ResourceManager::CreateAndLoadResources()
 
     Shader* defaultTerrainShader = resourceManager->Create<Shader>(m_defaultTerrainShader, Tools::FindFile("defaultTerrain.vs"));
     defaultTerrainShader->SetVertexAndFragmentShader(defaultTerrainShader->path.c_str(), Tools::FindFile("defaultTerrain.fs").c_str());
-    
+
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
 

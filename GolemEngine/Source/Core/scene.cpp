@@ -90,7 +90,7 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     if (!m_terrains.empty())
     {
-        UpdateTerrains(); 
+        UpdateTerrains(_camera); 
     }
     UpdateGameObjects(_width, _height, _camera);
     UpdateLights(defaultShader);
@@ -143,11 +143,11 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
-void Scene::UpdateTerrains()
+void Scene::UpdateTerrains(Camera* _camera)
 {
     for (int i = 0; i < m_terrains.size(); i++)
     {
-        m_terrains[i]->Draw();
+        m_terrains[i]->Draw(_camera);
     }
 }
 

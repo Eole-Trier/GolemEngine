@@ -67,9 +67,9 @@ void Terrain::SetupMesh()
     glEnableVertexAttribArray(1);
 }
 
-void Terrain::Draw()
+void Terrain::Draw(Camera* _camera)
 {
-    // m_shader->Use();
+    m_shader->Use();
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }
