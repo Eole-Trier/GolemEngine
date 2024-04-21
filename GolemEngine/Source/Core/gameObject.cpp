@@ -10,7 +10,7 @@ GameObject::GameObject()
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
 	AddComponent(new Transform);
 	transform = GetComponent<Transform>();
-	SceneManager::GetCurrentScene()->AddGameObject(this);
+	SceneManager::GetCurrentScene()->gameObjects.push_back(this);
 }
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
@@ -19,7 +19,7 @@ GameObject::GameObject(const std::string& _name, Transform* _transform)
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
 	AddComponent(_transform);
 	transform = GetComponent<Transform>();
-	SceneManager::GetCurrentScene()->AddGameObject(this);
+	SceneManager::GetCurrentScene()->gameObjects.push_back(this);
 }
 
 GameObject::~GameObject() 

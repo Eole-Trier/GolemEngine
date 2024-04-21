@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <nlohmann/json.hpp>
 
+#include "golemEngine.h"
 #include "utils.h"
 #include "Core/gameobject.h"
 #include "Resource/Rendering/mesh.h"
@@ -30,23 +31,18 @@ Scene::Scene(std::string _name, bool _isEmpty)
     
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     
-    if (!_isEmpty)
+    if (!_isEmpty)    // If there is already a save of the world, don't init a default scene
     { 
-        Init();
+        InitDefaultScene();
     }
 }
 
-void Scene::Init()
-{
-    InitGameObjects();
-    InitLights();
-}
-
-void Scene::InitGameObjects()
+void Scene::InitDefaultScene()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-    
+
+    // Create a viking room model
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
@@ -54,10 +50,7 @@ void Scene::InitGameObjects()
     Model* vikingRoom = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-
-    Audio* audio1 = new Audio("music_01.wav");
-    vikingGo->AddComponent(audio1);
-
+    // Create a sphere model
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
@@ -66,17 +59,6 @@ void Scene::InitGameObjects()
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
-    std::string ballBaldName2 = "ball_bald2";
-    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
-    GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
-    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald2 = resourceManager->Get<Model>("sphere");
-    Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
-    ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
-}
-
-void Scene::InitLights()
-{
     // Set up directional light
     DirectionalLight* dir = new DirectionalLight;
     m_world->AddComponent(dir);
@@ -93,8 +75,13 @@ void Scene::Update(Camera* _camera)
     {
         UpdateTerrains(_camera); 
     }
-    UpdateGameObjects(_camera);
-    UpdateLights(defaultShader);
+    
+    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+
+    if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
+    {
+        UpdateLights(defaultShader);
+    }
 }
 
 void Scene::UpdateGameObjects(Camera* _camera)
@@ -185,12 +172,6 @@ void Scene::AddLight(Light* _light)
     }
 }
 
-void Scene::AddGameObject(GameObject* _gameObject)
-{
-    // TODO maybe remove and put it in gamobject constructor
-    gameObjects.push_back(_gameObject);
-}
-
 void Scene::RemoveGameObject(GameObject* _gameObject)
 {
     bool removed = false;
@@ -267,9 +248,9 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
 
     Model* model = resourceManager->Get<Model>(_modelName);
     Mesh* mesh = new Mesh(model, texture, shader);
-    GameObject* go = new GameObject(name, transform);
-    go->AddComponent(new MeshRenderer(mesh));
-    AddGameObject(go);
+    GameObject* gameObject = new GameObject(name, transform);
+    gameObject->AddComponent(new MeshRenderer(mesh));
+    gameObjects.push_back(gameObject);
 }
 
 void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)

@@ -48,9 +48,7 @@ public:
 	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
 	Scene(std::string _name, bool _isEmpty);
 
-	void Init();
-	void InitGameObjects();
-	void InitLights();
+	void InitDefaultScene();
 	void Update(Camera* _camera);
 	void UpdateGameObjects(Camera* _camera);
 	void UpdateTerrains(Camera* _camera);
@@ -59,7 +57,6 @@ public:
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
-	void AddGameObject(GameObject* _gameObject);
 	void RemoveGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
 	void AddTerrain(Terrain* _terrain);
