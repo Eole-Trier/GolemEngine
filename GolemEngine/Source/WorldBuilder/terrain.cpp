@@ -51,50 +51,22 @@ Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
     SetupMesh();
 }
 
-Terrain::Terrain(const char* _noisemapPath, float _generationScale)
+Terrain::Terrain(const char* _noisemapPath)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
 
     // Load noisemap
-    unsigned char* noisemap = stbi_load(_noisemapPath, &m_width, &m_height, &m_nChannel, STBI_grey);
-
-    const int WIDTH = 204;
-    const int HEIGHT = 205;
-    const int WIDHT2 = 512;
-    const int HEIGHT2 = 513;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* noisemap = stbi_load(_noisemapPath, &m_xSize, &m_zSize, &m_nChannel, STBI_grey);
     
-    // Make a grid of vertices using the terrain's dimensions
-    for (int i = 0; i < WIDTH; i++)
+    for (int i = 0; i < m_xSize; i++)
     {
-        for (int j = 0; j < HEIGHT; j++)
+        for (int j = 0; j < m_zSize; j++)
         {
-            unsigned char noisemapValue = (noisemap + (i + WIDHT2 * j))[0];
+            unsigned int noisemapValue = (noisemap + (i + m_xSize * j))[0];
             std::cout << noisemapValue << std::endl;
-            Vertex vertex;
-            vertex.position.x = i * 60.0f / WIDHT2;
-            vertex.position.z = -10 + j * 60.0f / HEIGHT2;
-            vertex.position.y = noisemapValue / 255.0f * 5;
-
-            vertex.textureCoords.x = (1.0f / HEIGHT * j);
-            vertex.textureCoords.y = (1 - i * 1.0f / WIDTH);
-            
-            m_vertices.push_back(vertex);
-        }
-    }
-    // Setup indices
-    for (int i = 0; i < m_width; i++)
-    {
-        for (int j = 0; j < m_height - 1; j++)    // - 1 because of range error
-        {
-            m_indices.push_back(i * m_height + j);
-            m_indices.push_back((i + 1) * m_height + j);
-            m_indices.push_back(i * m_height + j + 1);
-
-            m_indices.push_back(i * m_height + j + 1);
-            m_indices.push_back((i + 1) * m_height + j);
-            m_indices.push_back((i + 1) * m_height + j + 1);
         }
     }
 

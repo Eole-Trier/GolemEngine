@@ -15,8 +15,8 @@ void WorldBuilder::CreateTerrain(int _xResolution, int _zResolution, float _gene
     SceneManager::GetCurrentScene()->AddTerrain(new Terrain(_xResolution, _zResolution, _generationScale));
 }
 
-void WorldBuilder::CreateTerrainNoisemap(const char* _noisemapPath, float _generationScale)
+void WorldBuilder::CreateTerrainNoisemap(const char* _noisemapPath)
 {
-    SceneManager::GetCurrentScene()->AddTerrain(new Terrain(_noisemapPath, _generationScale));
+    SceneManager::GetCurrentScene()->AddTerrain(new Terrain(_noisemapPath));
 }
 

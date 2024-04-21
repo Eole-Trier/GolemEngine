@@ -21,7 +21,7 @@ private:
 
     Shader* m_shader = nullptr;
 
-    int m_width, m_height, m_nChannel;
+    int m_xSize, m_zSize, m_nChannel;
     
 public:
     int xResolution;
@@ -30,7 +30,7 @@ public:
 
 public:
     Terrain(int _xResolution, int _zResolution, float _generationScale);
-    Terrain(const char* _noisemapPath, float _generationScale);
+    Terrain(const char* _noisemapPath);
 
     void SetupMesh();
     void Draw(Camera* _camera);

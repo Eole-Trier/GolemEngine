@@ -39,7 +39,6 @@ void WorldBuilderWindow::Update()
         WorldBuilder::CreateTerrainNoisemap(Tools::FindFile("heightmap.png").c_str());
     }
 
-
     ImGui::End();
 }
 
