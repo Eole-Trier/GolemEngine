@@ -1,7 +1,5 @@
 ﻿#include "WorldBuilder/worldBuilder.h"
 
-#include <iostream>
-
 #include "Resource/sceneManager.h"
 
 
