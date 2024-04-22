@@ -9,67 +9,95 @@
 #include "Wrappers/windowWrapper.h"
 
 
-Terrain::Terrain(int _xResolution, int _zResolution, float _generationScale)
-    : xResolution(_xResolution), zResolution(_zResolution)
+Terrain::Terrain(int _xResolution, int _zResolution, Vector2 _size)
+    : m_xResolution(_xResolution), m_zResolution(_zResolution)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
     
     // Make a grid of vertices using the terrain's dimensions
-    for (int i = 0; i < xResolution; i++)
+    for (int i = 0; i < m_xResolution; i++)
     {
-        for (int j = 0; j < zResolution; j++)
+        for (int j = 0; j < m_zResolution; j++)
         {
             // Set the vertex position
             Vertex vertex;
-            vertex.position.x = (i / (float)xResolution) * _generationScale;
-            vertex.position.z = -10 + (j / (float)zResolution) * _generationScale;    // -10 for offset but remove later
+            vertex.position.x = (i / (float)m_xResolution) * _size.x;
+            vertex.position.z = -10 + (j / (float)m_zResolution) * _size.y;    // -10 for offset but remove later
             vertex.position.y = 0.0f;
             // Set the vertex texture postion
-            vertex.textureCoords.x = (j / (float)zResolution);
-            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
+            vertex.textureCoords.x = (j / (float)m_zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)m_xResolution);
             
             m_vertices.push_back(vertex);
         }
     }
     // Setup indices
-    for (int i = 0; i < xResolution; i++)
+    for (int i = 0; i < m_xResolution; i++)
     {
-        for (int j = 0; j < zResolution - 1; j++)    // - 1 because of range error
+        for (int j = 0; j < m_zResolution - 1; j++)    // - 1 because of range error
         {
-            m_indices.push_back(i * zResolution + j);
-            m_indices.push_back((i + 1) * zResolution + j);
-            m_indices.push_back(i * zResolution + j + 1);
+            m_indices.push_back(i * m_zResolution + j);
+            m_indices.push_back((i + 1) * m_zResolution + j);
+            m_indices.push_back(i * m_zResolution + j + 1);
 
-            m_indices.push_back(i * zResolution + j + 1);
-            m_indices.push_back((i + 1) * zResolution + j);
-            m_indices.push_back((i + 1) * zResolution + j + 1);
+            m_indices.push_back(i * m_zResolution + j + 1);
+            m_indices.push_back((i + 1) * m_zResolution + j);
+            m_indices.push_back((i + 1) * m_zResolution + j + 1);
         }
     }
 
     SetupMesh();
 }
 
-Terrain::Terrain(const char* _noisemapPath)
+Terrain::Terrain(const char* _noisemapPath, Vector2 _size, float _amplitude)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
 
     // Load noisemap
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* noisemap = stbi_load(_noisemapPath, &m_xSize, &m_zSize, &m_nChannel, STBI_grey);
+    stbi_set_flip_vertically_on_load(false);
+    unsigned char* noisemap = stbi_load(_noisemapPath, &m_xResolution, &m_zResolution, &m_nChannel, STBI_grey);
+    std::vector<int> noisemapValues;
     
-    for (int i = 0; i < m_xSize; i++)
+    for (int i = 0; i < m_xResolution; i++)
     {
-        for (int j = 0; j < m_zSize; j++)
+        for (int j = 0; j < m_zResolution; j++)
         {
-            unsigned int noisemapValue = (noisemap + (i + m_xSize * j))[0];
-            std::cout << noisemapValue << std::endl;
+            unsigned int noisemapValue = (noisemap + (i + m_xResolution * j))[0];
+            // Set the vertex position
+            Vertex vertex;
+            vertex.position.x = (i / (float)m_xResolution) * _size.x;
+            vertex.position.z = -10 + (j / (float)m_zResolution) * _size.y;    // -10 for offset but remove later
+            vertex.position.y = noisemapValue / 255.0f * _amplitude;
+            if (vertex.position.y > m_yMax)
+            {
+                m_yMax = vertex.position.y;
+            }
+            // Set the vertex texture postion
+            vertex.textureCoords.x = (j / (float)m_zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)m_xResolution);
+            
+            m_vertices.push_back(vertex);
         }
     }
+    // Setup indices
+    for (int i = 0; i < m_xResolution; i++)
+    {
+        for (int j = 0; j < m_zResolution - 1; j++)    // - 1 because of range error
+        {
+            m_indices.push_back(i * m_zResolution + j);
+            m_indices.push_back((i + 1) * m_zResolution + j);
+            m_indices.push_back(i * m_zResolution + j + 1);
 
+            m_indices.push_back(i * m_zResolution + j + 1);
+            m_indices.push_back((i + 1) * m_zResolution + j);
+            m_indices.push_back((i + 1) * m_zResolution + j + 1);
+        }
+    }
+    
     SetupMesh();
 }
 
@@ -97,7 +125,8 @@ void Terrain::Draw(Camera* _camera)
     m_shader->Use();
     m_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
     m_shader->SetMat4("view", _camera->GetViewMatrix());
-    m_shader->SetMat4("projection",  Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->SetFloat("maxHeight", m_yMax);
     glBindVertexArray(m_vao);
-    glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }

@@ -2,7 +2,11 @@
 
 out vec4 FragColor;
 
+in vec3 FragPos;
+in float maxY; // Input from vertex shader
+
 void main()
 {
-    FragColor = vec4(0.0, 1.0, 0.0, 1.0);  // Green color
+    float normalizedHeight = FragPos.y / maxY; // Normalize the y-coordinate of the fragment position
+    FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
 }

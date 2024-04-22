@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "dll.h"
+#include "vector2.h"
 
 
 class GOLEM_ENGINE_API WorldBuilder
@@ -17,6 +18,6 @@ private:
 
 public:
     static void Init();
-    static void CreateTerrain(int _xResolution, int _zResolution, float _generationScale);
-    static void CreateTerrainNoisemap(const char* _noisemapPath);
+    static void CreateTerrain(int _xResolution, int _zResolution, Vector2 _size);
+    static void CreateTerrainNoisemap(const char* _noisemapPath, Vector2 _size, float _amplitude);
 };
