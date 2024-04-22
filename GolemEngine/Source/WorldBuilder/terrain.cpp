@@ -72,10 +72,18 @@ Terrain::Terrain(const char* _noisemapPath, Vector2 _size, float _amplitude)
             vertex.position.x = (i / (float)m_xResolution) * _size.x;
             vertex.position.z = -10 + (j / (float)m_zResolution) * _size.y;    // -10 for offset but remove later
             vertex.position.y = noisemapValue / 255.0f * _amplitude;
-            if (vertex.position.y > m_yMax)
+
+            // Set highest vertex for the shader
+            if(_amplitude > 0.0f && vertex.position.y > m_yMax)
             {
                 m_yMax = vertex.position.y;
             }
+            else if (_amplitude < 0.0f && vertex.position.y < m_yMax)    // Handle the case where the amplitude is negative
+            {
+                m_yMax = vertex.position.y;
+                std::cout << m_yMax << std::endl;
+            }
+            
             // Set the vertex texture postion
             vertex.textureCoords.x = (j / (float)m_zResolution);
             vertex.textureCoords.y = 1.0f - (i / (float)m_xResolution);

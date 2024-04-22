@@ -9,17 +9,24 @@
 class WorldBuilderWindow : public Window
 {
 private:
-#pragma region Create Terrain Variables
+#pragma region Create Default Terrain Variables
     bool m_isCreateDefaultTerrainPopupActive = false;
     int m_newDefaultTerrainResolutionX = 0;
     int m_newDefaultTerrainResolutionZ = 0;
     Vector2 m_newDefaultTerrainSize = {1.0f, 1.0f};
-#pragma endregion Create Terrain Variables
+#pragma endregion Create Default Terrain Variables
+    
+#pragma region Create Noisemap Terrain Variables
+    bool m_isCreateDefaultNoisemapTerrainPopupActive = false;
+    float m_newDefaultNoisemapTerrainAmplitude = 1.0f;
+    Vector2 m_newDefaultNoisemapTerrainSize = {1.0f, 1.0f};
+#pragma endregion Create Noisemap Terrain Variables
     
 public:
     WorldBuilderWindow(std::string _name);
     ~WorldBuilderWindow();
 
     void Update() override;
-    void UpdateCreateDefaultTerrainPopup(bool _isPopupOpen, int _xResolution, int _zResolution, Vector2 _size);
+    void UpdateCreateDefaultTerrainPopup(int& _xResolution, int& _zResolution, Vector2& _size);
+    void UpdateCreateDefaultNoisemapeTerrainPopup(Vector2& _size, float &_amplitude);
 };
