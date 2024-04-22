@@ -13,9 +13,13 @@ void main()
     {
         normalizedHeight = 1.0f;
     }
-    else if (maxY != 0.0f)
+    else if (maxY > 0.0f)
     {
         normalizedHeight = FragPos.y / maxY; // Normalize the y-coordinate of the fragment position for positive maxY
+    }
+    else if (maxY < 0.0f)
+    {
+        normalizedHeight = 1.0f - (-FragPos.y / abs(maxY)); // Normalize the y-coordinate of the fragment position for negative maxY
     }
 
     FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
