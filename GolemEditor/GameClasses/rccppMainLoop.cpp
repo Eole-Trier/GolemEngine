@@ -4,6 +4,8 @@
 #include "systemTable.h"
 //#include "player.h"
 #include <iostream>
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 // RCC++ uses interface Id's to distinguish between different classes
 // here we have only one, so we don't need a header for this enum and put it in the same
@@ -24,7 +26,6 @@ struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
     void MainLoop() override
     {
     }
-
     int GetInt() override
     {
         return 1;

@@ -124,5 +124,6 @@
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
+    <ClInclude Include="Include\Refl\refl.hpp" />
   </ItemGroup>
 </Project>

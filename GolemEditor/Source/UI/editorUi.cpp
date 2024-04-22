@@ -14,6 +14,7 @@
 #include "imgui_internal.h"
 #include "Inputs/inputManager.h"
 #include "Wrappers/windowWrapper.h"
+#include "playScene.h"
 
 
 void EditorUi::Init()
@@ -25,6 +26,7 @@ void EditorUi::Init()
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
+    m_windows.push_back(new PlayScene("Playing"));
 
     // Setup Imgui context
     IMGUI_CHECKVERSION();

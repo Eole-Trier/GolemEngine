@@ -168,6 +168,7 @@
     <ClInclude Include="Include\Reflection\classesManager.h" />
     <ClInclude Include="Include\Reflection\displayType.h" />
     <ClInclude Include="Include\Reflection\refl.hpp" />
+    <ClInclude Include="Include\Refl\refl.hpp" />
     <ClInclude Include="Include\Resource\guid.h" />
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
@@ -304,6 +305,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)GolemEngine\GameClasses;$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;$(SolutionDir)RCCPP\RuntimeObjectSystem;$(SolutionDir)RCCPP\RuntimeCompiler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

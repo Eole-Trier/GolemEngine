@@ -1,9 +1,9 @@
 #include "player.h"
 #include <iostream>
 
-Eole::Eole(){}
-
-int Eole::Maxime()
-{
-    return 6;
-}
+//Eole::Eole(){}
+//
+//int Eole::Maxime()
+//{
+//    return 6;
+//}

@@ -19,9 +19,10 @@
 #include "RuntimeObjectSystem.h"
 #include "StdioLogSystem.h"
 #include "rccppMainLoop.h"
+#include "Resource/tools.h"
 
 
-static IRuntimeObjectSystem* g_pRuntimeObjectSystem;
+static IRuntimeObjectSystem*    g_pRuntimeObjectSystem;
 static StdioLogSystem           g_Logger;
 static SystemTable              g_SystemTable;
 
@@ -39,7 +40,10 @@ bool RCCppInit()
     FileSystemUtils::Path basePath = g_pRuntimeObjectSystem->FindFile(__FILE__).ParentPath();
     FileSystemUtils::Path imguiIncludeDir = basePath / "imgui";
     g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
-    //g_pRuntimeObjectSystem->AddIncludeDir(Tools::FindFolder("GameClasses").c_str());
+    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui");
+    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui\\backends");
+    g_pRuntimeObjectSystem->RemoveFromRuntimeFileList("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include\\Refl\\refl.hpp");
+
     return true;
 }
 
@@ -107,6 +111,7 @@ void Editor::InitUi()
 
 void Editor::Init()
 {
+    RCCppInit();
     InitWindow();
     InitGraphics();
     InitUi();
@@ -117,11 +122,12 @@ void Editor::MainLoop()
 {
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-
 	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{
-		WindowWrapper::ProcessEvents();
+        RCCppUpdate();
+        g_SystemTable.pRCCppMainLoopI->MainLoop();
 
+		WindowWrapper::ProcessEvents();
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -153,6 +159,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
+    RCCppCleanup();
 }
 
 void Editor::Run()

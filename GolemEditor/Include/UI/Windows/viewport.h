@@ -39,4 +39,5 @@ public:
 	void DragDropEvent();
 
 	Camera* GetCamera();
+	Camera* playerCamera;
 };

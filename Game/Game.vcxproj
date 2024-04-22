@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8987c6aa-f313-4d4d-ae58-b43133051844}</ProjectGuid>
-    <RootNamespace>GolemEditor</RootNamespace>
+    <ProjectGuid>{f2a484ec-3ddc-40c7-b817-c59370f5159c}</ProjectGuid>
+    <RootNamespace>Game</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,28 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
-    <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
-    <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
-    <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\OpenAL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
-    <ExternalIncludePath>$(SolutionDir)Libraries/Include;$(ExternalIncludePath)</ExternalIncludePath>
-    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,15 +89,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,17 +103,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,28 +117,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GolemEditor\GameClasses;$(SolutionDir)Libraries\Libs\OpenAL;$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)RCCPP\RuntimeObjectSystem;$(SolutionDir)RCCPP\RuntimeCompiler;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <RuntimeTypeInfo>
-      </RuntimeTypeInfo>
-      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;RuntimeCompiler_VS2010.lib;RuntimeObjectSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
-    </PostBuildEvent>
-    <PreBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
-    </PreBuildEvent>
-    <PreLinkEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(SolutionDir)Build\Debug"</Command>
-    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -170,52 +131,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External;$(SolutionDir)GolemEditor\Include;$(SolutionDir)GolemEngine\Include;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)GolemEngine\External\imgui;$(SolutionDir)GolemEngine\External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameClasses\player.cpp" />
-    <ClCompile Include="GameClasses\playScene.cpp" />
-    <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
-    <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
-    <ClCompile Include="Source\UI\toolbar.cpp" />
-    <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
-    <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
-    <ClCompile Include="Source\UI\Windows\fileBrowser.cpp" />
-    <ClCompile Include="Source\UI\Windows\inspector.cpp" />
-    <ClCompile Include="Source\UI\Windows\viewport.cpp" />
-    <ClCompile Include="Source\UI\Windows\sceneGraph.cpp" />
-    <ClCompile Include="Source\editor.cpp" />
-    <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\UI\editorUi.cpp" />
-    <ClCompile Include="Source\UI\Windows\window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameClasses\player.h" />
-    <ClInclude Include="GameClasses\playScene.h" />
-    <ClInclude Include="GameClasses\rccppMainLoop.h" />
-    <ClInclude Include="GameClasses\StdioLogSystem.h" />
-    <ClInclude Include="GameClasses\systemTable.h" />
-    <ClInclude Include="Include\editor.h" />
-    <ClInclude Include="Include\UI\editorUi.h" />
-    <ClInclude Include="Include\UI\toolbar.h" />
-    <ClInclude Include="Include\UI\Windows\basicActors.h" />
-    <ClInclude Include="Include\UI\Windows\debugWindow.h" />
-    <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
-    <ClInclude Include="Include\UI\Windows\inspector.h" />
-    <ClInclude Include="Include\UI\Windows\viewport.h" />
-    <ClInclude Include="Include\UI\Windows\sceneGraph.h" />
-    <ClInclude Include="Include\UI\Windows\window.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

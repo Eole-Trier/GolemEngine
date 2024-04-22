@@ -15,6 +15,7 @@
 #include "vector4.h"
 #include "imgui_internal.h"
 #include "imgui.h"
+#include "playScene.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -29,7 +30,10 @@ void Viewport::Update()
     SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
-    
+    if (ImGui::Button("Play"))
+    {
+        g_isPlayTesting = true;
+    }
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
@@ -71,12 +75,10 @@ void Viewport::Update()
             //std::cout << "deselected" << std::endl;
         }
     }
-
+    // Renderer Editor graph
     ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
-
-    DragDropEvent();
 
     DragDropEvent();
 
