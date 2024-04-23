@@ -97,5 +97,16 @@ public:
 			}
 			_j["gameObjects"] = jGameObjects;
 		}
+		if (!m_terrains.empty())
+		{
+			json jTerrains;
+			for (int i = 0; i < m_terrains.size(); i++)
+			{
+				json jTerrainPtr;
+				m_terrains[i]->ToJson(jTerrainPtr);
+				jTerrains.push_back(jTerrainPtr);
+			}
+			_j["terrains"] = jTerrains;
+		}
 	}
 };

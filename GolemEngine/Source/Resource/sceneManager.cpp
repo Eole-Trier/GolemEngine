@@ -187,6 +187,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
         }
         else if (jScene["gameObjects"][i]["name"] == "World")    // Setup World seperatly
         {
+            // Setup guids
             Guid worldGuid;
             worldGuid.FromString(jScene["gameObjects"][i]["guid"]);
             scene->GetWorld()->guid = worldGuid;
@@ -214,6 +215,43 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                     }
                 }
             }
+        }
+    }
+
+    for (int i = 0; i < jScene["terrains"].size(); i++)
+    {
+        if (Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]) == "")
+        {
+            Terrain* terrain = new Terrain(
+                jScene["terrains"][i]["xResolution"],
+                jScene["terrains"][i]["zResolution"],
+                jScene["terrains"][i]["size"]
+            );
+        
+            // Setup guid
+            Guid terrainGuid;
+            terrainGuid.FromString(jScene["terrains"][i]["guid"]);
+            terrain->guid = terrainGuid;
+        
+            terrain->name = jScene["terrains"][i]["name"];
+            std::cout << jScene["terrains"][i]["size"] << std::endl;
+            scene->AddTerrain(terrain);
+        }
+        else
+        {
+            Terrain* terrain = new Terrain(
+                Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]).c_str(),
+                jScene["terrains"][i]["size"],
+                jScene["terrains"][i]["amplitude"]
+            );
+        
+            // Setup guid
+            Guid terrainGuid;
+            terrainGuid.FromString(jScene["terrains"][i]["guid"]);
+            terrain->guid = terrainGuid;
+            terrain->name = jScene["terrains"][i]["name"];
+            
+            scene->AddTerrain(terrain);
         }
     }
     

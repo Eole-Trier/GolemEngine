@@ -11,7 +11,7 @@
 
 
 Terrain::Terrain(int _xResolution, int _zResolution, Vector2 _size)
-    : m_xResolution(_xResolution), m_zResolution(_zResolution)
+    : m_xResolution(_xResolution), m_zResolution(_zResolution), m_size(_size)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -53,6 +53,7 @@ Terrain::Terrain(int _xResolution, int _zResolution, Vector2 _size)
 }
 
 Terrain::Terrain(const char* _noisemapPath, Vector2 _size, float _amplitude)
+    : m_noisemapPath(_noisemapPath), m_size(_size), m_amplitude(_amplitude)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -139,4 +140,14 @@ void Terrain::Draw(Camera* _camera)
     m_shader->SetFloat("maxHeight", m_yMax);
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+}
+
+std::string Terrain::GetNoisemapPath()
+{
+    return m_noisemapPath;
+}
+
+void Terrain::SetNoisemapPath(std::string _noisemapPath)
+{
+    m_noisemapPath = _noisemapPath;
 }
