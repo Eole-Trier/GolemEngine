@@ -4,13 +4,14 @@
 #include "Image/stb_image.h"
 #include "glad/glad.h"
 #include "Debug/log.h"
+#include "Wrappers/graphicWrapper.h"
 
 Texture::Texture()
 {
 
 }
 
-Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format) :
+Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format, unsigned int _internalFormat) :
     m_width(_width), m_height(_height)
 {
     glGenTextures(1, &id);
@@ -21,7 +22,7 @@ Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, m_width, m_height, 0, _format, GL_UNSIGNED_BYTE, NULL);
 }
 
 Texture::~Texture()

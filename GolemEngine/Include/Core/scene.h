@@ -34,6 +34,7 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
+	std::vector<Mesh*> m_meshes;
 
 	std::vector<Terrain*> m_terrains;
 

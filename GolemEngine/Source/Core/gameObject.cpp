@@ -2,6 +2,7 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
+#include "golemEngine.h"
 
 GameObject::GameObject()
 	: m_selected(false)

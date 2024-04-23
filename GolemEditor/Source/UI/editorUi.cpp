@@ -13,6 +13,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuizmo.h"
 #include "Inputs/inputManager.h"
 #include "Wrappers/windowWrapper.h"
 
@@ -31,6 +32,7 @@ void EditorUi::Init()
     // Setup ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;

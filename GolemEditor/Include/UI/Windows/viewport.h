@@ -21,8 +21,9 @@ private:
 	bool m_firstMouse;
 	bool m_isDragging = false;
 	bool m_lastSpacePress = false;
-
 	Vector2 m_viewportBounds[2];
+
+	bool isDisplayed;
 
 public:
 	int width = 0, height = 0;
@@ -33,10 +34,11 @@ public:
 	~Viewport();
 
 	void Update() override;
-
 	void SetCamera(Camera* _camera);
 
 	void DragDropModel();
 
+	void DragDropEvent();
+	Vector2 GetViewportSize();
 	Camera* GetCamera();
 };

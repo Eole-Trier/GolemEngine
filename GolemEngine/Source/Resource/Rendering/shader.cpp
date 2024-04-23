@@ -149,3 +149,8 @@ void Shader::SetViewPos(Vector3& _viewPos)
 {
     SetVec3("viewPos", _viewPos);
 }
+
+void Shader::SetEntityID(int _entityID)
+{
+    SetInt("entityID", _entityID);
+}

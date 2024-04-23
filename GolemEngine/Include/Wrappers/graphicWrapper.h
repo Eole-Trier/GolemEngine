@@ -2,8 +2,11 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <vector>
+#include <memory>
 
 #include "dll.h"
+#include "Resource/Rendering/texture.h"
 
 #define OPENGL_MAJOR_VERSION GLFW_CONTEXT_VERSION_MAJOR
 #define OPENGL_MINOR_VERSION GLFW_CONTEXT_VERSION_MINOR
@@ -27,10 +30,8 @@ private:
 	static unsigned int m_vbo;
 	static unsigned int m_rbo;
 	static unsigned int m_fbo;
-	static unsigned int m_textureId;
 	static int m_width;
 	static int m_height;
-
 private:
 	// Private constructors and destructor to make static class
 	GraphicWrapper() = delete;
@@ -42,10 +43,13 @@ private:
 	~GraphicWrapper() = delete;
 
 public:
+	static inline std::vector<std::unique_ptr<Texture>> m_textures;
+
+public:
 	// Initialize library
 	static int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	static void CreateFramebuffer(unsigned int _format, int _width, int _height);
+	static void CreateFramebuffer(int _width, int _height);
 
 	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id);
 
