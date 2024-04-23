@@ -80,7 +80,7 @@ void Transform::EditTransformGizmo()
     Matrix4 transformTest = GetLocalModel().Transpose();
 
     auto camera = GolemEngine::GetCamera();
-    Matrix4 cameraProjection = Matrix4::Projection(camera->GetZoom() * M_PI / 180.f, windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
+    Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
     ImGuizmo::Enable(true);

@@ -164,7 +164,7 @@ void Viewport::DragDropEvent()
 
 Vector2 Viewport::GetViewportSize()
 {
-    return Vector2();
+    return Vector2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 }
 
 Camera* Viewport::GetCamera()
