@@ -35,5 +35,5 @@ void Terrain::Draw(Camera* _camera)
     p_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     p_shader->SetFloat("maxHeight", p_yMax);
     glBindVertexArray(p_vao);
-    glDrawElements(GL_TRIANGLES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_LINES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 }

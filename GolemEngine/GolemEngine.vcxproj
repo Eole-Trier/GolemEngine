@@ -31,10 +31,10 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
-    <ClCompile Include="Source\Components\Light\directional.cpp" />
+    <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
     <ClCompile Include="Source\Components\Light\light.cpp" />
-    <ClCompile Include="Source\Components\Light\point.cpp" />
-    <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Components\Light\pointLight.cpp" />
+    <ClCompile Include="Source\Components\Light\spotLight.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
