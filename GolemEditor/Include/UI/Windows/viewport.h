@@ -35,6 +35,7 @@ public:
 
 	void Update() override;
 	void SetCamera(Camera* _camera);
+	void DragDropModel();
 
 	Vector2 GetViewportSize();
 	Camera* GetCamera();
