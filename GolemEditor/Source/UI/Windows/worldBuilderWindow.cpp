@@ -43,8 +43,6 @@ void WorldBuilderWindow::Update()
         UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainSize, m_newDefaultNoisemapTerrainAmplitude);
     }
 
-    
-
     ImGui::End();
 }
 
@@ -78,7 +76,7 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateTerrain(_xResolution, _zResolution, _size);
+            WorldBuilder::CreateDefaultTerrain(_xResolution, _zResolution, _size);
             m_isCreateDefaultTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }
@@ -116,7 +114,7 @@ void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(Vector2& _size
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateTerrainNoisemap(Tools::FindFile("heightmap.png").c_str(), _size, _amplitude);
+            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str(), _size, _amplitude);
             m_isCreateDefaultNoisemapTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }

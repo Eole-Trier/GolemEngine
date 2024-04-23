@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "5aab057c-6557-4a87-0000-cccccccccccc",
+            "guid": "02989676-d6f5-edd1-1d88-849b961307d7",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "91cafd68-36d2-687e-0000-cccccccccccc",
+      "guid": "fbf6d820-e612-da0d-fab7-bfadc3d46775",
       "name": "World"
     },
     {
@@ -70,7 +70,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "fe1b482c-5428-f0ce-0000-cccccccccccc",
+            "guid": "28ef5a4f-4011-7955-cc33-03166932cc18",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -91,14 +91,14 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Meshes\\viking_room.obj",
             "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "d77d8531-dc1d-58ee-0000-cccccccccccc",
+      "guid": "8e8dd39a-a421-2674-7048-cb9b5112502d",
       "name": "viking"
     },
     {
@@ -110,7 +110,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "2715368a-95bf-f67d-0000-cccccccccccc",
+            "guid": "89a97d2d-a4e2-9677-c548-70a3616a4ad1",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -131,43 +131,43 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
             "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "199a9c1e-9e9b-fed5-0000-cccccccccccc",
+      "guid": "80bee389-f039-798c-a8c0-e4dd71a03be9",
       "name": "ball_bald"
     }
   ],
-  "guid": "19ec3402-2a13-90ae-e05b-1bb6fcc71d4b",
+  "guid": "3021a83b-eb06-4bd6-3822-e56dc1264bd4",
   "name": "scene_0",
   "terrains": [
     {
-      "amplitude": 0.0,
-      "guid": "0bd2817e-af27-280e-0000-cccccccccccc",
-      "name": "",
-      "noisemapPath": "",
-      "size": {
-        "x": 3.0,
-        "y": 3.0
-      },
-      "xResolution": 3,
-      "zResolution": 3
-    },
-    {
-      "amplitude": 3.0,
-      "guid": "9b89a525-d717-29f8-7a97-1fe7026d52f8",
+      "amplitude": 1.0,
+      "guid": "69c8252c-31ee-8621-488c-64d550a67640",
       "name": "",
       "noisemapPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Heightmaps\\heightmap.png",
       "size": {
-        "x": -30.0,
-        "y": -30.0
+        "x": 1.0,
+        "y": 1.0
       },
       "xResolution": 512,
       "zResolution": 513
+    },
+    {
+      "amplitude": 0,
+      "guid": "73e6555f-8d65-3ddc-d1e4-1f9571a77954",
+      "name": "",
+      "noisemapPath": "",
+      "size": {
+        "x": -35.0,
+        "y": 40.0
+      },
+      "xResolution": 2,
+      "zResolution": 2
     }
   ]
 }

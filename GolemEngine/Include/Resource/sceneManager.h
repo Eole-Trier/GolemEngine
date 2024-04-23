@@ -23,6 +23,9 @@ private:
     void operator=(const SceneManager&) = delete;
     ~SceneManager() = delete;
 
+private:
+    static void CreateTerrainFromFile(Terrain* _terrain, Scene* _scene, json& _jScene, int _i);
+    
 public:
     static void Init();
 

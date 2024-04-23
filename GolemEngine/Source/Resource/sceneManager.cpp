@@ -19,6 +19,9 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/tools.h"
 #include "Resource/resourceManager.h"
+#include "WorldBuilder/terrain.h"
+#include "WorldBuilder/defaultTerrain.h"
+#include "WorldBuilder/noisemapTerrain.h"
 
 using json = nlohmann::json;
 
@@ -220,38 +223,27 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
 
     for (int i = 0; i < jScene["terrains"].size(); i++)
     {
+        // If the terrain is a default terrain
         if (Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]) == "")
         {
-            Terrain* terrain = new Terrain(
+            DefaultTerrain* terrain = new DefaultTerrain();
+            terrain->Init(
                 jScene["terrains"][i]["xResolution"],
                 jScene["terrains"][i]["zResolution"],
                 jScene["terrains"][i]["size"]
             );
-        
-            // Setup guid
-            Guid terrainGuid;
-            terrainGuid.FromString(jScene["terrains"][i]["guid"]);
-            terrain->guid = terrainGuid;
-        
-            terrain->name = jScene["terrains"][i]["name"];
-            std::cout << jScene["terrains"][i]["size"] << std::endl;
-            scene->AddTerrain(terrain);
+            CreateTerrainFromFile(terrain, scene, jScene, i);
         }
+        // If the terrain is a noisemap terrain
         else
         {
-            Terrain* terrain = new Terrain(
+            NoisemapTerrain* terrain = new NoisemapTerrain();
+            terrain->Init(
                 Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]).c_str(),
                 jScene["terrains"][i]["size"],
                 jScene["terrains"][i]["amplitude"]
             );
-        
-            // Setup guid
-            Guid terrainGuid;
-            terrainGuid.FromString(jScene["terrains"][i]["guid"]);
-            terrain->guid = terrainGuid;
-            terrain->name = jScene["terrains"][i]["name"];
-            
-            scene->AddTerrain(terrain);
+            CreateTerrainFromFile(terrain, scene, jScene, i);
         }
     }
     
@@ -287,4 +279,14 @@ void SceneManager::SetCurrentScene(Scene* _scene)
     m_currentScene = _scene;
 }
 
+void SceneManager::CreateTerrainFromFile(Terrain* _terrain, Scene* _scene, json& _jScene, int _i)
+{
+    // Setup guid
+    Guid terrainGuid;
+    terrainGuid.FromString(_jScene["terrains"][_i]["guid"]);
+    _terrain->guid = terrainGuid;
 
+    _terrain->name = _jScene["terrains"][_i]["name"];
+
+    _scene->AddTerrain(_terrain);  
+}

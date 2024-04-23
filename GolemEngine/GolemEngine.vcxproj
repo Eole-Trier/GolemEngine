@@ -128,6 +128,8 @@
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Resource\tools.cpp" />
+    <ClCompile Include="Source\WorldBuilder\defaultTerrain.cpp" />
+    <ClCompile Include="Source\WorldBuilder\noisemapTerrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
@@ -181,6 +183,8 @@
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Resource\tools.h" />
+    <ClInclude Include="Include\WorldBuilder\defaultTerrain.h" />
+    <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
