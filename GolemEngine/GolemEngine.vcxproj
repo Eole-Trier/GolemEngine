@@ -131,7 +131,7 @@
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
-    <ClCompile Include="Source\Resource\tools.cpp" />
+    <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />

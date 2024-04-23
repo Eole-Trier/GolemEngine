@@ -38,7 +38,6 @@ public:
 
 	void DragDropModel();
 
-	void DragDropEvent();
 	Vector2 GetViewportSize();
 	Camera* GetCamera();
 };

@@ -6,13 +6,13 @@
 #include "golemEngine.h"
 #include "utils.h"
 #include "Core/gameobject.h"
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
@@ -69,7 +69,7 @@ void Scene::Update(Camera* _camera)
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
-    defaultShader->SetViewPos(_camera->m_position);
+    defaultShader->SetViewPos(_camera->position);
 
     if (!m_terrains.empty())
     {

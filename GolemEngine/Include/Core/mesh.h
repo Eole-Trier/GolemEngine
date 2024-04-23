@@ -4,9 +4,9 @@
 #include <nlohmann/json.hpp>
 
 #include "dll.h"
-#include "shader.h"
-#include "texture.h"
-#include "model.h"
+#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/model.h"
 #include "Core/gameobject.h"
 
 using json = nlohmann::json;
