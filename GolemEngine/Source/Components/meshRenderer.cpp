@@ -5,6 +5,7 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 
+
 MeshRenderer::MeshRenderer()
 {}
 
@@ -35,6 +36,7 @@ void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
         shader->SetMat4("projection", projection);
 
         glBindVertexArray(model->VAO);
+        if
         glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
     }
 }

@@ -1,4 +1,4 @@
-#include "UI/Windows/basicActors.h"
+#include "UI/Windows/basicActorsWindow.h"
 
 #include "Core/gameobject.h"
 #include "golemEngine.h"
@@ -8,13 +8,13 @@
 #include "imgui_internal.h"
 #include "Refl/refl.hpp"
 
-BasicActors::BasicActors(std::string _name) 
+BasicActorsWindow::BasicActorsWindow(std::string _name) 
 	: Window(_name)
 {}
 
-BasicActors::~BasicActors() {}
+BasicActorsWindow::~BasicActorsWindow() {}
 
-void BasicActors::Update()
+void BasicActorsWindow::Update()
 {
 	ImGui::Begin(name.c_str());
 

@@ -99,14 +99,12 @@ void Viewport::Update()
     }
 
     ImGui::End();
-
 }
 
 void Viewport::SetCamera(Camera* _camera)
 {
     m_camera = _camera;
 }
-
 
 
 Camera* Viewport::GetCamera()

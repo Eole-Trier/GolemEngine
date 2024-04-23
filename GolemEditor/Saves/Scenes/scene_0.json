@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "02989676-d6f5-edd1-1d88-849b961307d7",
+            "guid": "2fa6a05e-b70f-3f1c-a7b9-e60be4f968f8",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "fbf6d820-e612-da0d-fab7-bfadc3d46775",
+      "guid": "fa5ce96a-d835-1531-e375-61b0be86b73f",
       "name": "World"
     },
     {
@@ -70,7 +70,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "28ef5a4f-4011-7955-cc33-03166932cc18",
+            "guid": "0628451f-ab98-f07d-cb4a-43b4adde279d",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -98,7 +98,7 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "8e8dd39a-a421-2674-7048-cb9b5112502d",
+      "guid": "2071cced-d559-d019-9100-426cae05fc0d",
       "name": "viking"
     },
     {
@@ -106,11 +106,11 @@
         {
           "data": {
             "globalPosition": {
-              "x": 3.0,
+              "x": 0.0,
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "89a97d2d-a4e2-9677-c548-70a3616a4ad1",
+            "guid": "2d40578b-df2f-9d3f-ea84-1e15430d703e",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -138,36 +138,10 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "80bee389-f039-798c-a8c0-e4dd71a03be9",
+      "guid": "8b875750-77fb-80cd-60af-59a71371a4e9",
       "name": "ball_bald"
     }
   ],
-  "guid": "3021a83b-eb06-4bd6-3822-e56dc1264bd4",
-  "name": "scene_0",
-  "terrains": [
-    {
-      "amplitude": 1.0,
-      "guid": "69c8252c-31ee-8621-488c-64d550a67640",
-      "name": "",
-      "noisemapPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Heightmaps\\heightmap.png",
-      "size": {
-        "x": 1.0,
-        "y": 1.0
-      },
-      "xResolution": 512,
-      "zResolution": 513
-    },
-    {
-      "amplitude": 0,
-      "guid": "73e6555f-8d65-3ddc-d1e4-1f9571a77954",
-      "name": "",
-      "noisemapPath": "",
-      "size": {
-        "x": -35.0,
-        "y": 40.0
-      },
-      "xResolution": 2,
-      "zResolution": 2
-    }
-  ]
+  "guid": "857f6c81-1831-6e61-08df-be433411af57",
+  "name": "scene_0"
 }
