@@ -10,14 +10,14 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
 #include "Resource/tools.h"
-#include "..\..\Include\Components\Light\pointLight.h"
-#include "..\..\Include\Components\Light\directionalLight.h"
-#include "..\..\Include\Components\Light\spotLight.h"
-#include "Resource/Rendering/shader.h"
-#include "Core/gameobject.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/spotLight.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
+#include "Core/gameobject.h"
+#include "Resource/Rendering/shader.h"
 
 using json = nlohmann::json;
 
@@ -164,20 +164,8 @@ void Scene::UpdateLights(Shader* _shader)
     }
 }
 
-// Check the gameobject's name is already in the vector or not.
-// If it exists will give a new name with a _2 at the last
 bool Scene::IsNameExists(const std::string& _name)
 {
-    /*
-    for (const auto& mesh : m_meshes)
-    {
-        if (mesh->GetName() == _name)
-        {
-            return true;
-        }
-    }
-    return false;
-    */
     return false;
 }
 

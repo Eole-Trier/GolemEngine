@@ -435,6 +435,5 @@ void FileBrowser::DragDropEvent()
 	{
 		g_isFromFileBrowser = false;
 		isDragging = false;
-		std::cout << "hiii" << std::endl;
 	}
 }
