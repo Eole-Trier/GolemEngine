@@ -29,7 +29,6 @@ void Terrain::SetupMesh()
 
 void Terrain::Draw(Camera* _camera)
 {
-    SetupMesh();
     p_shader->Use();
     p_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
     p_shader->SetMat4("view", _camera->GetViewMatrix());
