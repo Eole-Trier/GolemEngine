@@ -11,18 +11,14 @@
 using namespace JPH;
 using namespace JPH::literals;
 
-SphereCollider::SphereCollider(GameObject* _owner, float _radius)
+SphereCollider::SphereCollider()
+	: m_radius(1.f)
+{
+}
+
+SphereCollider::SphereCollider(float _radius)
 	: m_radius(_radius)
 {
-	owner = _owner;
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-
-	BodyCreationSettings sphere_settings(new SphereShape(_radius), RVec3(owner->transform->localPosition.x, owner->transform->localPosition.y, owner->transform->localPosition.z), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::MOVING);
-	id = body_interface.CreateAndAddBody(sphere_settings, EActivation::Activate);
-
-	// Now you can interact with the dynamic body, in this case we're going to give it a velocity.
-	// (note that if we had used CreateBody then we could have set the velocity straight on the body before adding it to the physics system)
-	body_interface.SetLinearVelocity(id, Vec3(0.0f, -5.0f, 0.0f));
 }
 
 
@@ -35,6 +31,16 @@ SphereCollider::~SphereCollider()
 	// Destroy the sphere. After this the sphere ID is no longer valid.
 	body_interface.DestroyBody(id);
 }
+
+void SphereCollider::Begin()
+{
+	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, m_radius);
+	
+	body_interface.SetLinearVelocity(id, Vec3(0.0f, 5.0f, -25.0f));
+}
+
 
 void SphereCollider::Update()
 {

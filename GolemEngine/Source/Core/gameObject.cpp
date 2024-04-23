@@ -28,6 +28,15 @@ GameObject::~GameObject()
 	DeleteAllComponents();
 }
 
+void GameObject::Update()
+{
+	for (Component* c : m_components)
+	{
+		c->Update();
+	}
+}
+
+
 size_t GameObject::GetId()
 {
 	return m_id;

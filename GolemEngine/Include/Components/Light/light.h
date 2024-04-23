@@ -21,7 +21,7 @@ public:
 	Light() = default;
 	Light(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular);
 	virtual ~Light();
-	virtual void Update(Shader* _shader) = 0;
+	virtual void Update() override {};
 };
 
 REFL_AUTO(

@@ -65,9 +65,8 @@ void PointLight::SetPointLight(Shader* _shader)
     _shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
 }
 
-void PointLight::Update(Shader* _shader)
+void PointLight::Update()
 {
     if (owner)
         position = owner->transform->globalPosition;
-    SetPointLight(_shader);
 }

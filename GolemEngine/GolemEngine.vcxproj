@@ -42,7 +42,7 @@
     <ClCompile Include="Source\Physic\objectLayerVsBroadPhaseLayerFilter.cpp" />
     <ClCompile Include="Source\Physic\objectLayerVsObjectLayer.cpp" />
     <ClCompile Include="Source\Physic\physicSystem.cpp" />
-    <ClCompile Include="Source\Components\Physic\sphreCollider.cpp" />
+    <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />

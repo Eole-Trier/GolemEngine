@@ -6,6 +6,7 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include "Components/component.h"
 #include "Core/gameobject.h"
+#include "Refl/refl.hpp"
 
 using namespace JPH;
 
@@ -18,10 +19,20 @@ public:
 	BodyID id;
 
 public:
-	SphereCollider(GameObject* _owner, float _radius);
+	SphereCollider();
+	SphereCollider(float _radius);
 	~SphereCollider();
+
+	void Begin() override;
 
 	void Update() override;
 
 	void to_json(json& j) const {}
+
+	friend refl_impl::metadata::type_info__<SphereCollider>; // needed to reflect private members
 };
+
+REFL_AUTO(
+	type(SphereCollider, bases<Component>),
+	field(m_radius, Range(0, 100))
+)

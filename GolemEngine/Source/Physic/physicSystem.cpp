@@ -19,11 +19,6 @@
 #include <thread>
 
 #include "Components/Physic/sphereCollider.h"
-#include "Physic/contactManager.h"
-#include "Physic/bodyActivationManager.h"
-#include "Physic/objectLayerVsBroadPhaseLayer.h"
-#include "Physic/objectLayerVsObjectLayer.h"
-#include "Physic/broadPhaseLayerInterface.h"
 
 // Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
 JPH_SUPPRESS_WARNINGS
@@ -60,9 +55,6 @@ static bool AssertFailedImpl(const char* inExpression, const char* inMessage, co
 
 #endif // JPH_ENABLE_ASSERTS
 
-
-PhysicsSystem PhysicSystem::physicsSystem;
-
 PhysicSystem::PhysicSystem()
 {
 	// Register allocation hook. In this example we'll just let Jolt use malloc / free but you can override these if you want (see Memory.h).
@@ -97,47 +89,23 @@ PhysicSystem::PhysicSystem()
 	// number then these contacts will be ignored and bodies will start interpenetrating / fall through the world.
 	const uint cMaxContactConstraints = 10240;
 
-	// Create mapping table from object layer to broadphase layer
-	// Note: As this is an interface, PhysicsSystem will take a reference to this so this instance needs to stay alive!
-	BPLInterface broad_phase_layer_interface;
-
-	// Create class that filters object vs broadphase layers
-	// Note: As this is an interface, PhysicsSystem will take a reference to this so this instance needs to stay alive!
-	ObjectLayerVsBroadPhaseLayer object_vs_broadphase_layer_filter;
-
-	// Create class that filters object vs object layers
-	// Note: As this is an interface, PhysicsSystem will take a reference to this so this instance needs to stay alive!
-	ObjectLayerVsObjectLayer object_vs_object_layer_filter;
-
 	// Now we can create the actual physics system.
 	physicsSystem.Init(cMaxBodies, cNumBodyMutexes, cMaxBodyPairs, cMaxContactConstraints, broad_phase_layer_interface, object_vs_broadphase_layer_filter, object_vs_object_layer_filter);
 
 	// A body activation listener gets notified when bodies activate and go to sleep
 	// Note that this is called from a job so whatever you do here needs to be thread safe.
 	// Registering one is entirely optional.
-	BodyActivationManager body_activation_listener;
-	physicsSystem.SetBodyActivationListener(&body_activation_listener);
+	physicsSystem.SetBodyActivationListener(&bodyActivationListener);
 
 	// A contact listener gets notified when bodies (are about to) collide, and when they separate again.
 	// Note that this is called from a job so whatever you do here needs to be thread safe.
 	// Registering one is entirely optional.
-	ContactManager contact_listener;
-	physicsSystem.SetContactListener(&contact_listener);
-
-	// The main way to interact with the bodies in the physics system is through the body interface. There is a locking and a non-locking
-	// variant of this. We're going to use the locking version (even though we're not planning to access bodies from multiple threads)
-	BodyInterface& body_interface = physicsSystem.GetBodyInterface();
+	physicsSystem.SetContactListener(&contactListener);
 
 	// Optional step: Before starting the physics simulation you can optimize the broad phase. This improves collision detection performance (it's pointless here because we only have 2 bodies).
 	// You should definitely not call this every frame or when e.g. streaming in a new level section as it is an expensive operation.
 	// Instead insert all new objects in batches instead of 1 at a time to keep the broad phase efficient.
 	physicsSystem.OptimizeBroadPhase();
-
-	//delete rb;
-
-	// Remove and destroy the floor
-	//body_interface.RemoveBody(floor->GetID());
-	//body_interface.DestroyBody(floor->GetID());
 }
 
 PhysicSystem::~PhysicSystem()
@@ -167,4 +135,21 @@ void PhysicSystem::Update()
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
+ BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
+{
+	 BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
+	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::MOVING);
+	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::Activate);
+}
+
+
+RVec3 PhysicSystem::ToJph(const Vector3 _v)
+{
+	return RVec3(_v.x, _v.y, _v.z);
+}
+
+Quat PhysicSystem::ToJph(const Quaternion _q)
+{
+	return Quat(_q.x, _q.y, _q.z, _q.w);
+}

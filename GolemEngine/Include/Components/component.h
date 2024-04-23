@@ -18,6 +18,8 @@ public:
 public:
 	virtual ~Component();
 
+	virtual void Begin() {};
+
 	virtual void Update() {};
 
 	

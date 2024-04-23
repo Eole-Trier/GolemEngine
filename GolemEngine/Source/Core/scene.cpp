@@ -60,7 +60,9 @@ void Scene::InitGameObjects()
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
-    SphereCollider* sc = new SphereCollider(ballBaldGo, 1.f);
+    SphereCollider* sc = new SphereCollider(1.f);
+    ballBaldGo->AddComponent(sc);
+    sc->Begin();
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
     std::string ballBaldName2 = "ball_bald2";
@@ -145,12 +147,9 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 
     for (int i = 0; i < m_gameObjects.size(); i++)
     {
+        m_gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
-        if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
-            audio->Update();
-        if (SphereCollider* sc = m_gameObjects[i]->GetComponent<SphereCollider>())
-            sc->Update();
     }
 }
 
@@ -164,15 +163,15 @@ void Scene::UpdateLights(Shader* _shader)
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
-        m_dirLights[i]->Update(_shader);
+        m_dirLights[i]->SetDirectionalLight(_shader);
     }
     for (unsigned int i = 0; i < m_pointLights.size(); ++i)
     {
-        m_pointLights[i]->Update(_shader);
+        m_pointLights[i]->SetPointLight(_shader);
     }
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
-        m_spotLights[i]->Update(_shader);
+        m_spotLights[i]->SetSpotLight(_shader);
     }
 }
 

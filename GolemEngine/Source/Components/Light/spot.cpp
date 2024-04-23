@@ -71,9 +71,8 @@ void SpotLight::SetSpotLight(Shader* _shader)
     _shader->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
 }
 
-void SpotLight::Update(Shader* _shader)
+void SpotLight::Update()
 {
     if (owner)
         position = owner->transform->globalPosition;
-    SetSpotLight(_shader);
 }

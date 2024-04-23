@@ -12,9 +12,9 @@
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
+    m_physicSystem = new PhysicSystem();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
-    m_physicSystem = new PhysicSystem();
     m_camera = new Camera();
 }
 

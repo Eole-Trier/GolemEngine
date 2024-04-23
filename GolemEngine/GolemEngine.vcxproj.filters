@@ -50,7 +50,7 @@
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
-    <ClCompile Include="Source\Components\Physic\sphreCollider.cpp" />
+    <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
     <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Physic\physicSystem.cpp" />
     <ClCompile Include="Source\Physic\contactManager.cpp" />
