@@ -88,7 +88,6 @@ public:
 		};
 		if (!gameObjects.empty())
 		{
-			std::cout << "Game object size: " << gameObjects.size() << std::endl;
 			json jGameObjects;
 			for (int i = 0; i < gameObjects.size(); i++)
 			{

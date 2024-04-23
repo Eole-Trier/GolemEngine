@@ -3,6 +3,10 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 #include "Components/audio.h"
 #include "Components/meshRenderer.h"
 #include "Components/Light/directionalLight.h"
@@ -40,6 +44,7 @@ void SceneManager::Init()
     else    // If there are no scenes saved, Create one
     {
         CreateScene("scene_0");
+        SaveScene();
     }
 }
 

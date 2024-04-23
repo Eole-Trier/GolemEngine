@@ -43,6 +43,8 @@ void WorldBuilderWindow::Update()
         UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainSize, m_newDefaultNoisemapTerrainAmplitude);
     }
 
+    
+
     ImGui::End();
 }
 

@@ -2,6 +2,7 @@
 
 #include <utils.h>
 
+#include "golemEngine.h"
 #include "Image/stb_image.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Resource/resourceManager.h"
@@ -130,6 +131,7 @@ void Terrain::SetupMesh()
 
 void Terrain::Draw(Camera* _camera)
 {
+    SetupMesh();
     m_shader->Use();
     m_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
     m_shader->SetMat4("view", _camera->GetViewMatrix());

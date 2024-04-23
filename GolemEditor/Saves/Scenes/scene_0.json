@@ -1,0 +1,147 @@
+{
+  "gameObjects": [
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "04c9e8ab-1082-648e-0000-cccccccccccc",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "ambientColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "diffuseColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "id": 0,
+            "specularColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "directionalLight"
+        }
+      ],
+      "guid": "f074930b-22ef-925a-0000-cccccccccccc",
+      "name": "World"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "10d61670-efef-5c9c-0000-cccccccccccc",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+          },
+          "name": "meshRenderer"
+        }
+      ],
+      "guid": "e468565b-fdfc-f17e-0000-cccccccccccc",
+      "name": "viking"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "b1eb9de8-97a6-0902-0000-cccccccccccc",
+            "localPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+          },
+          "name": "meshRenderer"
+        }
+      ],
+      "guid": "b1beebef-9482-2cd4-0000-cccccccccccc",
+      "name": "ball_bald"
+    }
+  ],
+  "guid": "0eb5f195-5490-e8b7-31aa-0ff3edd43713",
+  "name": "scene_0"
+}
