@@ -56,16 +56,6 @@ void Viewport::Update()
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
-    if (ImGui::IsKeyDown(ImGuiKey_V))
-    {
-        isDisplayed = true;
-    }
-
-    else
-    {
-        isDisplayed = false;
-    }
-
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
         GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
@@ -75,11 +65,13 @@ void Viewport::Update()
 
         if(pixelData == 5)
         {
+            std::cout << "heheheha" << std::endl;
             //GameObject::m_selected = true;
         }
 
         if (pixelData != 5)
         {
+            std::cout << "heheheha" << std::endl;
             //GameObject::m_selected = false;
         }
     }
@@ -159,7 +151,7 @@ void Viewport::DragDropModel()
 
 Vector2 Viewport::GetViewportSize()
 {
-    return Vector2();
+    return Vector2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 }
 
 Camera* Viewport::GetCamera()

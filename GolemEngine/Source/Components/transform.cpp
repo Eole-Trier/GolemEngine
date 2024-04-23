@@ -81,12 +81,12 @@ void Transform::EditTransformGizmo()
     Matrix4 transformTest = GetLocalModel().Transpose();
 
     auto camera = GolemEngine::GetCamera();
-    Matrix4 cameraProjection = Matrix4::Projection(camera->GetZoom() * M_PI / 180.f, windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
+    Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), windowWidth / windowHeight, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
     ImGuizmo::Enable(true);
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-    ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, currentMode, &transformTest.data[0][0], NULL, NULL, NULL, NULL);
+    ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, currentMode, &transformTest.data[0][0]);
 
     m_globalModel = transformTest.Transpose();
 }
