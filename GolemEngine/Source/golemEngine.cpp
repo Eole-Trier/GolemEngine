@@ -16,6 +16,7 @@ void GolemEngine::Init()
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
+    m_playerCamera = new Camera();
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -46,9 +47,15 @@ void GolemEngine::Update()
     //for (int i = 0; i < texList.size(); i++)
     //{
     SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
-    //}
 
+    //}
     // Go back to original framebuffer
+    GraphicWrapper::UnbindFramebuffer();
+
+    GraphicWrapper::BindPlaySceneFrambuffer();
+    GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+    GraphicWrapper::ClearBuffer();
+    SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_playerCamera);
     GraphicWrapper::UnbindFramebuffer();
 }
 

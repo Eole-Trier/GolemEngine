@@ -28,6 +28,11 @@ private:
 	static unsigned int m_rbo;
 	static unsigned int m_fbo;
 	static unsigned int m_textureId;
+	static unsigned int m_vaoPlayer;
+	static unsigned int m_vboPlayer;
+	static unsigned int m_rboPlayer;
+	static unsigned int m_fboPlayer;
+	static unsigned int m_playerSceneId;
 	static int m_width;
 	static int m_height;
 
@@ -55,6 +60,7 @@ public:
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
 	static void BindFramebuffer();
+	static void BindPlaySceneFrambuffer();
 	// Used to UNBIND the scene from a framebuffer to free the framebuffer. 
 	static void UnbindFramebuffer();
 	// Enable a feature of OpenGl
@@ -64,6 +70,8 @@ public:
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();
+
+	static unsigned int GetPlayerSceneId();
 
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
 	static void SetBackgroundColor(Vector4 _color);

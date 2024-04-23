@@ -16,6 +16,12 @@ unsigned int GraphicWrapper::m_rbo;
 unsigned int GraphicWrapper::m_fbo;
 unsigned int GraphicWrapper::m_textureId;
 
+unsigned int GraphicWrapper::m_vaoPlayer;
+unsigned int GraphicWrapper::m_vboPlayer;
+unsigned int GraphicWrapper::m_rboPlayer;
+unsigned int GraphicWrapper::m_fboPlayer;
+unsigned int GraphicWrapper::m_playerSceneId;
+
 int GraphicWrapper::Init()
 {
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -48,6 +54,34 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
+
+
+
+    // Create PlayScene framebuffer
+    glGenFramebuffers(1, &m_fboPlayer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fboPlayer);
+
+    // Create PlayScene texturebuffer
+    glGenTextures(1, &m_playerSceneId);
+    glBindTexture(GL_TEXTURE_2D, m_playerSceneId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_playerSceneId, 0);
+    AttachTexture(_format, _width, _height, 0, m_playerSceneId);
+
+    CreateRenderBuffer(_width, _height);
+
+    // Check PlayScene framebuffer completeness
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        std::cout << "Framebuffer is not complete." << std::endl;
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
+    glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
+    glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
 }
 
 void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
@@ -63,6 +97,12 @@ void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
     glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+
+    // Create renderbuffer
+    glGenRenderbuffers(1, &m_rboPlayer);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rboPlayer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rboPlayer);
 }
 
 int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
@@ -83,6 +123,11 @@ void GraphicWrapper::BindFramebuffer()
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 }
 
+void GraphicWrapper::BindPlaySceneFrambuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fboPlayer);
+}
+
 void GraphicWrapper::UnbindFramebuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -96,6 +141,11 @@ void GraphicWrapper::EnableDepth()
 unsigned int GraphicWrapper::GetTextureId()
 {
     return m_textureId;
+}
+
+unsigned int GraphicWrapper::GetPlayerSceneId()
+{
+    return m_playerSceneId;
 }
 
 void GraphicWrapper::SetBackgroundColor(Vector4 _color)

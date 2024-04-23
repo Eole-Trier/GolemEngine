@@ -14,6 +14,7 @@ class GOLEM_ENGINE_API GolemEngine
 {
 private:
 	static inline Camera* m_camera = nullptr;
+	static inline Camera* m_playerCamera = nullptr;
 	static inline float m_deltaTime = 0.f;
 
 private:
@@ -36,5 +37,4 @@ public:
 	static Camera* GetCamera();
 	static float GetDeltaTime();
 	static float GetTime();
-
 };
