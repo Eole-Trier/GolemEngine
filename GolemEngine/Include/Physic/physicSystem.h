@@ -24,15 +24,17 @@ public:
 	// We simulate the physics world in discrete time steps. 60 Hz is a good rate to update the physics system.
 	static constexpr float cDeltaTime = 1.0f / 60.0f;
 	static constexpr int cCollisionSteps = 1;
+
 	GOLEM_ENGINE_API static inline PhysicsSystem physicsSystem;
 	GOLEM_ENGINE_API static inline BodyActivationManager bodyActivationListener;
 	GOLEM_ENGINE_API static inline ContactManager contactListener;
 
-	GOLEM_ENGINE_API static inline BPLInterface broad_phase_layer_interface;
-	GOLEM_ENGINE_API static inline ObjectLayerVsBroadPhaseLayer object_vs_broadphase_layer_filter;
-	GOLEM_ENGINE_API static inline ObjectLayerVsObjectLayer object_vs_object_layer_filter;
+	GOLEM_ENGINE_API static inline BPLInterface broadPhaseLayerInterface;
+	GOLEM_ENGINE_API static inline ObjectLayerVsBroadPhaseLayer objectVsBroadphaseLayerFilter;
+	GOLEM_ENGINE_API static inline ObjectLayerVsObjectLayer objectVsObjectLayerFilter;
 
-
+	static Vector3 ToVector3(RVec3 _v);
+	static Quaternion ToQuaternion(Quat _q);
 
 public:
 	PhysicSystem();
@@ -40,5 +42,6 @@ public:
 
 	static void Update();
 	static BodyID CreateSphereCollider(Vector3 _position, float _radius);
+	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size);
 
 };

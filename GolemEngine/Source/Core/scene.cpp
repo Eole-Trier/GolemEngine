@@ -20,6 +20,7 @@
 #include "Components/audio.h"
 #include "Physic/physicSystem.h"
 #include "Components/Physic/sphereCollider.h"
+#include "Components/Physic/boxCollider.h"
 
 using json = nlohmann::json;
 
@@ -44,26 +45,29 @@ void Scene::InitGameObjects()
     Shader* defaultShader = resourceManager->Get<Shader>(m_defaultShader);
 
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
     Model* viking_room = resourceManager->Get<Model>("viking_room");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
+    BoxCollider* box = new BoxCollider(Vector3(1.f));
+    vikingGo->AddComponent(box);
+    box->Begin();
 
     Audio* audio1 = new Audio("music_01.wav");
     vikingGo->AddComponent(audio1);
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(10, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("sphere");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
+    ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
     SphereCollider* sc = new SphereCollider(1.f);
     ballBaldGo->AddComponent(sc);
     sc->Begin();
-    ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
 
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);

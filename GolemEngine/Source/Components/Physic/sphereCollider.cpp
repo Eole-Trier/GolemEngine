@@ -38,9 +38,8 @@ void SphereCollider::Begin()
 
 	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, m_radius);
 	
-	body_interface.SetLinearVelocity(id, Vec3(0.0f, 5.0f, -25.0f));
+	body_interface.SetLinearVelocity(id, Vec3(-15.0f, 5.0f, 0.0f));
 }
-
 
 void SphereCollider::Update()
 {
@@ -48,6 +47,6 @@ void SphereCollider::Update()
 	if (body_interface.IsActive(id))
 	{
 		RVec3 position = body_interface.GetCenterOfMassPosition(id);
-		owner->transform->localPosition = Vector3(position.GetX(), position.GetY(), position.GetZ());
+		owner->transform->localPosition = PhysicSystem::ToVector3(position);
 	}
 }

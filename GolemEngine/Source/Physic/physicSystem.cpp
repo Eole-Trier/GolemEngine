@@ -90,7 +90,7 @@ PhysicSystem::PhysicSystem()
 	const uint cMaxContactConstraints = 10240;
 
 	// Now we can create the actual physics system.
-	physicsSystem.Init(cMaxBodies, cNumBodyMutexes, cMaxBodyPairs, cMaxContactConstraints, broad_phase_layer_interface, object_vs_broadphase_layer_filter, object_vs_object_layer_filter);
+	physicsSystem.Init(cMaxBodies, cNumBodyMutexes, cMaxBodyPairs, cMaxContactConstraints, broadPhaseLayerInterface, objectVsBroadphaseLayerFilter, objectVsObjectLayerFilter);
 
 	// A body activation listener gets notified when bodies activate and go to sleep
 	// Note that this is called from a job so whatever you do here needs to be thread safe.
@@ -135,7 +135,7 @@ void PhysicSystem::Update()
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
- BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
+BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
 {
 	 BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
@@ -143,13 +143,30 @@ void PhysicSystem::Update()
 	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::Activate);
 }
 
+BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), EMotionType::Static, ObjectLayers::NON_MOVING);
+	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::Activate);
+}
 
 RVec3 PhysicSystem::ToJph(const Vector3 _v)
 {
 	return RVec3(_v.x, _v.y, _v.z);
 }
 
+Vector3 PhysicSystem::ToVector3(const RVec3 _v)
+{
+	return Vector3(_v.GetX(), _v.GetY(), _v.GetZ());
+}
+
 Quat PhysicSystem::ToJph(const Quaternion _q)
 {
 	return Quat(_q.x, _q.y, _q.z, _q.w);
+}
+
+Quaternion PhysicSystem::ToQuaternion(const Quat _q)
+{
+	return Quaternion(_q.GetW(), _q.GetX(), _q.GetY(), _q.GetZ());
 }
