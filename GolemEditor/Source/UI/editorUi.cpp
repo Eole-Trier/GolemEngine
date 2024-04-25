@@ -10,6 +10,7 @@
 #include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
 #include "UI/Windows/inspector.h"
+#include "Utils/viewportTools.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"

@@ -12,7 +12,7 @@
 #include "Resource/Rendering/model.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"

@@ -17,7 +17,7 @@
 #include "Resource/Rendering/mesh.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 #include "Resource/resourceManager.h"
 #include "WorldBuilder/terrain.h"
 #include "WorldBuilder/defaultTerrain.h"

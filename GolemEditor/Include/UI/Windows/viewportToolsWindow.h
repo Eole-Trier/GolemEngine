@@ -6,7 +6,7 @@
 class ViewportToolsWindow : public Window
 {
 public:
-    bool isWireframViewActive = false;
+    bool isWireframeViewActive = false;
     
 public:
     ViewportToolsWindow(std::string _name);

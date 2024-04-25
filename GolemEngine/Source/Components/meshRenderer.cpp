@@ -4,6 +4,7 @@
 #include "MathsLib/utils.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Utils/viewportTools.h"
 
 
 MeshRenderer::MeshRenderer()
@@ -36,7 +37,18 @@ void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
         shader->SetMat4("projection", projection);
 
         glBindVertexArray(model->VAO);
-        glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+
+        // Switch draw mode depending on view mode
+        switch (ViewportTools::currentViewMode)
+        {
+            case DEFAULT:
+                glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+                break;
+
+            case WIREFRAME:
+                glDrawArrays(GL_LINES, 0, model->vertices.size());
+                break;
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 #include "Wrappers/audioWrapper.h"
 #include "golemEngine.h"
-#include "Resource/tools.h"
+#include "Utils/tools.h"
 
 void AudioWrapper::UpdatePosition()
 {

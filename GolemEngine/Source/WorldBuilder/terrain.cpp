@@ -6,6 +6,7 @@
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
 #include "Wrappers/windowWrapper.h"
+#include "Utils/viewportTools.h"
 
 
 void Terrain::SetupMesh()
@@ -35,5 +36,18 @@ void Terrain::Draw(Camera* _camera)
     p_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     p_shader->SetFloat("maxHeight", p_yMax);
     glBindVertexArray(p_vao);
-    glDrawElements(GL_TRIANGLES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    
+    // Switch draw mode depending on view mode
+    switch (ViewportTools::currentViewMode)
+    {
+    case DEFAULT:
+        glDrawElements(GL_TRIANGLES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+
+        break;
+
+    case WIREFRAME:
+        glDrawElements(GL_LINES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+
+        break;
+    }
 }
