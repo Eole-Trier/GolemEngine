@@ -26,5 +26,5 @@ public:
 
     void Update() override;
     void UpdateCreateDefaultTerrainPopup(int& _xResolution, int& _zResolution);
-    void UpdateCreateDefaultNoisemapeTerrainPopup(float &_amplitude);
+    void UpdateCreateDefaultNoisemapeTerrainPopup();
 };

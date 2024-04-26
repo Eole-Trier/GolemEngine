@@ -40,7 +40,7 @@ void WorldBuilderWindow::Update()
 
     if (m_isCreateDefaultNoisemapTerrainPopupActive)
     {
-        UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainAmplitude);
+        UpdateCreateDefaultNoisemapeTerrainPopup();
     }
 
     ImGui::End();
@@ -79,7 +79,7 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
     }
 }
 
-void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(float &_amplitude)
+void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup()
 {
     ImGui::OpenPopup(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str());
     
@@ -88,21 +88,14 @@ void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(float &_amplit
     {
         ImGui::Text(CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE.c_str());
 
-        // Set terrain dimensions. Amplitude if for the height
-        ImGui::InputFloat("terrain amplitude", &_amplitude);
         
         // Check if user inputs are valid
         bool isUserInputValid = true;
-        if (_amplitude == 0.0f)    // Terrain amplitude error
-        {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Terrain amplitude scale can't be 0.");
-            isUserInputValid = false;
-        }
         
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str(), _amplitude);
+            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str());
             m_isCreateDefaultNoisemapTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }

@@ -19,5 +19,5 @@ private:
 public:
     static void Init();
     static void CreateDefaultTerrain(int _xResolution, int _zResolution);
-    static void CreateNoisemapTerrain(const char* _noisemapPath, float _amplitude);
+    static void CreateNoisemapTerrain(const char* _noisemapPath);
 };

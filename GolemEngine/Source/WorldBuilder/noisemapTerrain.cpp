@@ -8,10 +8,9 @@ NoisemapTerrain::NoisemapTerrain(std::string _name, Transform* _transform)
     : Terrain(_name, _transform)
 {}
 
-void NoisemapTerrain::Init(const char* _noisemapPath, float _amplitude)
+void NoisemapTerrain::Init(const char* _noisemapPath)
 {
     m_noisemapPath = _noisemapPath;
-    m_amplitude = _amplitude;
     
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -31,17 +30,16 @@ void NoisemapTerrain::Init(const char* _noisemapPath, float _amplitude)
             Vertex vertex;
             vertex.position.x =(i / (float)m_xResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.z =(j / (float)m_zResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.position.y = noisemapValue / 255.0f * _amplitude;
+            vertex.position.y = noisemapValue / 255.0f;
 
             // Set highest vertex for the shader
-            if(_amplitude > 0.0f && vertex.position.y > m_yMax)
+            if(vertex.position.y > m_yMax)
             {
                 m_yMax = vertex.position.y;
             }
-            else if (_amplitude < 0.0f && vertex.position.y < m_yMax)    // Handle the case where the amplitude is negative
+            else if (vertex.position.y < m_yMax)    // Handle the case where the amplitude is negative
             {
                 m_yMax = vertex.position.y;
-                std::cout << m_yMax << std::endl;
             }
             
             // Set the vertex texture postion

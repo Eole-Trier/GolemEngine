@@ -42,7 +42,7 @@ public:
     size_t GetId();
     
     virtual void Init(int _xResolution, int _zResolution) {}
-    virtual void Init(const char* _noisemapPath, float _amplitude) {}
+    virtual void Init(const char* _noisemapPath) {}
 
 #pragma region Noisemap terrain functions
     virtual std::string GetNoisemapPath() { return {}; }

@@ -19,12 +19,12 @@ void WorldBuilder::CreateDefaultTerrain(int _xResolution, int _zResolution)
     terrain->Init(_xResolution, _zResolution);
 }
 
-void WorldBuilder::CreateNoisemapTerrain(const char* _noisemapPath, float _amplitude)
+void WorldBuilder::CreateNoisemapTerrain(const char* _noisemapPath)
 {
     std::string name = "Noisemap Terrain";
     Transform* transform = new Transform();
     NoisemapTerrain* terrain = new NoisemapTerrain(name, transform);
     SceneManager::GetCurrentScene()->AddTerrain(terrain);
-    terrain->Init(_noisemapPath, _amplitude);
+    terrain->Init(_noisemapPath);
 }
 
