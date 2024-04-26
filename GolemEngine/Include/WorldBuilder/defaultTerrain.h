@@ -10,7 +10,7 @@ using json = nlohmann::json;
 class DefaultTerrain : public Terrain
 {
 public:
-    GOLEM_ENGINE_API DefaultTerrain();
+    GOLEM_ENGINE_API DefaultTerrain(Transform* _transform, std::string _name);
     
     GOLEM_ENGINE_API void Init(int _xResolution, int _zResolution, Vector2 _size) override;
 

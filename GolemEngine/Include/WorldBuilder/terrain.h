@@ -12,11 +12,12 @@
 #include "Resource/guid.h"
 #include "Core/camera.h"
 #include "vector2.h"
+#include "Core/gameobject.h"
 
 using json = nlohmann::json;
 
 
-class Terrain
+class Terrain : public GameObject
 {
 protected:
     std::vector<Vertex> m_vertices;
@@ -34,12 +35,7 @@ protected:
     size_t m_id;
 
 public:
-    Guid guid;
-    std::string name;
-    Transform* transform = nullptr;
-
-public:
-    GOLEM_ENGINE_API Terrain() = default;
+    GOLEM_ENGINE_API Terrain(Transform* _transform, std::string _name);
 
     GOLEM_ENGINE_API void SetupMesh();
     GOLEM_ENGINE_API void Draw(Camera* _camera);

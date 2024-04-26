@@ -15,7 +15,7 @@ private:
     int m_nChannel;
     
 public:
-    GOLEM_ENGINE_API NoisemapTerrain();
+    GOLEM_ENGINE_API NoisemapTerrain(Transform* _transform, std::string _name);
     
     GOLEM_ENGINE_API void Init(const char* _noisemapPath, Vector2 _size, float _amplitude) override;
 

@@ -226,7 +226,9 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
         // If the terrain is a default terrain
         if (Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]) == "")
         {
-            DefaultTerrain* terrain = new DefaultTerrain();
+            std::string name = "terraind";
+            Transform* transform = new Transform();
+            DefaultTerrain* terrain = new DefaultTerrain(transform, name);
             terrain->Init(
                 jScene["terrains"][i]["xResolution"],
                 jScene["terrains"][i]["zResolution"],
@@ -237,7 +239,9 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
         // If the terrain is a noisemap terrain
         else
         {
-            NoisemapTerrain* terrain = new NoisemapTerrain();
+            std::string name = "terrainn";
+            Transform* transform = new Transform();
+            NoisemapTerrain* terrain = new NoisemapTerrain(transform, name);
             terrain->Init(
                 Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]).c_str(),
                 jScene["terrains"][i]["size"],

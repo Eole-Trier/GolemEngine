@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "2fa6a05e-b70f-3f1c-a7b9-e60be4f968f8",
+            "guid": "d6dfeda3-0336-9c19-0f15-4ce7bd808959",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "fa5ce96a-d835-1531-e375-61b0be86b73f",
+      "guid": "a8561792-11de-f49b-d4bf-59d979e742f2",
       "name": "World"
     },
     {
@@ -70,7 +70,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "0628451f-ab98-f07d-cb4a-43b4adde279d",
+            "guid": "7b15ae8d-da7c-34b5-4892-098a192299c6",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -98,7 +98,7 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "2071cced-d559-d019-9100-426cae05fc0d",
+      "guid": "68726431-1b99-7cd7-a6cf-33474dfd8e20",
       "name": "viking"
     },
     {
@@ -110,7 +110,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "2d40578b-df2f-9d3f-ea84-1e15430d703e",
+            "guid": "468a5c12-fe0f-9e42-484d-5d794d353d70",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -138,10 +138,10 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "8b875750-77fb-80cd-60af-59a71371a4e9",
+      "guid": "285378ee-77d5-cc87-fccb-12a86013a686",
       "name": "ball_bald"
     }
   ],
-  "guid": "857f6c81-1831-6e61-08df-be433411af57",
+  "guid": "d9703f4c-408e-1c8b-cc25-d1686cce18cd",
   "name": "scene_0"
 }

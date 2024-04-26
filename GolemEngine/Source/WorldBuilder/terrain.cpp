@@ -9,6 +9,10 @@
 #include "Utils/viewportTools.h"
 
 
+Terrain::Terrain(Transform* _transform, std::string _name)
+    : GameObject(_name, _transform)
+{}
+
 void Terrain::SetupMesh()
 {
     glGenVertexArrays(1, &m_vao);
@@ -31,10 +35,11 @@ void Terrain::SetupMesh()
 void Terrain::Draw(Camera* _camera)
 {
     m_shader->Use();
-    m_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
+    m_shader->SetMat4("model", transform->GetGlobalModel());
     m_shader->SetMat4("view", _camera->GetViewMatrix());
     m_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     m_shader->SetFloat("maxHeight", m_yMax);
+    
     glBindVertexArray(m_vao);
     
     // Switch draw mode depending on view mode

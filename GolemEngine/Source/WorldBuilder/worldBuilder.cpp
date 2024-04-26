@@ -12,14 +12,18 @@ void WorldBuilder::Init()
 
 void WorldBuilder::CreateDefaultTerrain(int _xResolution, int _zResolution, Vector2 _size)
 {
-    DefaultTerrain* terrain = new DefaultTerrain();
+    std::string name = "terraind";
+    Transform* transform = new Transform();
+    DefaultTerrain* terrain = new DefaultTerrain(transform, name);
     SceneManager::GetCurrentScene()->AddTerrain(terrain);
     terrain->Init(_xResolution, _zResolution, _size);
 }
 
 void WorldBuilder::CreateNoisemapTerrain(const char* _noisemapPath, Vector2 _size, float _amplitude)
 {
-    NoisemapTerrain* terrain = new NoisemapTerrain();
+    std::string name = "terrainn";
+    Transform* transform = new Transform();
+    NoisemapTerrain* terrain = new NoisemapTerrain(transform, name);
     SceneManager::GetCurrentScene()->AddTerrain(terrain);
     terrain->Init(_noisemapPath, _size, _amplitude);
 }

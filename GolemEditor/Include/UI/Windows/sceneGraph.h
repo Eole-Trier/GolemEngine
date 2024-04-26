@@ -19,5 +19,4 @@ public:
 
 	void Update() override;
 	void DisplayObjects(GameObject* _gameObject);
-	void DisplayTerrains(Terrain* _terrain);
 };

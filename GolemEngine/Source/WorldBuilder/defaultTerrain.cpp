@@ -3,7 +3,9 @@
 #include "Resource/resourceManager.h"
 
 
-DefaultTerrain::DefaultTerrain() {}
+DefaultTerrain::DefaultTerrain(Transform* _transform, std::string _name)
+    : Terrain(_transform, _name)
+{}
 
 void DefaultTerrain::Init(int _xResolution, int _zResolution, Vector2 _size)
 {
