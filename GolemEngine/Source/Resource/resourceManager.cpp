@@ -4,6 +4,7 @@
 #include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Utils/viewportTools.h"
 
 
 ResourceManager* ResourceManager::m_instancePtr = nullptr;
@@ -22,10 +23,10 @@ void ResourceManager::CreateAndLoadResources()
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
-    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
+    defaultShader->SetVertexFragmentComputeShaders(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str(), Tools::FindFile("default.comp").c_str());
 
     Shader* defaultTerrainShader = resourceManager->Create<Shader>(m_defaultTerrainShader, Tools::FindFile("defaultTerrain.vs"));
-    defaultTerrainShader->SetVertexAndFragmentShader(defaultTerrainShader->path.c_str(), Tools::FindFile("defaultTerrain.fs").c_str());
+    defaultTerrainShader->SetVertexFragmentComputeShaders(defaultTerrainShader->path.c_str(), Tools::FindFile("defaultTerrain.fs").c_str(), Tools::FindFile("default.comp").c_str());
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());

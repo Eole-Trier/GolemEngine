@@ -26,6 +26,8 @@ private:
 	void operator=(const GolemEngine&) = delete;
 	~GolemEngine() = delete;
 
+	static void PerformComputShaderComputations();
+
 public:
 	static void Init();
 	static void UpdateDeltaTime();

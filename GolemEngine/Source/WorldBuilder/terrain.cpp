@@ -22,6 +22,8 @@ Terrain::~Terrain()
 
 void Terrain::SetupMesh()
 {
+    // Create the compute shader
+    
     glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);

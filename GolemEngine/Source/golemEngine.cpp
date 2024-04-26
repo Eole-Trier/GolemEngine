@@ -10,6 +10,10 @@
 #include "Reflection/classesManager.h"
 
 
+void GolemEngine::PerformComputShaderComputations()
+{
+}
+
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
