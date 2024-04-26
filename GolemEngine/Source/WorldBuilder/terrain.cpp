@@ -13,6 +13,12 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     : GameObject(_name, _transform)
 {}
 
+Terrain::~Terrain()
+{
+    SceneManager::GetCurrentScene()->RemoveTerrain(this);
+}
+
+
 void Terrain::SetupMesh()
 {
     glGenVertexArrays(1, &m_vao);

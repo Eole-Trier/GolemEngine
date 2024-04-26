@@ -156,6 +156,24 @@ void Scene::AddTerrain(Terrain* _terrain)
     m_terrains.push_back(_terrain);
 }
 
+void Scene::RemoveTerrain(Terrain* _terrain)
+{
+    bool removed = false;
+    for (size_t i = 0; i < m_terrains.size(); i++)
+    {
+        if (m_terrains[i] == _terrain)
+        {
+            removed = true;
+        }
+        if (removed)
+        {
+            m_terrains[i]->SetId(i - 1);
+        }
+    }
+    
+    std::erase(m_terrains, _terrain);
+}
+
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();

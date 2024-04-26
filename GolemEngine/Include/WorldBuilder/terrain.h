@@ -34,19 +34,20 @@ protected:
     size_t m_id;
 
 public:
-    GOLEM_ENGINE_API Terrain(std::string _name, Transform* _transform);
+    Terrain(std::string _name, Transform* _transform);
+    ~Terrain();
 
-    GOLEM_ENGINE_API void SetupMesh();
-    GOLEM_ENGINE_API void Draw(Camera* _camera);
-    GOLEM_ENGINE_API size_t GetId();
+    void SetupMesh();
+    void Draw(Camera* _camera);
+    size_t GetId();
     
-    GOLEM_ENGINE_API virtual void Init(int _xResolution, int _zResolution) {}
-    GOLEM_ENGINE_API virtual void Init(const char* _noisemapPath, float _amplitude) {}
+    virtual void Init(int _xResolution, int _zResolution) {}
+    virtual void Init(const char* _noisemapPath, float _amplitude) {}
 
 #pragma region Noisemap terrain functions
-    GOLEM_ENGINE_API virtual std::string GetNoisemapPath() { return {}; }
+    virtual std::string GetNoisemapPath() { return {}; }
 
-    GOLEM_ENGINE_API virtual void SetNoisemapPath(std::string _noisemapPath) {}
+    virtual void SetNoisemapPath(std::string _noisemapPath) {}
 #pragma endregion Noisemap terrain functions
 
 

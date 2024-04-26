@@ -6,6 +6,7 @@
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
 #include "Components/audio.h"
+#include "WorldBuilder/terrain.h"
 
 void ClassesManager::AddAllClasses()
 {

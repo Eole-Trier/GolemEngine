@@ -53,10 +53,12 @@ public:
 	void UpdateTerrains(Camera* _camera);
 	void UpdateGameObjects(Camera* _camera);
 	void UpdateLights(Shader* _shader);
-	// Check the gameobject's name is already in the vector or not.
+	// Check if the gameobject's name is already in the vector or not.
 	bool IsNameExists(const std::string& _name);
-	// To add a new gameobject in the scene
+	// To add a new terrain in the scene
 	void AddTerrain(Terrain* _terrain);
+	void RemoveTerrain(Terrain* _terrain);
+	// To add a new gameobject in the scene
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void RemoveGameObject(GameObject* _gameObject);

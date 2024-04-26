@@ -27,7 +27,7 @@ public:
 };
 
 template<typename TypeT>
-static void ClassesManager::Add()
+void ClassesManager::Add()
 {
 	// Get class hashcode
 	size_t hashCode = typeid(TypeT).hash_code();
