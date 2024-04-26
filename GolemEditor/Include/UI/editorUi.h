@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Core/gameobject.h"
+#include "WorldBuilder/terrain.h"
 #include "UI/toolbar.h"
 #include "vector2.h"
 
@@ -18,7 +19,8 @@ private:
 	static inline Toolbar* m_toolbar;
 
 public:
-	static inline GameObject* selected = nullptr;
+	static inline GameObject* selectedGameObject = nullptr;
+	static inline Terrain* selectedTerrain = nullptr;
 
 public:
 

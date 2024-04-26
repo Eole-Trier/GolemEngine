@@ -5,11 +5,13 @@
 
 class GolemEngine;
 class GameObject;
+class Terrain;
 
 class SceneGraph : public Window
 {
 private:
-	GameObject* m_renaming = nullptr;
+	GameObject* m_renamingGameObject = nullptr;
+	Terrain* m_renamingTerrain = nullptr;
 
 public:
 	SceneGraph(std::string _name);
@@ -17,4 +19,5 @@ public:
 
 	void Update() override;
 	void DisplayObjects(GameObject* _gameObject);
+	void DisplayTerrains(Terrain* _terrain);
 };

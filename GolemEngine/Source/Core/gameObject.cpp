@@ -4,7 +4,6 @@
 #include "Resource/sceneManager.h"
 
 GameObject::GameObject()
-	: m_selected(false)
 {
 	name = "New GameObject";
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
@@ -14,7 +13,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
-	: name(_name), m_selected(false)
+	: name(_name)
 {
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
 	AddComponent(_transform);

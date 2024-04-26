@@ -20,7 +20,6 @@ class GOLEM_ENGINE_API GameObject
 private:
 	size_t m_id;
 	std::vector<Component*> m_components;
-	bool m_selected;
 
 public:
 	Guid guid;

@@ -21,10 +21,10 @@ void Inspector::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	if (EditorUi::selected)
+	if (EditorUi::selectedGameObject)
 	{
-		DisplayType::DisplayField(EditorUi::selected);
-		DisplayType::AddComponentHandler(EditorUi::selected);
+		DisplayType::DisplayField(EditorUi::selectedGameObject);
+		DisplayType::AddComponentHandler(EditorUi::selectedGameObject);
 		
 	}
 	ImGui::End();

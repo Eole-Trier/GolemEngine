@@ -11,15 +11,15 @@
 
 void Terrain::SetupMesh()
 {
-    glGenVertexArrays(1, &p_vao);
-    glGenBuffers(1, &p_vbo);
-    glGenBuffers(1, &p_ebo);
+    glGenVertexArrays(1, &m_vao);
+    glGenBuffers(1, &m_vbo);
+    glGenBuffers(1, &m_ebo);
     // Bindings
-    glBindVertexArray(p_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, p_vbo);
-    glBufferData(GL_ARRAY_BUFFER, p_vertices.size() * sizeof(Vertex), p_vertices.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, p_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, p_indices.size() * sizeof(int), p_indices.data(), GL_STATIC_DRAW);
+    glBindVertexArray(m_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(0);
@@ -30,24 +30,29 @@ void Terrain::SetupMesh()
 
 void Terrain::Draw(Camera* _camera)
 {
-    p_shader->Use();
-    p_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
-    p_shader->SetMat4("view", _camera->GetViewMatrix());
-    p_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    p_shader->SetFloat("maxHeight", p_yMax);
-    glBindVertexArray(p_vao);
+    m_shader->Use();
+    m_shader->SetMat4("model", SceneManager::GetCurrentScene()->GetWorld()->transform->GetGlobalModel());
+    m_shader->SetMat4("view", _camera->GetViewMatrix());
+    m_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->SetFloat("maxHeight", m_yMax);
+    glBindVertexArray(m_vao);
     
     // Switch draw mode depending on view mode
     switch (ViewportTools::currentViewMode)
     {
     case DEFAULT:
-        glDrawElements(GL_TRIANGLES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 
         break;
 
     case WIREFRAME:
-        glDrawElements(GL_LINES, (p_xResolution - 1) * (p_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_LINES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
 
         break;
     }
+}
+
+size_t Terrain::GetId()
+{
+    return m_id;
 }

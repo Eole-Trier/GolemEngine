@@ -32,9 +32,9 @@ public:
         {
             {"name", name},
             {"guid", guid.ToString()},
-            {"xResolution", p_xResolution},
-            {"zResolution", p_zResolution},
-            {"size", p_size},
+            {"xResolution", m_xResolution},
+            {"zResolution", m_zResolution},
+            {"size", m_size},
             {"noisemapPath", m_noisemapPath},
             {"amplitude", m_amplitude}
         };
