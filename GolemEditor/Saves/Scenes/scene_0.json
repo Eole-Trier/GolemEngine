@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "8e721445-c133-5947-1000-cccccccccccc",
+            "guid": "a1ca3b49-dcf7-cce9-34a7-b6d1dc990522",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,10 +58,50 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "7b5cb408-0991-931b-1000-cccccccccccc",
+      "guid": "cbc45c9d-4ec2-cb2a-620c-9d5530571a73",
       "name": "World"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "47ecaf3b-897c-3975-9715-30b0daa2bc69",
+            "localPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "modelPath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
+            "shaderPath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
+            "texturePath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
+          },
+          "name": "meshRenderer"
+        }
+      ],
+      "guid": "78fdcf90-fe52-c8f4-1b65-031d83a01a37",
+      "name": "ball_bald"
     }
   ],
-  "guid": "4d65ed3f-f8e0-d7f5-f535-fb03b036b12b",
+  "guid": "41e36e61-22fb-e37c-81a8-dad129be9d2a",
   "name": "scene_0"
 }

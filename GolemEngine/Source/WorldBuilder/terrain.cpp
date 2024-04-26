@@ -16,6 +16,7 @@ Terrain::Terrain(std::string _name, Transform* _transform)
 Terrain::~Terrain()
 {
     SceneManager::GetCurrentScene()->RemoveTerrain(this);
+    DeleteAllComponents();
 }
 
 
