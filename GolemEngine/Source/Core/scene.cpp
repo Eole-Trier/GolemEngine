@@ -19,7 +19,6 @@
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
-#include "Wrappers/windowWrapper.h"
 
 using json = nlohmann::json;
 
@@ -107,7 +106,7 @@ void Scene::UpdateGameObjects(Camera* _camera)
     {
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
         {
-            meshRenderer->Draw(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, _camera);
+            meshRenderer->Draw(_camera);
         }
         
         if (Audio* audio = gameObjects[i]->GetComponent<Audio>())

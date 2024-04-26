@@ -8,10 +8,9 @@ NoisemapTerrain::NoisemapTerrain(std::string _name, Transform* _transform)
     : Terrain(_name, _transform)
 {}
 
-void NoisemapTerrain::Init(const char* _noisemapPath, Vector2 _size, float _amplitude)
+void NoisemapTerrain::Init(const char* _noisemapPath, float _amplitude)
 {
     m_noisemapPath = _noisemapPath;
-    m_size = _size;
     m_amplitude = _amplitude;
     
     // Set shader
@@ -30,8 +29,8 @@ void NoisemapTerrain::Init(const char* _noisemapPath, Vector2 _size, float _ampl
             unsigned int noisemapValue = (noisemap + (i + m_xResolution * j))[0];
             // Set the vertex position
             Vertex vertex;
-            vertex.position.x = (i / (float)m_xResolution) * _size.x;
-            vertex.position.z = -10 + (j / (float)m_zResolution) * _size.y;    // -10 for offset but remove later
+            vertex.position.x =(i / (float)m_xResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.z =(j / (float)m_zResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.y = noisemapValue / 255.0f * _amplitude;
 
             // Set highest vertex for the shader

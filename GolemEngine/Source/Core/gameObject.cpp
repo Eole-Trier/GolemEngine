@@ -3,6 +3,7 @@
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
 
+
 GameObject::GameObject()
 {
 	name = "New GameObject";

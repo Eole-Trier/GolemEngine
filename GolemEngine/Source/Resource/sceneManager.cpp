@@ -231,8 +231,7 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
             DefaultTerrain* terrain = new DefaultTerrain(name, transform);
             terrain->Init(
                 jScene["terrains"][i]["xResolution"],
-                jScene["terrains"][i]["zResolution"],
-                jScene["terrains"][i]["size"]
+                jScene["terrains"][i]["zResolution"]
             );
             CreateTerrainFromFile(terrain, scene, jScene, i);
         }
@@ -244,7 +243,6 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
             NoisemapTerrain* terrain = new NoisemapTerrain(name, transform);
             terrain->Init(
                 Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]).c_str(),
-                jScene["terrains"][i]["size"],
                 jScene["terrains"][i]["amplitude"]
             );
             CreateTerrainFromFile(terrain, scene, jScene, i);

@@ -5,6 +5,7 @@
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Utils/viewportTools.h"
+#include "Wrappers/windowWrapper.h"
 
 
 MeshRenderer::MeshRenderer()
@@ -17,7 +18,7 @@ MeshRenderer::MeshRenderer(Mesh* _mesh)
 MeshRenderer::~MeshRenderer()
 {}
 
-void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
+void MeshRenderer::Draw(Camera* _camera)
 {   
     if (m_mesh)
     {
@@ -29,12 +30,9 @@ void MeshRenderer::Draw(float _width, float _height, Camera* _camera)
         texture->Use();
 
         shader->Use();
-
-        Matrix4 view = _camera->GetViewMatrix();
-        Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
         shader->SetMat4("model", owner->transform->GetGlobalModel());
-        shader->SetMat4("view", view);
-        shader->SetMat4("projection", projection);
+        shader->SetMat4("view", _camera->GetViewMatrix());
+        shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
 
         glBindVertexArray(model->VAO);
 

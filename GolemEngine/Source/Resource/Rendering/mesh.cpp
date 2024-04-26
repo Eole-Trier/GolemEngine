@@ -13,20 +13,16 @@
 void Mesh::SetupMesh()
 {
     glGenVertexArrays(1, &m_model->VAO);
-
     glGenBuffers(1, &m_model->VBO);
-
+    // Bindings
     glBindVertexArray(m_model->VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_model->VBO);
-
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_model->vertices.size(), m_model->vertices.data(), GL_STATIC_DRAW);
-
+    // Attribues
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
     glEnableVertexAttribArray(0);
-
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
     glEnableVertexAttribArray(1);
-
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoords));
     glEnableVertexAttribArray(2);
 

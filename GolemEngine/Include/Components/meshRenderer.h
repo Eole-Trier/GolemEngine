@@ -15,7 +15,7 @@ public:
 	MeshRenderer(Mesh* _mesh);
 	~MeshRenderer() override;
 
-	void Draw(float _width, float _height, Camera* _camera);
+	void Draw(Camera* _camera);
 
 	Mesh* GetMesh();
 

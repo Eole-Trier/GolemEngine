@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "d6dfeda3-0336-9c19-1500-cccccccccccc",
+            "guid": "8e721445-c133-5947-1000-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,10 +58,10 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "a8561792-11de-f49b-bf00-cccccccccccc",
+      "guid": "7b5cb408-0991-931b-1000-cccccccccccc",
       "name": "World"
     }
   ],
-  "guid": "1dccc009-ac93-6901-d696-47d753af10bb",
+  "guid": "4d65ed3f-f8e0-d7f5-f535-fb03b036b12b",
   "name": "scene_0"
 }

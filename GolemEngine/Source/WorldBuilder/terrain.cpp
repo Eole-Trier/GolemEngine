@@ -30,6 +30,8 @@ void Terrain::SetupMesh()
     // color attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
 }
 
 void Terrain::Draw(Camera* _camera)
@@ -47,12 +49,10 @@ void Terrain::Draw(Camera* _camera)
     {
     case DEFAULT:
         glDrawElements(GL_TRIANGLES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
-
         break;
 
     case WIREFRAME:
         glDrawElements(GL_LINES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
-
         break;
     }
 }

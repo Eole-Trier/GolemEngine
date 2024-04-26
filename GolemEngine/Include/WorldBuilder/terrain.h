@@ -30,7 +30,6 @@ protected:
     float m_yMax = 0.0f;    // Store the heighest y value of the noise map to pass it to the shader
     int m_xResolution = 2;    // To set the amount of vertices in x (a terrin with 4 vertices or 255 will have a similar, so it's for vertex details)
     int m_zResolution = 2;    // To set the amount of vertices in z
-    Vector2 m_size = {1.0f, 1.0f};    // To set the size of the terrain
 
     size_t m_id;
 
@@ -41,8 +40,8 @@ public:
     GOLEM_ENGINE_API void Draw(Camera* _camera);
     GOLEM_ENGINE_API size_t GetId();
     
-    GOLEM_ENGINE_API virtual void Init(int _xResolution, int _zResolution, Vector2 _size) {}
-    GOLEM_ENGINE_API virtual void Init(const char* _noisemapPath, Vector2 _size, float _amplitude) {}
+    GOLEM_ENGINE_API virtual void Init(int _xResolution, int _zResolution) {}
+    GOLEM_ENGINE_API virtual void Init(const char* _noisemapPath, float _amplitude) {}
 
 #pragma region Noisemap terrain functions
     GOLEM_ENGINE_API virtual std::string GetNoisemapPath() { return {}; }

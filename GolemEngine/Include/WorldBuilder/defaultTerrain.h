@@ -12,7 +12,7 @@ class DefaultTerrain : public Terrain
 public:
     GOLEM_ENGINE_API DefaultTerrain(std::string _name, Transform* _transform);
     
-    GOLEM_ENGINE_API void Init(int _xResolution, int _zResolution, Vector2 _size) override;
+    GOLEM_ENGINE_API void Init(int _xResolution, int _zResolution) override;
 
     
     // Define serialization and deserialization functions manually because the
@@ -25,7 +25,6 @@ public:
             {"guid", guid.ToString()},
             {"xResolution", m_xResolution},
             {"zResolution", m_zResolution},
-            {"size", m_size},
             {"noisemapPath", ""},
             {"amplitude", 0}
         };

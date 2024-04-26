@@ -17,7 +17,7 @@ private:
 public:
     GOLEM_ENGINE_API NoisemapTerrain(std::string _name, Transform* _transform);
     
-    GOLEM_ENGINE_API void Init(const char* _noisemapPath, Vector2 _size, float _amplitude) override;
+    GOLEM_ENGINE_API void Init(const char* _noisemapPath, float _amplitude) override;
 
     GOLEM_ENGINE_API std::string GetNoisemapPath() override;
 
@@ -34,7 +34,6 @@ public:
             {"guid", guid.ToString()},
             {"xResolution", m_xResolution},
             {"zResolution", m_zResolution},
-            {"size", m_size},
             {"noisemapPath", m_noisemapPath},
             {"amplitude", m_amplitude}
         };

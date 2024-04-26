@@ -30,7 +30,7 @@ void WorldBuilderWindow::Update()
 
     if (m_isCreateDefaultTerrainPopupActive)
     {
-        UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ, m_newDefaultTerrainSize);
+        UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ);
     }
 
     if (ImGui::Button("Create new noisemap terrain"))
@@ -40,13 +40,13 @@ void WorldBuilderWindow::Update()
 
     if (m_isCreateDefaultNoisemapTerrainPopupActive)
     {
-        UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainSize, m_newDefaultNoisemapTerrainAmplitude);
+        UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainAmplitude);
     }
 
     ImGui::End();
 }
 
-void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int& _zResolution, Vector2& _size)
+void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int& _zResolution)
 {
     ImGui::OpenPopup(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str());
     
@@ -58,7 +58,6 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
         // Set terrain dimensions. Resolution are for the number of vertices inside the terrain
         ImGui::InputInt("x resolution", &_xResolution, 0, 0);
         ImGui::InputInt("z resolution", &_zResolution, 0, 0);
-        ImGui::InputFloat2("terrain size", &_size.x);
 
         // Check if user inputs are valid
         bool isUserInputValid = true;
@@ -67,16 +66,11 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Minimum terrain resolution are 2 by 2.");
             isUserInputValid = false;
         }
-        if (_size.x == 0.0f || _size.y == 0.0f)    // Terrain scale error
-        {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Terrain size scale can't be 0.");
-            isUserInputValid = false;
-        }
 
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateDefaultTerrain(_xResolution, _zResolution, _size);
+            WorldBuilder::CreateDefaultTerrain(_xResolution, _zResolution);
             m_isCreateDefaultTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }
@@ -85,7 +79,7 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
     }
 }
 
-void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(Vector2& _size, float &_amplitude)
+void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(float &_amplitude)
 {
     ImGui::OpenPopup(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str());
     
@@ -96,7 +90,6 @@ void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(Vector2& _size
 
         // Set terrain dimensions. Amplitude if for the height
         ImGui::InputFloat("terrain amplitude", &_amplitude);
-        ImGui::InputFloat2("terrain size", &_size.x);
         
         // Check if user inputs are valid
         bool isUserInputValid = true;
@@ -105,16 +98,11 @@ void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup(Vector2& _size
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Terrain amplitude scale can't be 0.");
             isUserInputValid = false;
         }
-        if (_size.x == 0.0f || _size.y == 0.0f)    // Terrain size error
-        {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: Terrain size scale can't be 0.");
-            isUserInputValid = false;
-        }
         
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str(), _size, _amplitude);
+            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str(), _amplitude);
             m_isCreateDefaultNoisemapTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }

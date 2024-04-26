@@ -7,11 +7,10 @@ DefaultTerrain::DefaultTerrain(std::string _name, Transform* _transform)
     : Terrain(_name, _transform)
 {}
 
-void DefaultTerrain::Init(int _xResolution, int _zResolution, Vector2 _size)
+void DefaultTerrain::Init(int _xResolution, int _zResolution)
 {
     m_xResolution = _xResolution;
     m_zResolution = _zResolution;
-    m_size = _size;
     
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -24,8 +23,8 @@ void DefaultTerrain::Init(int _xResolution, int _zResolution, Vector2 _size)
         {
             // Set the vertex position
             Vertex vertex;
-            vertex.position.x = (i / (float)m_xResolution) * _size.x;
-            vertex.position.z = -10 + (j / (float)m_zResolution) * _size.y;    // -10 for offset but remove later
+            vertex.position.x = (i / (float)m_xResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.z = (j / (float)m_zResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.y = 0.0f;
             // Set the vertex texture postion
             vertex.textureCoords.x = (j / (float)m_zResolution);
