@@ -4,8 +4,8 @@
 #include "Image/stb_image.h"
 
 
-NoisemapTerrain::NoisemapTerrain(Transform* _transform, std::string _name)
-    : Terrain(_transform, _name)
+NoisemapTerrain::NoisemapTerrain(std::string _name, Transform* _transform)
+    : Terrain(_name, _transform)
 {}
 
 void NoisemapTerrain::Init(const char* _noisemapPath, Vector2 _size, float _amplitude)

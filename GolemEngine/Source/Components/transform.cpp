@@ -4,17 +4,18 @@
 #include "Resource/sceneManager.h"
 
 Transform::Transform()
+    : localPosition({0.0f, 0.0f, 0.0f}), rotation({0.0f, 0.0f, 0.0f}), scaling({1.0f, 1.0f, 1.0f})
 {
     m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;
-    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
+    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1.0f, 1.0f, 1.0f));
     if (m_parent)
         m_parent->AddChild(this);
 }
 
 Transform::Transform(Transform* _parent)
-    : m_parent(_parent)
+    : m_parent(_parent), localPosition({0.0f, 0.0f, 0.0f}), rotation({0.0f, 0.0f, 0.0f}), scaling({1.0f, 1.0f, 1.0f})
 {
-    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
+    m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1.0f, 1.0f, 1.0f));
     if (m_parent)
         m_parent->AddChild(this);
 }
@@ -35,8 +36,7 @@ Transform::~Transform()
 }
 
 
-void Transform::Update()
-{}
+void Transform::Update() {}
 
 void Transform::UpdateSelfAndChilds()
 {

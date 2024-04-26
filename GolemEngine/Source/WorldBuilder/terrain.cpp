@@ -9,7 +9,7 @@
 #include "Utils/viewportTools.h"
 
 
-Terrain::Terrain(Transform* _transform, std::string _name)
+Terrain::Terrain(std::string _name, Transform* _transform)
     : GameObject(_name, _transform)
 {}
 

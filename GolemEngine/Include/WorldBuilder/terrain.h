@@ -35,7 +35,7 @@ protected:
     size_t m_id;
 
 public:
-    GOLEM_ENGINE_API Terrain(Transform* _transform, std::string _name);
+    GOLEM_ENGINE_API Terrain(std::string _name, Transform* _transform);
 
     GOLEM_ENGINE_API void SetupMesh();
     GOLEM_ENGINE_API void Draw(Camera* _camera);
