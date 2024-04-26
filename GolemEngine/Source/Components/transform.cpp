@@ -69,11 +69,7 @@ void Transform::UpdateSelfAndChilds()
 void Transform::EditTransformGizmo()
 {
     ImGuiIO& io = ImGui::GetIO();
-    float viewManipulateRight = io.DisplaySize.x;
-    float viewManipulateTop = 0;
-    static ImGuiWindowFlags gizmoWindowFlags = 0;
 
-    ImGuizmo::SetOrthographic(false);
     ImGuizmo::SetDrawlist();
 
     static ImGuizmo::OPERATION currentOperation(ImGuizmo::TRANSLATE);
@@ -88,7 +84,6 @@ void Transform::EditTransformGizmo()
     Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), io.DisplaySize.x / io.DisplaySize.y, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    ImGuizmo::Enable(true);
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, io.DisplaySize.x, io.DisplaySize.y);
     ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, currentMode, &transformTest.data[0][0], NULL, NULL, NULL, NULL);
 
