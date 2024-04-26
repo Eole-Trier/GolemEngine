@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "d6dfeda3-0336-9c19-0f15-4ce7bd808959",
+            "guid": "d6dfeda3-0336-9c19-1500-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,90 +58,10 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "a8561792-11de-f49b-d4bf-59d979e742f2",
+      "guid": "a8561792-11de-f49b-bf00-cccccccccccc",
       "name": "World"
-    },
-    {
-      "components": [
-        {
-          "data": {
-            "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "guid": "7b15ae8d-da7c-34b5-4892-098a192299c6",
-            "localPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "rotation": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "scaling": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
-            }
-          },
-          "name": "transform"
-        },
-        {
-          "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Meshes\\viking_room.obj",
-            "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
-          },
-          "name": "meshRenderer"
-        }
-      ],
-      "guid": "68726431-1b99-7cd7-a6cf-33474dfd8e20",
-      "name": "viking"
-    },
-    {
-      "components": [
-        {
-          "data": {
-            "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "guid": "468a5c12-fe0f-9e42-484d-5d794d353d70",
-            "localPosition": {
-              "x": 3.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "rotation": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "scaling": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
-            }
-          },
-          "name": "transform"
-        },
-        {
-          "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
-            "shaderPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Shaders\\default.vs",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
-          },
-          "name": "meshRenderer"
-        }
-      ],
-      "guid": "285378ee-77d5-cc87-fccb-12a86013a686",
-      "name": "ball_bald"
     }
   ],
-  "guid": "d9703f4c-408e-1c8b-cc25-d1686cce18cd",
+  "guid": "1dccc009-ac93-6901-d696-47d753af10bb",
   "name": "scene_0"
 }
