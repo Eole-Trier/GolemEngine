@@ -33,15 +33,24 @@ public:
 	GOLEM_ENGINE_API static inline ObjectLayerVsBroadPhaseLayer objectVsBroadphaseLayerFilter;
 	GOLEM_ENGINE_API static inline ObjectLayerVsObjectLayer objectVsObjectLayerFilter;
 
-	static Vector3 ToVector3(RVec3 _v);
-	static Quaternion ToQuaternion(Quat _q);
 
 public:
 	PhysicSystem();
 	~PhysicSystem();
 
+	static Vector3 ToVector3(RVec3 _v);
+	static Quaternion ToQuaternion(Quat _q);
+
 	static void Update();
+
 	static BodyID CreateSphereCollider(Vector3 _position, float _radius);
 	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size);
 
+	static void AddForce(BodyID _bodyId, Vector3 _force);
+
+	static void MakeBodyStatic(BodyID _bodyId);
+	static void MakeBodyDynamic(BodyID _bodyId);
+
+	static void ActivateBody(BodyID _bodyId);
+	static void DesactivateActivateBody(BodyID _bodyId);
 };

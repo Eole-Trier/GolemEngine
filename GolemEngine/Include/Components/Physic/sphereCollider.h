@@ -4,19 +4,17 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
-#include "Components/component.h"
+#include "Components/Physic/collider.h"
 #include "Core/gameobject.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
 
-class SphereCollider : public Component
+class SphereCollider : public Collider
 {
 private:
 	float m_radius;
 
-public:
-	BodyID id;
 
 public:
 	SphereCollider();

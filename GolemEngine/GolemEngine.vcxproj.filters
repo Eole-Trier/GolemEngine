@@ -59,6 +59,7 @@
     <ClCompile Include="Source\Physic\objectLayerVsObjectLayer.cpp" />
     <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
     <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
+    <ClCompile Include="Source\Components\Physic\collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -137,5 +138,6 @@
     <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
     <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
     <ClInclude Include="Include\Components\Physic\boxCollider.h" />
+    <ClInclude Include="Include\Components\Physic\collider.h" />
   </ItemGroup>
 </Project>

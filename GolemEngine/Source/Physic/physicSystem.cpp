@@ -55,6 +55,16 @@ static bool AssertFailedImpl(const char* inExpression, const char* inMessage, co
 
 #endif // JPH_ENABLE_ASSERTS
 
+RVec3 PhysicSystem::ToJph(const Vector3 _v)
+{
+	return RVec3(_v.x, _v.y, _v.z);
+}
+
+Quat PhysicSystem::ToJph(const Quaternion _q)
+{
+	return Quat(_q.x, _q.y, _q.z, _q.w);
+}
+
 PhysicSystem::PhysicSystem()
 {
 	// Register allocation hook. In this example we'll just let Jolt use malloc / free but you can override these if you want (see Memory.h).
@@ -118,6 +128,16 @@ PhysicSystem::~PhysicSystem()
 	Factory::sInstance = nullptr;
 }
 
+Vector3 PhysicSystem::ToVector3(const RVec3 _v)
+{
+	return Vector3(_v.GetX(), _v.GetY(), _v.GetZ());
+}
+
+Quaternion PhysicSystem::ToQuaternion(const Quat _q)
+{
+	return Quaternion(_q.GetW(), _q.GetX(), _q.GetY(), _q.GetZ());
+}
+
 void PhysicSystem::Update()
 {
 	// We need a temp allocator for temporary allocations during the physics update. We're
@@ -139,8 +159,8 @@ BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
 {
 	 BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::MOVING);
-	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::Activate);
+	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::NON_MOVING);
+	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::DontActivate);
 }
 
 BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
@@ -148,25 +168,36 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
 	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), EMotionType::Static, ObjectLayers::NON_MOVING);
-	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::Activate);
+	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
-RVec3 PhysicSystem::ToJph(const Vector3 _v)
+void PhysicSystem::AddForce(BodyID _bodyId, const Vector3 _force)
 {
-	return RVec3(_v.x, _v.y, _v.z);
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_force));
 }
 
-Vector3 PhysicSystem::ToVector3(const RVec3 _v)
+void PhysicSystem::MakeBodyStatic(BodyID _bodyId)
 {
-	return Vector3(_v.GetX(), _v.GetY(), _v.GetZ());
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetMotionType(_bodyId, EMotionType::Static, EActivation::DontActivate);
+	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::NON_MOVING);
 }
 
-Quat PhysicSystem::ToJph(const Quaternion _q)
+void PhysicSystem::MakeBodyDynamic(BodyID _bodyId)
 {
-	return Quat(_q.x, _q.y, _q.z, _q.w);
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetMotionType(_bodyId, EMotionType::Dynamic, EActivation::DontActivate);
+	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::MOVING);
 }
 
-Quaternion PhysicSystem::ToQuaternion(const Quat _q)
+void PhysicSystem::ActivateBody(BodyID _bodyId)
 {
-	return Quaternion(_q.GetW(), _q.GetX(), _q.GetY(), _q.GetZ());
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.ActivateBody(_bodyId);
+}
+void PhysicSystem::DesactivateActivateBody(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.DeactivateBody(_bodyId);
 }

@@ -59,7 +59,7 @@ void Scene::InitGameObjects()
     vikingGo->AddComponent(audio1);
 
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(10, 0, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
     Model* ballBald = resourceManager->Get<Model>("sphere");

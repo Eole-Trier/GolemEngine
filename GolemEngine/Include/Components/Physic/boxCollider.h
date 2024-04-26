@@ -4,13 +4,13 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
-#include "Components/component.h"
+#include "Components/Physic/collider.h"
 #include "Core/gameobject.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
 
-class BoxCollider : public Component
+class BoxCollider : public Collider
 {
 private:
 	Vector3 m_size;
@@ -26,8 +26,6 @@ public:
 	void Begin() override;
 
 	void Update() override;
-
-	void to_json(json& j) const {}
 
 	friend refl_impl::metadata::type_info__<BoxCollider>; // needed to reflect private members
 };

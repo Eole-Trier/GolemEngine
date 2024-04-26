@@ -21,15 +21,8 @@ SphereCollider::SphereCollider(float _radius)
 {
 }
 
-
 SphereCollider::~SphereCollider()
 {
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-	// Remove the sphere from the physics system. Note that the sphere itself keeps all of its state and can be re-added at any time.
-	body_interface.RemoveBody(id);
-
-	// Destroy the sphere. After this the sphere ID is no longer valid.
-	body_interface.DestroyBody(id);
 }
 
 void SphereCollider::Begin()
@@ -37,8 +30,6 @@ void SphereCollider::Begin()
 	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
 	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, m_radius);
-	
-	body_interface.SetLinearVelocity(id, Vec3(-15.0f, 5.0f, 0.0f));
 }
 
 void SphereCollider::Update()

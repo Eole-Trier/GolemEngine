@@ -27,8 +27,6 @@ void BoxCollider::Begin()
 	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
 	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, m_size);
-
-	body_interface.SetLinearVelocity(id, Vec3(0.0f, 0.0f, 0.0f));
 }
 
 void BoxCollider::Update()
