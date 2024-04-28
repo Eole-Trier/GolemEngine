@@ -47,8 +47,8 @@ void Scene::InitGameObjects()
     std::string vikingName = "viking";
     Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
-    Texture* viking_text = resourceManager->Get<Texture>("viking_texture");
-    Model* viking_room = resourceManager->Get<Model>("viking_room");
+    Texture* viking_text = resourceManager->Get<Texture>("viking_room.jpg");
+    Model* viking_room = resourceManager->Get<Model>("viking_room.obj");
     Mesh* vikingMesh = new Mesh(viking_room, viking_text, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
     BoxCollider* box = new BoxCollider(Vector3(1.f));
@@ -61,8 +61,8 @@ void Scene::InitGameObjects()
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald = resourceManager->Get<Model>("sphere");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
+    Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
     SphereCollider* sc = new SphereCollider(1.f);
@@ -72,8 +72,8 @@ void Scene::InitGameObjects()
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
-    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald2 = resourceManager->Get<Model>("sphere");
+    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald.jpg");
+    Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
 }
@@ -87,33 +87,21 @@ void Scene::InitLights()
 
 void Scene::CreateAndLoadResources()
 {
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    resourceManager->TraverseDirectoryAndLoadFiles(Tools::FindFolder("Assets"));
+
     m_defaultTexture = "default_texture";
     m_defaultModel = "default_model";
     m_defaultShader = "default_shader";
     // TODO set default model and texture to cube and default texture
 
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
-
-    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
-    vikingTexture->Load(vikingTexture->path.c_str());
-
-    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
-    allBaldTexture->Load(allBaldTexture->path.c_str());
-
-    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
-    vikingModel->Load(vikingModel->path.c_str());
-
+   
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
-
-    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
-    sphereModel->Load(sphereModel->path.c_str());
-
-    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
-    cubeModel->Load(cubeModel->path.c_str());
 
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());

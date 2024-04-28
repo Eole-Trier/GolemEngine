@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <filesystem>
 #include <iostream>
 
 #include "dll.h"
@@ -29,6 +30,9 @@ public:
 		}
 		return m_instancePtr;
 	}
+
+	void ProcessFile(const std::filesystem::path& _filePath);
+	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);

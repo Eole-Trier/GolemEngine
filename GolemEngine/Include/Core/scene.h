@@ -69,6 +69,7 @@ public:
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
+
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 
