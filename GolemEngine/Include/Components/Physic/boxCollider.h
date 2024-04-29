@@ -16,9 +16,6 @@ private:
 	Vector3 m_size;
 
 public:
-	BodyID id;
-
-public:
 	BoxCollider();
 	BoxCollider(Vector3 _size);
 	~BoxCollider();
@@ -33,6 +30,6 @@ public:
 };
 
 REFL_AUTO(
-	type(BoxCollider, bases<Component>),
+	type(BoxCollider, bases<Collider>),
 	field(m_size)
 )

@@ -14,6 +14,13 @@
 
 using namespace JPH;
 
+enum class MotionType : uint8
+{
+	Static,						
+	Kinematic,					
+	Dynamic,
+};
+
 class PhysicSystem
 {
 private:
@@ -43,14 +50,15 @@ public:
 
 	static void Update();
 
-	static BodyID CreateSphereCollider(Vector3 _position, float _radius);
+	static BodyID CreateSphereCollider(Vector3 _position, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size);
 
 	static void AddForce(BodyID _bodyId, Vector3 _force);
 
 	static void MakeBodyStatic(BodyID _bodyId);
 	static void MakeBodyDynamic(BodyID _bodyId);
+	static void MakeBodyKinematic(BodyID _bodyId);
 
 	static void ActivateBody(BodyID _bodyId);
-	static void DesactivateActivateBody(BodyID _bodyId);
+	static void DesactivateBody(BodyID _bodyId);
 };

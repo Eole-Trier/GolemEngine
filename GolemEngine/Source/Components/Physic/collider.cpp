@@ -1,11 +1,6 @@
 #include "Components/Physic/collider.h"
 #include "Physic/physicSystem.h"
 
-Collider::Collider()
-{
-
-}
-
 Collider::~Collider()
 {
 	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -22,5 +17,25 @@ void Collider::Begin()
 
 void Collider::Update()
 {
-
+	switch (m_MotionType)
+	{
+	case MotionType::Static:
+		PhysicSystem::MakeBodyStatic(id);
+		break;
+	case MotionType::Kinematic:
+		break;
+	case MotionType::Dynamic:
+		PhysicSystem::MakeBodyDynamic(id);
+		break;
+	default:
+		break;
+	}
+	if (m_IsActivated)
+	{
+		PhysicSystem::ActivateBody(id);
+	}
+	else
+	{
+		PhysicSystem::DesactivateBody(id);
+	}
 }

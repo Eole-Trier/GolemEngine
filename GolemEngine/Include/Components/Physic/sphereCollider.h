@@ -15,7 +15,6 @@ class SphereCollider : public Collider
 private:
 	float m_radius;
 
-
 public:
 	SphereCollider();
 	SphereCollider(float _radius);
@@ -31,6 +30,6 @@ public:
 };
 
 REFL_AUTO(
-	type(SphereCollider, bases<Component>),
+	type(SphereCollider, bases<Collider>),
 	field(m_radius, Range(0, 100))
 )

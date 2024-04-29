@@ -155,11 +155,12 @@ void PhysicSystem::Update()
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
-BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
+BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	 BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::NON_MOVING);
+	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), _motionType, _objectLayer);
+	 sphere_settings.mAllowDynamicOrKinematic = true;
 	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::DontActivate);
 }
 
@@ -168,6 +169,7 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
 	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), EMotionType::Static, ObjectLayers::NON_MOVING);
+	boxSettings.mAllowDynamicOrKinematic = true;
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
@@ -191,12 +193,19 @@ void PhysicSystem::MakeBodyDynamic(BodyID _bodyId)
 	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::MOVING);
 }
 
+void PhysicSystem::MakeBodyKinematic(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetMotionType(_bodyId, EMotionType::Kinematic, EActivation::DontActivate);
+	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::MOVING);
+}
+
 void PhysicSystem::ActivateBody(BodyID _bodyId)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.ActivateBody(_bodyId);
 }
-void PhysicSystem::DesactivateActivateBody(BodyID _bodyId)
+void PhysicSystem::DesactivateBody(BodyID _bodyId)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.DeactivateBody(_bodyId);

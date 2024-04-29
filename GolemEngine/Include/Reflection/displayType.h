@@ -32,6 +32,9 @@ public:
 	static void DisplayStdVector(MemberT* _member);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
+	static void DisplayEnum(MemberT* _member);
+
+	template<typename TypeT, typename MemberT, typename DescriptorT>
 	static void DisplayIntOrFloat(MemberT* _member);
 
 	template<typename TypeT>
@@ -60,12 +63,13 @@ void DisplayType::DisplayField(TypeT* _class)
 
 		if constexpr (!refl::descriptor::has_attribute<HideInInspector>(DescriptorT{}))
 		{
-			if constexpr (std::is_array_v<MemberT>) // array case
-			{
-			}
-			else if constexpr (is_std_vector_v<MemberT>) // std::vector case
+			if constexpr (is_std_vector_v<MemberT>) // std::vector case
 			{
 				DisplayStdVector<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
+			}
+			else if constexpr (std::is_enum_v<MemberT>) // enum case
+			{
+				DisplayEnum<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
 			}
 			else // basic case
 			{
@@ -115,6 +119,12 @@ void DisplayType::DisplayStdVector(MemberT* _member)
 	{
 		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_member)[i]);
 	}
+}
+
+template<typename TypeT, typename MemberT, typename DescriptorT>
+void DisplayType::DisplayEnum(MemberT* _member)
+{
+	// TODO
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
