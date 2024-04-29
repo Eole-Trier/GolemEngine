@@ -6,7 +6,7 @@
 
 #include "Resource/resource.h"
 #include "Components/component.h"
-#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/Shaders/shader.h"
 #include "Refl/refl.hpp"
 
 

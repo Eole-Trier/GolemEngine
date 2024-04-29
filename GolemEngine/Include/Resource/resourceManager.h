@@ -16,6 +16,8 @@ private:
 	// Static pointer which points to the only instance of this class
 	static ResourceManager* m_instancePtr;
 
+	static inline std::string m_defaultVertexShader = "default_vertex_shader";
+	static inline std::string m_defaultFragmentShader = "default_fragment_shader";
 	static inline std::string m_defaultShader = "default_shader";
 	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
 	static inline std::string m_defaultTexture = "default_texture";

@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "Core/gameobject.h"
 #include "Resource/Rendering/mesh.h"
-#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/Shaders/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/resourceManager.h"

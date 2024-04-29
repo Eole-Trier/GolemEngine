@@ -1,7 +1,7 @@
 #include "..\..\..\Include\Components\Light\directionalLight.h"
 
 #include "Debug/log.h"
-#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/Shaders/shader.h"
 #include "Resource/sceneManager.h"
 
 DirectionalLight::DirectionalLight()

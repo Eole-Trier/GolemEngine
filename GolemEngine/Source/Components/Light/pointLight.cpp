@@ -1,7 +1,7 @@
 #include "..\..\..\Include\Components\Light\pointLight.h"
 
 #include "Debug/log.h"
-#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/Shaders/shader.h"
 #include "Core/gameObject.h"
 #include "matrix4.h"
 #include "Resource/sceneManager.h"

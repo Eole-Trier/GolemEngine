@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 
 #include "dll.h"
-#include "shader.h"
+#include "Shaders/shader.h"
 #include "texture.h"
 #include "model.h"
 #include "Core/gameobject.h"

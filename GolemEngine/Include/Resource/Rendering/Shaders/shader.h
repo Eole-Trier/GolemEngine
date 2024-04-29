@@ -15,18 +15,26 @@ class Vector3;
 class Vector4;
 class Matrix4;
 
+class VertexShader;
+class FragmentShader;
+
 class GOLEM_ENGINE_API Shader : public Resource
 {
 public:
 	unsigned int id = 0;
+	VertexShader* vertexShader = nullptr;
+	FragmentShader* fragmentShader = nullptr;
 
-private:
+protected:
 	void CheckCompileErrors(unsigned int _shader, std::string _type);
 
 public:
-	Shader();
+	Shader(VertexShader* _vertexShader, FragmentShader* _fragmentShader);
 
-	void SetVertexFragmentComputeShaders(const char* _vertexPath, const char* _fragmentPath, const char* _computePath);
+	virtual void SetShader(const char* _shaderPath);
+	// virtual void SetVertexShader(const char* _vertexPath);
+	// virtual void SetFragmentShader(const char* _fragmentPath);
+	// virtual void SetComputeShader(const char* _computePath);
 
     void Use();
     void SetBool(const std::string& _name, bool _value) const;

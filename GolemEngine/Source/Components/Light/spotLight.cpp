@@ -3,7 +3,7 @@
 #include <MathsLib/utils.h>
 
 #include "Debug/log.h"
-#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/Shaders/shader.h"
 #include "Core/gameObject.h"
 #include "Resource/sceneManager.h"
 
