@@ -28,6 +28,7 @@ void PlayScene::Update()
 		}
 		ImGui::SetCursorPosX(0);
 		ImGui::Image((ImTextureID)GraphicWrapper::GetPlayerSceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
+		
 		ImGui::End();	
 		ImGui::PopStyleColor();
 	}

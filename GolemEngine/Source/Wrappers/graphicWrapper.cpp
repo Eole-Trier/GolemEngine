@@ -29,6 +29,7 @@ int GraphicWrapper::Init()
 
 void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _height)
 {
+    #pragma region viewport textureid
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
@@ -54,9 +55,9 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
-
-
-
+    #pragma endregion viewport textureid
+    
+    #pragma region playscene textureid
     // Create PlayScene framebuffer
     glGenFramebuffers(1, &m_fboPlayer);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fboPlayer);
@@ -82,6 +83,7 @@ void GraphicWrapper::CreateFramebuffer(unsigned int _format, int _width, int _he
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
+    #pragma endregion playscene textureid
 }
 
 void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)

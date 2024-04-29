@@ -42,8 +42,10 @@ bool RCCppInit()
     g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
     g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui");
     g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui\\backends");
+    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\Include");
+    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include");
+    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include\\MathsLib");
     g_pRuntimeObjectSystem->RemoveFromRuntimeFileList("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include\\Refl\\refl.hpp");
-
     return true;
 }
 
@@ -126,8 +128,8 @@ void Editor::MainLoop()
 	{
         RCCppUpdate();
         g_SystemTable.pRCCppMainLoopI->MainLoop();
-
-		WindowWrapper::ProcessEvents();
+        GolemEngine::GetPlayerCamera()->m_position.z -= g_SystemTable.pRCCppMainLoopI->GetFloat();
+		WindowWrapper::ProcessEvents(); 
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();

@@ -69,6 +69,11 @@ Camera* GolemEngine::GetCamera()
     return m_camera;
 }
 
+Camera* GolemEngine::GetPlayerCamera()
+{
+    return m_playerCamera;
+}
+
 float GolemEngine::GetDeltaTime()
 {
     return m_deltaTime;

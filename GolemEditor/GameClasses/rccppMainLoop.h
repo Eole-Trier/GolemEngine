@@ -8,4 +8,6 @@ struct RCCppMainLoopI
 {
     virtual void MainLoop() = 0;
     virtual int GetInt() = 0;
+    virtual float GetFloat() = 0;
+    virtual bool GetBool() = 0;
 };

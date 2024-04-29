@@ -35,6 +35,7 @@ public:
 	static void Close();
 
 	static Camera* GetCamera();
+	static Camera* GetPlayerCamera();
 	static float GetDeltaTime();
 	static float GetTime();
 };
