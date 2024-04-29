@@ -27,7 +27,7 @@ public:
     ~PointLight();
     void SetPointLight(Shader* _shader);
    
-    void Update(Shader* _shader) override;
+    void Update() override;
 
     
     // Define serialization and deserialization functions manually because the

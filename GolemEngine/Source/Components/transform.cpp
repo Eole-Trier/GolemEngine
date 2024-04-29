@@ -68,7 +68,6 @@ void Transform::UpdateSelfAndChilds()
 
 void Transform::EditTransformGizmo()
 {
-
     ImGuizmo::SetOrthographic(false);
     ImGuizmo::SetDrawlist();
 

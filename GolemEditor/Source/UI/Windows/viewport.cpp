@@ -70,7 +70,6 @@ void Viewport::Update()
     {
         GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        Log::Print("pixelID = %d", pixelData);
         GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
 
         if(pixelData == 5)
@@ -121,7 +120,6 @@ void Viewport::Update()
     if (EditorUi::selected)
     {
         EditorUi::selected->transform->EditTransformGizmo();
-        Log::Print("%d", EditorUi::selected->GetId());
     }
 
     ImGui::End();

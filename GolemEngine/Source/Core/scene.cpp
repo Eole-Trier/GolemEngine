@@ -5,31 +5,36 @@
 
 #include "golemEngine.h"
 #include "utils.h"
-#include "Core/gameobject.h"
 #include "Core/mesh.h"
-#include "Resource/Rendering/shader.h"
-#include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/shader.h"
+#include "Utils/tools.h"
+#include "Components\Light\pointLight.h"
+#include "Components\Light\directionalLight.h"
+#include "Components\Light\spotLight.h"
+#include "Resource/Rendering/shader.h"
+#include "Core/gameobject.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
-#include "Utils/tools.h"
-#include "Components/Light/directionalLight.h"
-#include "Components/Light/pointLight.h"
-#include "Components/Light/spotLight.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
+#include "Physic/physicSystem.h"
+#include "Components/Physic/sphereCollider.h"
+#include "Components/Physic/boxCollider.h"
 #include "Wrappers/windowWrapper.h"
 
 using json = nlohmann::json;
-
 
 Scene::Scene(std::string _name, bool _isEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
-    
+    ResourceManager::CreateAndLoadResources();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
+    InitLights();
+
     
     if (!_isEmpty)    // If there is already a save of the world, don't init a default scene
     { 
@@ -44,27 +49,47 @@ void Scene::InitDefaultScene()
 
     // Create a viking room model
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
-    Texture* vikingText = resourceManager->Get<Texture>("viking_texture");
-    Model* vikingRoom = resourceManager->Get<Model>("viking_room");
+    Texture* vikingText = resourceManager->Get<Texture>("viking_room.jpg");
+    Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
+    BoxCollider* box = new BoxCollider(Vector3(1.f));
+    vikingGo->AddComponent(box);
+    box->Begin();
+    Audio* audio1 = new Audio("music_01.wav");
+    vikingGo->AddComponent(audio1);
+
     // Create a sphere model
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald_texture");
-    Model* ballBald = resourceManager->Get<Model>("sphere");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
+    Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
+    SphereCollider* sc = new SphereCollider(1.f);
+    ballBaldGo->AddComponent(sc);
+    sc->Begin();
 
+    std::string ballBaldName2 = "ball_bald2";
+    Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* ballBald2Go = new GameObject(ballBaldName2, ballBaldTransform2);
+    Texture* ballBaldTexture2 = resourceManager->Get<Texture>("all_bald.jpg");
+    Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
+    Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
+    ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
+}
+
+void Scene::InitLights()
+{
     // Set up directional light
     DirectionalLight* dir = new DirectionalLight;
     m_world->AddComponent(dir);
 }
 
-void Scene::Update(Camera* _camera)
+void Scene::Update(Camera* _camera, float _width, float _height)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
@@ -76,7 +101,7 @@ void Scene::Update(Camera* _camera)
         UpdateTerrains(_camera); 
     }
     
-    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+    UpdateGameObjects(_camera, _width, _height);    // Always at least one gameobject (world)
 
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
@@ -92,7 +117,7 @@ void Scene::UpdateTerrains(Camera* _camera)
     }
 }
 
-void Scene::UpdateGameObjects(Camera* _camera)
+void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 {
     // Drag and drop
     if (isNewObjectDropped)
@@ -103,17 +128,14 @@ void Scene::UpdateGameObjects(Camera* _camera)
 
     m_world->transform->UpdateSelfAndChilds();
 
+
+    PhysicSystem::Update();
+
     for (int i = 0; i < gameObjects.size(); i++)
     {
+        gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
-        {
-            meshRenderer->Draw(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, _camera);
-        }
-        
-        if (Audio* audio = gameObjects[i]->GetComponent<Audio>())
-        {
-            audio->Update();
-        }
+            meshRenderer->Draw(_width, _height, _camera);
     }
 }
 
@@ -127,15 +149,15 @@ void Scene::UpdateLights(Shader* _shader)
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
-        m_dirLights[i]->Update(_shader);
+        m_dirLights[i]->SetDirectionalLight(_shader);
     }
     for (unsigned int i = 0; i < m_pointLights.size(); ++i)
     {
-        m_pointLights[i]->Update(_shader);
+        m_pointLights[i]->SetPointLight(_shader);
     }
     for (unsigned int i = 0; i < m_spotLights.size(); ++i)
     {
-        m_spotLights[i]->Update(_shader);
+        m_spotLights[i]->SetSpotLight(_shader);
     }
 }
 

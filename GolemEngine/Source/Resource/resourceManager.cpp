@@ -1,12 +1,45 @@
 #include "Resource/resourceManager.h"
-
-#include "Utils/tools.h"
-#include "Resource/Rendering/shader.h"
-#include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
-
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/shader.h"
+#include "Utils/tools.h"
 
 ResourceManager* ResourceManager::m_instancePtr = nullptr;
+
+void ResourceManager::ProcessFile(const std::filesystem::path& _filePath)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    std::string fileName = _filePath.filename().string();
+    std::string extension = _filePath.extension().string();
+    std::string filePath = _filePath.string();
+
+    if (extension == ".obj")
+    {
+        Model* model = resourceManager->Create<Model>(fileName, filePath);
+        model->Load(filePath.c_str());
+    }
+    else if (extension == ".jpg" || extension == ".png")
+    {
+        Texture* texture = resourceManager->Create<Texture>(fileName, filePath);
+        texture->Load(filePath.c_str());
+    }
+}
+
+void ResourceManager::TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath)
+{
+    for (const auto& entry : std::filesystem::directory_iterator(_directoryPath))
+    {
+        if (entry.is_regular_file())
+        {
+            ProcessFile(entry.path());
+        }
+        else if (entry.is_directory())
+        {
+            TraverseDirectoryAndLoadFiles(entry.path());
+        }
+    }
+}
 
 ResourceManager* ResourceManager::GetInstance()
 {
@@ -21,32 +54,21 @@ void ResourceManager::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
-    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
+    resourceManager->TraverseDirectoryAndLoadFiles(Tools::FindFolder("Assets"));
 
-    Shader* defaultTerrainShader = resourceManager->Create<Shader>(m_defaultTerrainShader, Tools::FindFile("defaultTerrain.vs"));
-    defaultTerrainShader->SetVertexAndFragmentShader(defaultTerrainShader->path.c_str(), Tools::FindFile("defaultTerrain.fs").c_str());
+    m_defaultTexture = "default_texture";
+    m_defaultModel = "default_model";
+    m_defaultShader = "default_shader";
+    // TODO set default model and texture to cube and default texture
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
 
-    Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
-    vikingTexture->Load(vikingTexture->path.c_str());
-
-    Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
-    allBaldTexture->Load(allBaldTexture->path.c_str());
-
-    Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
-    vikingModel->Load(vikingModel->path.c_str());
-
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
 
-    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
-    sphereModel->Load(sphereModel->path.c_str());
-
-    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
-    cubeModel->Load(cubeModel->path.c_str());
+    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
+    defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 }
 
 std::string ResourceManager::GetDefaultShader()

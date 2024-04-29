@@ -6,6 +6,8 @@
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
 #include "Components/audio.h"
+#include "Components/Physic/sphereCollider.h"
+#include "Components/Physic/boxCollider.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -17,6 +19,8 @@ void ClassesManager::AddAllClasses()
 	Add<PointLight>();
 	Add<SpotLight>();
 	Add<Audio>();
+	Add<SphereCollider>();
+	Add<BoxCollider>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

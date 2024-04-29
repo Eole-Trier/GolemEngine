@@ -9,10 +9,10 @@
 #include "vector4.h"
 #include "Reflection/classesManager.h"
 
-
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
+    m_physicSystem = new PhysicSystem();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
@@ -43,13 +43,14 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    SceneManager::GetCurrentScene()->Update(m_camera);
+    SceneManager::GetCurrentScene()->Update(m_camera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()
 {
+    delete m_physicSystem;
     glfwTerminate();
 }
 

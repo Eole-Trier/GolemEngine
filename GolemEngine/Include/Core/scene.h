@@ -39,6 +39,9 @@ private:
 	std::vector<Terrain*> m_terrains;
 
 public:
+	std::string m_defaultTexture;
+	std::string m_defaultModel;
+	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
 	bool isNewObjectDropped = false;
@@ -50,9 +53,10 @@ public:
 	Scene(std::string _name, bool _isEmpty);
 
 	void InitDefaultScene();
-	void Update(Camera* _camera);
+	void InitLights();
+	void Update(Camera* _camera, float _width, float _height);
 	void UpdateTerrains(Camera* _camera);
-	void UpdateGameObjects(Camera* _camera);
+	void UpdateGameObjects(Camera* _camera, float _width, float _height);
 	void UpdateLights(Shader* _shader);
 	// Check the gameobject's name is already in the vector or not.
 	bool IsNameExists(const std::string& _name);
@@ -60,9 +64,7 @@ public:
 	void AddTerrain(Terrain* _terrain);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
-	void RemoveGameObject(GameObject* _gameObject);
 	void AddLight(Light* _light);
-	void DeleteLight(Light* _light);
 	
 	std::vector<Terrain*> GetTerrains();
 	std::vector<DirectionalLight*> GetDirectionalLights();
@@ -72,9 +74,14 @@ public:
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
+
+	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
 	Guid GetGuid();
 
+	void AddGameObject(GameObject* _gameObject);
+	void RemoveGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
 	void SetGuid(Guid _guid);
 
 	

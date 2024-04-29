@@ -5,6 +5,7 @@
 
 #include "dll.h"
 #include "Core/scene.h"
+#include "Physic/physicSystem.h"
 
 
 struct GLFWwindow;
@@ -13,6 +14,7 @@ class Camera;
 class GOLEM_ENGINE_API GolemEngine
 {
 private:
+	static inline PhysicSystem* m_physicSystem = nullptr;
 	static inline Camera* m_camera = nullptr;
 	static inline float m_deltaTime = 0.0f;
 
@@ -36,5 +38,4 @@ public:
 	static Camera* GetCamera();
 	static float GetDeltaTime();
 	static float GetTime();
-
 };

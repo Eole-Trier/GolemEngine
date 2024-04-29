@@ -55,7 +55,6 @@ void DirectionalLight::SetDirectionalLight(Shader* _shader)
 	_shader->SetVec4("dirLights[" + std::to_string(id) + "].specular", specularColor);
 }
 
-void DirectionalLight::Update(Shader* _shader)
+void DirectionalLight::Update()
 {
-	SetDirectionalLight(_shader);
 }

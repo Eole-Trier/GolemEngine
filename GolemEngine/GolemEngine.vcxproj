@@ -41,6 +41,15 @@
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
+    <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
+    <ClCompile Include="Source\Components\Physic\collider.cpp" />
+    <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
+    <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
+    <ClCompile Include="Source\Physic\contactManager.cpp" />
+    <ClCompile Include="Source\Physic\objectLayerVsBroadPhaseLayerFilter.cpp" />
+    <ClCompile Include="Source\Physic\objectLayerVsObjectLayer.cpp" />
+    <ClCompile Include="Source\Physic\physicSystem.cpp" />
+    <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />
@@ -50,6 +59,7 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
+    <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Reflection\classManager.cpp" />
     <ClCompile Include="Source\Reflection\displayType.cpp" />
     <ClCompile Include="Source\Resource\guid.cpp">
@@ -177,6 +187,17 @@
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Components\meshRenderer.h" />
+    <ClInclude Include="Include\Components\Physic\boxCollider.h" />
+    <ClInclude Include="Include\Components\Physic\collider.h" />
+    <ClInclude Include="Include\Physic\bodyActivationManager.h" />
+    <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
+    <ClInclude Include="Include\Physic\contactManager.h" />
+    <ClInclude Include="Include\Physic\layers.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
+    <ClInclude Include="Include\Physic\physicSystem.h" />
+    <ClInclude Include="Include\Physic\bodiesManager.h" />
+    <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
     <ClInclude Include="Include\Core\mesh.h" />
@@ -204,6 +225,7 @@
     <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
+    <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
@@ -324,7 +346,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT;JPH_SHARED_LIBRARY;JPH_DEBUG_RENDERER;JPH_DISABLE_CUSTOM_ALLOCATOR;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_PROFILE_ENABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -333,11 +355,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;Jolt.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(SolutionDir)Libraries\Libs\Jolt</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)" &amp; xcopy /y /d "$(SolutionDir)Libraries\Libs\Jolt\Jolt.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
