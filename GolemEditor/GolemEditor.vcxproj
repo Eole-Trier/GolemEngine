@@ -184,10 +184,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameClasses\player.cpp" />
     <ClCompile Include="GameClasses\playScene.cpp" />
-    <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
-    <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
     <ClCompile Include="Source\UI\toolbar.cpp" />
     <ClCompile Include="Source\UI\Windows\basicActors.cpp" />
     <ClCompile Include="Source\UI\Windows\debugWindow.cpp" />
@@ -201,11 +198,7 @@
     <ClCompile Include="Source\UI\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameClasses\player.h" />
     <ClInclude Include="GameClasses\playScene.h" />
-    <ClInclude Include="GameClasses\rccppMainLoop.h" />
-    <ClInclude Include="GameClasses\StdioLogSystem.h" />
-    <ClInclude Include="GameClasses\systemTable.h" />
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\toolbar.h" />

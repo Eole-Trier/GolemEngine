@@ -48,16 +48,7 @@
     <ClCompile Include="Source\UI\toolbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameClasses\rccppMainLoop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameClasses\StdioLogSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameClasses\playScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameClasses\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,19 +83,7 @@
     <ClInclude Include="Include\UI\toolbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameClasses\rccppMainLoop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameClasses\StdioLogSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameClasses\systemTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameClasses\playScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameClasses\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

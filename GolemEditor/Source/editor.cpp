@@ -15,61 +15,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 
-#include "SystemTable.h"
-#include "RuntimeObjectSystem.h"
-#include "StdioLogSystem.h"
-#include "rccppMainLoop.h"
-#include "Resource/tools.h"
-
-
-static IRuntimeObjectSystem*    g_pRuntimeObjectSystem;
-static StdioLogSystem           g_Logger;
-static SystemTable              g_SystemTable;
-
-bool RCCppInit()
-{
-    g_pRuntimeObjectSystem = new RuntimeObjectSystem;
-    if (!g_pRuntimeObjectSystem->Initialise(&g_Logger, &g_SystemTable))
-    {
-        delete g_pRuntimeObjectSystem;
-        g_pRuntimeObjectSystem = NULL;
-        return false;
-    }
-
-    // ensure include directories are set - use location of this file as starting point
-    FileSystemUtils::Path basePath = g_pRuntimeObjectSystem->FindFile(__FILE__).ParentPath();
-    FileSystemUtils::Path imguiIncludeDir = basePath / "imgui";
-    g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
-    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui");
-    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\External\\imgui\\backends");
-    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEngine\\Include");
-    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include");
-    g_pRuntimeObjectSystem->AddIncludeDir("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include\\MathsLib");
-    g_pRuntimeObjectSystem->RemoveFromRuntimeFileList("E:\\Projects\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\Libraries\\Include\\Refl\\refl.hpp");
-    return true;
-}
-
-void RCCppUpdate()
-{
-    //check status of any compile
-    if (g_pRuntimeObjectSystem->GetIsCompiledComplete())
-    {
-        // load module when compile complete
-        g_pRuntimeObjectSystem->LoadCompiledModule();
-    }
-
-    if (!g_pRuntimeObjectSystem->GetIsCompiling())
-    {
-        float deltaTime = 1.0f / ImGui::GetIO().Framerate;
-        g_pRuntimeObjectSystem->GetFileChangeNotifier()->Update(deltaTime);
-    }
-}
-
-void RCCppCleanup()
-{
-    delete g_pRuntimeObjectSystem;
-}
-
 Editor::Editor()
 	:
 	m_name("Golem Engine")
@@ -113,7 +58,6 @@ void Editor::InitUi()
 
 void Editor::Init()
 {
-    RCCppInit();
     InitWindow();
     InitGraphics();
     InitUi();
@@ -126,9 +70,6 @@ void Editor::MainLoop()
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{
-        RCCppUpdate();
-        g_SystemTable.pRCCppMainLoopI->MainLoop();
-        GolemEngine::GetPlayerCamera()->m_position.z -= g_SystemTable.pRCCppMainLoopI->GetFloat();
 		WindowWrapper::ProcessEvents(); 
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -161,7 +102,6 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
-    RCCppCleanup();
 }
 
 void Editor::Run()
