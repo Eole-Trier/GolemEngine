@@ -9,6 +9,7 @@
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
+#include "Wrappers/windowWrapper.h"
 
 unsigned int GraphicWrapper::m_vao;
 unsigned int GraphicWrapper::m_vbo;
