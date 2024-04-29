@@ -119,7 +119,7 @@ void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch,
 
     // Use this offset to change camera vector values thus moving the camera
     float xOffset = mouseOffset.x;
-    float yOffset = mouseOffset.y;
+    float yOffset = -mouseOffset.y;
 
     xOffset *= m_mouseSensitivity;
     yOffset *= m_mouseSensitivity;

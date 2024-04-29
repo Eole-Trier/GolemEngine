@@ -91,9 +91,9 @@ void Viewport::Update()
 
     else
     {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize());
+        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
     }
-    
+
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 
     DragDropEvent();

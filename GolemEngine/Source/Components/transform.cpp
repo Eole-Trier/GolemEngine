@@ -81,12 +81,8 @@ void Transform::EditTransformGizmo()
 
     float aspectRatio = io.DisplaySize.x / io.DisplaySize.y;
     float fov = DegToRad(camera->GetZoom());
-    float tanFov = std::tan(fov * 0.5);
 
-    Matrix4 cameraProjection = Matrix4::Projection(fov, aspectRatio, 
-        camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
-    cameraProjection.data[0][0] = 1.0 / (tanFov * aspectRatio);
-    cameraProjection.data[1][1] = 1.0 / tanFov;
+    Matrix4 cameraProjection = Matrix4::Projection(fov, aspectRatio, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
