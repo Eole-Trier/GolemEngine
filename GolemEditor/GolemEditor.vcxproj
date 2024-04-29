@@ -149,7 +149,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;RuntimeCompiler_VS2010.lib;RuntimeObjectSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GolemEngine.lib;$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>

@@ -44,14 +44,11 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    //for (int i = 0; i < texList.size(); i++)
-    //{
     SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
-
-    //}
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
-
+    
+    // Renderer play scene
     GraphicWrapper::BindPlaySceneFrambuffer();
     GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     GraphicWrapper::ClearBuffer();
