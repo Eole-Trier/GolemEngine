@@ -8,7 +8,7 @@
 #include "imgui_internal.h"
 #include "ImGuizmo.h"
 #include "MathsLib/utils.h"
-
+#include <cmath>
 
 Transform::Transform()
 {
@@ -75,19 +75,24 @@ void Transform::EditTransformGizmo()
     static ImGuizmo::OPERATION currentOperation(ImGuizmo::TRANSLATE);
     static ImGuizmo::MODE currentMode(ImGuizmo::WORLD);
 
-    /*float windowWidth = (float)ImGui::GetWindowWidth();
-    float windowHeight = (float)ImGui::GetWindowHeight();*/
+    auto camera = GolemEngine::GetCamera();
 
     Matrix4 transformTest = GetGlobalModel().Transpose();
 
-    auto camera = GolemEngine::GetCamera();
-    Matrix4 cameraProjection = Matrix4::Projection(DegToRad(camera->GetZoom()), io.DisplaySize.x / io.DisplaySize.y, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
+    float aspectRatio = io.DisplaySize.x / io.DisplaySize.y;
+    float fov = DegToRad(camera->GetZoom());
+    float tanFov = std::tan(fov * 0.5);
+
+    Matrix4 cameraProjection = Matrix4::Projection(fov, aspectRatio, 
+        camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
+    cameraProjection.data[0][0] = 1.0 / (tanFov * aspectRatio);
+    cameraProjection.data[1][1] = 1.0 / tanFov;
+
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    std::cout << transformTest << std::endl;
-
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, io.DisplaySize.x, io.DisplaySize.y);
-    ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, currentMode, &transformTest.data[0][0], NULL, NULL, NULL, NULL);
+    ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, 
+        currentMode, &transformTest.data[0][0], NULL, NULL, NULL, NULL);
 
     m_globalModel = transformTest.Transpose();
 }
