@@ -102,6 +102,12 @@ void Scene::CreateAndLoadResources()
     
     Shader* shad = resourceManager->Create<Shader>("default");
     shad->SetVertexAndFragmentShader("Shaders/default.vs", "Shaders/default.fs");
+
+    Shader* skybox = resourceManager->Create<Shader>("skybox");
+    skybox->SetVertexAndFragmentShader("Shaders/skybox.vs", "Shaders/skybox.fs");
+    GraphicWrapper::SetSkybox();
+    skybox->Use();
+    skybox->SetInt("skybox", 0);
 }
 
 void Scene::Update(float _width, float _height, Camera* _camera)
@@ -116,6 +122,20 @@ void Scene::Update(float _width, float _height, Camera* _camera)
 
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _camera);
+
+    Shader* skyboxShader = resourceManager->Get<Shader>("skybox");
+    Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
+    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+    skyboxShader->Use();
+    skyboxShader->SetMat4("view", _camera->GetViewMatrix());
+    skyboxShader->SetMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(GraphicWrapper::GetSkyboxVAO());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, GraphicWrapper::GetSkyboxId());
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS);
 }
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)

@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <vector>
 
 #include "dll.h"
 
@@ -33,6 +34,9 @@ private:
 	static unsigned int m_rboPlayer;
 	static unsigned int m_fboPlayer;
 	static unsigned int m_playerSceneId;
+	static unsigned int m_cubemapId;
+	static unsigned int m_skyboxVAO;
+	static unsigned int m_skyboxVBO;
 	static int m_width;
 	static int m_height;
 
@@ -70,8 +74,12 @@ public:
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();
-
+	// Get playscene texture id
 	static unsigned int GetPlayerSceneId();
+	// Get Skybox Id
+	static unsigned int GetSkyboxId();
+
+	static unsigned int GetSkyboxVAO();
 
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
 	static void SetBackgroundColor(Vector4 _color);
@@ -79,6 +87,10 @@ public:
 	static void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
 	static unsigned int GetFbo();
+	// Load skybox (cubemap)
+	static unsigned int LoadCubemap(std::vector<std::string> faces);
+	// Set skybox
+	static void SetSkybox();
 
 #pragma region Shader functions
 	// These functions should only be used through the Shader class and not through this GraphicWrapper class
