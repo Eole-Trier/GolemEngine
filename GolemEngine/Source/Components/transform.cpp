@@ -75,18 +75,23 @@ void Transform::EditTransformGizmo()
     static ImGuizmo::OPERATION currentOperation(ImGuizmo::TRANSLATE);
     static ImGuizmo::MODE currentMode(ImGuizmo::WORLD);
 
+    float windowWidth = (float)ImGui::GetWindowWidth();
+    float windowHeight = (float)ImGui::GetWindowHeight();
+
     auto camera = GolemEngine::GetCamera();
 
     Matrix4 transformTest = GetGlobalModel().Transpose();
 
-    float aspectRatio = io.DisplaySize.x / io.DisplaySize.y;
+    float aspectRatio = windowWidth / windowHeight;
     float fov = DegToRad(camera->GetZoom());
 
-    Matrix4 cameraProjection = Matrix4::Projection(fov, aspectRatio, camera->Camera::GetNear(), camera->Camera::GetFar()).Transpose();
+    Matrix4 cameraProjection = Matrix4::Projection(fov, aspectRatio, camera->Camera::GetNear(), 
+        camera->Camera::GetFar()).Transpose();
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, io.DisplaySize.x, io.DisplaySize.y);
+
     ImGuizmo::Manipulate(&cameraView.data[0][0], &cameraProjection.data[0][0], currentOperation, 
         currentMode, &transformTest.data[0][0], NULL, NULL, NULL, NULL);
 

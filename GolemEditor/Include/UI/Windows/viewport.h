@@ -23,8 +23,6 @@ private:
 	bool m_lastSpacePress = false;
 	Vector2 m_viewportBounds[2];
 
-	bool isDisplayed;
-
 public:
 	int width = 0, height = 0;
 

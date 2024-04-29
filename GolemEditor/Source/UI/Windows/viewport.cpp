@@ -51,20 +51,10 @@ void Viewport::Update()
     my -= m_viewportBounds[0].y;
 
     Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
-    //my = viewportSize.y - my; 
+    my = viewportSize.y - my; 
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
-
-    if (ImGui::IsKeyDown(ImGuiKey_V))
-    {
-        isDisplayed = true;
-    }
-
-    else
-    {
-        isDisplayed = false;
-    }
 
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
@@ -84,15 +74,7 @@ void Viewport::Update()
         }
     }
 
-    if (isDisplayed)
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize());
-    }
-
-    else
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
-    }
+    ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 
