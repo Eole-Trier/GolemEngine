@@ -47,6 +47,7 @@ public:
 	float GetZoom();
 	float GetNear();
 	float GetFar();
+	Vector3 GetFront();
 
 	friend refl_impl::metadata::type_info__<Camera>;
 };
