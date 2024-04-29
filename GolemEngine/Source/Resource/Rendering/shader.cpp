@@ -39,53 +39,89 @@ void Shader::CheckCompileErrors(unsigned int _shader, std::string _type)
 
 Shader::Shader() {}
 
-void Shader::SetVertexFragmentComputeShaders(const char* _vertexPath, const char* _fragmentPath)
+void Shader::SetVertexFragmentComputeShaders(const char* _vertexPath, const char* _fragmentPath, const char* _computePath)
 {
+    // Load vertex code
     std::string vertexCode;
-    std::string fragmentCode;
     std::ifstream vShaderFile;
-    std::ifstream fShaderFile;
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
     {
         vShaderFile.open(_vertexPath);
-        fShaderFile.open(_fragmentPath);
-        std::stringstream vShaderStream, fShaderStream, cShaderStream;
+        std::stringstream vShaderStream;
         vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();
         vShaderFile.close();
-        fShaderFile.close();
         vertexCode = vShaderStream.str();
+    }
+    catch (std::ifstream::failure e)
+    {
+        Log::Print("ERROR::SHADER::VERTEX::FILE_NOT_SUCCESFULLY_READ\n");
+    }
+
+    // Load compute code
+    std::string computeCode;
+    std::ifstream cShaderFile;
+    cShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    try
+    {
+        cShaderFile.open(_computePath);
+        std::stringstream cShaderStream;
+        cShaderStream << cShaderFile.rdbuf();
+        cShaderFile.close();
+        computeCode = cShaderStream.str();
+    }
+    catch (std::ifstream::failure e)
+    {
+        Log::Print("ERROR::SHADER::COMPUTE::FILE_NOT_SUCCESFULLY_READ\n");
+    }
+
+    // Load fragment code
+    std::string fragmentCode;
+    std::ifstream fShaderFile;
+    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    try
+    {
+        fShaderFile.open(_fragmentPath);
+        std::stringstream fShaderStream;
+        fShaderStream << fShaderFile.rdbuf();
+        fShaderFile.close();
         fragmentCode = fShaderStream.str();
     }
     catch (std::ifstream::failure e)
     {
-        Log::Print("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ\n");
+        Log::Print("ERROR::SHADER::FRAGMENT::FILE_NOT_SUCCESFULLY_READ\n");
     }
 
     const char* vShaderCode = vertexCode.c_str();
+    const char* cShaderCode = computeCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
 
-    unsigned int vertex, fragment;
+    unsigned int vertex, compute, fragment;
 
-    vertex = GraphicWrapper::CreateShader(SHADER_TYPE);
+    vertex = GraphicWrapper::CreateShader(SHADER_TYPE_VERTEX);
     GraphicWrapper::SetShaderSourceCode(vertex, 1, &vShaderCode, NULL);
     GraphicWrapper::CompileShader(vertex);
     CheckCompileErrors(vertex, "VERTEX");
 
-    fragment = GraphicWrapper::CreateShader(FRAGMENT_SHADER_TYPE);
+    compute = GraphicWrapper::CreateShader(SHADER_TYPE_COMPUTE);
+    GraphicWrapper::SetShaderSourceCode(compute, 1, &cShaderCode, NULL);
+    GraphicWrapper::CompileShader(compute);
+    CheckCompileErrors(compute, "COMPUTE");
+
+    fragment = GraphicWrapper::CreateShader(SHADER_TYPE_FRAGMENT);
     GraphicWrapper::SetShaderSourceCode(fragment, 1, &fShaderCode, NULL);
     GraphicWrapper::CompileShader(fragment);
     CheckCompileErrors(fragment, "FRAGMENT");
 
     id = GraphicWrapper::CreateShaderProgram();
     GraphicWrapper::AttachShaderToProgram(id, vertex);
+    GraphicWrapper::AttachShaderToProgram(id, compute);
     GraphicWrapper::AttachShaderToProgram(id, fragment);
     GraphicWrapper::LinkProgram(id);
     CheckCompileErrors(id, "PROGRAM");
 
     GraphicWrapper::DeleteShaderObject(vertex);
+    GraphicWrapper::DeleteShaderObject(compute);
     GraphicWrapper::DeleteShaderObject(fragment);
 }
 

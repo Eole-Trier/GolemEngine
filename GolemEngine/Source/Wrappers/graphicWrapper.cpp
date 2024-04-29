@@ -160,6 +160,8 @@ void GraphicWrapper::DeleteShaderObject(GLuint _shader)
 void GraphicWrapper::UseShader(GLuint _program)
 {
     glUseProgram(_program);
+    glDispatchCompute(10, 10, 1);
+    glMemoryBarrier(GL_ALL_BARRIER_BITS);
 }
 
 unsigned int GraphicWrapper::GetFbo()
