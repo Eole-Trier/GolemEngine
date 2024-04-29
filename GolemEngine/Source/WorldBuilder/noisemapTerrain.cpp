@@ -37,10 +37,6 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
             {
                 m_yMax = vertex.position.y;
             }
-            else if (vertex.position.y < m_yMax)    // Handle the case where the amplitude is negative
-            {
-                m_yMax = vertex.position.y;
-            }
             
             // Set the vertex texture postion
             vertex.textureCoords.x = (j / (float)m_zResolution);
