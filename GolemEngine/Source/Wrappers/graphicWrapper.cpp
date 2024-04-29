@@ -23,9 +23,6 @@ unsigned int GraphicWrapper::m_vboPlayer;
 unsigned int GraphicWrapper::m_rboPlayer;
 unsigned int GraphicWrapper::m_fboPlayer;
 unsigned int GraphicWrapper::m_playerSceneId;
-unsigned int GraphicWrapper::m_cubemapId;
-unsigned int GraphicWrapper::m_skyboxVAO;
-unsigned int GraphicWrapper::m_skyboxVBO;
 
 int GraphicWrapper::Init()
 {
@@ -155,16 +152,6 @@ unsigned int GraphicWrapper::GetPlayerSceneId()
     return m_playerSceneId;
 }
 
-unsigned int GraphicWrapper::GetSkyboxId()
-{
-    return m_cubemapId;
-}
-
-unsigned int GraphicWrapper::GetSkyboxVAO()
-{
-    return m_skyboxVAO;
-}
-
 void GraphicWrapper::SetBackgroundColor(Vector4 _color)
 {
     glClearColor(_color.x, _color.y, _color.z, _color.w);
@@ -231,108 +218,6 @@ void GraphicWrapper::UseShader(GLuint _program)
 unsigned int GraphicWrapper::GetFbo()
 {
     return m_fbo;
-}
-
-unsigned int GraphicWrapper::LoadCubemap(std::vector<std::string> faces)
-{
-    float skyboxVertices[] = {
-        // positions          
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f
-    };
-
-    // skybox VAO
-    
-    glGenVertexArrays(1, &m_skyboxVAO);
-    glGenBuffers(1, &m_skyboxVBO);
-    glBindVertexArray(m_skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, m_skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-
-    int width, height, nrChannels;
-    for (unsigned int i = 0; i < faces.size(); i++)
-    {
-        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-        if (data)
-        {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-            );
-            stbi_image_free(data);
-        }
-        else
-        {
-            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
-            stbi_image_free(data);
-        }
-    }
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-    return textureID;
-}
-
-void GraphicWrapper::SetSkybox()
-{
-    std::vector<std::string> faces
-    {
-        Tools::FindFile("skybox_right.jpg"),
-        Tools::FindFile("skybox_left.jpg"),
-        Tools::FindFile("skybox_top.jpg"),
-        Tools::FindFile("skybox_bottom.jpg"),
-        Tools::FindFile("skybox_front.jpg"),
-        Tools::FindFile("skybox_back.jpg"),
-    };
-
-    m_cubemapId = LoadCubemap(faces);
 }
 
 void GraphicWrapper::SetShaderBool(GLuint _program, const std::string& _name, bool _value)
