@@ -128,8 +128,7 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 
     m_world->transform->UpdateSelfAndChilds();
 
-
-    PhysicSystem::Update();
+    //PhysicSystem::Update();
 
     for (int i = 0; i < gameObjects.size(); i++)
     {

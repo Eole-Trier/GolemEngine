@@ -10,7 +10,7 @@
 #include "Utils/tools.h"
 #include "Inputs/inputManager.h"
 #include "Core/scene.h"
-#include "../include/UI/EditorUi.h"
+#include "UI/EditorUi.h"
 #include "vector4.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -19,6 +19,7 @@
 #include "ImGuizmo.h"
 #include "MathsLib/utils.h"
 #include "Components/transform.h"
+#include "UI/Windows/playScene.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -33,7 +34,12 @@ void Viewport::Update()
     SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
-    
+    if (ImGui::Button("Play"))
+    {
+        g_isPlayTesting = true;
+    }
+
+
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
