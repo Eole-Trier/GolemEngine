@@ -105,7 +105,6 @@ void Viewport::Update()
     if (EditorUi::selected)
     {
         EditorUi::selected->transform->EditTransformGizmo();
-        Log::Print("%d", EditorUi::selected->GetId());
     }
 
     ImGui::End();
