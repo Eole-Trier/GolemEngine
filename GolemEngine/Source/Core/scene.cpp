@@ -245,12 +245,12 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
     if (_resourceName == "")
     {
         Model* model = resourceManager->Get<Model>(ResourceManager::GetDefaultModel());
-        loadingObject = GetFileName(_filePath);
+        loadingObject = GetFileName(_filePath) + ".obj";
     }
     else
     {
         Model* model = resourceManager->Get<Model>(_resourceName);
-        loadingObject = GetFileName(_filePath);
+        loadingObject = GetFileName(_filePath) + ".obj";
     }
 }
 
