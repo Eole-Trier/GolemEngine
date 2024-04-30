@@ -40,6 +40,7 @@
 #define KEY_X GLFW_KEY_X
 #define KEY_Y GLFW_KEY_Y
 #define KEY_Z GLFW_KEY_Z
+#define KEY_LEFT_CTRL GLFW_KEY_LEFT_CONTROL
 #pragma endregion Keyboard defines
 
 #pragma region Mouse defines
