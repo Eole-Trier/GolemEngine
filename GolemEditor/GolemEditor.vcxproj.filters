@@ -48,10 +48,10 @@
     <ClCompile Include="Source\UI\toolbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\Windows\worldBuilderWindow.cpp">
+    <ClCompile Include="Source\rccppMainLoop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\Windows\playScene.cpp">
+    <ClCompile Include="Source\StdioLogSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,10 +86,13 @@
     <ClInclude Include="Include\UI\toolbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\UI\Windows\worldBuilderWindow.h">
+    <ClInclude Include="Source\rccppMainLoop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\UI\Windows\playScene.h">
+    <ClInclude Include="Source\systemTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\StdioLogSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

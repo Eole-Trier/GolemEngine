@@ -5,21 +5,16 @@
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
 #include "Resource/Rendering/texture.h"
-#include "Core/mesh.h"
+#include "Resource/Rendering/mesh.h"
 #include "Resource/sceneManager.h"
-#include "Utils/tools.h"
+#include "Resource/tools.h"
 #include "Inputs/inputManager.h"
-#include "Core/scene.h"
-#include "UI/EditorUi.h"
-#include "vector4.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "Core/scene.h"
+#include "vector4.h"
 #include "imgui_internal.h"
 #include "imgui.h"
-#include "ImGuizmo.h"
-#include "MathsLib/utils.h"
-#include "Components/transform.h"
-#include "UI/Windows/playScene.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -34,16 +29,11 @@ void Viewport::Update()
     SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
-    if (ImGui::Button("Play"))
-    {
-        g_isPlayTesting = true;
-    }
-
-
+    
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
-    ImVec2 minBound = ImGui::GetWindowPos(); 
+    ImVec2 minBound = ImGui::GetWindowPos();
 
     minBound.x += viewportOffset.x;
     minBound.y += viewportOffset.y;
@@ -57,52 +47,38 @@ void Viewport::Update()
     my -= m_viewportBounds[0].y;
 
     Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
-    //my = viewportSize.y - my; 
+    my = viewportSize.y - my;
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
-    if (ImGui::IsKeyDown(ImGuiKey_V))
-    {
-        isDisplayed = true;
-    }
+    Texture pickingTex(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
 
-    else
+    if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {
-        isDisplayed = false;
-    }
+        GraphicWrapper::AttachTexture(GL_RED, pickingTex.m_width, pickingTex.m_height, 1, pickingTex.id);
 
-
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
-    {
-        GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
         int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
+        //Log::Print("pixelID = %d", pixelData);
 
-        if(pixelData == 5)
+        if (pixelData != 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            //GameObject::m_selected = true;
+            //std::cout << "selected" << std::endl;
         }
 
-        if (pixelData != 5)
+        else if (pixelData == 126322567 && InputManager::IsButtonPressed(BUTTON_0))
         {
-            //GameObject::m_selected = false;
+            //std::cout << "deselected" << std::endl;
         }
     }
 
-    if (isDisplayed)
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
-    }
-
-    else
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
-    }
+    ImGui::Image((ImTextureID)GraphicWrapper::GetTextureId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
     
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 
-    DragDropModel();
+    DragDropEvent();
+
+    DragDropEvent();
 
     if (ImGui::IsWindowHovered() && InputManager::IsButtonPressed(BUTTON_1))
     {
@@ -124,12 +100,8 @@ void Viewport::Update()
         m_camera->isFirstMouse = true;  // Important so the next time you move in the viewport, it doesn't teleport the camera to the cursor
     }
 
-    if (EditorUi::selected)
-    {
-        EditorUi::selected->transform->EditTransformGizmo();
-    }
-
     ImGui::End();
+
 }
 
 void Viewport::SetCamera(Camera* _camera)
@@ -137,12 +109,12 @@ void Viewport::SetCamera(Camera* _camera)
     m_camera = _camera;
 }
 
-void Viewport::DragDropModel()
+void Viewport::DragDropEvent()
 {
     if (ImGui::BeginDragDropTarget())
     {
         m_isDragging = true;
-
+        
         ImGui::EndDragDropTarget();
     }
 
@@ -154,17 +126,14 @@ void Viewport::DragDropModel()
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FileDrop"))
         {
             std::string droppedFilePath(static_cast<const char*>(payload->Data), payload->DataSize);
-            SceneManager::GetCurrentScene()->CreateNewModel(droppedFilePath);
-            SceneManager::GetCurrentScene()->isNewObjectDropped = true;
+            //std::cout << "Drop in " << droppedFilePath.c_str() << std::endl;
+            // TODO 
+            SceneManager::GetCurrentScene()->AddNewModel(droppedFilePath);
+            SceneManager::GetCurrentScene()->isObjectInit = true;
             m_isDragging = false;
             g_isFromFileBrowser = false;
         }
     }
-}
-
-Vector2 Viewport::GetViewportSize()
-{
-    return Vector2();
 }
 
 Camera* Viewport::GetCamera()

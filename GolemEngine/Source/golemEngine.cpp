@@ -9,14 +9,13 @@
 #include "vector4.h"
 #include "Reflection/classesManager.h"
 
+
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
-    m_physicSystem = new PhysicSystem();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
     m_camera = new Camera();
-    m_playerCamera = new Camera();
 }
 
 void GolemEngine::UpdateDeltaTime()
@@ -40,35 +39,27 @@ void GolemEngine::Update()
     // Bind next framebuffer to the scene buffer
     GraphicWrapper::BindFramebuffer();
     // Assign background color and clear previous scene buffers
-    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
+    GraphicWrapper::SetBackgroundColor(Vector4(0.2f, 0.3f, 0.3f, 1.0f));
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    SceneManager::GetCurrentScene()->Update(m_camera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-    // Go back to original framebuffer
-    GraphicWrapper::UnbindFramebuffer();
+    //for (int i = 0; i < texList.size(); i++)
+    //{
+    SceneManager::GetCurrentScene()->Update(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_camera);
+    //}
 
-    GraphicWrapper::BindPlaySceneFrambuffer();
-    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
-    GraphicWrapper::ClearBuffer();
-    SceneManager::GetCurrentScene()->Update(m_playerCamera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()
 {
-    delete m_physicSystem;
     glfwTerminate();
 }
 
 Camera* GolemEngine::GetCamera()
 {
     return m_camera;
-}
-
-Camera* GolemEngine::GetPlayerCamera()
-{
-    return m_playerCamera;
 }
 
 float GolemEngine::GetDeltaTime()

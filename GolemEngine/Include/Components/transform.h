@@ -7,7 +7,7 @@
 #include "matrix4.h"
 #include "Components/component.h"
 #include "Resource/guid.h"
-#include "Core/camera.h"
+
 
 class Transform : public Component
 {
@@ -19,7 +19,7 @@ private:
 
 public:
 	Guid guid;
-
+	
 	Vector3 globalPosition; // access only, modification is useless yet
 	Vector3 localPosition;
 	Vector3 rotation;
@@ -29,11 +29,10 @@ public:
 	GOLEM_ENGINE_API Transform();
 	GOLEM_ENGINE_API Transform(Transform* _parent);
 	GOLEM_ENGINE_API Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling, Transform* _parent);
-	GOLEM_ENGINE_API ~Transform() override;
-
+	GOLEM_ENGINE_API ~Transform();
 	GOLEM_ENGINE_API void Update() override;
+
 	GOLEM_ENGINE_API void UpdateSelfAndChilds();
-	GOLEM_ENGINE_API void EditTransformGizmo();
 	GOLEM_ENGINE_API void AddChild(Transform* const _t);
 	GOLEM_ENGINE_API void AddChildren(std::vector<Transform*> const _ts);
 	GOLEM_ENGINE_API void RemoveChild(Transform* const _t);
@@ -52,12 +51,11 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& _j) const override
+	void to_json(json& j) const
 	{
-		_j = json
+		j = json
 		{
-			{"name", "transform"},
-			{"data",
+			{"transform",
 				{
 					{"guid", guid.ToString()},
 					{"globalPosition", globalPosition},

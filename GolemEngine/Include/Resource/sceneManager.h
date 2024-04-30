@@ -27,13 +27,10 @@ public:
     static void Init();
 
     static void SaveScene();
-    static void LoadScene(int _id);
     static void CreateScene(std::string _sceneName);
-    static void CreateSceneFromFile(std::string _sceneFileName);
-
+    static void LoadScene(int _id);
+    
     static Scene* GetCurrentScene();
     static Scene* GetScene(int _id);
     static int GetSceneCount();
-    
-    static void SetCurrentScene(Scene* _scene);
 };

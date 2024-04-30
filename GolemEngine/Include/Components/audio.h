@@ -52,19 +52,11 @@ private:
 
     // Define serialization and deserialization functions manually because the
 // macro is not used due to the pointer member variable.
-    void ToJson(json& j) const
+    void to_json(json& j) const
     {
         j = json
         {
-            {"name", "audio"},
-            {"data",
-                {
-                    {"musicPath", musicPath},
-                    {"volume", m_volume},
-                    {"isLooping", m_isLooping},
-                    {"isPlaying", m_isPlaying},
-                }
-            }
+            {"audio", "audio component"}
         };
 
     }

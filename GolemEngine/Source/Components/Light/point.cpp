@@ -1,4 +1,4 @@
-#include "Components\Light\pointLight.h"
+#include "..\..\..\Include\Components\Light\pointLight.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/shader.h"
@@ -44,8 +44,6 @@ PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const V
     else
     {
         SceneManager::GetCurrentScene()->AddLight(this);
-        //SceneManager::GetCurrentScene()->GetPointLights().push_back(this);
-       // TODO maybe for all lights
     }
 }
 
@@ -65,8 +63,9 @@ void PointLight::SetPointLight(Shader* _shader)
     _shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
 }
 
-void PointLight::Update()
+void PointLight::Update(Shader* _shader)
 {
     if (owner)
         position = owner->transform->globalPosition;
+    SetPointLight(_shader);
 }

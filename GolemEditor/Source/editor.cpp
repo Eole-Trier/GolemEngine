@@ -6,7 +6,6 @@
 #include "Components/audio.h"
 
 #include "golemEngine.h"
-#include "Components/transform.h"
 #include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
@@ -15,8 +14,54 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "ImGuizmo.h"
-#include "MathsLib/utils.h"
+
+#include "SystemTable.h"
+#include "RuntimeObjectSystem.h"
+#include "StdioLogSystem.h"
+#include "rccppMainLoop.h"
+
+static IRuntimeObjectSystem*	g_pRuntimeObjectSystem;
+static StdioLogSystem           g_Logger;
+static SystemTable              g_SystemTable;
+
+bool RCCppInit()
+{
+	g_pRuntimeObjectSystem = new RuntimeObjectSystem;
+	if (!g_pRuntimeObjectSystem->Initialise(&g_Logger, &g_SystemTable))
+	{
+		delete g_pRuntimeObjectSystem;
+		g_pRuntimeObjectSystem = NULL;
+		return false;
+	}
+
+	// ensure include directories are set - use location of this file as starting point
+	FileSystemUtils::Path basePath = g_pRuntimeObjectSystem->FindFile(__FILE__).ParentPath();
+	FileSystemUtils::Path imguiIncludeDir = basePath / "imgui";
+	g_pRuntimeObjectSystem->AddIncludeDir(imguiIncludeDir.c_str());
+
+	return true;
+}
+
+void RCCppUpdate()
+{
+	//check status of any compile
+	if (g_pRuntimeObjectSystem->GetIsCompiledComplete())
+	{
+		// load module when compile complete
+		g_pRuntimeObjectSystem->LoadCompiledModule();
+	}
+
+	if (!g_pRuntimeObjectSystem->GetIsCompiling())
+	{
+		float deltaTime = 1.0f / ImGui::GetIO().Framerate;
+		g_pRuntimeObjectSystem->GetFileChangeNotifier()->Update(deltaTime);
+	}
+}
+
+void RCCppCleanup()
+{
+	delete g_pRuntimeObjectSystem;
+}
 
 Editor::Editor()
 	:
@@ -61,6 +106,7 @@ void Editor::InitUi()
 
 void Editor::Init()
 {
+	RCCppInit();
     InitWindow();
     InitGraphics();
     InitUi();
@@ -75,10 +121,12 @@ void Editor::MainLoop()
 	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{
 		WindowWrapper::ProcessEvents();
+		RCCppUpdate();
+		g_SystemTable.pRCCppMainLoopI->MainLoop();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGuizmo::BeginFrame();
 
 		EditorUi::BeginDockSpace();
 
@@ -98,7 +146,7 @@ void Editor::MainLoop()
 			ImGui::RenderPlatformWindowsDefault();
 			WindowWrapper::MakeContext(backup_current_context);
 		}
-
+		
 		WindowWrapper::SwapBuffers(WindowWrapper::window);
 		AudioWrapper::GetInstance().UpdatePosition();
 	}
@@ -106,7 +154,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
-	ImGui::EndFrame();
+	RCCppCleanup();
 }
 
 void Editor::Run()

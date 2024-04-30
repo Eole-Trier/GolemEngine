@@ -21,6 +21,7 @@ SceneGraph::~SceneGraph() {}
 void SceneGraph::Update()
 {
 	ImGui::Begin(name.c_str());
+
 	ImGui::Text("%s", SceneManager::GetCurrentScene()->name.c_str());
 	DisplayObjects(SceneManager::GetCurrentScene()->GetWorld());
 
@@ -42,7 +43,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
 	
-	std::string n = _gameObject->name;
+	std::string n = _gameObject->GetName();
 	const char* name = n.c_str();
 	size_t id = _gameObject->GetId();
 
@@ -52,7 +53,6 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	{
 		name = "##input";
 	}
-	
 	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
 		if (m_renaming == _gameObject)

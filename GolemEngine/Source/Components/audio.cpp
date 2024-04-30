@@ -8,7 +8,7 @@
 
 #include "Components/audio.h"
 #include "Resource/resourceManager.h"
-#include "Utils/tools.h"
+#include "Resource/tools.h"
 #include "Wrappers/audioWrapper.h"
 #include "Core/gameobject.h"
 

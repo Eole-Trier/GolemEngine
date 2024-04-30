@@ -9,7 +9,6 @@
 #include "Core/camera.h"
 #include "Debug/log.h"
 #include "Components/Light/light.h"
-#include "WorldBuilder/terrain.h"
 
 using json = nlohmann::json;
 
@@ -25,7 +24,9 @@ class GOLEM_ENGINE_API Scene
 {
 private:
 	Guid m_guid;
+	
 	GameObject* m_world = nullptr;
+	std::vector<GameObject*> m_gameObjects;
 
 	static constexpr size_t m_maxDirLights = 3;
 	static constexpr size_t m_maxPointLights = 10;    // According to the shader
@@ -34,39 +35,29 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
-	std::vector<Mesh*> m_meshes;
-
-	std::vector<Terrain*> m_terrains;
 
 public:
-	std::string m_defaultTexture;
-	std::string m_defaultModel;
-	std::string m_defaultShader;
 	std::string name;
-	std::vector<GameObject*> gameObjects;
-	bool isNewObjectDropped = false;
+	bool isInit = false;
+	bool isObjectInit = false;
 	std::string loadingObject;
 	
 public:
-	// Create a scene by giving it a name and setting _isEmpty to 0 or 1. 0 means the scene will be a default
-	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
-	Scene(std::string _name, bool _isEmpty);
+	Scene(std::string _name);
 
-	void InitDefaultScene();
+	void Init();
+	void InitGameObjects();
 	void InitLights();
-	void Update(Camera* _camera, float _width, float _height);
-	void UpdateTerrains(Camera* _camera);
-	void UpdateGameObjects(Camera* _camera, float _width, float _height);
+	void CreateAndLoadResources();
+	void Update(float _width, float _height, Camera* _camera);
+	void UpdateGameObjects(float _width, float _height, Camera* _camera);
 	void UpdateLights(Shader* _shader);
-	// Check the gameobject's name is already in the vector or not.
 	bool IsNameExists(const std::string& _name);
-	// To add a new gameobject in the scene
-	void AddTerrain(Terrain* _terrain);
-	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
-	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
+	
+	void AddNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+	void AddNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
 	
-	std::vector<Terrain*> GetTerrains();
 	std::vector<DirectionalLight*> GetDirectionalLights();
 	std::vector<PointLight*> GetPointLights();
 	std::vector<SpotLight*> GetSpotLights();
@@ -74,37 +65,35 @@ public:
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
-
 	const std::vector<GameObject*>& GetGameObjects();
 	GameObject* GetWorld();
-	Guid GetGuid();
 
 	void AddGameObject(GameObject* _gameObject);
 	void RemoveGameObject(GameObject* _gameObject);
 	void DeleteLight(Light* _light);
-	void SetGuid(Guid _guid);
 
 	
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& _j) const
+	void to_json(json& j) const
 	{
-		_j = json
+		j = json
 		{
 			{"name", name},
 			{"guid", m_guid.ToString()},
+			{"loadingObject", loadingObject}
 		};
-		if (!gameObjects.empty())
+		if (!m_gameObjects.empty())
 		{
-			std::cout << "Game object size: " << gameObjects.size() << std::endl;
+			std::cout << "Game object size: " << m_gameObjects.size() << std::endl;
 			json jGameObjects;
-			for (int i = 0; i < gameObjects.size(); i++)
+			for (int i = 0; i < m_gameObjects.size(); i++)
 			{
 				json jGameObjectPtr;
-				gameObjects[i]->ToJson(jGameObjectPtr);
+				m_gameObjects[i]->to_json(jGameObjectPtr);
 				jGameObjects.push_back(jGameObjectPtr);
 			}
-			_j["gameObjects"] = jGameObjects;
+			j["gameObjects"] = jGameObjects;
 		}
 	}
 };

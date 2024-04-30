@@ -17,5 +17,4 @@ public:
     Guid();
 
     std::string ToString() const;
-    void FromString(const std::string& _guidStr);
 };

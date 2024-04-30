@@ -8,7 +8,7 @@
 
 
 GLFWwindow* WindowWrapper::window = nullptr;
-Vector2 WindowWrapper::screenSize = { 0.0f, 0.0f };
+Vector2 WindowWrapper::m_screenSize = { 0.0f, 0.0f };
 
 void WindowWrapper::InitWindow()
 {
@@ -50,19 +50,16 @@ void WindowWrapper::MakeContext(GLFWwindow* _window)
 std::unordered_map<std::string, std::optional<GLuint>> textureMap;
 GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
-    if (textureMap.find(_filename) != textureMap.end()) 
-    {
+    if (textureMap.find(_filename) != textureMap.end()) {
         // Check if the texture is already loaded
-        if (textureMap[_filename].has_value()) 
-        {
+        if (textureMap[_filename].has_value()) {
             return textureMap[_filename].value();
         }
     }
 
     int width, height, channels;
     unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);
-    if (!data)
-    {
+    if (!data) {
         return 0;
     }
 
@@ -98,10 +95,10 @@ GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 
 Vector2 WindowWrapper::GetScreenSize()
 {
-    return screenSize;
+    return m_screenSize;
 }
 
 void WindowWrapper::SetScreenSize(Vector2 _screenSize)
 {
-    screenSize = { _screenSize.x, _screenSize.y };
+    m_screenSize = { _screenSize.x, _screenSize.y };
 }

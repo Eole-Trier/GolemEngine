@@ -12,7 +12,7 @@
 #include "ImGuiFileDialog-master/ImGuiFileDialog.h"
 #include "UI/Windows/viewport.h"
 #include "Wrappers/windowWrapper.h"
-#include "Utils/tools.h"
+#include "Resource/tools.h"
 #include "Core/scene.h"
 #include "Core/gameobject.h"
 #include "Inputs/inputManager.h"
@@ -395,5 +395,6 @@ void FileBrowser::DragDropEvent()
 	{
 		g_isFromFileBrowser = false;
 		isDragging = false;
+		std::cout << "hiii" << std::endl;
 	}
 }

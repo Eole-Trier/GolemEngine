@@ -7,6 +7,7 @@
 #include "matrix4.h"
 #include "Refl/refl.hpp"
 
+
 class GOLEM_ENGINE_API Camera
 {
 private:
@@ -28,7 +29,7 @@ private:
 	bool m_isMouseTp = false;
 
 public:
-	Vector3 position;
+	Vector3 m_position;
 	bool isFirstMouse = true;
 
 public:

@@ -3,18 +3,15 @@
 #include "golemEngine.h"
 #include "UI/Windows/window.h"
 #include "Ui/Windows/basicActors.h"
-#include "Ui/Windows/worldBuilderWindow.h"
 #include "Ui/Windows/viewport.h"
 #include "Ui/Windows/fileBrowser.h"
 #include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
 #include "UI/Windows/inspector.h"
-#include "UI/Windows/playScene.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
-#include "ImGuizmo.h"
 #include "Inputs/inputManager.h"
 #include "Wrappers/windowWrapper.h"
 
@@ -24,17 +21,14 @@ void EditorUi::Init()
     // Add windows to be used in dockspace later
     m_windows.push_back(new Viewport("Viewport"));
     m_windows.push_back(new BasicActors("Basic_Actors"));
-    m_windows.push_back(new WorldBuilderWindow("World_Builder"));
     m_windows.push_back(new FileBrowser("File_Browser"));
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
-    m_windows.push_back(new PlayScene("Playing"));
 
-    // Setup ImGui context
+    // Setup Imgui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
@@ -136,7 +130,6 @@ void EditorUi::BeginDockSpace()
 
             // For defining the position of the dock
             ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topLeft);
-            ImGui::DockBuilderDockWindow(GetWindowByName("World_Builder")->name.c_str(), dock_id_topLeft);
             ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottom);
             ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_middle);
             ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);

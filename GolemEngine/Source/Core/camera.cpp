@@ -5,7 +5,6 @@
 #include "Wrappers/windowWrapper.h" 
 #include "Inputs/inputManager.h"
 #include "utils.h"
-#include "Debug/log.h"
 
 
 const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 20;
@@ -19,7 +18,7 @@ const int TP_LEFT_Y_BOTTOM_MARGIN = 20;
 
 Camera::Camera(Vector3 _position, Vector3 _up, float _yaw, float _pitch)
     : 
-    position(_position),
+    m_position(_position),
     m_front(Vector3(0.0f, 0.0f, -1.0f)),
     m_worldUp(_up),
     m_yaw(_yaw),
@@ -39,27 +38,27 @@ void Camera::ProcessKeyboardInput(float _deltaTime)
 {
     if (InputManager::IsKeyPressed(KEY_W))
     {
-        position += m_front * m_movementSpeed * _deltaTime;
+        m_position += m_front * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_S))
     {
-        position -= m_front * m_movementSpeed * _deltaTime;
+        m_position -= m_front * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_A))
     {
-        position -= m_right * m_movementSpeed * _deltaTime;
+        m_position -= m_right * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_D))
     {
-        position += m_right * m_movementSpeed * _deltaTime;
+        m_position += m_right * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_Q))
     {
-        position -= m_up * m_movementSpeed * _deltaTime;
+        m_position -= m_up * m_movementSpeed * _deltaTime;
     }
     if (InputManager::IsKeyPressed(KEY_E))
     {
-        position += m_up * m_movementSpeed * _deltaTime;
+        m_position += m_up * m_movementSpeed * _deltaTime;
     }
 }
 
@@ -162,7 +161,7 @@ void Camera::ProcessMouseScroll(float _yOffset)
 
 Matrix4 Camera::GetViewMatrix()
 {
-    return Matrix4::LookAt(position, position + m_front, m_up);
+    return Matrix4::LookAt(m_position, m_position + m_front, m_up);
 }
 
 float Camera::GetZoom()

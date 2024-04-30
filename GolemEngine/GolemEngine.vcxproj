@@ -21,18 +21,13 @@
   <ItemGroup>
     <ClCompile Include="External\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="External\imgui\GraphEditor.cpp" />
-    <ClCompile Include="External\imgui\ImCurveEdit.cpp" />
-    <ClCompile Include="External\imgui\ImGradient.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.cpp" />
-    <ClCompile Include="External\imgui\ImGuizmo.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
     <ClCompile Include="External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
@@ -41,25 +36,14 @@
     <ClCompile Include="Source\Components\Light\point.cpp" />
     <ClCompile Include="Source\Components\Light\spot.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
-    <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
-    <ClCompile Include="Source\Components\Physic\collider.cpp" />
-    <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
-    <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
-    <ClCompile Include="Source\Physic\contactManager.cpp" />
-    <ClCompile Include="Source\Physic\objectLayerVsBroadPhaseLayerFilter.cpp" />
-    <ClCompile Include="Source\Physic\objectLayerVsObjectLayer.cpp" />
-    <ClCompile Include="Source\Physic\physicSystem.cpp" />
-    <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
     <ClCompile Include="Source\Core\camera.cpp" />
     <ClCompile Include="Source\Core\gameObject.cpp" />
-    <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Core\scene.cpp" />
     <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
-    <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Reflection\classManager.cpp" />
     <ClCompile Include="Source\Reflection\displayType.cpp" />
     <ClCompile Include="Source\Resource\guid.cpp">
@@ -136,50 +120,34 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
-    <ClCompile Include="Source\Utils\tools.cpp" />
-    <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
-    <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
+    <ClCompile Include="Source\Resource\tools.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="External\glm\platform.h" />
-    <ClInclude Include="External\glm\qualifier.hpp" />
-    <ClInclude Include="External\glm\setup.hpp" />
-    <ClInclude Include="External\glm\_fixes.hpp" />
-    <ClInclude Include="External\imguizmo\GraphEditor.h" />
-    <ClInclude Include="External\imguizmo\ImCurveEdit.h" />
-    <ClInclude Include="External\imguizmo\ImGradient.h" />
-    <ClInclude Include="External\imguizmo\ImGuizmo.h" />
-    <ClInclude Include="External\imguizmo\ImSequencer.h" />
-    <ClInclude Include="External\imguizmo\ImZoomSlider.h" />
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="External\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="External\imgui\backends\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="External\imgui\GraphEditor.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
-    <ClInclude Include="External\imgui\ImCurveEdit.h" />
-    <ClInclude Include="External\imgui\ImGradient.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\dirent\dirent.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialog.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\ImGuiFileDialogConfig.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image.h" />
     <ClInclude Include="External\imgui\ImGuiFileDialog-master\stb\stb_image_resize.h" />
-    <ClInclude Include="External\imgui\ImGuizmo.h" />
     <ClInclude Include="External\imgui\imgui_internal.h" />
     <ClInclude Include="External\imgui\imgui_stdlib.h" />
-    <ClInclude Include="External\imgui\ImSequencer.h" />
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
-    <ClInclude Include="External\imgui\ImZoomSlider.h" />
     <ClInclude Include="Include\Components\audio.h" />
     <ClInclude Include="Include\Components\component.h" />
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
@@ -187,20 +155,8 @@
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Components\meshRenderer.h" />
-    <ClInclude Include="Include\Components\Physic\boxCollider.h" />
-    <ClInclude Include="Include\Components\Physic\collider.h" />
-    <ClInclude Include="Include\Physic\bodyActivationManager.h" />
-    <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
-    <ClInclude Include="Include\Physic\contactManager.h" />
-    <ClInclude Include="Include\Physic\layers.h" />
-    <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
-    <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
-    <ClInclude Include="Include\Physic\physicSystem.h" />
-    <ClInclude Include="Include\Physic\bodiesManager.h" />
-    <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
-    <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="Include\Core\scene.h" />
     <ClInclude Include="Include\Components\transform.h" />
     <ClInclude Include="Include\Debug\assertion.h" />
@@ -223,9 +179,6 @@
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Resource\tools.h" />
-    <ClInclude Include="Include\WorldBuilder\terrain.h" />
-    <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
-    <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
@@ -346,7 +299,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT;JPH_SHARED_LIBRARY;JPH_DEBUG_RENDERER;JPH_DISABLE_CUSTOM_ALLOCATOR;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_PROFILE_ENABLED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -355,11 +308,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;Jolt.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(SolutionDir)Libraries\Libs\Jolt</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)" &amp; xcopy /y /d "$(SolutionDir)Libraries\Libs\Jolt\Jolt.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -2,25 +2,24 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
-#include "golemEngine.h"
 
 GameObject::GameObject()
 	: m_selected(false)
 {
 	name = "New GameObject";
-	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
 	AddComponent(new Transform);
 	transform = GetComponent<Transform>();
-	SceneManager::GetCurrentScene()->gameObjects.push_back(this);
+	SceneManager::GetCurrentScene()->AddGameObject(this);
 }
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
 	: name(_name), m_selected(false)
 {
-	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
+	m_id = SceneManager::GetCurrentScene()->GetGameObjects().size();
 	AddComponent(_transform);
 	transform = GetComponent<Transform>();
-	SceneManager::GetCurrentScene()->gameObjects.push_back(this);
+	SceneManager::GetCurrentScene()->AddGameObject(this);
 }
 
 GameObject::~GameObject() 
@@ -29,12 +28,9 @@ GameObject::~GameObject()
 	DeleteAllComponents();
 }
 
-void GameObject::Update()
+std::string GameObject::GetName()
 {
-	for (Component* c : m_components)
-	{
-		c->Update();
-	}
+	return name;
 }
 
 size_t GameObject::GetId()
@@ -64,8 +60,8 @@ void GameObject::DeleteLight(Light* _l)
 
 void GameObject::RemoveComponent(Component* _c)
 {
-	std::erase(m_components, _c);
 	delete _c;
+	std::erase(m_components, _c);
 }
 
 void GameObject::DeleteAllComponents()

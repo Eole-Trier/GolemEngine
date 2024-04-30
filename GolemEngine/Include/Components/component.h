@@ -18,12 +18,10 @@ public:
 public:
 	virtual ~Component();
 
-	virtual void Begin() {};
-
 	virtual void Update() {};
 
 	
-	virtual void ToJson(json& _j) const = 0;    // Virtual function to serialize component to JSON
+	virtual void to_json(json& j) const = 0;    // Virtual function to serialize component to JSON
 }; 
 
 REFL_AUTO(

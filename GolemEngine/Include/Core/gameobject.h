@@ -18,12 +18,12 @@ using json = nlohmann::json;
 class GOLEM_ENGINE_API GameObject
 {
 private:
+	Guid m_guid;
 	size_t m_id;
 	std::vector<Component*> m_components;
 	bool m_selected;
 
 public:
-	Guid guid;
 	std::string name;
 	Transform* transform = nullptr;
 
@@ -32,8 +32,7 @@ public:
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
 
-	void Update();
-
+	std::string GetName();
 	size_t GetId();
 	void SetId(size_t _id);
 
@@ -58,12 +57,12 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& j) const
+	void to_json(json& j) const
 	{
 		j = json
 		{
 			{"name", name},
-			{"guid", guid.ToString()}
+			{"guid", m_guid.ToString()}
 		};
 		if (!m_components.empty())
 		{
@@ -71,7 +70,7 @@ public:
 			for (int i = 0; i < m_components.size(); i++)
 			{
 				json jComponentPtr;
-				m_components[i]->ToJson(jComponentPtr);
+				m_components[i]->to_json(jComponentPtr);
 				jComponents.push_back(jComponentPtr);
 			}
 			
@@ -109,7 +108,7 @@ TypeT* GameObject::GetComponent()
 	for (Component* c : m_components)
 	{
 		auto t = dynamic_cast<TypeT*>(c);
-		if (t)
+		if (t != nullptr)
 		{
 			return t;
 		}
@@ -124,7 +123,7 @@ std::vector<TypeT*> GameObject::GetComponents()
 	for (Component* c : m_components)
 	{
 		auto t = dynamic_cast<TypeT*>(c);
-		if (t)
+		if (t != nullptr)
 		{
 			components.push_back(t);
 		}

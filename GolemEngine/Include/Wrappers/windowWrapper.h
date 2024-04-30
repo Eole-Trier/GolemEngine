@@ -49,7 +49,6 @@
 
 #define BUTTON_0 GLFW_MOUSE_BUTTON_1
 #define BUTTON_1 GLFW_MOUSE_BUTTON_2
-#define	BUTTON_2 GLFW_KEY_V
 #pragma endregion Mouse defines
 
 #pragma region Other defines
@@ -64,7 +63,7 @@ class GOLEM_ENGINE_API WindowWrapper
 {
 public:
 	static GLFWwindow* window;
-	static Vector2 screenSize;
+	static Vector2 m_screenSize;
 
 private:
 	// Private constructors and destructor to make static class

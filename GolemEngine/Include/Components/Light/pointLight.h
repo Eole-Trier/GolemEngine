@@ -27,17 +27,16 @@ public:
     ~PointLight();
     void SetPointLight(Shader* _shader);
    
-    void Update() override;
+    void Update(Shader* _shader) override;
 
     
     // Define serialization and deserialization functions manually because the
     // macro is not used due to the pointer member variable.
-    void ToJson(json& j) const
+    void to_json(json& j) const
     {
         j = json
         {
-            {"name", "pointLight"},
-            {"data",
+            {"pointLight",
                 {
                     {"id", id},
                     {"diffuseColor", diffuseColor},

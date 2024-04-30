@@ -6,7 +6,6 @@
 #include "Resource/resource.h"
 #include "vertex.h"
 
-
 class GOLEM_ENGINE_API Model : public Resource
 {
 public:
@@ -14,6 +13,7 @@ public:
 	std::vector<Vertex> vertices;
 
 public:
+
 	Model();
 	~Model();
 
