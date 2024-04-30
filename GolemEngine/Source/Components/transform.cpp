@@ -97,7 +97,11 @@ void Transform::EditTransformGizmo()
                          &cameraProjection.data[0][0], currentOperation, currentMode, 
                          &transformTest.data[0][0], NULL, NULL, NULL, NULL);
 
-    m_globalModel = transformTest.Transpose();
+    transformTest = transformTest.Transpose();
+
+    localPosition = transformTest.Matrix4::TrsToPosition();
+    rotation = Vector3::QuaternionToEuler(transformTest.Matrix4::TrsToRotation());
+    scaling = transformTest.Matrix4::TrsToScaling();
 }
 
 void Transform::AddChild(Transform* const _t)
