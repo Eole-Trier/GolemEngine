@@ -91,7 +91,7 @@ void Transform::EditTransformGizmo()
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
-        io.DisplaySize.x, io.DisplaySize.y);
+        ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 
     ImGuizmo::Manipulate(&cameraView.data[0][0],
                          &cameraProjection.data[0][0], currentOperation, currentMode, 
