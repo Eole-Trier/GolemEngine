@@ -1,42 +1,27 @@
-#pragma once
+﻿#pragma once
 
 #include <string>
 
 #include "dll.h"
-#include "Resource/resource.h"
 
+class Shader;
 class Vector2;
 class Vector3;
 class Vector4;
 class Matrix4;
 
-class Vector2;
-class Vector3;
-class Vector4;
-class Matrix4;
 
-class VertexShader;
-class FragmentShader;
-
-class GOLEM_ENGINE_API Shader : public Resource
+class GOLEM_ENGINE_API FragmentShader
 {
+private:
+    Shader* m_shader = nullptr;
+    const char* m_fragmentPath;
+    
 public:
-	unsigned int id = 0;
-	VertexShader* vertexShader = nullptr;
-	FragmentShader* fragmentShader = nullptr;
+    FragmentShader(Shader* _shader, const char* _fragmentPath);
 
-protected:
-	void CheckCompileErrors(unsigned int _shader, std::string _type);
+    void Init();
 
-public:
-	Shader(VertexShader* _vertexShader, FragmentShader* _fragmentShader);
-
-	virtual void SetShader(const char* _shaderPath);
-	// virtual void SetVertexShader(const char* _vertexPath);
-	// virtual void SetFragmentShader(const char* _fragmentPath);
-	// virtual void SetComputeShader(const char* _computePath);
-
-    void Use();
     void SetBool(const std::string& _name, bool _value) const;
     void SetInt(const std::string& _name, int _value) const;
     void SetFloat(const std::string& _name, float _value) const;

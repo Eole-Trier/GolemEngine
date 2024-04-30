@@ -1,10 +1,11 @@
 #include "..\..\..\Include\Components\Light\pointLight.h"
 
 #include "Debug/log.h"
-#include "Resource/Rendering/Shaders/shader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Core/gameObject.h"
 #include "matrix4.h"
 #include "Resource/sceneManager.h"
+#include "Resource/Rendering/Shader/vertexShader.h"
 
 PointLight::PointLight()
 {
@@ -56,13 +57,13 @@ PointLight::~PointLight()
 
 void PointLight::SetPointLight(Shader* _shader)
 {
-    _shader->SetVec3("pointLights[" + std::to_string(id) + "].position", position);
-    _shader->SetVec4("pointLights[" + std::to_string(id) + "].ambient", ambientColor);
-    _shader->SetVec4("pointLights[" + std::to_string(id) + "].diffuse", diffuseColor);
-    _shader->SetVec4("pointLights[" + std::to_string(id) + "].specular", specularColor);
-    _shader->SetFloat("pointLights[" + std::to_string(id) + "].constant", constant);
-    _shader->SetFloat("pointLights[" + std::to_string(id) + "].linear", linear);
-    _shader->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
+    _shader->GetFragmentShader()->SetVec3("pointLights[" + std::to_string(id) + "].position", position);
+    _shader->GetFragmentShader()->SetVec4("pointLights[" + std::to_string(id) + "].ambient", ambientColor);
+    _shader->GetFragmentShader()->SetVec4("pointLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+    _shader->GetFragmentShader()->SetVec4("pointLights[" + std::to_string(id) + "].specular", specularColor);
+    _shader->GetFragmentShader()->SetFloat("pointLights[" + std::to_string(id) + "].constant", constant);
+    _shader->GetFragmentShader()->SetFloat("pointLights[" + std::to_string(id) + "].linear", linear);
+    _shader->GetFragmentShader()->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
 }
 
 void PointLight::Update(Shader* _shader)

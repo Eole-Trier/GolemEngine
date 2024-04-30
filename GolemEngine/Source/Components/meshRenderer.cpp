@@ -4,6 +4,7 @@
 #include "MathsLib/utils.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Utils/viewportTools.h"
 #include "Wrappers/windowWrapper.h"
 
@@ -30,9 +31,9 @@ void MeshRenderer::Draw(Camera* _camera)
         texture->Use();
 
         shader->Use();
-        shader->SetMat4("model", owner->transform->GetGlobalModel());
-        shader->SetMat4("view", _camera->GetViewMatrix());
-        shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+        shader->GetVertexShader()->SetMat4("model", owner->transform->GetGlobalModel());
+        shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+        shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
 
         glBindVertexArray(model->VAO);
 

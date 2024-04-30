@@ -6,7 +6,6 @@
 
 #include "dll.h"
 #include "Components/transform.h"
-#include "Resource/Rendering/Shaders/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/vertex.h"
 #include "Resource/guid.h"

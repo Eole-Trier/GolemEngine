@@ -4,7 +4,7 @@
 
 #include "Wrappers/graphicWrapper.h"
 #include "Components/transform.h"
-#include "Resource/Rendering/Shaders/shader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Core/camera.h"

@@ -21,4 +21,7 @@ namespace Tools
 
 	// Get the string of a saved path because saving a path to json modifies it so we need to re write it correctly
 	std::string GOLEM_ENGINE_API GetPathFromJsonString(std::string _savedJsonPath);
+
+	// Check shader compile errors
+	void GOLEM_ENGINE_API CheckCompileErrors(unsigned int _shader, std::string _type);
 }

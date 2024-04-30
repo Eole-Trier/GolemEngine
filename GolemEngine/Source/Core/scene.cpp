@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "Core/gameobject.h"
 #include "Resource/Rendering/mesh.h"
-#include "Resource/Rendering/Shaders/shader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/resourceManager.h"
@@ -68,7 +68,7 @@ void Scene::Update(Camera* _camera)
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
-    defaultShader->SetViewPos(_camera->m_position);
+    defaultShader->GetVertexShader()->SetViewPos(_camera->m_position);
 
     if (!m_terrains.empty())
     {
@@ -120,9 +120,9 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->SetInt("nbrDirLights", m_dirLights.size());
-    _shader->SetInt("nbrPointLights", m_pointLights.size());
-    _shader->SetInt("nbrSpotLights", m_spotLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", m_dirLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", m_pointLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", m_spotLights.size());
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {

@@ -7,6 +7,7 @@
 #include <nlohmann/json.hpp>
 
 #include "dll.h"
+#include "Wrappers/graphicWrapper.h"
 
 using json = nlohmann::json;
 
@@ -100,4 +101,30 @@ namespace Tools
         std::string parsedPath = jParsed["path"];
         return parsedPath;
     }
+
+    void GOLEM_ENGINE_API CheckCompileErrors(unsigned int _shader, std::string _type)
+    {
+        int success;
+        char infoLog[1024];
+        if (_type != "PROGRAM")
+        {
+            GraphicWrapper::GetShaderIv(_shader, SHADER_COMPILE_STATUS, &success);
+
+            if (!success)
+            {
+                GraphicWrapper::GetShaderLog(_shader, 1024, NULL, infoLog);
+                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << _type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            }
+        }
+        else
+        {
+            GraphicWrapper::GetShaderIv(_shader, SHADER_LINK_STATUS, &success);
+            if (!success)
+            {
+                GraphicWrapper::GetShaderLog(_shader, 1024, NULL, infoLog);
+                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << _type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            }
+        }
+    }
+
 }

@@ -1,11 +1,11 @@
 #include "Resource/resourceManager.h"
 
 #include "Utils/tools.h"
-#include "Resource/Rendering/Shaders/shader.h"
-#include "Resource/Rendering/Shaders/vertexShader.h"
-#include "Resource/Rendering/Shaders/fragmentShader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Resource/Rendering/Shader/vertexShader.h"
+#include "Resource/Rendering/Shader/fragmentShader.h"
 #include "Utils/viewportTools.h"
 
 
@@ -24,9 +24,10 @@ void ResourceManager::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-    VertexShader* defaultVertexShader = resourceManager->Create<VertexShader>(m_defaultVertexShader, Tools::FindFile("default.vs"));
-    FragmentShader* defaultFragmentShader = resourceManager->Create<FragmentShader>(m_defaultFragmentShader, Tools::FindFile("default.fs"));
-    Shader* defaultShader = new Shader(defaultVertexShader, defaultFragmentShader);
+    Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader);
+    VertexShader* defaultVertexShader = new VertexShader(defaultShader, Tools::FindFile("default.vs").c_str());
+    FragmentShader* defaultFragmentShader = new FragmentShader(defaultShader, Tools::FindFile("default.fs").c_str());
+    defaultShader->SetAllShaders(defaultVertexShader, defaultFragmentShader);
     
     // Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     // defaultShader->SetVertexFragmentComputeShaders(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str(), Tools::FindFile("default.comp").c_str());

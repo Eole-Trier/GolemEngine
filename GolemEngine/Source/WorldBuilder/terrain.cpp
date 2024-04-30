@@ -7,6 +7,7 @@
 #include "Resource/sceneManager.h"
 #include "Wrappers/windowWrapper.h"
 #include "Utils/viewportTools.h"
+#include "Resource/Rendering/Shader/shader.h"
 
 
 Terrain::Terrain(std::string _name, Transform* _transform)
@@ -46,10 +47,10 @@ void Terrain::SetupMesh()
 void Terrain::Draw(Camera* _camera)
 {
     m_shader->Use();
-    m_shader->SetMat4("model", transform->GetGlobalModel());
-    m_shader->SetMat4("view", _camera->GetViewMatrix());
-    m_shader->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shader->SetFloat("maxHeight", m_yMax);
+    m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
+    m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+    m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
     
     glBindVertexArray(m_vao);
     

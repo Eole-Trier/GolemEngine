@@ -1,8 +1,9 @@
 #include "..\..\..\Include\Components\Light\directionalLight.h"
 
 #include "Debug/log.h"
-#include "Resource/Rendering/Shaders/shader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Resource/sceneManager.h"
+#include "Resource/Rendering/Shader/vertexShader.h"
 
 DirectionalLight::DirectionalLight()
 {
@@ -49,10 +50,10 @@ DirectionalLight::~DirectionalLight()
 
 void DirectionalLight::SetDirectionalLight(Shader* _shader)
 {
-	_shader->SetVec3("dirLights[" + std::to_string(id) + "].direction", direction);
-	_shader->SetVec4("dirLights[" + std::to_string(id) + "].ambient", ambientColor);
-	_shader->SetVec4("dirLights[" + std::to_string(id) + "].diffuse", diffuseColor);
-	_shader->SetVec4("dirLights[" + std::to_string(id) + "].specular", specularColor);
+	_shader->GetFragmentShader()->SetVec3("dirLights[" + std::to_string(id) + "].direction", direction);
+	_shader->GetFragmentShader()->SetVec4("dirLights[" + std::to_string(id) + "].ambient", ambientColor);
+	_shader->GetFragmentShader()->SetVec4("dirLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+	_shader->GetFragmentShader()->SetVec4("dirLights[" + std::to_string(id) + "].specular", specularColor);
 }
 
 void DirectionalLight::Update(Shader* _shader)

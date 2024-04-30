@@ -3,7 +3,7 @@
 #include <MathsLib/utils.h>
 
 #include "Debug/log.h"
-#include "Resource/Rendering/Shaders/shader.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Core/gameObject.h"
 #include "Resource/sceneManager.h"
 
@@ -59,16 +59,16 @@ SpotLight::~SpotLight()
 
 void SpotLight::SetSpotLight(Shader* _shader)
 {
-    _shader->SetVec3("spotLights[" + std::to_string(id) + "].position", position);
-    _shader->SetVec3("spotLights[" + std::to_string(id) + "].direction", direction);
-    _shader->SetVec4("spotLights[" + std::to_string(id) + "].ambient", ambientColor);
-    _shader->SetVec4("spotLights[" + std::to_string(id) + "].diffuse", diffuseColor);
-    _shader->SetVec4("spotLights[" + std::to_string(id) + "].specular", specularColor);
-    _shader->SetFloat("spotLights[" + std::to_string(id) + "].constant", constant);
-    _shader->SetFloat("spotLights[" + std::to_string(id) + "].linear", linear);
-    _shader->SetFloat("spotLights[" + std::to_string(id) + "].quadratic", quadratic);
-    _shader->SetFloat("spotLights[" + std::to_string(id) + "].cutOff", cos(DegToRad(cutOff)));
-    _shader->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
+    _shader->GetFragmentShader()->SetVec3("spotLights[" + std::to_string(id) + "].position", position);
+    _shader->GetFragmentShader()->SetVec3("spotLights[" + std::to_string(id) + "].direction", direction);
+    _shader->GetFragmentShader()->SetVec4("spotLights[" + std::to_string(id) + "].ambient", ambientColor);
+    _shader->GetFragmentShader()->SetVec4("spotLights[" + std::to_string(id) + "].diffuse", diffuseColor);
+    _shader->GetFragmentShader()->SetVec4("spotLights[" + std::to_string(id) + "].specular", specularColor);
+    _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].constant", constant);
+    _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].linear", linear);
+    _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].quadratic", quadratic);
+    _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].cutOff", cos(DegToRad(cutOff)));
+    _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
 }
 
 void SpotLight::Update(Shader* _shader)
