@@ -10,12 +10,11 @@
 BoxCollider::BoxCollider()
 	: m_size(Vector3(1.f, 1.f, 1.f))
 {
-
 }
+
 BoxCollider::BoxCollider(Vector3 _size)
 	: m_size(_size)
 {
-
 }
 
 BoxCollider::~BoxCollider()

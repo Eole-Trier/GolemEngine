@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 
+#include <BetterEnums/enum.h>
+
 #include "vector3.h"
 #include "vector4.h"
 

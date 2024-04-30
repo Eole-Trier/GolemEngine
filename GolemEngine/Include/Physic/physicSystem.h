@@ -2,6 +2,7 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/PhysicsSystem.h>
+#include <BetterEnums/enum.h>
 
 #include "Physic/bodyActivationManager.h"
 #include "Physic/contactManager.h"
@@ -14,12 +15,15 @@
 
 using namespace JPH;
 
-enum class MotionType : uint8
+
+
+/*enum class MotionType : uint8
 {
 	Static,						
 	Kinematic,					
 	Dynamic,
-};
+};*/
+BETTER_ENUM(MotionType, uint8, Static, Kinematic, Dynamic)
 
 class PhysicSystem
 {
@@ -51,7 +55,7 @@ public:
 	static void Update();
 
 	static BodyID CreateSphereCollider(Vector3 _position, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
-	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size);
+	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
 	static void AddForce(BodyID _bodyId, Vector3 _force);
 

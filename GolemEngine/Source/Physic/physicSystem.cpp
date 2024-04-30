@@ -20,6 +20,7 @@
 
 #include "Components/Physic/sphereCollider.h"
 
+
 // Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
 JPH_SUPPRESS_WARNINGS
 
@@ -164,11 +165,11 @@ BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius, EMot
 	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::DontActivate);
 }
 
-BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
+BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), EMotionType::Static, ObjectLayers::NON_MOVING);
+	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), _motionType, _objectLayer);
 	boxSettings.mAllowDynamicOrKinematic = true;
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }

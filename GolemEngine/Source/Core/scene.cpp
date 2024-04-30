@@ -25,6 +25,7 @@
 #include "Components/Physic/boxCollider.h"
 #include "Wrappers/windowWrapper.h"
 
+
 using json = nlohmann::json;
 
 Scene::Scene(std::string _name, bool _isEmpty)

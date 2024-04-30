@@ -20,7 +20,6 @@ class Shader;
 class GameObject;
 class Mesh;
 
-
 class GOLEM_ENGINE_API Scene
 {
 private:

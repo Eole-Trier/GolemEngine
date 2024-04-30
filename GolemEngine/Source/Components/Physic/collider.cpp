@@ -1,6 +1,10 @@
 #include "Components/Physic/collider.h"
 #include "Physic/physicSystem.h"
 
+Collider::Collider()
+{
+}
+
 Collider::~Collider()
 {
 	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();

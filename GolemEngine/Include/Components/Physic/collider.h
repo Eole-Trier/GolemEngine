@@ -21,7 +21,7 @@ public:
 	BodyID id;
 
 public:
-	Collider() = default;
+	Collider();
 	virtual ~Collider();
 
 	virtual void Begin() override;
