@@ -43,7 +43,6 @@ void VertexShader::Init()
     GraphicWrapper::CompileShader(vertex);
     Tools::CheckCompileErrors(vertex, "VERTEX");
 
-    m_shader->id = GraphicWrapper::CreateShaderProgram();
     GraphicWrapper::AttachShaderToProgram(m_shader->id, vertex);
     GraphicWrapper::LinkProgram(m_shader->id);
     Tools::CheckCompileErrors(m_shader->id, "PROGRAM");

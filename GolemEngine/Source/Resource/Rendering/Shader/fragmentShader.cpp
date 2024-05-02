@@ -43,7 +43,6 @@ void FragmentShader::Init()
     GraphicWrapper::CompileShader(fragment);
     Tools::CheckCompileErrors(fragment, "FRAGMENT");
 
-    m_shader->id = GraphicWrapper::CreateShaderProgram();
     GraphicWrapper::AttachShaderToProgram(m_shader->id, fragment);
     GraphicWrapper::LinkProgram(m_shader->id);
     Tools::CheckCompileErrors(m_shader->id, "PROGRAM");
