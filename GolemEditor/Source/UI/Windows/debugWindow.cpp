@@ -25,5 +25,20 @@ void DebugWindow::Update()
 	ImGui::Text("Mouse position relative to window: %.0f %.0f", InputManager::GetMouseWindowPos().x, InputManager::GetMouseWindowPos().y);
 	ImGui::Text("Mouse position relative to screen: %.0f %.0f", ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 	ImGui::Text("Camera position: %.2f %.2f %.2f", GolemEngine::GetCamera()->m_position.x, GolemEngine::GetCamera()->m_position.y, GolemEngine::GetCamera()->m_position.z);
+	DrawFpsGraph();
 	ImGui::End();
+}
+
+void DebugWindow::DrawFpsGraph()
+{
+	static std::vector<float> fpsHistory;
+	int maxHistorySize = 100;
+	float currentFPS = 1.0f / GolemEngine::GetDeltaTime();
+	fpsHistory.push_back(currentFPS);
+    
+	if (fpsHistory.size() > maxHistorySize) {
+		fpsHistory.erase(fpsHistory.begin());
+	}
+
+	ImGui::PlotLines("FPS", fpsHistory.data(), fpsHistory.size(), 0, "FPS", 0, 120, ImVec2(0, 80));
 }

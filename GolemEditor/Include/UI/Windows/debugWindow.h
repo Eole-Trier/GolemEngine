@@ -10,4 +10,5 @@ public:
 	~DebugWindow();
 
 	void Update() override;
+	void DrawFpsGraph();
 };
