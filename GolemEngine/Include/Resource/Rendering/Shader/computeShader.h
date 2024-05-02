@@ -1,16 +1,21 @@
 #pragma once
 
+// #include <string>
+
 #include "dll.h"
+#include "Resource/resource.h"
 
 
-class GOLEM_ENGINE_API ComputeShader
+class GOLEM_ENGINE_API ComputeShader : public Resource
 {
 public:
     unsigned int id = 0;
-    const char* m_computePath;
+    std::string m_computePath;
 
 public:
-    ComputeShader(const char* _computePath);
+    ComputeShader();
 
     void Init();
+
+    void SetComputePath(std::string _computePath);
 };

@@ -9,11 +9,7 @@
 #include "Wrappers/graphicWrapper.h"
 
 
-ComputeShader::ComputeShader(const char* _computePath)
-    : m_computePath(_computePath)
-{
-    Init();
-}
+ComputeShader::ComputeShader() {}
 
 void ComputeShader::Init()
 {
@@ -47,4 +43,9 @@ void ComputeShader::Init()
     Tools::CheckCompileErrors(id, "PROGRAM");
 
     GraphicWrapper::DeleteShaderObject(compute);
+}
+
+void ComputeShader::SetComputePath(std::string _computePath)
+{
+    m_computePath = _computePath;
 }

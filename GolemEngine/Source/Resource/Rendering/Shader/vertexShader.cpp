@@ -21,6 +21,7 @@ void VertexShader::Init()
     std::string vertexCode;
     std::ifstream vShaderFile;
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    m_vertexPath;
     try
     {
         vShaderFile.open(m_vertexPath);

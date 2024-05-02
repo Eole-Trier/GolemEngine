@@ -4,6 +4,7 @@
 #include "Resource/Rendering/Shader/shader.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Resource/Rendering/Shader/computeShader.h"
 #include "Resource/Rendering/Shader/vertexShader.h"
 #include "Resource/Rendering/Shader/fragmentShader.h"
 #include "Utils/viewportTools.h"
@@ -35,6 +36,11 @@ void ResourceManager::CreateAndLoadResources()
     VertexShader* defaultTerrainVertexShader = new VertexShader(defaultTerrainShader, Tools::FindFile("defaultTerrain.vs").c_str());
     FragmentShader* defaultTerrainFragmentShader = new FragmentShader(defaultTerrainShader, Tools::FindFile("defaultTerrain.fs").c_str());
     defaultTerrainShader->SetAllShaders(defaultTerrainVertexShader, defaultTerrainFragmentShader);
+
+    // Create the default compute shader for terrains
+    ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_defaultTerrainComputeShader);
+    defaultTerrainComputeShader->SetComputePath(Tools::FindFile("default.comp"));
+    defaultTerrainComputeShader->Init();
     
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());

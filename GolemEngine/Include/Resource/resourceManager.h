@@ -18,6 +18,7 @@ private:
 
 	static inline std::string m_defaultShader = "default_shader";
 	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
+	static inline std::string m_defaultTerrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
 
