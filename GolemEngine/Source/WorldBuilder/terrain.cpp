@@ -108,12 +108,10 @@ void Terrain::GetComputeShaderData(Camera* _camera)
         {
             // Get the original vertex position
             Vector4 originalPosition = Vector4(verticesData[i].position.x, verticesData[i].position.y, verticesData[i].position.z, 1.0f); // Assuming the position is in vec3 format
-
             // Apply the concatenated transformation matrix
             Vector4 transformedPosition = transformationMatrix * originalPosition;
-
             // Perform perspective division
-            Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z) / transformedPosition.w;
+            Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
 
             // Update the vertex position in the CPU buffer
             cpuBuffer[i].position = {finalPosition.x, finalPosition.y, finalPosition.z};
