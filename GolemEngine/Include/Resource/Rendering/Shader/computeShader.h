@@ -5,6 +5,8 @@
 
 class GOLEM_ENGINE_API ComputeShader
 {
+public:
+    unsigned int id = 0;
     const char* m_computePath;
 
 public:
