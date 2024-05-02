@@ -32,6 +32,7 @@ public:
 
 	static std::string GetDefaultShader();
 	static std::string GetDefaultTerrainShader();
+	static std::string GetDefaultTerrainComputeShader();
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
 

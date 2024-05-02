@@ -38,11 +38,17 @@ void ComputeShader::Init()
     GraphicWrapper::CompileShader(compute);
     Tools::CheckCompileErrors(compute, "COMPUTE");
 
-    GraphicWrapper::AttachShaderToProgram(id, compute);    // Attach it to its own program and not the other shader program
+    id = GraphicWrapper::CreateShaderProgram();    // Use a different program than the default shader
+    GraphicWrapper::AttachShaderToProgram(id, compute);
     GraphicWrapper::LinkProgram(id);
     Tools::CheckCompileErrors(id, "PROGRAM");
 
     GraphicWrapper::DeleteShaderObject(compute);
+}
+
+void ComputeShader::Use()
+{
+    GraphicWrapper::UseShader(id);
 }
 
 void ComputeShader::SetComputePath(std::string _computePath)

@@ -23,8 +23,6 @@ Terrain::~Terrain()
 
 void Terrain::SetupMesh()
 {
-    // Create the compute shader
-    
     glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
@@ -42,6 +40,22 @@ void Terrain::SetupMesh()
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
+
+    // Setup the compute shader
+    glGenBuffers(1, &m_ssbo);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_STATIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
+    
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void Terrain::UseComputeShader()
+{
+    m_computeShader->Use();
+    glDispatchCompute(10, 10, 1);
+    
+    glMemoryBarrier(GL_ALL_BARRIER_BITS);
 }
 
 void Terrain::Draw(Camera* _camera)
@@ -65,6 +79,60 @@ void Terrain::Draw(Camera* _camera)
         glDrawElements(GL_LINES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
         break;
     }
+}
+
+void Terrain::GetComputeShaderData(Camera* _camera)
+{
+ // Bind the SSBO containing the vertex data
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
+
+    // Map the buffer to CPU memory
+    void* ptr = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY);
+
+    if (ptr != nullptr)
+    {
+        // Copy the data to a CPU-accessible buffer
+        Vertex* vertexData = static_cast<Vertex*>(ptr);
+        std::vector<Vertex> cpuBuffer(m_vertices.size()); // Assuming vertexCount is the total number of vertices
+        
+        // Apply transformations to the vertex positions on the CPU side
+        for (size_t i = 0; i < m_vertices.size(); ++i)
+        {
+            // Get the original vertex position
+            Vector4 position = Vector4(vertexData[i].position.x, vertexData[i].position.y, vertexData[i].position.z, 1.0f); // Assuming the position is in vec3 format
+
+            // Apply model, view, and projection transformations
+            Matrix4 modelMatrix = transform->GetGlobalModel();
+            Matrix4 viewMatrix = _camera->GetViewMatrix();
+            Matrix4 projectionMatrix = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
+            
+            // Concatenate model, view, and projection matrices into a single transformation matrix
+            Matrix4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
+
+            // Apply the concatenated transformation matrix
+            Vector4 transformedPosition = transformationMatrix * position;
+
+            // Perform perspective division
+            Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z) / transformedPosition.w;
+
+            // Update the vertex position in the CPU buffer
+            cpuBuffer[i].position = finalPosition;
+        }
+        std::cout << cpuBuffer[0].position << std::endl;
+        
+        // Unmap the buffer
+        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+        // Now you have the transformed positions in the 'cpuBuffer'
+        // You can access and use this data as needed
+    }
+    else
+    {
+        std::cout << "vertex ptr is null" << std::endl;
+    }
+
+    // Don't forget to unbind the buffer after use
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 size_t Terrain::GetId()

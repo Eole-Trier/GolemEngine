@@ -74,6 +74,11 @@ std::string ResourceManager::GetDefaultTerrainShader()
     return m_defaultTerrainShader;
 }
 
+std::string ResourceManager::GetDefaultTerrainComputeShader()
+{
+    return m_defaultTerrainComputeShader;
+}
+
 std::string ResourceManager::GetDefaultTexture()
 {
     return m_defaultTexture;

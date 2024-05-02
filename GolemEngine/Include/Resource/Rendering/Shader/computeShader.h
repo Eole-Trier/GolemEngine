@@ -16,6 +16,7 @@ public:
     ComputeShader();
 
     void Init();
+    void Use();
 
     void SetComputePath(std::string _computePath);
 };

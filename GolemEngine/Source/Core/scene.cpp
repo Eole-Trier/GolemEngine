@@ -87,6 +87,8 @@ void Scene::UpdateTerrains(Camera* _camera)
 {
     for (int i = 0; i < m_terrains.size(); i++)
     {
+        m_terrains[i]->UseComputeShader();
+        m_terrains[i]->GetComputeShaderData(_camera);
         m_terrains[i]->Draw(_camera);
     }
 }
