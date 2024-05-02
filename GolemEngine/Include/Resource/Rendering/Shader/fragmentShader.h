@@ -18,7 +18,6 @@ private:
     const char* m_fragmentPath;
     
 public:
-    FragmentShader() {}
     FragmentShader(Shader* _shader, const char* _fragmentPath);
 
     void Init();

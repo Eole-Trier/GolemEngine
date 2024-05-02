@@ -124,6 +124,7 @@
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Resource\Rendering\mesh.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\Shader\computeShader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\Shader\fragmentShader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\Shader\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\Shader\vertexShader.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
+    <ClInclude Include="Include\Resource\Rendering\Shader\computeShader.h" />
     <ClInclude Include="Include\Resource\Rendering\Shader\fragmentShader.h" />
     <ClInclude Include="Include\Resource\Rendering\Shader\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />

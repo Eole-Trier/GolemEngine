@@ -18,7 +18,6 @@ private:
     const char* m_vertexPath;
     
 public:
-    VertexShader() {}
     VertexShader(Shader* _shader, const char* _vertexPath);
 
     void Init();
