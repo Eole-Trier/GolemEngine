@@ -83,7 +83,7 @@ void Terrain::Draw(Camera* _camera)
 
 void Terrain::GetComputeShaderData(Camera* _camera)
 {
- // Bind the SSBO containing the vertex data
+    // Bind the SSBO containing the vertex data
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
 
     // Map the buffer to CPU memory
@@ -94,37 +94,46 @@ void Terrain::GetComputeShaderData(Camera* _camera)
         // Copy the data to a CPU-accessible buffer
         Vertex* vertexData = static_cast<Vertex*>(ptr);
         std::vector<Vertex> cpuBuffer(m_vertices.size()); // Assuming vertexCount is the total number of vertices
+
+        // Calculate batch size
+        const size_t batchSize = 100; // You can adjust this value based on performance testing
+
+        // Get these matrices to use them for calculation after
+        Matrix4 modelMatrix = transform->GetGlobalModel();
+        Matrix4 viewMatrix = _camera->GetViewMatrix();
+        Matrix4 projectionMatrix = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
+        // Concatenate model, view, and projection matrices into a single transformation matrix
+        Matrix4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
         
-        // Apply transformations to the vertex positions on the CPU side
-        for (size_t i = 0; i < m_vertices.size(); ++i)
+        // Apply transformations to the vertex positions in batches
+        for (size_t i = 0; i < m_vertices.size(); i += batchSize)
         {
-            // Get the original vertex position
-            Vector4 position = Vector4(vertexData[i].position.x, vertexData[i].position.y, vertexData[i].position.z, 1.0f); // Assuming the position is in vec3 format
+            size_t batchSizeThisIteration = std::min(batchSize, m_vertices.size() - i); // Determine the actual batch size for this iteration
+            // Process vertices in the current batch
+            for (size_t j = i; j < i + batchSizeThisIteration; ++j)
+            {
+                // Get the original vertex position
+                Vector4 position = Vector4(vertexData[j].position.x, vertexData[j].position.y, vertexData[j].position.z, 1.0f); // Assuming the position is in vec3 format
 
-            // Apply model, view, and projection transformations
-            Matrix4 modelMatrix = transform->GetGlobalModel();
-            Matrix4 viewMatrix = _camera->GetViewMatrix();
-            Matrix4 projectionMatrix = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
-            
-            // Concatenate model, view, and projection matrices into a single transformation matrix
-            Matrix4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
+                // Apply the concatenated transformation matrix
+                Vector4 transformedPosition = transformationMatrix * position;
 
-            // Apply the concatenated transformation matrix
-            Vector4 transformedPosition = transformationMatrix * position;
+                // Perform perspective division
+                Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z) / transformedPosition.w;
 
-            // Perform perspective division
-            Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z) / transformedPosition.w;
+                // Update the vertex position in the CPU buffer
+                cpuBuffer[j].position = finalPosition;
 
-            // Update the vertex position in the CPU buffer
-            cpuBuffer[i].position = finalPosition;
+                // Check the highest y coordinate
+                if (cpuBuffer[j].position.y >= m_yMax)
+                {
+                    m_yMax = cpuBuffer[j].position.y;
+                }
+            }
         }
-        std::cout << cpuBuffer[0].position << std::endl;
-        
+
         // Unmap the buffer
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-
-        // Now you have the transformed positions in the 'cpuBuffer'
-        // You can access and use this data as needed
     }
     else
     {
