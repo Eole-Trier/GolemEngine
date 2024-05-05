@@ -41,12 +41,26 @@ Run.
 
 ## Functionalities
 
-Golem Engine includes classical game engine features such as a docked imgui space for a basic actors, viewport, scene graph, debug, inspector and file browser window.  
-You can navigate in the viewport using WASD and right click.  
-Inspector allows (for now) to modify the transform of various objects and add light components.  
-
-## Special Features
-
+Golem Engine includes classical game engine features such as :
+- Docked UI layout
+- Windows :
+    - Basic actors window 
+    - Viewport
+    - Viewport tools window
+    - Scene graph
+    - Debug
+    - Inspector
+    - File browser
+- Scene management (load, create, save)
+- Audio
+- Physics  
+  
+You can navigate in the viewport using by using WASD and holding down right click.  
+  
+All functionalities are not listed in the README so feel free to discover them yourself.  
+  
+## Special Features  
+  
 ### World Builder  
   
 Features *(current)* :
@@ -54,18 +68,18 @@ Features *(current)* :
 You can build a terrain in two different ways. The first method is to create a default flat terrain and set its vertices definition. The second method is to load the terrain from a heightmap.
 
 > Plan to be implemented
-> - ***Terrain Vertex Brush :***  
-> To edit the terrain vertices allowing to create mountains and valleys.
-> - ***Terrain Texture Brush :***  
-> To apply textures on the terrain.
-> - ***Terrain Instancing Brush :***  
-> To instance any type of object on the terrain, like vegetation, rocks and more.
-> - ***Weather Tool :***  
-> To add wind and weather to the terrain which could be shown in game or (for the wind) could impact the orientation of instanced objects.
-
-We plan to have several features :  
-Map making tool.  
-Toon Shading tool.  
-Particle System.  
-
-These special features will be developed later.
+> > World Builder related
+> > - ***Terrain Vertex Brush :***  
+> > To edit the terrain vertices allowing to create mountains and valleys.
+> > - ***Terrain Texture Brush :***  
+> > To apply textures on the terrain.
+> > - ***Terrain Instancing Brush :***  
+> > To instance any type of object on the terrain, like vegetation, rocks and more.
+> > - ***Weather Tool :***  
+> > To add wind and weather to the terrain which could be shown in game or (for the wind) could impact the orientation of instanced objects.  
+> 
+> > Map Making Tool
+> 
+> > Toon Shading Tool
+> 
+> > Particle System
