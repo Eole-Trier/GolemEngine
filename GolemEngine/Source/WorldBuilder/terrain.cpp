@@ -88,48 +88,36 @@ void Terrain::GetComputeShaderData(Camera* _camera)
     // Bind the SSBO containing the vertex data
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
 
-    // Map the buffer to CPU memory
-    void* ptr = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY);
-
+    Vertex* ptr = static_cast<Vertex*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY));
+    
     if (ptr != nullptr)
     {
-        // Copy the data to a CPU-accessible buffer
-        Vertex* verticesData = static_cast<Vertex*>(ptr);
-        std::vector<Vertex> cpuBuffer(m_vertices.size()); // Assuming vertexCount is the total number of vertices
-
         // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
 
-        int batchSize = 100; // You can adjust this value based on performance testing
+        // int batchSize = 100; // You can adjust this value based on performance testing
 
-        float yMin = 0.0f;
-        float yMax = 0.0f;
+        float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
+        float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
         
         for (int i = 0; i < m_vertices.size(); ++i)
         {
             // Get the original vertex position
-            Vector4 originalPosition = Vector4(verticesData[i].position.x, verticesData[i].position.y, verticesData[i].position.z, 1.0f); // Assuming the position is in vec3 format
-            // Apply the concatenated transformation matrix
+            Vector4 originalPosition = Vector4(ptr[i].position.x, ptr[i].position.y, ptr[i].position.z, 1.0f);
+            // Apply the model matrix
             Vector4 transformedPosition = modelMatrix * originalPosition;
-            // Perform perspective division
+            // Set final position
             Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
-
             // Update the vertex position in the CPU buffer
-            cpuBuffer[i].position = {finalPosition.x, finalPosition.y, finalPosition.z};
-
-            if (finalPosition.y <= yMin)    // Store lowest vertex
-            {
-                yMin = finalPosition.y;
-            }
-            
-            if (finalPosition.y >= yMax)    // Store highestPosition
-            {
-                yMax = finalPosition.y;
-            }
+            m_vertices[i].position = finalPosition;
+            // Set min and max point of the heightmap
+            yMin = std::min(yMin, finalPosition.y);
+            yMax = std::max(yMax, finalPosition.y);
         }
+
         m_yMin = yMin;
         m_yMax = yMax;
-        // Unmap the buffer
+
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
     }
     else
