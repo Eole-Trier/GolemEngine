@@ -95,21 +95,19 @@ void Terrain::GetComputeShaderData(Camera* _camera)
         Vertex* verticesData = static_cast<Vertex*>(ptr);
         std::vector<Vertex> cpuBuffer(m_vertices.size()); // Assuming vertexCount is the total number of vertices
 
-        // Get these matrices to use them for calculation after
+        // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
-        Matrix4 viewMatrix = _camera->GetViewMatrix();
-        Matrix4 projectionMatrix = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
-        // Concatenate model, view, and projection matrices into a single transformation matrix for optimization
-        Matrix4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
-        const size_t batchSize = 100; // You can adjust this value based on performance testing
+        int batchSize = 100; // You can adjust this value based on performance testing
+
+        float yMax = 0.0f;
         
-        for (size_t i = 0; i < m_vertices.size(); ++i)
+        for (int i = 0; i < m_vertices.size(); ++i)
         {
             // Get the original vertex position
             Vector4 originalPosition = Vector4(verticesData[i].position.x, verticesData[i].position.y, verticesData[i].position.z, 1.0f); // Assuming the position is in vec3 format
             // Apply the concatenated transformation matrix
-            Vector4 transformedPosition = transformationMatrix * originalPosition;
+            Vector4 transformedPosition = modelMatrix * originalPosition;
             // Perform perspective division
             Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
 
@@ -117,11 +115,13 @@ void Terrain::GetComputeShaderData(Camera* _camera)
             cpuBuffer[i].position = {finalPosition.x, finalPosition.y, finalPosition.z};
 
             // Check the highest y coordinate
-            if (finalPosition.y >= m_yMax)
+            if (finalPosition.y >= yMax)
             {
-                m_yMax = finalPosition.y;
+                yMax = finalPosition.y;
             }
         }
+        std::cout << cpuBuffer[0].position << std::endl;
+        m_yMax = yMax;
         // Unmap the buffer
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
     }
