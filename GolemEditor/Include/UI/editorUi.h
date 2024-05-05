@@ -20,7 +20,6 @@ private:
 
 public:
 	static inline GameObject* selectedGameObject = nullptr;
-	static inline Terrain* selectedTerrain = nullptr;
 
 public:
 
