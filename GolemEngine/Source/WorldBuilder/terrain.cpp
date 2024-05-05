@@ -64,6 +64,8 @@ void Terrain::Draw(Camera* _camera)
     m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
     m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
+    std::cout << m_yMin << std::endl;
     m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
     
     glBindVertexArray(m_vao);
@@ -100,6 +102,7 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
         int batchSize = 100; // You can adjust this value based on performance testing
 
+        float yMin = 0.0f;
         float yMax = 0.0f;
         
         for (int i = 0; i < m_vertices.size(); ++i)
@@ -114,13 +117,17 @@ void Terrain::GetComputeShaderData(Camera* _camera)
             // Update the vertex position in the CPU buffer
             cpuBuffer[i].position = {finalPosition.x, finalPosition.y, finalPosition.z};
 
-            // Check the highest y coordinate
-            if (finalPosition.y >= yMax)
+            if (finalPosition.y <= yMin)    // Store lowest vertex
+            {
+                yMin = finalPosition.y;
+            }
+            
+            if (finalPosition.y >= yMax)    // Store highestPosition
             {
                 yMax = finalPosition.y;
             }
         }
-        std::cout << cpuBuffer[0].position << std::endl;
+        m_yMin = yMin;
         m_yMax = yMax;
         // Unmap the buffer
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
