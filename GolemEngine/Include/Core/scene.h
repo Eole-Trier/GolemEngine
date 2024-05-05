@@ -35,11 +35,11 @@ private:
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
 
-	std::vector<Terrain*> m_terrains;
 
 public:
 	std::string name;
 	std::vector<GameObject*> gameObjects;
+	std::vector<Terrain*> terrains;
 	bool isNewObjectDropped = false;
 	std::string loadingObject;
 	
@@ -99,13 +99,13 @@ public:
 			}
 			_j["gameObjects"] = jGameObjects;
 		}
-		if (!m_terrains.empty())
+		if (!terrains.empty())
 		{
 			json jTerrains;
-			for (int i = 0; i < m_terrains.size(); i++)
+			for (int i = 0; i < terrains.size(); i++)
 			{
 				json jTerrainPtr;
-				m_terrains[i]->ToJson(jTerrainPtr);
+				terrains[i]->ToJson(jTerrainPtr);
 				jTerrains.push_back(jTerrainPtr);
 			}
 			_j["terrains"] = jTerrains;

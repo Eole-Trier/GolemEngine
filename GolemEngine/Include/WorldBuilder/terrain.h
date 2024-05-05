@@ -35,8 +35,6 @@ protected:
     int m_xResolution = 2;    // To set the amount of vertices in x (a terrin with 4 vertices or 255 will have a similar, so it's for vertex details)
     int m_zResolution = 2;    // To set the amount of vertices in z
 
-    size_t m_id;
-
 public:
     Terrain(std::string _name, Transform* _transform);
     ~Terrain();
@@ -45,7 +43,6 @@ public:
     void UseComputeShader();
     void Draw(Camera* _camera);
     void GetComputeShaderData(Camera* _camera);
-    size_t GetId();
     
     virtual void Init(int _xResolution, int _zResolution) {}
     virtual void Init(const char* _noisemapPath) {}

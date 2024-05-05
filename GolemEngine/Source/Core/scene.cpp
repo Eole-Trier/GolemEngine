@@ -70,7 +70,7 @@ void Scene::Update(Camera* _camera)
     defaultShader->Use();
     defaultShader->GetVertexShader()->SetViewPos(_camera->m_position);
 
-    if (!m_terrains.empty())
+    if (!terrains.empty())
     {
         UpdateTerrains(_camera); 
     }
@@ -85,11 +85,11 @@ void Scene::Update(Camera* _camera)
 
 void Scene::UpdateTerrains(Camera* _camera)
 {
-    for (int i = 0; i < m_terrains.size(); i++)
+    for (int i = 0; i < terrains.size(); i++)
     {
-        m_terrains[i]->UseComputeShader();
-        m_terrains[i]->Draw(_camera);
-        m_terrains[i]->GetComputeShaderData(_camera);
+        terrains[i]->UseComputeShader();
+        terrains[i]->Draw(_camera);
+        terrains[i]->GetComputeShaderData(_camera);
     }
 }
 
@@ -155,25 +155,25 @@ bool Scene::IsNameExists(const std::string& _name)
 
 void Scene::AddTerrain(Terrain* _terrain)
 {
-    m_terrains.push_back(_terrain);
+    terrains.push_back(_terrain);
 }
 
 void Scene::RemoveTerrain(Terrain* _terrain)
 {
     bool removed = false;
-    for (size_t i = 0; i < m_terrains.size(); i++)
+    for (size_t i = 0; i < terrains.size(); i++)
     {
-        if (m_terrains[i] == _terrain)
+        if (terrains[i] == _terrain)
         {
             removed = true;
         }
         if (removed)
         {
-            m_terrains[i]->SetId(i - 1);
+            terrains[i]->SetId(i - 1);
         }
     }
     
-    std::erase(m_terrains, _terrain);
+    std::erase(terrains, _terrain);
 }
 
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
@@ -305,7 +305,7 @@ void Scene::DeleteLight(Light* _light)
 
 std::vector<Terrain*> Scene::GetTerrains()
 {
-    return  m_terrains;
+    return  terrains;
 }
 
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()

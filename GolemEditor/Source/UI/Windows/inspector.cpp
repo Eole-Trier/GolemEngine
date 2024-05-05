@@ -9,6 +9,7 @@
 #include "Refl/refl.hpp"
 #include "UI/editorUi.h"
 #include "Reflection/displayType.h"
+#include "Resource/sceneManager.h"
 
 Inspector::Inspector(std::string _name)
 	: Window(_name)
@@ -25,8 +26,20 @@ void Inspector::Update()
 	{
 		DisplayType::DisplayField(EditorUi::selectedGameObject);
 		DisplayType::AddComponentHandler(EditorUi::selectedGameObject);
-		
+
+		if (!SceneManager::GetCurrentScene()->terrains.empty())
+		{
+			for (int i = 0; i < SceneManager::GetCurrentScene()->terrains.size(); i++)
+			{
+				if (EditorUi::selectedGameObject->GetId() == SceneManager::GetCurrentScene()->terrains[i]->GetId())
+				{
+					// TODO : call GetComputeShadersData
+				}
+			}
+		}
 	}
+
+	
 	ImGui::End();
 }
 

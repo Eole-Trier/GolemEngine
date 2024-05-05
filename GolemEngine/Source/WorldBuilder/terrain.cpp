@@ -65,7 +65,6 @@ void Terrain::Draw(Camera* _camera)
     m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    std::cout << m_yMin << std::endl;
     m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
     
     glBindVertexArray(m_vao);
@@ -127,9 +126,4 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
     // Don't forget to unbind the buffer after use
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-size_t Terrain::GetId()
-{
-    return m_id;
 }
