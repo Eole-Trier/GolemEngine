@@ -119,7 +119,7 @@ void Transform::EditTransformGizmo()
 
     //Manipulate the gizmo with or without snap
     ImGuizmo::Manipulate(&cameraView.data[0][0],
-                         &cameraProjection.data[0][0], currentOperation, currentMode, 
+                         &cameraProjection.data[0][0], currentOperation, currentMode,
                          &transformTest.data[0][0], nullptr, snap ? snapValues : nullptr);
 
     transformTest = transformTest.Transpose();
