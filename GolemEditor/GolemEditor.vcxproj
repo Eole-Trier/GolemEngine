@@ -185,7 +185,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameClasses\player.cpp" />
-    <ClCompile Include="GameClasses\playScene.cpp" />
     <ClCompile Include="GameClasses\rccppMainLoop.cpp" />
     <ClCompile Include="GameClasses\StdioLogSystem.cpp" />
     <ClCompile Include="Source\UI\toolbar.cpp" />
@@ -202,7 +201,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameClasses\player.h" />
-    <ClInclude Include="GameClasses\playScene.h" />
     <ClInclude Include="GameClasses\rccppMainLoop.h" />
     <ClInclude Include="GameClasses\StdioLogSystem.h" />
     <ClInclude Include="GameClasses\systemTable.h" />
