@@ -17,6 +17,13 @@
 #include "imgui_internal.h"
 #include "ImGuizmo.h"
 #include "MathsLib/utils.h"
+#include <thread>
+
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/class.h>
+#include <mono/metadata/debug-helpers.h>
+#include <mono/metadata/mono-config.h>
 
 Editor::Editor()
 	:
@@ -67,13 +74,33 @@ void Editor::Init()
     GolemEngine::Init();
 }
 
+MonoDomain* domain;
+
+void Mono()
+{
+	mono_set_assemblies_path("C:\\Program Files\\Mono\\lib");
+	domain = mono_jit_init("a");
+}
+
 void Editor::MainLoop()
 {
+	Mono();
 	ImGuiIO& io = ImGui::GetIO();
 	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 
 	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{
+		const char* managed_binary_path = "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Scripts\\Test.dll";
+		MonoAssembly* assembly = mono_domain_assembly_open(domain, managed_binary_path);
+		MonoImage* image = mono_assembly_get_image(assembly);
+		MonoClass* main_class = mono_class_from_name(image, "MonoCsharp", "MainTest");
+
+		MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("MonoCsharp.MainTest:Main()", true);
+		MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
+		mono_method_desc_free(entry_point_method_desc);
+		mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+		//mono_jit_cleanup(domain);
+
 		WindowWrapper::ProcessEvents();
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
