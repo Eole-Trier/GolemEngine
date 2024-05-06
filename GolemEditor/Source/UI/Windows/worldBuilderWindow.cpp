@@ -6,10 +6,13 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuiFileDialog-master/dirent/dirent.h"
 #include "Utils/tools.h"
 
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_TITLE = "Specify new terrain dimensions";
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE = "Enter terrain dimensions";
+const std::string CREATE_DEFAULT_NOISEMAP_TERRAIN_POPUP_TITLE = "Select a heightmap";
+const std::string CREATE_DEFAULT_NOISEMAP_TERRAIN_POPUP_MESSAGE = "Available heightmaps : ";
 
 
 WorldBuilderWindow::WorldBuilderWindow(std::string _name) 
@@ -51,7 +54,7 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
     ImGui::OpenPopup(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str());
     
     // Popup content
-    if (ImGui::BeginPopupModal(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str()))
+    if (ImGui::BeginPopupModal(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::Text(CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE.c_str());
 
@@ -74,6 +77,12 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
             m_isCreateDefaultTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel"))
+        {
+            m_isCreateDefaultTerrainPopupActive = false;
+            ImGui::CloseCurrentPopup();
+        }
 
         ImGui::EndPopup();
     }
@@ -81,21 +90,45 @@ void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int&
 
 void WorldBuilderWindow::UpdateCreateDefaultNoisemapeTerrainPopup()
 {
-    ImGui::OpenPopup(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str());
+    ImGui::OpenPopup(CREATE_DEFAULT_NOISEMAP_TERRAIN_POPUP_TITLE.c_str());
     
     // Popup content
-    if (ImGui::BeginPopupModal(CREATE_DEFAULT_TERRAIN_POPUP_TITLE.c_str()))
+    if (ImGui::BeginPopupModal(CREATE_DEFAULT_NOISEMAP_TERRAIN_POPUP_TITLE.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
-        ImGui::Text(CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE.c_str());
+        ImGui::Text(CREATE_DEFAULT_NOISEMAP_TERRAIN_POPUP_MESSAGE.c_str());
 
-        
+        for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Heightmaps")); i++)
+        {
+            std::string heightmapName = Tools::GetFolderElementsNames(Tools::FindFolder("Heightmaps"))[i];
+            if (ImGui::MenuItem(heightmapName.c_str()))
+            {
+                m_selectedHeightmap = heightmapName;
+            }
+        }
+
         // Check if user inputs are valid
-        bool isUserInputValid = true;
-        
+        bool isUserInputValid = false;
+        if (m_selectedHeightmap != "")
+        {
+            isUserInputValid = true;
+            ImGui::NewLine();
+            std::string text = "selected heighmtap : " + m_selectedHeightmap; 
+            ImGui::Text(text.c_str());
+        }
+
         // Create terrain on valid input and "OK" button pressed
         if (isUserInputValid && ImGui::Button("OK"))
         {
-            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile("heightmap.png").c_str());
+            WorldBuilder::CreateNoisemapTerrain(Tools::FindFile(m_selectedHeightmap).c_str());
+            m_isCreateDefaultNoisemapTerrainPopupActive = false;
+            ImGui::CloseCurrentPopup();
+        }
+        if (isUserInputValid)
+        {
+            ImGui::SameLine();
+        }
+        if (ImGui::Button("Cancel"))
+        {
             m_isCreateDefaultNoisemapTerrainPopupActive = false;
             ImGui::CloseCurrentPopup();
         }

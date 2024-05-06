@@ -18,6 +18,7 @@ private:
 #pragma region Create Noisemap Terrain Variables
     bool m_isCreateDefaultNoisemapTerrainPopupActive = false;
     float m_newDefaultNoisemapTerrainAmplitude = 1.0f;
+    std::string m_selectedHeightmap = "";
 #pragma endregion Create Noisemap Terrain Variables
     
 public:
