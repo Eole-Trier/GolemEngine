@@ -2,7 +2,6 @@
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/PhysicsSystem.h>
-#include <BetterEnums/enum.h>
 
 #include "Physic/bodyActivationManager.h"
 #include "Physic/contactManager.h"
@@ -17,13 +16,12 @@ using namespace JPH;
 
 
 
-/*enum class MotionType : uint8
+enum class MotionType : uint8
 {
 	Static,						
 	Kinematic,					
 	Dynamic,
-};*/
-BETTER_ENUM(MotionType, uint8, Static, Kinematic, Dynamic)
+};
 
 class PhysicSystem
 {

@@ -3,8 +3,6 @@
 #include <vector>
 #include <iostream>
 
-#include <BetterEnums/enum.h>
-
 #include "vector3.h"
 #include "vector4.h"
 
@@ -14,6 +12,7 @@
 #include "Reflection/attributes.h"
 #include "Refl/refl.hpp"
 #include "Core/gameObject.h"
+#include "MagicEnum/magic_enum.hpp"
 #include "vector2.h"
 
 class DisplayType
@@ -31,10 +30,10 @@ public:
 	static void BasicsFields(MemberT* _class);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
-	static void DisplayStdVector(MemberT* _member);
+	static void DisplayStdVector(MemberT* _class);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
-	static void DisplayEnum(MemberT* _member);
+	static void DisplayEnum(MemberT* _class);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
 	static void DisplayIntOrFloat(MemberT* _member);
@@ -111,22 +110,35 @@ void DisplayType::BasicsFields(MemberT* _class)
 		ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, .1f);
 	}
 	ImGui::PopID();
-
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
-void DisplayType::DisplayStdVector(MemberT* _member)
+void DisplayType::DisplayStdVector(MemberT* _class)
 {
-	for (unsigned int i = 0; i < _member->size(); i++)
+	for (unsigned int i = 0; i < _class->size(); i++)
 	{
-		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_member)[i]);
+		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_class)[i]);
 	}
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
-void DisplayType::DisplayEnum(MemberT* _member)
+void DisplayType::DisplayEnum(MemberT* _class)
 {
-	// TODO
+	constexpr auto enumName = magic_enum::enum_type_name<MemberT>();
+
+	if (ImGui::BeginCombo("enum class", "My class"))
+	{
+		for (auto name : magic_enum::enum_names<MemberT>())
+		{
+			if (ImGui::Selectable(name), _class)
+			{
+			}
+
+		}
+		ImGui::EndCombo();
+	}
+	ImGui::ShowDemoWindow();
+
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
