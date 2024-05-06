@@ -16,6 +16,9 @@ private:
 	static inline Camera* m_camera = nullptr;
 	static inline float m_deltaTime = 0.0f;
 
+public:
+	static inline GameObject* selectedGameObject = nullptr;
+
 private:
 	// Private constructors and destructor to make static class
 	GolemEngine() = delete;

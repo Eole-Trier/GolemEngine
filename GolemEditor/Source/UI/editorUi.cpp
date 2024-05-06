@@ -157,6 +157,7 @@ void EditorUi::EndDockSpace()
 
 void EditorUi::UpdateWindows()
 {
+    GolemEngine::selectedGameObject = selectedGameObject;
     for (Window* window : m_windows)
     {
         window->Update();

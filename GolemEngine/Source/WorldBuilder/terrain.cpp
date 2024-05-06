@@ -94,8 +94,6 @@ void Terrain::GetComputeShaderData(Camera* _camera)
         // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
 
-        // int batchSize = 100; // You can adjust this value based on performance testing
-
         float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
         float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
         

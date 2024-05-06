@@ -89,7 +89,11 @@ void Scene::UpdateTerrains(Camera* _camera)
     {
         terrains[i]->UseComputeShader();
         terrains[i]->Draw(_camera);
-        terrains[i]->GetComputeShaderData(_camera);
+        
+        if (GolemEngine::selectedGameObject == terrains[i])    // Use compute shader only if terrain is being selected
+        {
+            terrains[i]->GetComputeShaderData(_camera);
+        }
     }
 }
 
