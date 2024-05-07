@@ -6,10 +6,7 @@
 #include "Resource/sceneManager.h"
 
 
-void WorldBuilder::Init()
-{
-    
-}
+void WorldBuilder::Init() {}
 
 void WorldBuilder::CreateDefaultTerrain(int _xResolution, int _zResolution)
 {

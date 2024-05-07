@@ -96,24 +96,28 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
         float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
         float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
-        
-        for (int i = 0; i < m_vertices.size(); ++i)
+
+        if (m_oldModelMatrix != modelMatrix)
         {
-            // Get the original vertex position
-            Vector4 originalPosition = Vector4(ptr[i].position.x, ptr[i].position.y, ptr[i].position.z, 1.0f);
-            // Apply the model matrix
-            Vector4 transformedPosition = modelMatrix * originalPosition;
-            // Set final position
-            Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
-            // Update the vertex position in the CPU buffer
-            m_vertices[i].position = finalPosition;
-            // Set min and max point of the heightmap
-            yMin = std::min(yMin, finalPosition.y);
-            yMax = std::max(yMax, finalPosition.y);
+            for (int i = 0; i < m_vertices.size(); ++i)
+            {
+                // Get the original vertex position
+                Vector4 originalPosition = Vector4(ptr[i].position.x, ptr[i].position.y, ptr[i].position.z, 1.0f);
+                // Apply the model matrix
+                Vector4 transformedPosition = modelMatrix * originalPosition;
+                // Set final position
+                Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
+                // Update the vertex position in the CPU buffer
+                m_vertices[i].position = finalPosition;
+                // Set min and max point of the heightmap
+                yMin = std::min(yMin, finalPosition.y);
+                yMax = std::max(yMax, finalPosition.y);
+            }
+            m_yMin = yMin;
+            m_yMax = yMax;
         }
 
-        m_yMin = yMin;
-        m_yMax = yMax;
+        m_oldModelMatrix = modelMatrix;
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
     }
