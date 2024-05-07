@@ -62,5 +62,5 @@ public:
 	static void MakeBodyKinematic(BodyID _bodyId);
 
 	static void ActivateBody(BodyID _bodyId);
-	static void DesactivateBody(BodyID _bodyId);
+	static void DesactivateBody(BodyID _bodyId, Vector3 _position);
 };

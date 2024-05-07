@@ -126,19 +126,18 @@ void DisplayType::DisplayEnum(MemberT* _class)
 {
 	constexpr auto enumName = magic_enum::enum_type_name<MemberT>();
 
-	if (ImGui::BeginCombo("enum class", "My class"))
+	if (ImGui::BeginCombo(enumName.data(), "My Value"))
 	{
 		for (auto name : magic_enum::enum_names<MemberT>())
 		{
-			if (ImGui::Selectable(name), _class)
+			std::string nameStr(name);
+			if (ImGui::Selectable(nameStr.c_str(), _class))
 			{
+				*_class = magic_enum::enum_cast<MemberT>(name).value_or(*_class);
 			}
-
 		}
 		ImGui::EndCombo();
 	}
-	ImGui::ShowDemoWindow();
-
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>

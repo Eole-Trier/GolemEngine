@@ -206,8 +206,9 @@ void PhysicSystem::ActivateBody(BodyID _bodyId)
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.ActivateBody(_bodyId);
 }
-void PhysicSystem::DesactivateBody(BodyID _bodyId)
+void PhysicSystem::DesactivateBody(BodyID _bodyId, Vector3 _position)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.DeactivateBody(_bodyId);
+	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
 }

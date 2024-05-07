@@ -1,5 +1,6 @@
 #include "Components/Physic/collider.h"
 #include "Physic/physicSystem.h"
+#include "Core/gameobject.h"
 
 Collider::Collider()
 {
@@ -40,6 +41,6 @@ void Collider::Update()
 	}
 	else
 	{
-		PhysicSystem::DesactivateBody(id);
+		PhysicSystem::DesactivateBody(id, owner->transform->localPosition);
 	}
 }
