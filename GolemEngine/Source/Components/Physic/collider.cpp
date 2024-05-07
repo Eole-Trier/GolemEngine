@@ -41,6 +41,16 @@ void Collider::Update()
 	}
 	else
 	{
-		PhysicSystem::DesactivateBody(id, owner->transform->localPosition);
+		PhysicSystem::DeactivateBody(id, owner->transform->localPosition);
+	}
+
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	if (bodyInterface.IsActive(id))
+	{
+		RVec3 position = bodyInterface.GetPosition(id);
+		Quat rotation = bodyInterface.GetRotation(id);
+		owner->transform->localPosition = PhysicSystem::ToVector3(position);
+		owner->transform->rotation = Vector3::QuaternionToEuler(PhysicSystem::ToQuaternion(rotation));
 	}
 }

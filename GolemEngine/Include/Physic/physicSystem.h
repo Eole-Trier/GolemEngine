@@ -52,15 +52,19 @@ public:
 
 	static void Update();
 
-	static BodyID CreateSphereCollider(Vector3 _position, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
-	static BodyID CreateBoxCollider(Vector3 _position, Vector3 _size, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
-	static void AddForce(BodyID _bodyId, Vector3 _force);
 
 	static void MakeBodyStatic(BodyID _bodyId);
 	static void MakeBodyDynamic(BodyID _bodyId);
 	static void MakeBodyKinematic(BodyID _bodyId);
 
 	static void ActivateBody(BodyID _bodyId);
-	static void DesactivateBody(BodyID _bodyId, Vector3 _position);
+	static void DeactivateBody(BodyID _bodyId, Vector3 _position);
+
+	static void AddForce(BodyID _bodyId, Vector3 _force);
+
+	static void SetSphereShape(BodyID _bodyId, float _radius);
+	static void SetBoxShape(BodyID _bodyId, Vector3 _size);
 };

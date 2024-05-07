@@ -31,5 +31,5 @@ public:
 
 REFL_AUTO(
 	type(SphereCollider, bases<Collider>),
-	field(m_radius, Range(0, 100))
+	field(m_radius, Range(0.f, 100))
 )

@@ -27,22 +27,13 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Begin()
 {
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-
-	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, m_radius);
-	
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_radius);
 }
 
 void SphereCollider::Update()
 {
 	Collider::Update();
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-	
-
-	if (body_interface.IsActive(id))
-	{
-		RVec3 position = body_interface.GetCenterOfMassPosition(id);
-		owner->transform->localPosition = PhysicSystem::ToVector3(position);
-	}
-
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	PhysicSystem::SetSphereShape(id, m_radius);
 }

@@ -103,7 +103,12 @@ void DisplayType::BasicsFields(MemberT* _class)
 	}
 	else if constexpr (std::is_same_v<Vector3, MemberT>)
 	{
-		ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, .1f);
+		if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
+		{
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, refl::descriptor::get_attribute<Range>(DescriptorT{}).min, refl::descriptor::get_attribute<Range>(DescriptorT{}).max, .1f);
+		}
+		else
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, .1f);
 	}
 	else if constexpr (std::is_same_v<Vector4, MemberT>)
 	{
@@ -126,7 +131,9 @@ void DisplayType::DisplayEnum(MemberT* _class)
 {
 	constexpr auto enumName = magic_enum::enum_type_name<MemberT>();
 
-	if (ImGui::BeginCombo(enumName.data(), "My Value"))
+	auto name = magic_enum::enum_name(*_class);
+	std::string nameStr(name);
+	if (ImGui::BeginCombo(enumName.data(), nameStr.c_str()))
 	{
 		for (auto name : magic_enum::enum_names<MemberT>())
 		{

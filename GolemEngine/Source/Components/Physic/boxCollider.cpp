@@ -23,17 +23,14 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::Begin()
 {
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, m_size);
+	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_size);
 }
 
 void BoxCollider::Update()
 {
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-	if (body_interface.IsActive(id))
-	{
-		RVec3 position = body_interface.GetCenterOfMassPosition(id);
-		owner->transform->localPosition = PhysicSystem::ToVector3(position);
-	}
+	Collider::Update();
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	PhysicSystem::SetBoxShape(id, m_size);
 }

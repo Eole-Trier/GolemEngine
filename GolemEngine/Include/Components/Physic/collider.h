@@ -29,6 +29,7 @@ public:
 	virtual void Update() override;
 
 	virtual void ToJson(json& j) const {}
+
 	friend refl_impl::metadata::type_info__<Collider>; // needed to reflect private members
 };
 

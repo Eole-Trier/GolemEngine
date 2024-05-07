@@ -31,5 +31,5 @@ public:
 
 REFL_AUTO(
 	type(BoxCollider, bases<Collider>),
-	field(m_size)
+	field(m_size, Range(1.f, 100.f))
 )
