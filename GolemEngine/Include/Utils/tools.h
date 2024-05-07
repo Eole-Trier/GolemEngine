@@ -6,7 +6,10 @@
 
 #include "dll.h"
 
+
 #define print(x) std::cout << x << std::endl
+
+class Scene;
 
 namespace Tools
 {
