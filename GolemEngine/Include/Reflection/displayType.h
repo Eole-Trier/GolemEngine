@@ -105,14 +105,30 @@ void DisplayType::BasicsFields(MemberT* _class)
 	{
 		if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
 		{
-			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, refl::descriptor::get_attribute<Range>(DescriptorT{}).min, refl::descriptor::get_attribute<Range>(DescriptorT{}).max, .1f);
+			auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 3, 0.1f, &range.min, &range.max);
+
+			_class->x = std::clamp(_class->x, range.min, range.max);
+			_class->y = std::clamp(_class->y, range.min, range.max);
+			_class->z = std::clamp(_class->z, range.min, range.max);
 		}
 		else
-			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, .1f);
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x);
 	}
 	else if constexpr (std::is_same_v<Vector4, MemberT>)
 	{
-		ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, .1f);
+		if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
+		{
+			auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 4, 0.1f, nullptr, &range.min, &range.max);
+
+			_class->x = std::clamp(_class->x, range.min, range.max);
+			_class->y = std::clamp(_class->y, range.min, range.max);
+			_class->z = std::clamp(_class->z, range.min, range.max);
+			_class->w = std::clamp(_class->w, range.min, range.max);
+		}
+		else
+			ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x);
 	}
 	ImGui::PopID();
 }
@@ -187,7 +203,11 @@ void DisplayType::DisplayIntOrFloat(MemberT* _member)
 	ImGui::PushID(_member);
 
 	if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
-		ImGui::SliderScalar(DescriptorT::name.c_str(), type, _member, &refl::descriptor::get_attribute<Range>(DescriptorT{}).min, &refl::descriptor::get_attribute<Range>(DescriptorT{}).max);
+	{
+		auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member, 0.1f, &range.min, &range.max);
+		_member->x = std::clamp(_member->x, range.min, range.max);
+	}
 	else
 		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member);
 
