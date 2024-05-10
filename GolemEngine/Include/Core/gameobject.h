@@ -21,6 +21,9 @@ private:
 	size_t m_id;
 	std::vector<Component*> m_components;
 
+protected:
+	bool m_isTerrain = false;
+
 public:
 	Guid guid;
 	std::string name;

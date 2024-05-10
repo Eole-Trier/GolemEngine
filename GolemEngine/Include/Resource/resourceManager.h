@@ -17,10 +17,11 @@ private:
 	static ResourceManager* m_instancePtr;
 
 	static inline std::string m_defaultShader = "default_shader";
-	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
-	static inline std::string m_defaultTerrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
+	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
+	static inline std::string m_defaultTerrainComputeShader = "default_terrain_compute_shader";
+	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
 
 	std::unordered_map<std::string, Resource*> m_resources;
 private:
@@ -31,10 +32,11 @@ public:
 	static void CreateAndLoadResources();
 
 	static std::string GetDefaultShader();
-	static std::string GetDefaultTerrainShader();
-	static std::string GetDefaultTerrainComputeShader();
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
+	static std::string GetDefaultTerrainShader();
+	static std::string GetDefaultTerrainComputeShader();
+	static std::string GetDefaultGridTerrainTexture();
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);

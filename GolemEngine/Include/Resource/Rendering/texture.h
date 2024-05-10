@@ -18,7 +18,7 @@ public:
 
 public :
 	Texture();
-	Texture(unsigned int _width, unsigned int _height, unsigned int _format);
+	Texture(unsigned int _width, unsigned int _height);
 	~Texture();
 
 	void Load(const char* _filename);

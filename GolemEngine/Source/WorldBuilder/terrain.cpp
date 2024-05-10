@@ -12,7 +12,12 @@
 
 Terrain::Terrain(std::string _name, Transform* _transform)
     : GameObject(_name, _transform)
-{}
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    m_texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultGridTerrainTexture());
+
+    m_isTerrain = true;
+}
 
 Terrain::~Terrain()
 {

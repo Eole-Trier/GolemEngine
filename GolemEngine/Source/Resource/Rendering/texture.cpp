@@ -10,7 +10,7 @@ Texture::Texture()
 
 }
 
-Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format) :
+Texture::Texture(unsigned int _width, unsigned int _height) :
     m_width(_width), m_height(_height)
 {
     glGenTextures(1, &id);

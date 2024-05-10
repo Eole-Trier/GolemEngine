@@ -52,7 +52,7 @@ void Viewport::Update()
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
-    Texture pickingTex(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, GL_RED);
+    Texture pickingTex(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
     
     if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
     {

@@ -45,6 +45,9 @@ void ResourceManager::CreateAndLoadResources()
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
 
+    Texture* defaultGridTerrainTexture = resourceManager->Create<Texture>(m_defaultGridTerrainTexture, Tools::FindFile("grid_1.jpg"));
+    defaultGridTerrainTexture->Load(defaultGridTerrainTexture->path.c_str());
+
     Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
     vikingTexture->Load(vikingTexture->path.c_str());
 
@@ -69,6 +72,16 @@ std::string ResourceManager::GetDefaultShader()
     return m_defaultShader;
 }
 
+std::string ResourceManager::GetDefaultTexture()
+{
+    return m_defaultTexture;
+}
+
+std::string ResourceManager::GetDefaultModel()
+{
+    return m_defaultModel;
+}
+
 std::string ResourceManager::GetDefaultTerrainShader()
 {
     return m_defaultTerrainShader;
@@ -79,12 +92,7 @@ std::string ResourceManager::GetDefaultTerrainComputeShader()
     return m_defaultTerrainComputeShader;
 }
 
-std::string ResourceManager::GetDefaultTexture()
+std::string ResourceManager::GetDefaultGridTerrainTexture()
 {
-    return m_defaultTexture;
-}
-
-std::string ResourceManager::GetDefaultModel()
-{
-    return m_defaultModel;
+    return m_defaultGridTerrainTexture;
 }
