@@ -45,7 +45,7 @@ public:
 public:
 	// Create a scene by giving it a name and setting _isEmpty to 0 or 1. 0 means the scene will be a default
 	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
-	Scene(std::string _name, bool _isEmpty);
+	Scene(std::string _name, bool _makeSceneEmpty);
 
 	void InitDefaultScene();
 	void Update(Camera* _camera);

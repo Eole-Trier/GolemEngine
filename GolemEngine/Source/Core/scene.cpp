@@ -23,14 +23,14 @@
 using json = nlohmann::json;
 
 
-Scene::Scene(std::string _name, bool _isEmpty)
+Scene::Scene(std::string _name, bool _makeSceneEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
     
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     
-    if (!_isEmpty)    // If there is already a save of the world, don't init a default scene
+    if (!_makeSceneEmpty)    // If there is already a save of the world, don't init a default scene
     { 
         InitDefaultScene();
     }
