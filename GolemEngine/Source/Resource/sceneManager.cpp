@@ -1,6 +1,5 @@
 #include "Resource/sceneManager.h"
 
-#include <nlohmann/json.hpp>
 #include <fstream>
 
 #include "imgui.h"
@@ -22,8 +21,6 @@
 #include "WorldBuilder/terrain.h"
 #include "WorldBuilder/defaultTerrain.h"
 #include "WorldBuilder/noisemapTerrain.h"
-
-using json = nlohmann::json;
 
 
 void SceneManager::Init()
@@ -97,89 +94,139 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
     
     Scene* scene = new Scene(_sceneName, 1);
     scene->name = jScene["name"];
-    // scene.
-    // Initialize the scene gameObjects corresponding to the json doc
-    for (int i = 0; i < jScene["gameObjects"].size(); i++)
+
+    SetupWorldFromJson(scene, jScene);
+    SetupGameObjectsFromJson(scene, jScene);
+    SetupDefaultTerrainsFromJson(scene, jScene);
+    SetupNoisemapTerrainsFromJson(scene, jScene);
+    
+    m_scenes.push_back(scene);    
+}
+
+void SceneManager::SetupWorldFromJson(Scene* _scene, json _jsonFile)
+{
+    for (int i = 0; i < _jsonFile["gameObjects"].size(); i++)
     {
-        // Check if the gameObject being created is not the World because World is created already on Scene constructor
-        if (jScene["gameObjects"][i]["name"] != "World" && !jScene["gameObjects"][i]["name"].is_null())
+        if (_jsonFile["gameObjects"][i]["name"] == "World")
+        {
+            // Setup guids
+            Guid worldGuid;
+            worldGuid.FromString(_jsonFile["gameObjects"][i]["guid"]);
+            _scene->GetWorld()->guid = worldGuid;
+            Guid worldTransformGuid;
+            worldTransformGuid.FromString(_jsonFile["gameObjects"][i]["components"][0]["data"]["guid"]);
+            _scene->GetWorld()->transform->guid = worldTransformGuid;
+            
+            _scene->GetWorld()->transform->localPosition = _jsonFile["gameObjects"][i]["components"][0]["data"]["localPosition"];
+            _scene->GetWorld()->transform->rotation = _jsonFile["gameObjects"][i]["components"][0]["data"]["rotation"];
+            _scene->GetWorld()->transform->scaling = _jsonFile["gameObjects"][i]["components"][0]["data"]["scaling"];
+
+            // Setup world directionalLight
+            if (_jsonFile["gameObjects"][i]["components"].size() > 1)
+            {
+                for (int j = 0; j < _jsonFile["gameObjects"][j]["components"].size(); j++)
+                {
+                    if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "directionalLight")
+                    {
+                        _scene->GetWorld()->AddComponent<DirectionalLight>();
+                        _scene->GetWorld()->GetComponent<DirectionalLight>()->id = _jsonFile["gameObjects"][i]["components"][j]["data"]["id"];
+                        _scene->GetWorld()->GetComponent<DirectionalLight>()->diffuseColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                        _scene->GetWorld()->GetComponent<DirectionalLight>()->ambientColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                        _scene->GetWorld()->GetComponent<DirectionalLight>()->specularColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                        _scene->GetWorld()->GetComponent<DirectionalLight>()->direction = _jsonFile["gameObjects"][i]["components"][j]["data"]["direction"];
+                    }
+                }
+            }
+        }
+    }
+}
+
+void SceneManager::SetupGameObjectsFromJson(Scene* _scene, json _jsonFile)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    
+    for (int i = 0; i < _jsonFile["gameObjecs"].size(); i++)
+    {
+        if (_jsonFile["gameObjects"][i]["name"] != "World" &&    // Check if the gameObject being created is not the World because World is created already on Scene constructor
+            !_jsonFile["gameObjects"][i]["name"].is_null() &&
+            _jsonFile["gameObjects"][i]["isTerrain"] == false)
         {
             GameObject* gameObject = new GameObject();
-            gameObject->name = jScene["gameObjects"][i]["name"];
+            gameObject->name = _jsonFile["gameObjects"][i]["name"];
             Guid gameObjectGuid;
-            gameObjectGuid.FromString(jScene["gameObjects"][i]["guid"]);
+            gameObjectGuid.FromString(_jsonFile["gameObjects"][i]["guid"]);
             gameObject->guid = gameObjectGuid;
             
             // Setup components
-            for (int j = 0; j < jScene["gameObjects"][i]["components"].size(); j++)
+            for (int j = 0; j < _jsonFile["gameObjects"][i]["components"].size(); j++)
             {
                 // Setup each component
                 
                 // Setup transform component
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "transform")
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "transform")
                 {
                     Guid gameObjectGuid;
-                    gameObjectGuid.FromString(jScene["gameObjects"][i]["components"][j]["data"]["guid"]);
+                    gameObjectGuid.FromString(_jsonFile["gameObjects"][i]["components"][j]["data"]["guid"]);
                     gameObject->transform->guid = gameObjectGuid;
-                    gameObject->transform->localPosition = jScene["gameObjects"][i]["components"][j]["data"]["localPosition"];
-                    gameObject->transform->rotation = jScene["gameObjects"][i]["components"][j]["data"]["rotation"];
-                    gameObject->transform->scaling = jScene["gameObjects"][i]["components"][j]["data"]["scaling"];
+                    gameObject->transform->localPosition = _jsonFile["gameObjects"][i]["components"][j]["data"]["localPosition"];
+                    gameObject->transform->rotation = _jsonFile["gameObjects"][i]["components"][j]["data"]["rotation"];
+                    gameObject->transform->scaling = _jsonFile["gameObjects"][i]["components"][j]["data"]["scaling"];
                 }
                 // Setup directionalLight component
-                // std::cout << jScene["gameObjects"][i]["components"][j]["name"] << std::endl;
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "directionalLight")
+                // std::cout << _jsonFile["gameObjects"][i]["components"][j]["name"] << std::endl;
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "directionalLight")
                 {
                     gameObject->AddComponent<DirectionalLight>();
-                    gameObject->GetComponent<DirectionalLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
-                    gameObject->GetComponent<DirectionalLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
-                    gameObject->GetComponent<DirectionalLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
-                    gameObject->GetComponent<DirectionalLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
-                    gameObject->GetComponent<DirectionalLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
+                    gameObject->GetComponent<DirectionalLight>()->id = _jsonFile["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<DirectionalLight>()->diffuseColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<DirectionalLight>()->ambientColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<DirectionalLight>()->specularColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<DirectionalLight>()->direction = _jsonFile["gameObjects"][i]["components"][j]["data"]["direction"];
                 }
                 
                 // Setup pointLight component
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "pointLight")
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "pointLight")
                 {
                     gameObject->AddComponent<PointLight>();
-                    gameObject->GetComponent<PointLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
-                    gameObject->GetComponent<PointLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
-                    gameObject->GetComponent<PointLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
-                    gameObject->GetComponent<PointLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
-                    gameObject->GetComponent<PointLight>()->position = jScene["gameObjects"][i]["components"][j]["data"]["position"];
-                    gameObject->GetComponent<PointLight>()->constant = jScene["gameObjects"][i]["components"][j]["data"]["constant"];
-                    gameObject->GetComponent<PointLight>()->linear = jScene["gameObjects"][i]["components"][j]["data"]["linear"];
-                    gameObject->GetComponent<PointLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
+                    gameObject->GetComponent<PointLight>()->id = _jsonFile["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<PointLight>()->diffuseColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<PointLight>()->ambientColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<PointLight>()->specularColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<PointLight>()->position = _jsonFile["gameObjects"][i]["components"][j]["data"]["position"];
+                    gameObject->GetComponent<PointLight>()->constant = _jsonFile["gameObjects"][i]["components"][j]["data"]["constant"];
+                    gameObject->GetComponent<PointLight>()->linear = _jsonFile["gameObjects"][i]["components"][j]["data"]["linear"];
+                    gameObject->GetComponent<PointLight>()->quadratic = _jsonFile["gameObjects"][i]["components"][j]["data"]["quadratic"];
                 }
                 
                 // Setup spotLight component
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "spotLight")
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "spotLight")
                 {
                     gameObject->AddComponent<SpotLight>();
-                    gameObject->GetComponent<SpotLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
-                    gameObject->GetComponent<SpotLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
-                    gameObject->GetComponent<SpotLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
-                    gameObject->GetComponent<SpotLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
-                    gameObject->GetComponent<SpotLight>()->position = jScene["gameObjects"][i]["components"][j]["data"]["position"];
-                    gameObject->GetComponent<SpotLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
-                    gameObject->GetComponent<SpotLight>()->constant = jScene["gameObjects"][i]["components"][j]["data"]["constant"];
-                    gameObject->GetComponent<SpotLight>()->linear = jScene["gameObjects"][i]["components"][j]["data"]["linear"];
-                    gameObject->GetComponent<SpotLight>()->quadratic = jScene["gameObjects"][i]["components"][j]["data"]["quadratic"];
-                    gameObject->GetComponent<SpotLight>()->cutOff = jScene["gameObjects"][i]["components"][j]["data"]["cutOff"];
-                    gameObject->GetComponent<SpotLight>()->outerCutOff = jScene["gameObjects"][i]["components"][j]["data"]["outerCutOff"];
+                    gameObject->GetComponent<SpotLight>()->id = _jsonFile["gameObjects"][i]["components"][j]["data"]["id"];
+                    gameObject->GetComponent<SpotLight>()->diffuseColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
+                    gameObject->GetComponent<SpotLight>()->ambientColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["ambientColor"];
+                    gameObject->GetComponent<SpotLight>()->specularColor = _jsonFile["gameObjects"][i]["components"][j]["data"]["specularColor"];
+                    gameObject->GetComponent<SpotLight>()->position = _jsonFile["gameObjects"][i]["components"][j]["data"]["position"];
+                    gameObject->GetComponent<SpotLight>()->direction = _jsonFile["gameObjects"][i]["components"][j]["data"]["direction"];
+                    gameObject->GetComponent<SpotLight>()->constant = _jsonFile["gameObjects"][i]["components"][j]["data"]["constant"];
+                    gameObject->GetComponent<SpotLight>()->linear = _jsonFile["gameObjects"][i]["components"][j]["data"]["linear"];
+                    gameObject->GetComponent<SpotLight>()->quadratic = _jsonFile["gameObjects"][i]["components"][j]["data"]["quadratic"];
+                    gameObject->GetComponent<SpotLight>()->cutOff = _jsonFile["gameObjects"][i]["components"][j]["data"]["cutOff"];
+                    gameObject->GetComponent<SpotLight>()->outerCutOff = _jsonFile["gameObjects"][i]["components"][j]["data"]["outerCutOff"];
                 }
 
                 // Setup audio component
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "audio")
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "audio")
                 {
                     gameObject->AddComponent<Audio>();
-                    gameObject->GetComponent<Audio>()->musicPath = Tools::GetPathFromJsonString(jScene["gameObjects"][i]["components"][j]["data"]["musicPath"]);
-                    gameObject->GetComponent<Audio>()->SetVolume(jScene["gameObjects"][i]["components"][j]["data"]["volume"]);
-                    gameObject->GetComponent<Audio>()->SetLoop(jScene["gameObjects"][i]["components"][j]["data"]["isLooping"]);
-                    gameObject->GetComponent<Audio>()->StopMusic(jScene["gameObjects"][i]["components"][j]["data"]["isPlaying"]);
+                    gameObject->GetComponent<Audio>()->musicPath = Tools::GetPathFromJsonString(_jsonFile["gameObjects"][i]["components"][j]["data"]["musicPath"]);
+                    gameObject->GetComponent<Audio>()->SetVolume(_jsonFile["gameObjects"][i]["components"][j]["data"]["volume"]);
+                    gameObject->GetComponent<Audio>()->SetLoop(_jsonFile["gameObjects"][i]["components"][j]["data"]["isLooping"]);
+                    gameObject->GetComponent<Audio>()->StopMusic(_jsonFile["gameObjects"][i]["components"][j]["data"]["isPlaying"]);
                 }
 
                 // Setup meshRenderer component
-                if (jScene["gameObjects"][i]["components"][j]["name"] == "meshRenderer")
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "meshRenderer")
                 {
                     Shader* shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
                     Texture* texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
@@ -188,67 +235,88 @@ void SceneManager::CreateSceneFromFile(std::string _sceneName)
                 }
             }
         }
-        else if (jScene["gameObjects"][i]["name"] == "World")    // Setup World seperatly
-        {
-            // Setup guids
-            Guid worldGuid;
-            worldGuid.FromString(jScene["gameObjects"][i]["guid"]);
-            scene->GetWorld()->guid = worldGuid;
-            Guid worldTransformGuid;
-            worldTransformGuid.FromString(jScene["gameObjects"][i]["components"][0]["data"]["guid"]);
-            scene->GetWorld()->transform->guid = worldTransformGuid;
-            
-            scene->GetWorld()->transform->localPosition = jScene["gameObjects"][i]["components"][0]["data"]["localPosition"];
-            scene->GetWorld()->transform->rotation = jScene["gameObjects"][i]["components"][0]["data"]["rotation"];
-            scene->GetWorld()->transform->scaling = jScene["gameObjects"][i]["components"][0]["data"]["scaling"];
+    }
+}
 
-            // Setup world directionalLight
-            if (jScene["gameObjects"][i]["components"].size() > 1)
+void SceneManager::SetupDefaultTerrainsFromJson(Scene* _scene, json _jsonFile)
+{
+    for (int i = 0; i < _jsonFile["gameObjects"].size(); i++)
+    {
+        if (_jsonFile["gameObjects"][i]["name"] != "World" &&
+            !_jsonFile["gameObjects"][i]["name"].is_null() &&
+            _jsonFile["gameObjects"][i]["isTerrain"] == true &&
+            _jsonFile["gameObjects"][i]["terrainData"]["noisemapPath"] == "")
+        {
+            std::string name = _jsonFile["gameObjects"][i]["name"];
+            Guid terrainGuid;
+            terrainGuid.FromString(_jsonFile["gameObjects"][i]["guid"]);
+
+            Guid terrainTranformGuid;
+            Vector3 localPosition;
+            Vector3 rotation;
+            Vector3 scaling;
+
+            for (int j = 0; j < _jsonFile["gameObjects"][i]["components"].size(); j++)
             {
-                for (int j = 0; j < jScene["gameObjects"][j]["components"].size(); j++)
+                // Setup transform
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "transform")
                 {
-                    if (jScene["gameObjects"][i]["components"][j]["name"] == "directionalLight")
-                    {
-                        scene->GetWorld()->AddComponent<DirectionalLight>();
-                        scene->GetWorld()->GetComponent<DirectionalLight>()->id = jScene["gameObjects"][i]["components"][j]["data"]["id"];
-                        scene->GetWorld()->GetComponent<DirectionalLight>()->diffuseColor = jScene["gameObjects"][i]["components"][j]["data"]["diffuseColor"];
-                        scene->GetWorld()->GetComponent<DirectionalLight>()->ambientColor = jScene["gameObjects"][i]["components"][j]["data"]["ambientColor"];
-                        scene->GetWorld()->GetComponent<DirectionalLight>()->specularColor = jScene["gameObjects"][i]["components"][j]["data"]["specularColor"];
-                        scene->GetWorld()->GetComponent<DirectionalLight>()->direction = jScene["gameObjects"][i]["components"][j]["data"]["direction"];
-                    }
+                    terrainTranformGuid.FromString(_jsonFile["gameObjects"][i]["components"][j]["data"]["guid"]);
+                    localPosition = _jsonFile["gameObjects"][i]["components"][j]["data"]["localPosition"];
+                    rotation = _jsonFile["gameObjects"][i]["components"][j]["data"]["rotation"];
+                    scaling = _jsonFile["gameObjects"][i]["components"][j]["data"]["scaling"];
                 }
             }
+            Transform* transform = new Transform();
+            transform->localPosition = localPosition;
+            transform->rotation = rotation;
+            transform->scaling = scaling;
+            DefaultTerrain* defaultTerrain = new DefaultTerrain(name, transform);
+            defaultTerrain->xResolution = _jsonFile["gameObjects"][i]["terrainData"]["xResolution"];
+            defaultTerrain->zResolution = _jsonFile["gameObjects"][i]["terrainData"]["zResolution"];
         }
     }
+}
 
-    for (int i = 0; i < jScene["terrains"].size(); i++)
+void SceneManager::SetupNoisemapTerrainsFromJson(Scene* _scene, json _jsonFile)
+{
+    for (int i = 0; i < _jsonFile["gameObjects"].size(); i++)
     {
-        // If the terrain is a default terrain
-        if (Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]) == "")
+        if (_jsonFile["gameObjects"][i]["name"] != "World" &&
+            !_jsonFile["gameObjects"][i]["name"].is_null() &&
+            _jsonFile["gameObjects"][i]["isTerrain"] == true &&
+            _jsonFile["gameObjects"][i]["terrainData"]["noisemapPath"] != "")
         {
-            std::string name = "terraind";
+            std::string name = _jsonFile["gameObjects"][i]["name"];
+            Guid terrainGuid;
+            terrainGuid.FromString(_jsonFile["gameObjects"][i]["guid"]);
+
+            Guid terrainTranformGuid;
+            Vector3 localPosition;
+            Vector3 rotation;
+            Vector3 scaling;
+
+            for (int j = 0; j < _jsonFile["gameObjects"][i]["components"].size(); j++)
+            {
+                // Setup transform
+                if (_jsonFile["gameObjects"][i]["components"][j]["name"] == "transform")
+                {
+                    terrainTranformGuid.FromString(_jsonFile["gameObjects"][i]["components"][j]["data"]["guid"]);
+                    localPosition = _jsonFile["gameObjects"][i]["components"][j]["data"]["localPosition"];
+                    rotation = _jsonFile["gameObjects"][i]["components"][j]["data"]["rotation"];
+                    scaling = _jsonFile["gameObjects"][i]["components"][j]["data"]["scaling"];
+                }
+            }
             Transform* transform = new Transform();
-            DefaultTerrain* terrain = new DefaultTerrain(name, transform);
-            terrain->Init(
-                jScene["terrains"][i]["xResolution"],
-                jScene["terrains"][i]["zResolution"]
-            );
-            CreateTerrainFromFile(terrain, scene, jScene, i);
-        }
-        // If the terrain is a noisemap terrain
-        else
-        {
-            std::string name = "terrainn";
-            Transform* transform = new Transform();
-            NoisemapTerrain* terrain = new NoisemapTerrain(name, transform);
-            terrain->Init(
-                Tools::GetPathFromJsonString(jScene["terrains"][i]["noisemapPath"]).c_str()
-            );
-            CreateTerrainFromFile(terrain, scene, jScene, i);
+            transform->guid = terrainTranformGuid;
+            transform->localPosition = localPosition;
+            transform->rotation = rotation;
+            transform->scaling = scaling;
+            NoisemapTerrain* noisemapTerrain = new NoisemapTerrain(name, transform);
+            noisemapTerrain->xResolution = _jsonFile["gameObjects"][i]["terrainData"]["xResolution"];
+            noisemapTerrain->zResolution = _jsonFile["gameObjects"][i]["terrainData"]["zResolution"];
         }
     }
-    
-    m_scenes.push_back(scene);    
 }
 
 Scene* SceneManager::GetCurrentScene()

@@ -17,7 +17,6 @@ class DirectionalLight;
 class PointLight;
 class SpotLight;
 class Shader;
-class GameObject;
 class Mesh;
 
 
@@ -98,17 +97,6 @@ public:
 				jGameObjects.push_back(jGameObjectPtr);
 			}
 			_j["gameObjects"] = jGameObjects;
-		}
-		if (!terrains.empty())
-		{
-			json jTerrains;
-			for (int i = 0; i < terrains.size(); i++)
-			{
-				json jTerrainPtr;
-				terrains[i]->ToJson(jTerrainPtr);
-				jTerrains.push_back(jTerrainPtr);
-			}
-			_j["terrains"] = jTerrains;
 		}
 	}
 };

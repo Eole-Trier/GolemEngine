@@ -5,25 +5,25 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.600000023841858,
+              "y": 0.8999999761581421,
+              "z": 0.800000011920929
             },
-            "guid": "ca6a292e-91bf-dd20-b532-9e39faf7feab",
+            "guid": "80f021e2-bc15-9c6b-4398-4bceabbc27e3",
             "localPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.600000023841858,
+              "y": 0.8999999761581421,
+              "z": 0.800000011920929
             },
             "rotation": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.2999999523162842,
+              "y": 4.400000095367432,
+              "z": 3.0
             },
             "scaling": {
-              "x": 1.0,
-              "y": 1.0,
-              "z": 1.0
+              "x": 1.7000000476837158,
+              "y": 6.400000095367432,
+              "z": 1.899999976158142
             }
           },
           "name": "transform"
@@ -58,7 +58,8 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "fa2a5acc-4025-e5f9-5f38-5d2c1cb88019",
+      "guid": "d5b9b6aa-6734-f83c-5974-105d7a83ee38",
+      "isTerrain": false,
       "name": "World"
     },
     {
@@ -66,11 +67,11 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 1.600000023841858,
+              "y": 0.8999999761581421,
+              "z": 0.800000011920929
             },
-            "guid": "9151f8a8-25c6-cbe1-7b83-b16cdd706bf1",
+            "guid": "db5cca29-48ce-a2ac-58a2-79a59ea885a9",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -91,14 +92,15 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Meshes\\viking_room.obj",
+            "modelPath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Meshes\\viking_room.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
+            "texturePath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "138b82c5-747e-e615-e88f-a160eb7aa54b",
+      "guid": "6de5cef3-ba72-7279-3923-16a305eea9e3",
+      "isTerrain": false,
       "name": "viking"
     },
     {
@@ -106,11 +108,11 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "x": 6.678000450134277,
+              "y": 1.1661267280578613,
+              "z": 0.40873289108276367
             },
-            "guid": "6e3f4314-1bdb-af76-cdca-4061ef44883a",
+            "guid": "a5701c2f-a9e5-6754-a073-f9e0dee2239b",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -131,17 +133,18 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
+            "modelPath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
+            "texturePath": "C:\\Users\\Maxim\\Dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "6946cbe9-5827-eb93-cf77-7d1a8cc255fd",
+      "guid": "ad38e409-c9a6-daac-7bfd-c937a695acc7",
+      "isTerrain": false,
       "name": "ball_bald"
     }
   ],
-  "guid": "ffc091b1-d707-e3e0-2239-4e32e7c05d57",
+  "guid": "c94a68e3-2633-1fd2-d2bd-5dd62b198269",
   "name": "scene_0"
 }

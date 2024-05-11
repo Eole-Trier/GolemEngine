@@ -2,6 +2,7 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
+#include "WorldBuilder/terrain.h"
 
 
 GameObject::GameObject()
@@ -71,3 +72,32 @@ void GameObject::DeleteAllComponents()
 	}
 }
 
+void GameObject::ToJson(json& _j) const
+{
+	_j = json
+	{
+		{"name", name},
+		{"guid", guid.ToString()},
+		{"isTerrain", m_isTerrain}
+	};
+	if (!m_components.empty())
+	{
+		json jComponents;
+		for (int i = 0; i < m_components.size(); i++)
+		{
+			json jComponentPtr;
+			m_components[i]->ToJson(jComponentPtr);
+			jComponents.push_back(jComponentPtr);
+		}
+		
+		_j["components"] = jComponents;
+	}
+	
+	const Terrain* terrainPtr = dynamic_cast<const Terrain*>(this);
+	if (terrainPtr)
+	{
+		json jTerrainData;
+		terrainPtr->ToJson(jTerrainData);
+		_j["terrainData"] = jTerrainData;
+	}
+}

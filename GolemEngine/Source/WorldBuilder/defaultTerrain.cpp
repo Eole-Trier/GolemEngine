@@ -9,8 +9,8 @@ DefaultTerrain::DefaultTerrain(std::string _name, Transform* _transform)
 
 void DefaultTerrain::Init(int _xResolution, int _zResolution)
 {
-    m_xResolution = _xResolution;
-    m_zResolution = _zResolution;
+    xResolution = _xResolution;
+    zResolution = _zResolution;
     
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -18,34 +18,34 @@ void DefaultTerrain::Init(int _xResolution, int _zResolution)
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
     
     // Make a grid of vertices using the terrain's dimensions
-    for (int i = 0; i < m_xResolution; i++)
+    for (int i = 0; i < xResolution; i++)
     {
-        for (int j = 0; j < m_zResolution; j++)
+        for (int j = 0; j < zResolution; j++)
         {
             // Set the vertex position
             Vertex vertex;
-            vertex.position.x = (i / (float)m_xResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.position.z = (j / (float)m_zResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.x = (i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.z = (j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.y = 0.0f;
             // Set the vertex texture postion
-            vertex.textureCoords.x = (j / (float)m_zResolution);
-            vertex.textureCoords.y = 1.0f - (i / (float)m_xResolution);
+            vertex.textureCoords.x = (j / (float)zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
             
             m_vertices.push_back(vertex);
         }
     }
     // Setup indices
-    for (int i = 0; i < m_xResolution; i++)
+    for (int i = 0; i < xResolution; i++)
     {
-        for (int j = 0; j < m_zResolution - 1; j++)    // - 1 because of range error
+        for (int j = 0; j < zResolution - 1; j++)    // - 1 because of range error
         {
-            m_indices.push_back(i * m_zResolution + j);
-            m_indices.push_back((i + 1) * m_zResolution + j);
-            m_indices.push_back(i * m_zResolution + j + 1);
+            m_indices.push_back(i * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back(i * zResolution + j + 1);
 
-            m_indices.push_back(i * m_zResolution + j + 1);
-            m_indices.push_back((i + 1) * m_zResolution + j);
-            m_indices.push_back((i + 1) * m_zResolution + j + 1);
+            m_indices.push_back(i * zResolution + j + 1);
+            m_indices.push_back((i + 1) * zResolution + j);
+            m_indices.push_back((i + 1) * zResolution + j + 1);
         }
     }
 

@@ -78,11 +78,11 @@ void Terrain::Draw(Camera* _camera)
     switch (ViewportTools::currentViewMode)
     {
     case DEFAULT:
-        glDrawElements(GL_TRIANGLES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
         break;
 
     case WIREFRAME:
-        glDrawElements(GL_LINES, (m_xResolution - 1) * (m_zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_LINES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
         break;
     }
 }

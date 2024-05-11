@@ -29,10 +29,8 @@ public:
     {
         _j = json
         {
-            {"name", name},
-            {"guid", guid.ToString()},
-            {"xResolution", m_xResolution},
-            {"zResolution", m_zResolution},
+            {"xResolution", xResolution},
+            {"zResolution", zResolution},
             {"noisemapPath", m_noisemapPath}
         };
     }

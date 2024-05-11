@@ -212,6 +212,7 @@
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
+    <ClCompile Include="tt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />

@@ -58,27 +58,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& j) const
-	{
-		j = json
-		{
-			{"name", name},
-			{"guid", guid.ToString()}
-		};
-		if (!m_components.empty())
-		{
-			json jComponents;
-			for (int i = 0; i < m_components.size(); i++)
-			{
-				json jComponentPtr;
-				m_components[i]->ToJson(jComponentPtr);
-				jComponents.push_back(jComponentPtr);
-			}
-			
-			j["components"] = jComponents;
-		}
-	}
-
+	void ToJson(json& _j) const;
 };
 
 template<typename TypeT>
