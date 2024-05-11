@@ -145,7 +145,93 @@ void SceneManager::SetupWorldFromJson(Scene* _scene, json _jScene, int _i)
 
 void SceneManager::SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i)
 {
-  
+    // Check if the GameObject isn't a terrain or world. Null condition is added because of a bug discovered
+    if (_jScene["gameObjects"][_i]["name"].is_null() ||
+        _jScene["gameObjects"][_i]["name"] == "World" ||
+        _jScene["gameObjects"][_i]["isTerrain"] == true)
+    {
+        return;
+    }
+
+    // Setup name
+    GameObject* gameObject = new GameObject();
+    gameObject->name = _jScene["gameObjects"][_i]["name"];
+    // Setup guid
+    Guid gameObjectGuid;
+    gameObjectGuid.FromString(_jScene["gameObjects"][_i]["guid"]);
+    gameObject->guid = gameObjectGuid;
+
+    // Setup components
+    for (int j = 0; j < _jScene["gameObjects"][_i]["components"].size(); j++)
+    {
+        // Setup transform component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "transform")
+        {
+            Guid transformGuid;
+            transformGuid.FromString(_jScene["gameObjects"][_i]["components"][j]["data"]["guid"]);
+            gameObject->transform->guid = transformGuid;
+            gameObject->transform->localPosition = _jScene["gameObjects"][_i]["components"][j]["data"]["localPosition"];
+            gameObject->transform->rotation = _jScene["gameObjects"][_i]["components"][j]["data"]["rotation"];
+            gameObject->transform->scaling = _jScene["gameObjects"][_i]["components"][j]["data"]["scaling"];
+        }
+        // Setup directionalLight component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "directionalLight")
+        {
+            gameObject->AddComponent<DirectionalLight>();
+            gameObject->GetComponent<DirectionalLight>()->id = _jScene["gameObjects"][_i]["components"][j]["data"]["id"];
+            gameObject->GetComponent<DirectionalLight>()->diffuseColor = _jScene["gameObjects"][_i]["components"][j]["data"]["diffuseColor"];
+            gameObject->GetComponent<DirectionalLight>()->ambientColor = _jScene["gameObjects"][_i]["components"][j]["data"]["ambientColor"];
+            gameObject->GetComponent<DirectionalLight>()->specularColor = _jScene["gameObjects"][_i]["components"][j]["data"]["specularColor"];
+            gameObject->GetComponent<DirectionalLight>()->direction = _jScene["gameObjects"][_i]["components"][j]["data"]["direction"];
+        }
+        // Setup pointLight component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "pointLight")
+        {
+            gameObject->AddComponent<PointLight>();
+            gameObject->GetComponent<PointLight>()->id = _jScene["gameObjects"][_i]["components"][j]["data"]["id"];
+            gameObject->GetComponent<PointLight>()->diffuseColor = _jScene["gameObjects"][_i]["components"][j]["data"]["diffuseColor"];
+            gameObject->GetComponent<PointLight>()->ambientColor = _jScene["gameObjects"][_i]["components"][j]["data"]["ambientColor"];
+            gameObject->GetComponent<PointLight>()->specularColor = _jScene["gameObjects"][_i]["components"][j]["data"]["specularColor"];
+            gameObject->GetComponent<PointLight>()->position = _jScene["gameObjects"][_i]["components"][j]["data"]["position"];
+            gameObject->GetComponent<PointLight>()->constant = _jScene["gameObjects"][_i]["components"][j]["data"]["constant"];
+            gameObject->GetComponent<PointLight>()->linear = _jScene["gameObjects"][_i]["components"][j]["data"]["linear"];
+            gameObject->GetComponent<PointLight>()->quadratic = _jScene["gameObjects"][_i]["components"][j]["data"]["quadratic"];
+        }
+        // Setup spotLight component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "spotLight")
+        {
+            gameObject->AddComponent<SpotLight>();
+            gameObject->GetComponent<SpotLight>()->id = _jScene["gameObjects"][_i]["components"][j]["data"]["id"];
+            gameObject->GetComponent<SpotLight>()->diffuseColor = _jScene["gameObjects"][_i]["components"][j]["data"]["diffuseColor"];
+            gameObject->GetComponent<SpotLight>()->ambientColor = _jScene["gameObjects"][_i]["components"][j]["data"]["ambientColor"];
+            gameObject->GetComponent<SpotLight>()->specularColor = _jScene["gameObjects"][_i]["components"][j]["data"]["specularColor"];
+            gameObject->GetComponent<SpotLight>()->position = _jScene["gameObjects"][_i]["components"][j]["data"]["position"];
+            gameObject->GetComponent<SpotLight>()->direction = _jScene["gameObjects"][_i]["components"][j]["data"]["direction"];
+            gameObject->GetComponent<SpotLight>()->constant = _jScene["gameObjects"][_i]["components"][j]["data"]["constant"];
+            gameObject->GetComponent<SpotLight>()->linear = _jScene["gameObjects"][_i]["components"][j]["data"]["linear"];
+            gameObject->GetComponent<SpotLight>()->quadratic = _jScene["gameObjects"][_i]["components"][j]["data"]["quadratic"];
+            gameObject->GetComponent<SpotLight>()->cutOff = _jScene["gameObjects"][_i]["components"][j]["data"]["cutOff"];
+            gameObject->GetComponent<SpotLight>()->outerCutOff = _jScene["gameObjects"][_i]["components"][j]["data"]["outerCutOff"];
+        }
+        // Setup audio component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "audio")
+        {
+            gameObject->AddComponent<Audio>();
+            gameObject->GetComponent<Audio>()->musicPath = Tools::GetPathFromJsonString(_jScene["gameObjects"][_i]["components"][j]["data"]["musicPath"]);
+            gameObject->GetComponent<Audio>()->SetVolume(_jScene["gameObjects"][_i]["components"][j]["data"]["volume"]);
+            gameObject->GetComponent<Audio>()->SetLoop(_jScene["gameObjects"][_i]["components"][j]["data"]["isLooping"]);
+            gameObject->GetComponent<Audio>()->StopMusic(_jScene["gameObjects"][_i]["components"][j]["data"]["isPlaying"]);
+        }
+        // Setup meshRenderer component
+        if (_jScene["gameObjects"][_i]["components"][j]["name"] == "meshRenderer")
+        {
+            ResourceManager* resourceManager = ResourceManager::GetInstance();
+            Shader* shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+            Texture* texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
+            Model* model = resourceManager->Get<Model>(ResourceManager::GetDefaultModel());
+            gameObject->AddComponent(new MeshRenderer(new Mesh(model, texture, shader)));
+        }
+    }
 }
 
 void SceneManager::SetupDefaultTerrainsFromJson(Scene* _scene, json _jScene, int _i)
