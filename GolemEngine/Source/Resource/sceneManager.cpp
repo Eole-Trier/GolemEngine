@@ -236,12 +236,79 @@ void SceneManager::SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i)
 
 void SceneManager::SetupDefaultTerrainsFromJson(Scene* _scene, json _jScene, int _i)
 {
+    // Check if the GameObject isn't world. Null condition is added because of a bug discovered
+    if (_jScene["gameObjects"][_i]["name"].is_null() ||
+        _jScene["gameObjects"][_i]["name"] == "World" ||
+        _jScene["gameObjects"][_i]["isTerrain"] == false)
+    {
+        return;
+    }
+    // Check if the terrain is a default terraain
+    if (_jScene["gameObjects"][_i]["terrainData"]["noisemapPath"] != "")
+    {
+        return;
+    }
 
+    std::string name = _jScene["gameObjects"][_i]["name"];
+    Transform* transform = new Transform();
+    DefaultTerrain* defaultTerrain = new DefaultTerrain(name, transform);
+
+    // Setup components
+    for (int i = 0; i < _jScene["gameObjects"][_i]["components"].size(); i++)
+    {
+        // Setup transform
+        if (_jScene["gameObjects"][_i]["components"][i]["name"] == "transform")
+        {
+            Guid transformGuid;
+            transformGuid.FromString(_jScene["gameObjects"][_i]["components"][i]["data"]["guid"]);
+            defaultTerrain->transform->guid = transformGuid;
+            defaultTerrain->transform->localPosition = _jScene["gameObjects"][_i]["components"][i]["data"]["localPosition"];
+            defaultTerrain->transform->rotation = _jScene["gameObjects"][_i]["components"][i]["data"]["rotation"];
+            defaultTerrain->transform->scaling = _jScene["gameObjects"][_i]["components"][i]["data"]["scaling"];
+        }
+    }
+
+    GetCurrentScene()->AddTerrain(defaultTerrain);
+    defaultTerrain->Init(_jScene["gameObjects"][_i]["terrainData"]["xResolution"], _jScene["gameObjects"][_i]["terrainData"]["zResolution"]);
 }
 
 void SceneManager::SetupNoisemapTerrainsFromJson(Scene* _scene, json _jScene, int _i)
 {
-   
+    // Check if the GameObject isn't world. Null condition is added because of a bug discovered
+    if (_jScene["gameObjects"][_i]["name"].is_null() ||
+        _jScene["gameObjects"][_i]["name"] == "World" ||
+        _jScene["gameObjects"][_i]["isTerrain"] == false)
+    {
+        return;
+    }
+    // Check if the terrain is a default terraain
+    if (_jScene["gameObjects"][_i]["terrainData"]["noisemapPath"] == "")
+    {
+        return;
+    }
+
+    std::string name = _jScene["gameObjects"][_i]["name"];
+    Transform* transform = new Transform();
+    NoisemapTerrain* noisemapTerrain = new NoisemapTerrain(name, transform);
+
+    // Setup components
+    for (int i = 0; i < _jScene["gameObjects"][_i]["components"].size(); i++)
+    {
+        // Setup transform
+        if (_jScene["gameObjects"][_i]["components"][i]["name"] == "transform")
+        {
+            Guid transformGuid;
+            transformGuid.FromString(_jScene["gameObjects"][_i]["components"][i]["data"]["guid"]);
+            noisemapTerrain->transform->guid = transformGuid;
+            noisemapTerrain->transform->localPosition = _jScene["gameObjects"][_i]["components"][i]["data"]["localPosition"];
+            noisemapTerrain->transform->rotation = _jScene["gameObjects"][_i]["components"][i]["data"]["rotation"];
+            noisemapTerrain->transform->scaling = _jScene["gameObjects"][_i]["components"][i]["data"]["scaling"];
+        }
+    }
+
+    GetCurrentScene()->AddTerrain(noisemapTerrain);
+    std::string noisemapPath = Tools::GetPathFromJsonString(_jScene["gameObjects"][_i]["terrainData"]["noisemapPath"]);
+    noisemapTerrain->Init(noisemapPath.c_str());
 }
 
 Scene* SceneManager::GetCurrentScene()
