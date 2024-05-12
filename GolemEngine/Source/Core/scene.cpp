@@ -19,6 +19,8 @@
 #include "Core/gameobject.h"
 #include "Resource/Rendering/shader.h"
 
+#include "Resource/Rendering/skybox.h"
+
 using json = nlohmann::json;
 
 
@@ -105,7 +107,8 @@ void Scene::CreateAndLoadResources()
 
     Shader* skybox = resourceManager->Create<Shader>("skybox");
     skybox->SetVertexAndFragmentShader("Shaders/skybox.vs", "Shaders/skybox.fs");
-    GraphicWrapper::SetSkybox();
+    Skybox::GetInstance().SetTexture();
+
     skybox->Use();
     skybox->SetInt("skybox", 0);
 }
@@ -130,9 +133,9 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     skyboxShader->SetMat4("view", _camera->GetViewMatrix());
     skyboxShader->SetMat4("projection", projection);
     // skybox cube
-    glBindVertexArray(GraphicWrapper::GetSkyboxVAO());
+    glBindVertexArray(Skybox::GetInstance().GetSkyboxVAO());
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, GraphicWrapper::GetSkyboxId());
+    glBindTexture(GL_TEXTURE_CUBE_MAP, Skybox::GetInstance().GetSkyboxId());
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     glDepthFunc(GL_LESS);

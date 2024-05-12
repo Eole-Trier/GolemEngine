@@ -53,6 +53,7 @@
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Resource\Rendering\framebuffer.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -125,5 +126,6 @@
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
     <ClInclude Include="Include\Refl\refl.hpp" />
+    <ClInclude Include="Include\Resource\Rendering\skybox.h" />
   </ItemGroup>
 </Project>
