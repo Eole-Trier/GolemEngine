@@ -78,7 +78,7 @@ void GameObject::ToJson(json& _j) const
 	{
 		{"name", name},
 		{"guid", guid.ToString()},
-		{"isTerrain", m_isTerrain}
+		{"isTerrain", isTerrain}
 	};
 	if (!m_components.empty())
 	{

@@ -16,12 +16,11 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultGridTerrainTexture());
 
-    m_isTerrain = true;
+    isTerrain = true;
 }
 
 Terrain::~Terrain()
 {
-    SceneManager::GetCurrentScene()->RemoveTerrain(this);
     DeleteAllComponents();
 }
 

@@ -70,30 +70,11 @@ void Scene::Update(Camera* _camera)
     defaultShader->Use();
     defaultShader->GetVertexShader()->SetViewPos(_camera->m_position);
 
-    if (!terrains.empty())
-    {
-        UpdateTerrains(_camera); 
-    }
-    
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
 
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
-    }
-}
-
-void Scene::UpdateTerrains(Camera* _camera)
-{
-    for (int i = 0; i < terrains.size(); i++)
-    {
-        terrains[i]->UseComputeShader();
-        terrains[i]->Draw(_camera);
-        
-        if (GolemEngine::selectedGameObject == terrains[i])    // Use compute shader only if terrain is being selected
-        {
-            terrains[i]->GetComputeShaderData(_camera);
-        }
     }
 }
 
@@ -118,6 +99,21 @@ void Scene::UpdateGameObjects(Camera* _camera)
         if (Audio* audio = gameObjects[i]->GetComponent<Audio>())
         {
             audio->Update();
+        }
+
+        if (gameObjects[i]->isTerrain)
+        {
+            Terrain* terrain = dynamic_cast<Terrain*>(gameObjects[i]);
+            if (terrain)
+            {
+                terrain->UseComputeShader();
+                terrain->Draw(_camera);
+        
+                if (GolemEngine::selectedGameObject == terrain)    // Use compute shader only if terrain is being selected
+                {
+                    terrain->GetComputeShaderData(_camera);
+                }
+            }
         }
     }
 }
@@ -155,29 +151,6 @@ bool Scene::IsNameExists(const std::string& _name)
     }
 
     return false;
-}
-
-void Scene::AddTerrain(Terrain* _terrain)
-{
-    terrains.push_back(_terrain);
-}
-
-void Scene::RemoveTerrain(Terrain* _terrain)
-{
-    bool removed = false;
-    for (size_t i = 0; i < terrains.size(); i++)
-    {
-        if (terrains[i] == _terrain)
-        {
-            removed = true;
-        }
-        if (removed)
-        {
-            terrains[i]->SetId(i - 1);
-        }
-    }
-    
-    std::erase(terrains, _terrain);
 }
 
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
@@ -307,10 +280,10 @@ void Scene::DeleteLight(Light* _light)
     }
 }
 
-std::vector<Terrain*> Scene::GetTerrains()
-{
-    return  terrains;
-}
+// std::vector<Terrain*> Scene::GetTerrains()
+// {
+    // return  terrains;
+// }
 
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()
 {

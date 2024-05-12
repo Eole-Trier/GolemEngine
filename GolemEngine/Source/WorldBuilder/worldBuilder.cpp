@@ -21,7 +21,6 @@ void WorldBuilder::CreateDefaultTerrain(int _xResolution, int _zResolution)
     
     Transform* transform = new Transform();
     DefaultTerrain* terrain = new DefaultTerrain(name, transform);
-    SceneManager::GetCurrentScene()->AddTerrain(terrain);
     terrain->Init(_xResolution, _zResolution);
 }
 
@@ -38,7 +37,6 @@ void WorldBuilder::CreateNoisemapTerrain(const char* _noisemapPath)
     
     Transform* transform = new Transform();
     NoisemapTerrain* terrain = new NoisemapTerrain(name, transform);
-    SceneManager::GetCurrentScene()->AddTerrain(terrain);
     terrain->Init(_noisemapPath);
 }
 
