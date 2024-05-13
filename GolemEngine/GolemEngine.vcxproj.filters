@@ -50,11 +50,6 @@
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
-    <ClCompile Include="External\imguizmo\GraphEditor.cpp" />
-    <ClCompile Include="External\imguizmo\ImCurveEdit.cpp" />
-    <ClCompile Include="External\imguizmo\ImGradient.cpp" />
-    <ClCompile Include="External\imguizmo\ImGuizmo.cpp" />
-    <ClCompile Include="External\imguizmo\ImSequencer.cpp" />
     <ClCompile Include="External\imgui\ImGradient.cpp" />
     <ClCompile Include="External\imgui\ImCurveEdit.cpp" />
     <ClCompile Include="External\imgui\GraphEditor.cpp" />

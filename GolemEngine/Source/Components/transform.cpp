@@ -99,7 +99,7 @@ void Transform::EditTransformGizmo()
 
     auto camera = GolemEngine::GetCamera();
 
-    Matrix4 transformTest = GetGlobalModel().Transpose();
+    Matrix4 objectTransform = GetGlobalModel().Transpose();
 
     float aspectRatio = windowWidth / windowHeight;
     float fov = DegToRad(camera->GetZoom());
@@ -114,23 +114,32 @@ void Transform::EditTransformGizmo()
 
     //set snap functionnality
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
-    float snapValue = 0.1f;
+    float snapValue = 0.3f;
     float snapValues[3] = {snapValue, snapValue, snapValue};
 
     //Manipulate the gizmo with or without snap
     ImGuizmo::Manipulate(&cameraView.data[0][0],
                          &cameraProjection.data[0][0], currentOperation, currentMode,
-                         &transformTest.data[0][0], nullptr, snap ? snapValues : nullptr);
+                         &objectTransform.data[0][0], nullptr, snap ? snapValues : nullptr);
 
-    transformTest = transformTest.Transpose();
+    objectTransform = objectTransform.Transpose();
 
     //set the new values to the selected object's transform
-    if (ImGuizmo::IsUsing())
+    if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::TRANSLATE)
     {
-        //Vector3 deltaRotation = rotation - Vector3::QuaternionToEuler(transformTest.Matrix4::TrsToRotation());
-        localPosition = transformTest.Matrix4::TrsToPosition();
-        rotation = Vector3::QuaternionToEuler(transformTest.Matrix4::TrsToRotation());
-        scaling = transformTest.Matrix4::TrsToScaling();
+        localPosition = objectTransform.Matrix4::TrsToPosition();
+    }
+
+    else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::SCALE)
+    {
+        scaling = objectTransform.Matrix4::TrsToScaling();
+    }
+
+    else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::ROTATE)
+    {
+        Vector3 rotate = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
+        //Vector3 deltaRotation = rotation - rotate;
+        rotation = rotate;
     }
 }
 
