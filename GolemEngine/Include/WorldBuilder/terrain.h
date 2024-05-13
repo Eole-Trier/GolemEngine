@@ -48,6 +48,7 @@ public:
     void UseComputeShader();
     void Draw(Camera* _camera);
     void GetComputeShaderData(Camera* _camera);
+    void CalculateNormals();
     
     virtual void Init(int _xResolution, int _zResolution) {}
     virtual void Init(const char* _noisemapPath) {}

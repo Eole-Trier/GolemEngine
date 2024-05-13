@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "f467f978-61e7-d301-9500-cccccccccccc",
+            "guid": "20744e50-c933-8f01-0900-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "54a7662d-d641-7f19-8600-cccccccccccc",
+      "guid": "6955ddf3-71fb-fa5d-1700-cccccccccccc",
       "isTerrain": false,
       "name": "World"
     },
@@ -67,13 +67,13 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
+              "x": 3.0,
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "48c9d02c-03c8-9f64-2100-cccccccccccc",
+            "guid": "564145e7-ce05-7988-2600-cccccccccccc",
             "localPosition": {
-              "x": 0.0,
+              "x": 3.0,
               "y": 0.0,
               "z": 0.0
             },
@@ -83,24 +83,27 @@
               "z": 0.0
             },
             "scaling": {
-              "x": 2.9000000953674316,
+              "x": 1.0,
               "y": 1.0,
-              "z": 3.200000047683716
+              "z": 1.0
             }
           },
           "name": "transform"
+        },
+        {
+          "data": {
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "shaderPath": "",
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+          },
+          "name": "meshRenderer"
         }
       ],
-      "guid": "72cb6649-e51b-c00f-8f7d-90da206672b1",
-      "isTerrain": true,
-      "name": "Noisemap_Terrain",
-      "terrainData": {
-        "noisemapPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Heightmaps\\heightmap3.jpeg",
-        "xResolution": 300,
-        "zResolution": 300
-      }
+      "guid": "c904403b-6600-3c6d-4e00-cccccccccccc",
+      "isTerrain": false,
+      "name": "ball_bald"
     }
   ],
-  "guid": "56c292e3-94e5-3af4-6ca2-63bf5566b78a",
+  "guid": "9b55b6b8-b880-f2b5-c61e-90c414401d16",
   "name": "scene_0"
 }

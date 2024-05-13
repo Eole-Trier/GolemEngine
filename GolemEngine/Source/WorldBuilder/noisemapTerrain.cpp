@@ -42,7 +42,7 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
             // Set the vertex texture postion
             vertex.textureCoords.x = (j / (float)zResolution);
             vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
-            
+
             m_vertices.push_back(vertex);
         }
     }
