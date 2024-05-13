@@ -20,6 +20,6 @@ public:
 	static Skybox& GetInstance();
 	unsigned int LoadCubemap(std::vector<std::string> faces);
 	void SetTexture();
-	unsigned int GetSkyboxId();
+	unsigned int GetSkyboxCubeMapId();
 	unsigned int GetSkyboxVAO();
 };

@@ -78,8 +78,8 @@ void Skybox::SetTexture()
 	{
 	    Tools::FindFile("skybox_right.jpg"),
 	    Tools::FindFile("skybox_left.jpg"),
-	    Tools::FindFile("skybox_top.jpg"),
 	    Tools::FindFile("skybox_bottom.jpg"),
+	    Tools::FindFile("skybox_top.jpg"),
 	    Tools::FindFile("skybox_front.jpg"),
 	    Tools::FindFile("skybox_back.jpg"),
 	};
@@ -108,9 +108,7 @@ unsigned int Skybox::LoadCubemap(std::vector<std::string> faces)
         unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-            );
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
             stbi_image_free(data);
         }
         else
@@ -128,7 +126,7 @@ unsigned int Skybox::LoadCubemap(std::vector<std::string> faces)
     return textureID;
 }
 
-unsigned int Skybox ::GetSkyboxId()
+unsigned int Skybox ::GetSkyboxCubeMapId()
 {
     return m_cubemapId;
 }
