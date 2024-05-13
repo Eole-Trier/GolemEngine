@@ -4,7 +4,9 @@
 #include "Wrappers/graphicWrapper.h"
 
 Collider::Collider()
+	: m_IsActivated(false), m_MotionType(MotionType::Static), m_model(nullptr), m_modelPath(nullptr)
 {
+	PhysicSystem::AddCollider(this);
 }
 
 Collider::~Collider()
@@ -15,14 +17,17 @@ Collider::~Collider()
 
 	// Destroy the body. After this the sphere ID is no longer valid.
 	body_interface.DestroyBody(id);
+	PhysicSystem::DeleteCollider(this);
 }
 
 void Collider::Begin()
 {
 }
 
-void Collider::Update()
+void Collider::PreUpdate()
 {
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
 	switch (m_MotionType)
 	{
 	case MotionType::Static:
@@ -45,15 +50,25 @@ void Collider::Update()
 		PhysicSystem::DeactivateBody(id, owner->transform->localPosition);
 	}
 
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	//if (bodyInterface.IsActive(id))
+	//{
+	bodyInterface.SetPosition(id, PhysicSystem::ToJph(owner->transform->localPosition), EActivation::DontActivate);
+	bodyInterface.SetRotation(id, PhysicSystem::ToJph(Quaternion::EulerToQuaternion(owner->transform->rotation)), EActivation::DontActivate);
+	
+	//}
+}
 
-	if (bodyInterface.IsActive(id))
-	{
-		RVec3 position = bodyInterface.GetPosition(id);
-		Quat rotation = bodyInterface.GetRotation(id);
-		owner->transform->localPosition = PhysicSystem::ToVector3(position);
-		owner->transform->rotation = Vector3::QuaternionToEuler(PhysicSystem::ToQuaternion(rotation));
-	}
+void Collider::Update()
+{
+}
+
+void Collider::PostUpdate()
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	RVec3 position = bodyInterface.GetPosition(id);
+	Quat rotation = bodyInterface.GetRotation(id);
+	owner->transform->localPosition = PhysicSystem::ToVector3(position);
+	owner->transform->rotation = Vector3::QuaternionToEuler(PhysicSystem::ToQuaternion(rotation));
 }
 
 Model* Collider::GetModel()

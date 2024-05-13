@@ -22,8 +22,9 @@ public:
 	~BoxCollider();
 
 	void Begin() override;
-
+	void PreUpdate() override;
 	void Update() override;
+	void PostUpdate() override;
 
 	void Draw(float _width, float _height, Camera* _camera);
 

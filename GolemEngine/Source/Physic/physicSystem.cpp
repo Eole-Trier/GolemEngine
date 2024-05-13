@@ -139,6 +139,14 @@ Quaternion PhysicSystem::ToQuaternion(const Quat _q)
 	return Quaternion(_q.GetW(), _q.GetX(), _q.GetY(), _q.GetZ());
 }
 
+void PhysicSystem::PreUpdate()
+{
+	for (Collider* c : m_colliders)
+	{
+		c->PreUpdate();
+	}
+}
+
 void PhysicSystem::Update()
 {
 	// We need a temp allocator for temporary allocations during the physics update. We're
@@ -154,6 +162,25 @@ void PhysicSystem::Update()
 	JobSystemThreadPool job_system(cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1);
 
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
+}
+
+
+void PhysicSystem::PostUpdate()
+{
+	for (Collider* c : m_colliders)
+	{
+		c->PostUpdate();
+	}
+}
+
+void PhysicSystem::AddCollider(Collider* _collider)
+{
+	m_colliders.push_back(_collider);
+}
+
+void PhysicSystem::DeleteCollider(Collider* _collider)
+{
+	std::erase(m_colliders, _collider);
 }
 
 BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, EMotionType _motionType, ObjectLayer _objectLayer)

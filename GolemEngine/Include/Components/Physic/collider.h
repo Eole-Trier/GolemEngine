@@ -18,7 +18,7 @@ class Collider : public Component
 private:
 	bool m_IsActivated;
 	MotionType m_MotionType;
-	Model* m_model;
+	Model* m_model = nullptr;
 	const char* m_modelPath;
 
 public:
@@ -30,7 +30,9 @@ public:
 
 	virtual void Begin() override;
 
+	virtual void PreUpdate();
 	virtual void Update() override;
+	virtual void PostUpdate();
 
 	virtual void Draw(float _width, float _height, Camera* _camera) {};
 

@@ -37,11 +37,21 @@ void BoxCollider::Begin()
 	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_size);
 }
 
+void BoxCollider::PreUpdate()
+{
+	Collider::PreUpdate();
+}
+
 void BoxCollider::Update()
 {
 	Collider::Update();
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	PhysicSystem::SetBoxShape(id, m_size);
+}
+
+void BoxCollider::PostUpdate()
+{
+	Collider::PostUpdate();
 }
 
 void BoxCollider::Draw(float _width, float _height, Camera* _camera)

@@ -104,6 +104,10 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     
     UpdateGameObjects(_camera, _width, _height);    // Always at least one gameobject (world)
 
+    PhysicSystem::PreUpdate();
+    PhysicSystem::Update();
+    PhysicSystem::PostUpdate();
+
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
@@ -128,10 +132,6 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
     }
 
     m_world->transform->UpdateSelfAndChilds();
-
-
-    PhysicSystem::Update();
-
 
     for (int i = 0; i < gameObjects.size(); i++)
     {
