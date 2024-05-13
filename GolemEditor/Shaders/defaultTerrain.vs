@@ -3,17 +3,17 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTexCoord;
 
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+uniform float minHeight;
+uniform float maxHeight;
+
 out vec3 FragPos;
 out vec2 TexCoord;
 out float minY; // Varying output for min height
 out float maxY; // Varying output for max height
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-
-uniform float minHeight;
-uniform float maxHeight;
 
 void main()
 {

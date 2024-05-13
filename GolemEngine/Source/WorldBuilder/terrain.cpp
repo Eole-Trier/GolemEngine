@@ -39,8 +39,8 @@ void Terrain::SetupMesh()
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    // texture attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoords));
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
@@ -64,12 +64,16 @@ void Terrain::UseComputeShader()
 
 void Terrain::Draw(Camera* _camera)
 {
+    glActiveTexture(GL_TEXTURE0);
+    m_texture->Use();
+
     m_shader->Use();
     m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
     m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
     m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    m_shader->GetFragmentShader()->SetInt("ourTexture", 0);
     
     glBindVertexArray(m_vao);
     
