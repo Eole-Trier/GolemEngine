@@ -47,6 +47,38 @@ void* ClassesManager::Create(size_t _hashCode)
 		Log::Print("No class matches the hash code");
 		return nullptr;
 	}
+
+	if (!it->second.createCondition())
+		return nullptr;
+
 	// else store it in display func pointer
 	return it->second.create();
+}
+
+void* ClassesManager::Create(const std::string& _name)
+{
+	auto it = m_classesByName.find(_name);
+
+	// return if no classes linked to hash code
+	if (it == m_classesByName.end())
+	{
+		Log::Print("No class matches the name");
+		return nullptr;
+	}
+
+	if (!it->second.createCondition())
+		return nullptr;
+
+	// else store it in display func pointer
+	return it->second.create();
+}
+
+std::vector<std::string> ClassesManager::GetComponents()
+{
+	std::vector<std::string> result;
+	for (const std::string& name : m_classesByName | std::views::keys)
+	{
+		result.push_back(name);
+	}
+	return result;
 }

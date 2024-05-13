@@ -43,6 +43,7 @@ public:
 	void RemoveComponent(Component* _c);
 	void DeleteAllComponents();
 
+	void AddComponent(Component* _type);
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);
 	template<typename TypeT>

@@ -50,7 +50,7 @@ void Scene::InitDefaultScene()
 
     // Create a viking room model
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* vikingTransform = new Transform(Vector3(5, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* vikingText = resourceManager->Get<Texture>("viking_room.jpg");
     Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
@@ -64,7 +64,7 @@ void Scene::InitDefaultScene()
 
     // Create a sphere model
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(0, 3, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
     Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
@@ -132,11 +132,14 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 
     PhysicSystem::Update();
 
+
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
+        if (Collider* collider = gameObjects[i]->GetComponent<Collider>())
+            collider->Draw(_width, _height, _camera);
     }
 }
 
@@ -171,7 +174,6 @@ bool Scene::IsNameExists(const std::string& _name)
             return true;
         }
     }
-
     return false;
 }
 
@@ -307,22 +309,22 @@ void Scene::DeleteLight(Light* _light)
     }
 }
 
-std::vector<Terrain*> Scene::GetTerrains()
+std::vector<Terrain*>& Scene::GetTerrains()
 {
     return  m_terrains;
 }
 
-std::vector<DirectionalLight*> Scene::GetDirectionalLights()
+const std::vector<DirectionalLight*>& Scene::GetDirectionalLights()
 {
     return m_dirLights;
 }
 
-std::vector<PointLight*> Scene::GetPointLights()
+const std::vector<PointLight*>& Scene::GetPointLights()
 {
     return m_pointLights;
 }
 
-std::vector<SpotLight*> Scene::GetSpotLights()
+const std::vector<SpotLight*>& Scene::GetSpotLights()
 {
     return m_spotLights;
 }

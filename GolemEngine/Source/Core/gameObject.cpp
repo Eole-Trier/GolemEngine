@@ -80,3 +80,10 @@ void GameObject::DeleteAllComponents()
 	}
 }
 
+
+void GameObject::AddComponent(Component* _type)
+{
+	// TODO check already has component
+	m_components.push_back(_type);
+	_type->owner = this;
+}

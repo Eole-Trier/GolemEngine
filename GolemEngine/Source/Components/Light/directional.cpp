@@ -6,7 +6,7 @@
 
 DirectionalLight::DirectionalLight()
 {
-	std::vector<DirectionalLight*> dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
+	const std::vector<DirectionalLight*>& dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
 	size_t maxDirs = SceneManager::GetCurrentScene()->GetMaxDirectionalLights();
 
 	diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -28,7 +28,7 @@ DirectionalLight::DirectionalLight()
 DirectionalLight::DirectionalLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _direction)
 	: Light(_diffuse, _ambient, _specular), direction(_direction)
 {
-	std::vector<DirectionalLight*> dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
+	const std::vector<DirectionalLight*>& dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
 	size_t maxDirs = SceneManager::GetCurrentScene()->GetMaxDirectionalLights();
 
 	id = dirLights.size();

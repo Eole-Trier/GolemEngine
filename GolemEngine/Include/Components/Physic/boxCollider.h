@@ -6,6 +6,7 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include "Components/Physic/collider.h"
 #include "Core/gameobject.h"
+#include "Core/camera.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
@@ -23,6 +24,8 @@ public:
 	void Begin() override;
 
 	void Update() override;
+
+	void Draw(float _width, float _height, Camera* _camera);
 
 	void ToJson(json& j) const {}
 

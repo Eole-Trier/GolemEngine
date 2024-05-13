@@ -19,6 +19,26 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 	if (ImGui::Button(m_addComponentButtonName, ImVec2(m_addComponentButtonSize.x, m_addComponentButtonSize.y)))
 		ImGui::OpenPopup(m_addComponentPopupId);
 
+	std::vector<std::string>&& classes = ClassesManager::GetComponents();
+
+	for (const std::string& name : classes)
+	{
+		if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
+		{
+			if (ImGui::MenuItem(name.c_str()))
+			{
+				Component* obj = static_cast<Component*>(ClassesManager::Create(name));
+				if (obj)
+				{
+					_gameObject->AddComponent(obj);
+				}
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	/*
 	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
 	{
 		if (ImGui::MenuItem("Point Light"))
@@ -51,5 +71,7 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 			}
 		}
 		ImGui::EndPopup();
-	}
+	}*/
+
+
 }

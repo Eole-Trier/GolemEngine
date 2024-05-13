@@ -109,7 +109,7 @@ void DisplayType::BasicsFields(MemberT* _class)
 			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 3, 0.1f, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
 		}
 		else
-			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x);
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, 0.1f);
 	}
 	else if constexpr (std::is_same_v<Vector4, MemberT>)
 	{
@@ -119,7 +119,7 @@ void DisplayType::BasicsFields(MemberT* _class)
 			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 4, 0.1f, nullptr, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
 		}
 		else
-			ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x);
+			ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, 0.1f);
 	}
 	ImGui::PopID();
 }
@@ -199,7 +199,7 @@ void DisplayType::DisplayIntOrFloat(MemberT* _member)
 			ImGui::DragScalar(DescriptorT::name.c_str(), type, _member, 0.1f, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
 	}
 	else
-		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member);
+		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member, 0.1f);
 
 	ImGui::PopID();
 }

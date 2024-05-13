@@ -7,6 +7,8 @@
 
 #include "Physic/physicSystem.h"
 #include "Components/component.h"
+#include "Resource/Rendering/model.h"
+#include "Core/camera.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
@@ -16,6 +18,8 @@ class Collider : public Component
 private:
 	bool m_IsActivated;
 	MotionType m_MotionType;
+	Model* m_model;
+	const char* m_modelPath;
 
 public:
 	BodyID id;
@@ -28,7 +32,14 @@ public:
 
 	virtual void Update() override;
 
+	virtual void Draw(float _width, float _height, Camera* _camera) {};
+
 	virtual void ToJson(json& j) const {}
+
+	Model* GetModel();
+	void SetModel(Model* _model); 
+	const char* GetModelPath();
+	void SetModelPath(const char* _path);
 
 	friend refl_impl::metadata::type_info__<Collider>; // needed to reflect private members
 };

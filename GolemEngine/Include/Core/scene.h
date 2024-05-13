@@ -65,10 +65,10 @@ public:
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
 	
-	std::vector<Terrain*> GetTerrains();
-	std::vector<DirectionalLight*> GetDirectionalLights();
-	std::vector<PointLight*> GetPointLights();
-	std::vector<SpotLight*> GetSpotLights();
+	std::vector<Terrain*>& GetTerrains();
+	const std::vector<DirectionalLight*>& GetDirectionalLights();
+	const std::vector<PointLight*>& GetPointLights();
+	const std::vector<SpotLight*>& GetSpotLights();
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();

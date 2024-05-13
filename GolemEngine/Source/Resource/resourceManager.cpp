@@ -69,6 +69,12 @@ void ResourceManager::CreateAndLoadResources()
 
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
+
+    Shader* sphereColliderShader = resourceManager->Create<Shader>("sphereCollider", Tools::FindFile("sphereCollider.vs"));
+    sphereColliderShader->SetVertexAndFragmentShader(sphereColliderShader->path.c_str(), Tools::FindFile("sphereCollider.fs").c_str());
+
+    Shader* boxColliderShader = resourceManager->Create<Shader>("boxCollider", Tools::FindFile("boxCollider.vs"));
+    boxColliderShader->SetVertexAndFragmentShader(boxColliderShader->path.c_str(), Tools::FindFile("boxCollider.fs").c_str());
 }
 
 std::string ResourceManager::GetDefaultShader()

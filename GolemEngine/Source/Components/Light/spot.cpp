@@ -38,7 +38,7 @@ SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vec
     : Light(_diffuse, _ambient, _specular), position(_position), direction(_direction), constant(_constant), linear(_linear), quadratic(_quadratic), 
     cutOff(_cutOff), outerCutOff(_outerCutOff)
 {
-    std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
+    const std::vector<SpotLight*>& spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
     size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
 
     id = spotLights.size();
