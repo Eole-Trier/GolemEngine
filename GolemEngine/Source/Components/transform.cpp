@@ -77,22 +77,25 @@ void Transform::EditTransformGizmo()
     static ImGuizmo::OPERATION currentOperation(ImGuizmo::TRANSLATE);
     static ImGuizmo::MODE currentMode(ImGuizmo::WORLD);
 
-    //select operation with inputs
-    if (InputManager::IsKeyPressed(KEY_X))
-    {
-        currentOperation = ImGuizmo::SCALE;
-    }
+    //select operation with inputs while is not used
 
-    else if (InputManager::IsKeyPressed(KEY_Z))
+    if (!ImGuizmo::IsUsing())
     {
-        currentOperation = ImGuizmo::TRANSLATE;
-    }
+        if (InputManager::IsKeyPressed(KEY_X))
+        {
+            currentOperation = ImGuizmo::SCALE;
+        }
 
-    else if (InputManager::IsKeyPressed(KEY_C))
-    {
-        currentOperation = ImGuizmo::ROTATE;
-    }
+        else if (InputManager::IsKeyPressed(KEY_Z))
+        {
+            currentOperation = ImGuizmo::TRANSLATE;
+        }
 
+        else if (InputManager::IsKeyPressed(KEY_C))
+        {
+            currentOperation = ImGuizmo::ROTATE;
+        }
+    }
 
     float windowWidth = (float)ImGui::GetWindowWidth();
     float windowHeight = (float)ImGui::GetWindowHeight();
