@@ -123,23 +123,25 @@ void Transform::EditTransformGizmo()
                          &objectTransform.data[0][0], nullptr, snap ? snapValues : nullptr);
 
     objectTransform = objectTransform.Transpose();
+    Vector3 newPosition = objectTransform.Matrix4::TrsToPosition();
+    Vector3 newScale = objectTransform.Matrix4::TrsToScaling();
+    Vector3 newRotation = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
 
     //set the new values to the selected object's transform
     if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::TRANSLATE)
     {
-        localPosition = objectTransform.Matrix4::TrsToPosition();
+        localPosition = newPosition;
     }
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::SCALE)
     {
-        scaling = objectTransform.Matrix4::TrsToScaling();
+        scaling = newScale;
     }
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::ROTATE)
     {
-        Vector3 newRotation = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
         Vector3 deltaRotation = newRotation - rotation;
-        rotation = deltaRotation;
+        rotation += deltaRotation;
     }
 }
 
