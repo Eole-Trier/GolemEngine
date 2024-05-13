@@ -143,8 +143,7 @@ void Transform::EditTransformGizmo()
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::ROTATE)
     {
-        Vector3 deltaRotation = newRotation - rotation;
-        rotation += deltaRotation;
+        rotation = newRotation;
     }
 }
 
