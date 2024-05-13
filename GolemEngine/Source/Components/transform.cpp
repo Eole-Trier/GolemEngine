@@ -112,9 +112,9 @@ void Transform::EditTransformGizmo()
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
         ImGui::GetWindowSize().x, ImGui::GetWindowSize().y); 
 
-    //set snap functionnality
+    //set snap functionnality and snap value
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
-    float snapValue = 0.3f;
+    float snapValue = 0.2f;
     float snapValues[3] = {snapValue, snapValue, snapValue};
 
     //Manipulate the gizmo with or without snap
@@ -137,9 +137,9 @@ void Transform::EditTransformGizmo()
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::ROTATE)
     {
-        Vector3 rotate = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
-        //Vector3 deltaRotation = rotation - rotate;
-        rotation = rotate;
+        Vector3 newRotation = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
+        Vector3 deltaRotation = newRotation - rotation;
+        rotation = deltaRotation;
     }
 }
 
