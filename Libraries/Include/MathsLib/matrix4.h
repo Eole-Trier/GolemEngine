@@ -31,6 +31,8 @@ public:
 	Matrix4 Rotate(Vector3 _XYZrad) const;
 	Matrix4 Rotate(Quaternion _q) const;
 	Matrix4 Scale(Vector3 _scale) const;
+	Matrix4 ExtractRotationAndScale(const Matrix4& _viewMatrix) const;
+	
 	Vector3 TrsToPosition();
 	Quaternion TrsToRotation();
 	Vector3 TrsToScaling();

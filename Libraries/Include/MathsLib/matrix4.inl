@@ -183,6 +183,17 @@ Matrix4 Matrix4::Scale(Vector3 _scale) const
 	return (*this) * scale;
 }
 
+Matrix4 Matrix4::ExtractRotationAndScale(const Matrix4& _viewMatrix) const
+{
+	// Extract rotation and scale by taking the upper-left 3x3 submatrix
+	return Matrix4(
+		_viewMatrix.data[0][0], _viewMatrix.data[0][1], _viewMatrix.data[0][2], 0.0f,
+		_viewMatrix.data[1][0], _viewMatrix.data[1][1], _viewMatrix.data[1][2], 0.0f,
+		_viewMatrix.data[2][0], _viewMatrix.data[2][1], _viewMatrix.data[2][2], 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+}
+
 Vector3 Matrix4::TrsToPosition()
 {
 	return Vector3(data[0][3], data[1][3], data[2][3]);

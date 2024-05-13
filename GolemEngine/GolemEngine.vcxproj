@@ -138,6 +138,7 @@
     </ClCompile>
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
     <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
     <ClInclude Include="Include\Resource\Rendering\shader.h" />
+    <ClInclude Include="Include\Resource\Rendering\skybox.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
     <ClInclude Include="Include\Resource\resource.h" />

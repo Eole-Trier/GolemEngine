@@ -48,6 +48,7 @@
     <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
     <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
@@ -136,6 +137,8 @@
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
+    <ClInclude Include="Include\Refl\refl.hpp" />
+    <ClInclude Include="Include\Resource\Rendering\skybox.h" />
     <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="External\glm\qualifier.hpp" />
     <ClInclude Include="External\glm\setup.hpp" />

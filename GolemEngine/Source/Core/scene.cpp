@@ -4,25 +4,26 @@
 #include <nlohmann/json.hpp>
 
 #include "golemEngine.h"
-#include "utils.h"
 #include "Core/mesh.h"
-#include "Resource/Rendering/model.h"
-#include "Resource/Rendering/texture.h"
-#include "Resource/Rendering/shader.h"
-#include "Utils/tools.h"
-#include "Components\Light\pointLight.h"
-#include "Components\Light\directionalLight.h"
-#include "Components\Light\spotLight.h"
-#include "Resource/Rendering/shader.h"
 #include "Core/gameobject.h"
-#include "Resource/resourceManager.h"
-#include "Resource/sceneManager.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/spotLight.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
 #include "Components/audio.h"
-#include "Physic/physicSystem.h"
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
+#include "Resource/Rendering/model.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/skybox.h"
+#include "Resource/resourceManager.h"
+#include "Resource/sceneManager.h"
+#include "Physic/physicSystem.h"
+#include "utils.h"
+#include "Utils/tools.h"
 #include "Wrappers/windowWrapper.h"
 
 using json = nlohmann::json;
@@ -80,6 +81,14 @@ void Scene::InitDefaultScene()
     Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
+
+    Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
+    skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
+
+    Skybox::GetInstance().SetTexture();
+
+    skyboxShader->Use();
+    skyboxShader->SetInt("skybox", 0);
 }
 
 void Scene::InitLights()
@@ -95,6 +104,23 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
     defaultShader->SetViewPos(_camera->position);
+
+    // Skybox shader load
+    Shader* skyboxShader = resourceManager->Get<Shader>("skybox_shader");
+    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+    skyboxShader->Use();
+    Matrix4 viewMatrix = _camera->GetViewMatrix();
+    Matrix4 view = viewMatrix.ExtractRotationAndScale(viewMatrix);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
+    skyboxShader->SetMat4("view", view);
+    skyboxShader->SetMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(Skybox::GetInstance().GetSkyboxVAO());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, Skybox::GetInstance().GetSkyboxCubeMapId());
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS);
 
     if (!m_terrains.empty())
     {

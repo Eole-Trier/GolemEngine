@@ -59,6 +59,7 @@ void ResourceManager::CreateAndLoadResources()
     m_defaultTexture = "default_texture";
     m_defaultModel = "default_model";
     m_defaultShader = "default_shader";
+
     // TODO set default model and texture to cube and default texture
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
