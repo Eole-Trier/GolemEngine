@@ -2,6 +2,7 @@
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/shader.h"
+#include "Resource/Rendering/skybox.h"
 #include "Utils/tools.h"
 
 ResourceManager* ResourceManager::m_instancePtr = nullptr;
@@ -70,6 +71,12 @@ void ResourceManager::CreateAndLoadResources()
 
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
+
+    Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
+    skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
+    Skybox::GetInstance().SetTexture();
+    skyboxShader->Use();
+    skyboxShader->SetInt("skybox", 0);
 }
 
 std::string ResourceManager::GetDefaultShader()

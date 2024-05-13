@@ -81,14 +81,6 @@ void Scene::InitDefaultScene()
     Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
-
-    Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
-    skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
-
-    Skybox::GetInstance().SetTexture();
-
-    skyboxShader->Use();
-    skyboxShader->SetInt("skybox", 0);
 }
 
 void Scene::InitLights()
