@@ -78,7 +78,6 @@ void Transform::EditTransformGizmo()
     static ImGuizmo::MODE currentMode(ImGuizmo::WORLD);
 
     //select operation with inputs while is not used
-
     if (!ImGuizmo::IsUsing())
     {
         if (InputManager::IsKeyPressed(KEY_X))
@@ -113,7 +112,7 @@ void Transform::EditTransformGizmo()
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
-        ImGui::GetWindowSize().x, ImGui::GetWindowSize().y); 
+        ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 
     //set snap functionnality and snap value
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
@@ -126,10 +125,11 @@ void Transform::EditTransformGizmo()
                          &objectTransform.data[0][0], nullptr, snap ? snapValues : nullptr);
 
     objectTransform = objectTransform.Transpose();
+
     Vector3 newPosition = objectTransform.Matrix4::TrsToPosition();
     Vector3 newScale = objectTransform.Matrix4::TrsToScaling();
     Vector3 newRotation = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
-
+    
     //set the new values to the selected object's transform
     if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::TRANSLATE)
     {
