@@ -46,10 +46,16 @@ void Terrain::SetupMesh()
     glBindVertexArray(0);
 
     // Setup the compute shader
-    glGenBuffers(1, &m_ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
+    // Input buffer
+    glGenBuffers(1, &m_ssboIn);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboIn);
     glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
+    // Output buffer
+    glGenBuffers(1, &m_ssboOut);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboOut);
     
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
@@ -93,12 +99,15 @@ void Terrain::Draw(Camera* _camera)
 void Terrain::GetComputeShaderData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
-
-    Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE));
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
+    // map the gpu data to the cpu
+    void* mappedData = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE);
     
-    if (ptr != nullptr)
+    if (mappedData != nullptr)
     {
+        // Transform the mapped data to a vertex
+        Vertex* verticesOut = static_cast<Vertex*>(mappedData);
+        
         // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
 
@@ -109,13 +118,8 @@ void Terrain::GetComputeShaderData(Camera* _camera)
         {
             for (int i = 0; i < m_vertices.size(); ++i)
             {
-                // if (i < m_vertices.size() * 0.5f)    // Weird error when reading the exact middle vertice
-                {
-                // Get the original vertex position from the SSBO
-                Vertex* vertexPtr = ptr + i;
-                
                 // Get the original vertex position
-                Vector4 originalPosition = Vector4(vertexPtr[i].position.x, vertexPtr[i].position.y, vertexPtr[i].position.z, 1.0f);
+                Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
                 // Apply the model matrix
                 Vector4 transformedPosition = modelMatrix * originalPosition;
                 // Set final position
@@ -126,9 +130,9 @@ void Terrain::GetComputeShaderData(Camera* _camera)
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
 
+                // std::cout << verticesOut[i].normal << std::endl;
                 // Retrieve the normals
-                m_vertices[i].normal = ptr[i].normal;
-                }
+                // m_vertices[i].normal = verticesOut[i].normal;
                     
             }
             CalculateNormals();
@@ -152,5 +156,8 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
 void Terrain::CalculateNormals()
 {
-    std::cout << m_vertices[45054].position << std::endl;
+    std::cout << "Vertex " << 0 << ". position: " << m_vertices[0].position << std::endl;
+    std::cout << "Vertex " << 1 << ". position: " << m_vertices[1].position << std::endl;
+    std::cout << "Vertex " << 2 << ". position: " << m_vertices[2].position << std::endl;
+    std::cout << "Vertex " << 3 << ". position: " << m_vertices[3].position << std::endl;
 }
