@@ -16,8 +16,8 @@ private:
 		std::function<void*(void)> create;
 		std::function<void(void*)> display;
 		std::function<bool()> createCondition;
-
 		std::string name;
+		size_t hashCode;
 	};
 
 	template <typename T>
@@ -61,6 +61,7 @@ public:
 	GOLEM_ENGINE_API static void* Create(size_t _hashCode);
 	GOLEM_ENGINE_API static void* Create(const std::string& _name);
 	GOLEM_ENGINE_API static std::vector<std::string> GetComponents();
+	GOLEM_ENGINE_API _NODISCARD static size_t GetHashCodeFromName(const std::string& _name);
 };
 
 template<typename TypeT>
@@ -74,7 +75,8 @@ static void ClassesManager::Add()
 		.create = []() -> void* { return nullptr; },
 		.display = [](void* _class) -> void { DisplayType::DisplayField<TypeT>(static_cast<TypeT*>(_class)); },
 		.createCondition = CreateCondition<TypeT>::CanCreate,
-		.name = typeid(TypeT).name()
+		.name = refl::reflect<TypeT>().name.c_str(),
+		.hashCode = hashCode
 	};
 
 	// Check the abstract class case
@@ -84,6 +86,5 @@ static void ClassesManager::Add()
 	// Store values in std::unordered_map
 	m_classes.emplace(hashCode, classInfo);
 	m_classesByName.emplace(classInfo.name, classInfo);
-
 }
 

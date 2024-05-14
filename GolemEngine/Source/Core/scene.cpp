@@ -219,7 +219,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
         name = originalName + "_" + std::to_string(suffix++);
     }
 
-    Model* model = resourceManager->Get<Model>(_modelName);
+    Model* model = resourceManager->Get<Model>(_modelName + ".obj");
     Mesh* mesh = new Mesh(model, texture, shader);
     GameObject* gameObject = new GameObject(name, transform);
     gameObject->AddComponent(new MeshRenderer(mesh));

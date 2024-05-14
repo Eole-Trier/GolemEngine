@@ -3,6 +3,7 @@
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
 #include "golemEngine.h"
+#include "Reflection/classesManager.h"
 
 GameObject::GameObject()
 	: IsSelected(false)
@@ -35,6 +36,24 @@ void GameObject::Update()
 	{
 		c->Update();
 	}
+}
+
+bool GameObject::HasComponent(const std::string& _name) const
+{
+	size_t hash = ClassesManager::GetHashCodeFromName(_name);
+
+	for (Component* c : m_components)
+	{
+		size_t otherHash = typeid(*c).hash_code();
+
+		if (hash == otherHash)
+		{
+			Log::Print("The GameObject already has a Component of this type");
+			return true;
+		}
+	}
+
+	return false;
 }
 
 size_t GameObject::GetId()
@@ -80,10 +99,9 @@ void GameObject::DeleteAllComponents()
 	}
 }
 
-
 void GameObject::AddComponent(Component* _type)
-{
-	// TODO check already has component
+{	
 	m_components.push_back(_type);
 	_type->owner = this;
+	return;
 }

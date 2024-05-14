@@ -27,51 +27,15 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 		{
 			if (ImGui::MenuItem(name.c_str()))
 			{
-				Component* obj = static_cast<Component*>(ClassesManager::Create(name));
-				if (obj)
+				if (!_gameObject->HasComponent(name))
 				{
-					_gameObject->AddComponent(obj);
+					Component* obj = static_cast<Component*>(ClassesManager::Create(name));
+					if (obj)
+						_gameObject->AddComponent(obj);
 				}
 			}
 
 			ImGui::EndPopup();
 		}
 	}
-
-	/*
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Point Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetPointLights().size() < SceneManager::GetCurrentScene()->GetMaxPointLights() && !_gameObject->GetComponent<PointLight>())
-			{
-				_gameObject->AddComponent(new PointLight);
-			}
-		}
-		ImGui::EndPopup();
-	}
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Spot Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetSpotLights().size() < SceneManager::GetCurrentScene()->GetMaxSpotLights() && !_gameObject->GetComponent<SpotLight>())
-			{
-				_gameObject->AddComponent(new SpotLight);
-			}
-		}
-		ImGui::EndPopup();
-	}
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Directional Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
-			{
-				_gameObject->AddComponent(new DirectionalLight);
-			}
-		}
-		ImGui::EndPopup();
-	}*/
-
-
 }

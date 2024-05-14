@@ -82,3 +82,17 @@ std::vector<std::string> ClassesManager::GetComponents()
 	}
 	return result;
 }
+
+size_t ClassesManager::GetHashCodeFromName(const std::string& _name)
+{
+	auto it = m_classesByName.find(_name);
+
+	// return if no classes linked to name
+	if (it == m_classesByName.end())
+	{
+		Log::Print("No class matches the name");
+		return 0;
+	}
+
+	return it->second.hashCode;
+}

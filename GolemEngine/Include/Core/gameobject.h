@@ -33,6 +33,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	_NODISCARD bool HasComponent(const std::string& _name) const;
 
 	size_t GetId();
 	void SetId(size_t _id);
