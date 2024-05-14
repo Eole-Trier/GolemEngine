@@ -7,6 +7,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "Utils/tools.h"
+#include "Resource/Rendering/skybox.h"
 
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_TITLE = "Specify new terrain dimensions";
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE = "Enter terrain dimensions";
@@ -21,11 +22,29 @@ WorldBuilderWindow::~WorldBuilderWindow() {}
 
 void WorldBuilderWindow::Update()
 {
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(5.0f, 10.0f));
+
     ImGui::Begin(name.c_str());
 
-    if (ImGui::Button("Create new terrain"))
+    ImGui::SetWindowFontScale(1.2f);
+
+    if (ImGui::TreeNode("Terrain"))
     {
-        m_isCreateDefaultTerrainPopupActive = true;
+        if (ImGui::Button("Create new terrain"))
+        {
+            m_isCreateDefaultTerrainPopupActive = true;
+        }
+
+        
+
+        if (ImGui::Button("Create new noisemap terrain"))
+        {
+            m_isCreateDefaultNoisemapTerrainPopupActive = true;
+        }
+
+
+
+        ImGui::TreePop();
     }
 
     if (m_isCreateDefaultTerrainPopupActive)
@@ -33,17 +52,29 @@ void WorldBuilderWindow::Update()
         UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ, m_newDefaultTerrainSize);
     }
 
-    if (ImGui::Button("Create new noisemap terrain"))
-    {
-        m_isCreateDefaultNoisemapTerrainPopupActive = true;
-    }
-
     if (m_isCreateDefaultNoisemapTerrainPopupActive)
     {
         UpdateCreateDefaultNoisemapeTerrainPopup(m_newDefaultNoisemapTerrainSize, m_newDefaultNoisemapTerrainAmplitude);
     }
 
+    if (ImGui::TreeNode("Skybox"))
+    {
+        if (ImGui::Button("Space"))
+        {
+            Skybox::GetInstance().SetSpaceSkybox();
+        }
+        if (ImGui::Button("Blue Sky"))
+        {
+            Skybox::GetInstance().SetTexture();
+        }
+        ImGui::TreePop();
+    }
+
     ImGui::End();
+
+    ImGui::SetWindowFontScale(1.0f);
+    
+    ImGui::PopStyleVar();
 }
 
 void WorldBuilderWindow::UpdateCreateDefaultTerrainPopup(int& _xResolution, int& _zResolution, Vector2& _size)
