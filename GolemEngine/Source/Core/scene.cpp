@@ -138,7 +138,9 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
         gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
-        if (Collider* collider = gameObjects[i]->GetComponent<Collider>())
+
+        Collider* collider = gameObjects[i]->GetComponent<Collider>();
+        if (collider && collider->owner->IsSelected)
             collider->Draw(_width, _height, _camera);
     }
 }

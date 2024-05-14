@@ -92,6 +92,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
 					delete _gameObject;
+					EditorUi::selected->IsSelected = false;
 					EditorUi::selected = nullptr;
 				}
 				ImGui::EndPopup();
@@ -125,7 +126,10 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	
 			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			{
+				if (EditorUi::selected)
+					EditorUi::selected->IsSelected = false;
 				EditorUi::selected = _gameObject;
+				EditorUi::selected->IsSelected = true;
 			}
 		}
 	

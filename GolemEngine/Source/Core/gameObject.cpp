@@ -5,7 +5,7 @@
 #include "golemEngine.h"
 
 GameObject::GameObject()
-	: m_selected(false)
+	: IsSelected(false)
 {
 	name = "New GameObject";
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
@@ -15,7 +15,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
-	: name(_name), m_selected(false)
+	: name(_name), IsSelected(false)
 {
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
 	AddComponent(_transform);
