@@ -100,26 +100,15 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
-
+    // Create a buffer to store the output of the gpu
     GLint bufferSize;
     glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    // Store the output to the buffer
     std::vector<VertexGpu> verticesOut(bufferSize / sizeof(VertexGpu));
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bufferSize, verticesOut.data());
-    for (int i = 0; i < verticesOut.size(); i++)
+    
+    if (!verticesOut.empty())
     {
-        std::cout << verticesOut[i].position << std::endl;
-    }
-    std::cout << "." << std::endl;
-    
-    
-    // map the gpu data to the cpu
-    void* mappedData = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE);
-    
-    if (mappedData != nullptr)
-    {
-        // Transform the mapped data to a vertex
-        Vertex* verticesOut = static_cast<Vertex*>(mappedData);
-        
         // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
 
@@ -131,8 +120,7 @@ void Terrain::GetComputeShaderData(Camera* _camera)
             for (int i = 0; i < m_vertices.size(); ++i)
             {
                 // Get the original vertex position
-                // Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
-                Vector4 originalPosition = Vector4(m_vertices[i].position.x, m_vertices[i].position.y, m_vertices[i].position.z, 1.0f);
+                Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
                 // Apply the model matrix
                 Vector4 transformedPosition = modelMatrix * originalPosition;
                 // Set final position
@@ -142,6 +130,8 @@ void Terrain::GetComputeShaderData(Camera* _camera)
                 // Set min and max point of the heightmap
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
+
+                m_vertices[i].normal = verticesOut[i].normal;
             }
             CalculateNormals();
             
@@ -155,7 +145,7 @@ void Terrain::GetComputeShaderData(Camera* _camera)
     }
     else
     {
-        std::cout << "vertex ptr is null" << std::endl;
+        std::cout << "ERROR: vertex output from the compute shader is null" << std::endl;
     }
 
     // Don't forget to unbind the buffer after use
@@ -168,4 +158,9 @@ void Terrain::CalculateNormals()
     std::cout << "Vertex " << 1 << " position: " << m_vertices[1].position << "\tnormal : " << m_vertices[1].normal << "\ttexCoords : " << m_vertices[1].textureCoords << std::endl;
     std::cout << "Vertex " << 2 << " position: " << m_vertices[2].position << "\tnormal : " << m_vertices[2].normal << "\ttexCoords : " << m_vertices[2].textureCoords << std::endl;
     std::cout << "Vertex " << 3 << " position: " << m_vertices[3].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[3].textureCoords << std::endl;
+    // std::cout << "Vertex " << 4 << " position: " << m_vertices[4].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[4].textureCoords << std::endl;
+    // std::cout << "Vertex " << 5 << " position: " << m_vertices[5].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[5].textureCoords << std::endl;
+    // std::cout << "Vertex " << 6 << " position: " << m_vertices[6].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[6].textureCoords << std::endl;
+    // std::cout << "Vertex " << 7 << " position: " << m_vertices[7].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[7].textureCoords << std::endl;
+    // std::cout << "Vertex " << 8 << " position: " << m_vertices[8].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[8].textureCoords << std::endl;
 }
