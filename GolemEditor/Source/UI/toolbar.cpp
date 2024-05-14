@@ -1,10 +1,12 @@
 #include "UI/toolbar.h"
-
+#include <iostream>
 #include "Resource/sceneManager.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+
+#include "Resource/Rendering/skybox.h"
 
 
 void Toolbar::Update()
@@ -50,6 +52,26 @@ void Toolbar::Update()
                 SceneManager::CreateScene(sceneName);
             }
             
+            ImGui::EndMenu();
+        }
+
+        // Menu widget
+        if (ImGui::BeginMenu("Setting"))
+        {
+            ImGui::Text(" ");
+            if (ImGui::BeginMenu("Skybox"))
+            {
+                if (ImGui::Button("Space"))
+                {
+                    Skybox::GetInstance().SetSpaceSkybox();
+                }
+                if (ImGui::Button("Blue Sky"))
+                {
+                    Skybox::GetInstance().SetTexture();
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::Text(" ");
             ImGui::EndMenu();
         }
         
