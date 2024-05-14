@@ -121,7 +121,8 @@ void Transform::EditTransformGizmo()
 
     //create TRS matrix
     float mat[16];
-    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, &rotation.x, &scaling.x, mat);
+    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, 
+        &rotation.x, &scaling.x, mat);
 
     //used to manipulate the gizmos
     ImGuizmo::Manipulate(&cameraView.data[0][0],

@@ -112,8 +112,7 @@ void Scene::Update(float _width, float _height, Camera* _camera)
     shader->Use();
 
     shader->SetViewPos(_camera->position);
-    shader->SetEntityID(5);
-
+    
     UpdateLights(viking);
     UpdateGameObjects(_width, _height, _camera);
 }
@@ -135,9 +134,11 @@ void searchFolders(const std::filesystem::path& folderPath, const std::string& f
 
 void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 {
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
     std::string folderName = "Saves"; 
     std::vector<std::filesystem::path> foundPaths;
     std::filesystem::path currentPath = std::filesystem::current_path();
+    Shader* shader = resourceManager->Get<Shader>("default");
 
     // Test TODO
     if (isObjectInit)
@@ -151,9 +152,15 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
     for (int i = 0; i < m_gameObjects.size(); i++)
     {
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+        {
             meshRenderer->Draw(_width, _height, _camera);
+            shader->SetInt("entityID", m_gameObjects[i]->GetId());
+        }
+
         if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
+        {
             audio->Update();
+        }
     }
 }
 
