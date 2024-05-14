@@ -65,9 +65,9 @@ void BoxCollider::Draw(float _width, float _height, Camera* _camera)
 
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
-	Matrix4 Model = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
+	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
 	shader->SetVec3("size", m_size);
-	shader->SetMat4("model", Model);
+	shader->SetMat4("model", modelMat);
 	shader->SetMat4("view", view);
 	shader->SetMat4("projection", projection);
 
@@ -75,4 +75,5 @@ void BoxCollider::Draw(float _width, float _height, Camera* _camera)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBindVertexArray(0);
 }

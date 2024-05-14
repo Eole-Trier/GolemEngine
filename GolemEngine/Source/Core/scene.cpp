@@ -50,7 +50,7 @@ void Scene::InitDefaultScene()
 
     // Create a viking room model
     std::string vikingName = "viking";
-    Transform* vikingTransform = new Transform(Vector3(5, 0, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* vikingText = resourceManager->Get<Texture>("viking_room.jpg");
     Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
@@ -279,7 +279,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
 
 void Scene::AddLight(Light* _light)
 {
-    // TODO remove and put in lights
     if (PointLight* pL = dynamic_cast<PointLight*>(_light))
     {
         m_pointLights.push_back(pL);

@@ -103,5 +103,4 @@ void GameObject::AddComponent(Component* _type)
 {	
 	m_components.push_back(_type);
 	_type->owner = this;
-	return;
 }

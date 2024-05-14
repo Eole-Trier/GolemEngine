@@ -86,6 +86,7 @@ void Collider::SetModel(Model* _model)
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 const char* Collider::GetModelPath()
