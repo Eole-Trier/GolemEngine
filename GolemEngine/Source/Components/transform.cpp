@@ -119,31 +119,32 @@ void Transform::EditTransformGizmo()
     float snapValue = 0.2f;
     float snapValues[3] = {snapValue, snapValue, snapValue};
 
-    //Manipulate the gizmo with or without snap
+    float mat[16];
+    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, &rotation.x, &scaling.x, mat);
+
     ImGuizmo::Manipulate(&cameraView.data[0][0],
-                         &cameraProjection.data[0][0], currentOperation, currentMode,
-                         &objectTransform.data[0][0], nullptr, snap ? snapValues : nullptr);
+        &cameraProjection.data[0][0], currentOperation, currentMode,
+        mat, nullptr, snap ? snapValues : nullptr);
 
     objectTransform = objectTransform.Transpose();
 
-    Vector3 newPosition = objectTransform.Matrix4::TrsToPosition();
-    Vector3 newScale = objectTransform.Matrix4::TrsToScaling();
-    Vector3 newRotation = Vector3::QuaternionToEuler(objectTransform.Matrix4::TrsToRotation());
+    float newPos[3], newRot[3], newScale[3];
+    ImGuizmo::DecomposeMatrixToComponents(mat, newPos, newRot, newScale);
     
     //set the new values to the selected object's transform
     if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::TRANSLATE)
     {
-        localPosition = newPosition;
+        localPosition = Vector3(newPos[0], newPos[1], newPos[2]);
     }
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::SCALE)
     {
-        scaling = newScale;
+        scaling = Vector3(newScale[0], newScale[1], newScale[2]);
     }
 
     else if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::ROTATE)
     {
-        rotation = newRotation;
+        rotation = Vector3(newRot[0], newRot[1], newRot[2]);
     }
 }
 
