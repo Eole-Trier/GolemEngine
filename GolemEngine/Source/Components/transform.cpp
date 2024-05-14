@@ -119,15 +119,16 @@ void Transform::EditTransformGizmo()
     float snapValue = 0.2f;
     float snapValues[3] = {snapValue, snapValue, snapValue};
 
+    //create TRS matrix
     float mat[16];
     ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, &rotation.x, &scaling.x, mat);
 
+    //used to manipulate the gizmos
     ImGuizmo::Manipulate(&cameraView.data[0][0],
         &cameraProjection.data[0][0], currentOperation, currentMode,
         mat, nullptr, snap ? snapValues : nullptr);
 
-    objectTransform = objectTransform.Transpose();
-
+    //decompose the TRS matrix to get 3 vector3 : Translation, rotation, scaling
     float newPos[3], newRot[3], newScale[3];
     ImGuizmo::DecomposeMatrixToComponents(mat, newPos, newRot, newScale);
     
