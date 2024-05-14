@@ -18,10 +18,20 @@
 using json = nlohmann::json;
 
 
+struct VertexGpu
+{
+    Vector3 position;
+    float padding1;
+    Vector3 normal;
+    float padding2;
+    Vector2 textureCoords;
+    Vector2 padding3;
+};
+
 class Terrain : public GameObject
 {
 protected:
-    std::vector<Vertex> m_vertices;
+    std::vector<VertexGpu> m_vertices;
     std::vector<int> m_indices;
     unsigned int m_vao;
     unsigned int m_vbo;

@@ -28,7 +28,7 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
         {
             unsigned int noisemapValue = (noisemap + (i + xResolution * j))[0];
             // Set the vertex position
-            Vertex vertex;
+            VertexGpu vertex;
             vertex.position.x =(i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.z =(j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
             vertex.position.y = noisemapValue / 255.0f;

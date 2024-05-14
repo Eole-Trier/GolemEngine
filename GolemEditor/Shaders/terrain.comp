@@ -2,9 +2,16 @@
 
 struct Vertex {
     vec3 position;
+    float padding1;
     vec3 normal;
+    float padding2;
     vec2 textureCoords;
+    vec2 padding3;
 };
+
+//struct Vertex {
+//    float data[8];
+//};
 
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
@@ -21,5 +28,8 @@ void main()
     uint currentIndex = gl_GlobalInvocationID.x;
     
     verticesOut[currentIndex] = verticesIn[currentIndex];
-    verticesOut[currentIndex].normal.y = 2.0;
+    verticesOut[currentIndex].normal.y = 44.0;
+//    verticesOut[currentIndex].data[4] = 2.0;
+//    verticesOut[currentIndex].data[6] = 5.0;
+//    verticesOut[currentIndex].data[7] = 5.0;
 }

@@ -33,14 +33,14 @@ void Terrain::SetupMesh()
     // Bindings
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)0);
     glEnableVertexAttribArray(0);
     // texture attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoords));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, textureCoords));
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
@@ -49,13 +49,13 @@ void Terrain::SetupMesh()
     // Input buffer
     glGenBuffers(1, &m_ssboIn);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboIn);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
     // Output buffer
     glGenBuffers(1, &m_ssboOut);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(Vertex), m_vertices.data(), GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboOut);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
     
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
@@ -100,6 +100,18 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
+
+    GLint bufferSize;
+    glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    std::vector<VertexGpu> verticesOut(bufferSize / sizeof(VertexGpu));
+    glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bufferSize, verticesOut.data());
+    for (int i = 0; i < verticesOut.size(); i++)
+    {
+        std::cout << verticesOut[i].position << std::endl;
+    }
+    std::cout << "." << std::endl;
+    
+    
     // map the gpu data to the cpu
     void* mappedData = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_WRITE);
     
@@ -119,7 +131,8 @@ void Terrain::GetComputeShaderData(Camera* _camera)
             for (int i = 0; i < m_vertices.size(); ++i)
             {
                 // Get the original vertex position
-                Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
+                // Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
+                Vector4 originalPosition = Vector4(m_vertices[i].position.x, m_vertices[i].position.y, m_vertices[i].position.z, 1.0f);
                 // Apply the model matrix
                 Vector4 transformedPosition = modelMatrix * originalPosition;
                 // Set final position
@@ -129,11 +142,6 @@ void Terrain::GetComputeShaderData(Camera* _camera)
                 // Set min and max point of the heightmap
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
-
-                // std::cout << verticesOut[i].normal << std::endl;
-                // Retrieve the normals
-                // m_vertices[i].normal = verticesOut[i].normal;
-                    
             }
             CalculateNormals();
             
@@ -156,8 +164,8 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
 void Terrain::CalculateNormals()
 {
-    std::cout << "Vertex " << 0 << ". position: " << m_vertices[0].position << std::endl;
-    std::cout << "Vertex " << 1 << ". position: " << m_vertices[1].position << std::endl;
-    std::cout << "Vertex " << 2 << ". position: " << m_vertices[2].position << std::endl;
-    std::cout << "Vertex " << 3 << ". position: " << m_vertices[3].position << std::endl;
+    std::cout << "Vertex " << 0 << " position: " << m_vertices[0].position << "\tnormal : " << m_vertices[0].normal << "\ttexCoords : " << m_vertices[0].textureCoords << std::endl;
+    std::cout << "Vertex " << 1 << " position: " << m_vertices[1].position << "\tnormal : " << m_vertices[1].normal << "\ttexCoords : " << m_vertices[1].textureCoords << std::endl;
+    std::cout << "Vertex " << 2 << " position: " << m_vertices[2].position << "\tnormal : " << m_vertices[2].normal << "\ttexCoords : " << m_vertices[2].textureCoords << std::endl;
+    std::cout << "Vertex " << 3 << " position: " << m_vertices[3].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[3].textureCoords << std::endl;
 }
