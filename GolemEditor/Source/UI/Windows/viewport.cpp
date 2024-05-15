@@ -9,7 +9,6 @@
 #include "Resource/sceneManager.h"
 #include "Utils/tools.h"
 #include "Inputs/inputManager.h"
-#include "Core/scene.h"
 #include "UI/EditorUi.h"
 #include "vector4.h"
 #include "imgui_impl_glfw.h"
@@ -39,7 +38,6 @@ void Viewport::Update()
     {
         g_isPlayTesting = true;
     }
-
 
     auto viewportOffset = ImGui::GetCursorPos();
 
@@ -80,7 +78,7 @@ void Viewport::Update()
                     EditorUi::selected = objects[i];
                 }
 
-                else if (pixelData == 0)
+                else if (pixelData >= 1000000)
                 {
                     EditorUi::selected = nullptr;
                 }

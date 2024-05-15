@@ -25,6 +25,7 @@
 #include "utils.h"
 #include "Utils/tools.h"
 #include "Wrappers/windowWrapper.h"
+#include "Core/gameobject.h"
 
 
 using json = nlohmann::json;
@@ -145,6 +146,9 @@ void Scene::UpdateTerrains(Camera* _camera)
 
 void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 {
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    Shader* shader = resourceManager->Get<Shader>("default_shader");
+
     if (isNewObjectDropped)
     {
         CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
@@ -156,12 +160,18 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
+        shader->SetInt("entityID", gameObjects[i]->GetId());
+
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
+        {
             meshRenderer->Draw(_width, _height, _camera);
+        }
 
         Collider* collider = gameObjects[i]->GetComponent<Collider>();
         if (collider && collider->owner->IsSelected)
+        {
             collider->Draw(_width, _height, _camera);
+        }
     }
 }
 
@@ -369,6 +379,11 @@ std::string Scene::GetFileName(const std::string& _filePath)
 {
     std::filesystem::path path(_filePath);
     return path.stem().string();
+}
+
+const std::vector<GameObject*>& Scene::GetGameObjects()
+{
+    return gameObjects;
 }
 
 GameObject* Scene::GetWorld()

@@ -60,7 +60,7 @@ public:
 
 	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id);
 
-	static void CreateRenderBuffer(int _width, int _height);
+	static void CreateRenderBuffer(int _width, int _height, unsigned int _rbo);
 	// Used to clear a buffer for the next draw
 	static void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
