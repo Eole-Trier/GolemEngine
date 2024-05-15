@@ -235,10 +235,16 @@ void PhysicSystem::DeactivateBody(BodyID _bodyId, Vector3 _position)
 	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
 }
 
-void PhysicSystem::AddForce(BodyID _bodyId, const Vector3 _force)
+void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_force));
+	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_velocity));
+}
+
+void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.AddForce(_bodyId, ToJph(_force * _power));
 }
 
 void PhysicSystem::SetSphereShape(BodyID _bodyId, float _radius)
