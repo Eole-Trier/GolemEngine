@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "dll.h"
 #include "Resource/Rendering/texture.h"

@@ -19,7 +19,6 @@ struct PointLight
 struct DirLight
 {
     vec3 direction;
-    
     vec4 ambient;
     vec4 diffuse;
     vec4 specular;

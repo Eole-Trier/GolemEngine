@@ -310,7 +310,10 @@ Matrix4 Matrix4::LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up)
 		Z.x, Z.y, Z.z, 0,
 		0, 0, 0, 1
 	);
-	temp = temp.Translate(_cameraPos * -1);
+
+	temp.data[0][3] = Vector3::Dot(X, _cameraPos) * -1;
+	temp.data[1][3] = Vector3::Dot(Y, _cameraPos) * -1;
+	temp.data[2][3] = Vector3::Dot(Z, _cameraPos) * -1;
 
 	return temp;
 }

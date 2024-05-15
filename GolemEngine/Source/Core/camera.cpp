@@ -179,3 +179,8 @@ float Camera::GetFar()
 {
     return m_far;
 }
+
+Vector3 Camera::GetFront()
+{
+    return m_front;
+}

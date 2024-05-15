@@ -129,6 +129,15 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     PhysicSystem::Update();
     PhysicSystem::PostUpdate();
 
+    shader->SetViewPos(_camera->position);
+    
+    UpdateLights(viking);
+    UpdateGameObjects(_width, _height, _camera);
+}
+
+void searchFolders(const std::filesystem::path& folderPath, const std::string& folderName, std::vector<std::filesystem::path>& foundPaths) 
+{
+    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) 
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
@@ -137,6 +146,14 @@ void Scene::Update(Camera* _camera, float _width, float _height)
 
 void Scene::UpdateTerrains(Camera* _camera)
 {
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    std::string folderName = "Saves"; 
+    std::vector<std::filesystem::path> foundPaths;
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    Shader* shader = resourceManager->Get<Shader>("default");
+
+    // Test TODO
+    if (isObjectInit)
     for (int i = 0; i < m_terrains.size(); i++)
     {
         m_terrains[i]->Draw(_camera);
@@ -156,6 +173,17 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 
     for (int i = 0; i < gameObjects.size(); i++)
     {
+        shader->SetInt("entityID", m_gameObjects[i]->GetId());
+
+        if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
+        {
+            meshRenderer->Draw(_width, _height, _camera);
+        }
+
+        if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
+        {
+            audio->Update();
+        }
         gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
