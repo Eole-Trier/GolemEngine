@@ -14,7 +14,7 @@ BoxCollider::BoxCollider()
 	: m_size(Vector3(1.f, 1.f, 1.f))
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("cube.obj");
+	SetModelPath("cube");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 
@@ -22,7 +22,7 @@ BoxCollider::BoxCollider(Vector3 _size)
 	: m_size(_size)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("cube.obj");
+	SetModelPath("cube");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 

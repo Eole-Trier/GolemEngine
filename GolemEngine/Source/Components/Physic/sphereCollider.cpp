@@ -18,7 +18,7 @@ SphereCollider::SphereCollider()
 	: m_radius(1.f)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("sphere.obj");
+	SetModelPath("sphere");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 
@@ -26,7 +26,7 @@ SphereCollider::SphereCollider(float _radius)
 	: m_radius(_radius)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("sphere.obj");
+	SetModelPath("sphere");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 

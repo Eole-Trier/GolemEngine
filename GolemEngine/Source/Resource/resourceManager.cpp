@@ -67,6 +67,12 @@ void ResourceManager::CreateAndLoadResources()
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
 
+    Model* sphere = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
+    sphere->Load(sphere->path.c_str());
+
+    Model* cube = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
+    cube->Load(cube->path.c_str());
+
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 

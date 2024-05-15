@@ -53,14 +53,19 @@ void Scene::InitDefaultScene()
     Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* vikingText = resourceManager->Get<Texture>("viking_room.jpg");
-    Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
+    Model* vikingRoom = resourceManager->Get<Model>("cube.obj");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-    BoxCollider* box = new BoxCollider(Vector3(1.f));
-    vikingGo->AddComponent(box);
-    box->Begin();
     Audio* audio1 = new Audio("music_01.wav");
     vikingGo->AddComponent(audio1);
+
+    std::string vikingName2 = "viking2";
+    Transform* vikingTransform2 = new Transform(Vector3(0, -3, -5), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* vikingGo2 = new GameObject(vikingName2, vikingTransform2);
+    Texture* vikingText2 = resourceManager->Get<Texture>("viking_room.jpg");
+    Model* vikingRoom2 = resourceManager->Get<Model>("cube.obj");
+    Mesh* vikingMesh2 = new Mesh(vikingRoom2, vikingText2, defaultShader);
+    vikingGo2->AddComponent(new MeshRenderer(vikingMesh2));
 
     // Create a sphere model
     std::string ballBaldName = "ball_bald";
@@ -70,9 +75,7 @@ void Scene::InitDefaultScene()
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-    SphereCollider* sc = new SphereCollider(1.f);
-    ballBaldGo->AddComponent(sc);
-    sc->Begin();
+   
 
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
