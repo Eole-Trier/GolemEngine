@@ -89,6 +89,15 @@ void ResourceManager::CreateAndLoadResources()
     skyboxShader->SetInt("skybox", 0);
 }
 
+void ResourceManager::DeleteAllResouces()
+{
+    for (auto& resource : m_resources)
+    {
+        delete resource.second;
+    }
+}
+
+
 std::string ResourceManager::GetDefaultShader()
 {
     return m_defaultShader;

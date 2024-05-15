@@ -22,13 +22,14 @@ private:
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
 
-	std::unordered_map<std::string, Resource*> m_resources;
+	static inline std::unordered_map<std::string, Resource*> m_resources;
 private:
 	ResourceManager() {}
 
 public:
 	static ResourceManager* GetInstance();
 	static void CreateAndLoadResources();
+	static void DeleteAllResouces();
 
 	static std::string GetDefaultShader();
 	static std::string GetDefaultTerrainShader();
