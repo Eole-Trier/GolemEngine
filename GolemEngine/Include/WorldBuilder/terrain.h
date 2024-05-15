@@ -28,7 +28,7 @@ struct VertexGpu
     Vector2 padding3;
 };
 
-class Terrain : public GameObject
+class GOLEM_ENGINE_API Terrain : public GameObject
 {
 protected:
     std::vector<VertexGpu> m_vertices;

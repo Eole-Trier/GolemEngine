@@ -1,18 +1,20 @@
 #pragma once
 
+#include "terrain.h"
+
 #include <nlohmann/json.hpp>
 
-#include "terrain.h"
+#include "dll.h"
 
 using json = nlohmann::json;
 
 
-class DefaultTerrain : public Terrain
+class GOLEM_ENGINE_API DefaultTerrain : public Terrain
 {
 public:
-    GOLEM_ENGINE_API DefaultTerrain(std::string _name, Transform* _transform);
+    DefaultTerrain(std::string _name, Transform* _transform);
     
-    GOLEM_ENGINE_API void Init(int _xResolution, int _zResolution) override;
+    void Init(int _xResolution, int _zResolution) override;
 
     
     // Define serialization and deserialization functions manually because the

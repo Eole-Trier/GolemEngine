@@ -2,12 +2,13 @@
 
 #include "golemEngine.h"
 #include "WorldBuilder/worldBuilder.h"
+#include "Resource/sceneManager.h"
+#include "Utils/tools.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
 #include "ImGuiFileDialog-master/dirent/dirent.h"
-#include "Utils/tools.h"
 
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_TITLE = "Specify new terrain dimensions";
 const std::string CREATE_DEFAULT_TERRAIN_POPUP_MESSAGE = "Enter terrain dimensions";
@@ -30,7 +31,6 @@ void WorldBuilderWindow::Update()
     {
         m_isCreateDefaultTerrainPopupActive = true;
     }
-
     if (m_isCreateDefaultTerrainPopupActive)
     {
         UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ);
@@ -40,10 +40,18 @@ void WorldBuilderWindow::Update()
     {
         m_isCreateDefaultNoisemapTerrainPopupActive = true;
     }
-
     if (m_isCreateDefaultNoisemapTerrainPopupActive)
     {
         UpdateCreateDefaultNoisemapeTerrainPopup();
+    }
+
+    if (dynamic_cast<Terrain*>(GolemEngine::selectedGameObject))
+    {
+        if (ImGui::Button("Calculate normals"))
+        {
+            Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
+            selectedTerrain->CalculateNormals();
+        }
     }
 
     ImGui::End();

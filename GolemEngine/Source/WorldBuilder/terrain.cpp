@@ -136,7 +136,6 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
                 m_vertices[i].normal = verticesOut[i].normal;
             }
-            CalculateNormals();
             
             m_yMin = yMin;
             m_yMax = yMax;
@@ -176,6 +175,6 @@ void Terrain::CalculateNormals()
     // {
     //     vertex.normal = vertex.normal.Normalize();
     // }
-    std::cout << "Vertex " << 555 << "position: " << m_vertices[555].position << "\tnormal: " << m_vertices[555].normal << std::endl;
     // }
+    std::cout << name << std::endl;
 }

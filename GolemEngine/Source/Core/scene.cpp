@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 
 #include "golemEngine.h"
+#include "imgui.h"
 #include "utils.h"
 #include "Core/gameobject.h"
 #include "Resource/Rendering/mesh.h"
