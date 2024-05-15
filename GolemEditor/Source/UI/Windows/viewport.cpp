@@ -19,6 +19,7 @@
 #include "ImGuizmo.h"
 #include "MathsLib/utils.h"
 #include "Components/transform.h"
+#include "ImGuizmo.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -56,13 +57,33 @@ void Viewport::Update()
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+    std::vector<GameObject*> objects = SceneManager::GetCurrentScene()->GetGameObjects();
+
+    if (!ImGuizmo::IsOver())
     {
-        GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
-        int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        Log::Print("pixelID = %d", pixelData);
-        GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+        {
+            GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
+            int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
+            Log::Print("pixelID = %d", pixelData);
+            GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
+
+            for (int i = 1; i < objects.size(); i++)
+            {
+                std::cout << "object name : " << objects[i]->name << "id : " << objects[i]->GetId() << std::endl;;
+                if (objects[i]->GetId() == pixelData)
+                {
+                    EditorUi::selected = objects[i];
+                }
+
+                else if (pixelData == 0)
+                {
+                    EditorUi::selected = nullptr;
+                }
+            }
+        }
     }
+    
 
     ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
@@ -81,7 +102,7 @@ void Viewport::Update()
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Update camera speed depending on scroll
         m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
-        InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change bt has a value
+        InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change but has a value
         m_camera->ProcessMouseInput();
     }
 

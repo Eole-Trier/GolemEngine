@@ -151,10 +151,11 @@ void Scene::UpdateGameObjects(float _width, float _height, Camera* _camera)
 
     for (int i = 0; i < m_gameObjects.size(); i++)
     {
+        shader->SetInt("entityID", m_gameObjects[i]->GetId());
+
         if (MeshRenderer* meshRenderer = m_gameObjects[i]->GetComponent<MeshRenderer>())
         {
             meshRenderer->Draw(_width, _height, _camera);
-            shader->SetInt("entityID", m_gameObjects[i]->GetId());
         }
 
         if (Audio* audio = m_gameObjects[i]->GetComponent<Audio>())
