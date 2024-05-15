@@ -59,7 +59,6 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
-    <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Reflection\classManager.cpp" />
     <ClCompile Include="Source\Reflection\displayType.cpp" />
     <ClCompile Include="Source\Resource\guid.cpp">
@@ -197,7 +196,6 @@
     <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
     <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
     <ClInclude Include="Include\Physic\physicSystem.h" />
-    <ClInclude Include="Include\Physic\bodiesManager.h" />
     <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />

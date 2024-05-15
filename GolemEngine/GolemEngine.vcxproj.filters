@@ -52,7 +52,6 @@
     <ClCompile Include="Source\Core\mesh.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
     <ClCompile Include="Source\Components\Physic\sphereCollider.cpp" />
-    <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Physic\physicSystem.cpp" />
     <ClCompile Include="Source\Physic\contactManager.cpp" />
     <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
@@ -61,16 +60,13 @@
     <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
     <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
     <ClCompile Include="Source\Components\Physic\collider.cpp" />
-    <ClCompile Include="External\imguizmo\GraphEditor.cpp" />
-    <ClCompile Include="External\imguizmo\ImCurveEdit.cpp" />
-    <ClCompile Include="External\imguizmo\ImGradient.cpp" />
-    <ClCompile Include="External\imguizmo\ImGuizmo.cpp" />
-    <ClCompile Include="External\imguizmo\ImSequencer.cpp" />
     <ClCompile Include="External\imgui\ImGradient.cpp" />
     <ClCompile Include="External\imgui\ImCurveEdit.cpp" />
     <ClCompile Include="External\imgui\GraphEditor.cpp" />
     <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="External\imgui\ImGuizmo.cpp" />
+    <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
+    <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -137,7 +133,6 @@
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />
     <ClInclude Include="Include\Components\Light\spotLight.h" />
-    <ClInclude Include="Include\Refl\refl.hpp" />
     <ClInclude Include="Include\Resource\Rendering\skybox.h" />
     <ClInclude Include="Include\Core\mesh.h" />
     <ClInclude Include="External\glm\qualifier.hpp" />
@@ -156,5 +151,21 @@
     <ClInclude Include="External\imgui\ImSequencer.h" />
     <ClInclude Include="External\imgui\ImGuizmo.h" />
     <ClInclude Include="External\imgui\ImZoomSlider.h" />
+    <ClInclude Include="Include\Components\Physic\boxCollider.h" />
+    <ClInclude Include="Include\Components\Physic\collider.h" />
+    <ClInclude Include="Include\Physic\bodyActivationManager.h" />
+    <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
+    <ClInclude Include="Include\Physic\contactManager.h" />
+    <ClInclude Include="Include\Physic\layers.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
+    <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
+    <ClInclude Include="Include\Physic\physicSystem.h" />
+    <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
+    <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
+    <ClInclude Include="Include\Resource\Rendering\mesh.h" />
+    <ClInclude Include="Include\Resource\tools.h" />
+    <ClInclude Include="Include\WorldBuilder\terrain.h" />
+    <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
+    <ClInclude Include="Include\Utils\tools.h" />
   </ItemGroup>
 </Project>

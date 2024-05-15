@@ -26,6 +26,7 @@
 #include "Utils/tools.h"
 #include "Wrappers/windowWrapper.h"
 
+
 using json = nlohmann::json;
 
 Scene::Scene(std::string _name, bool _isEmpty)
@@ -56,23 +57,26 @@ void Scene::InitDefaultScene()
     Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-    BoxCollider* box = new BoxCollider(Vector3(1.f));
-    vikingGo->AddComponent(box);
-    box->Begin();
     Audio* audio1 = new Audio("music_01.wav");
     vikingGo->AddComponent(audio1);
 
+    std::string vikingName2 = "viking2";
+    Transform* vikingTransform2 = new Transform(Vector3(0, -3, -5), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* vikingGo2 = new GameObject(vikingName2, vikingTransform2);
+    Texture* vikingText2 = resourceManager->Get<Texture>("aoi_todo.jpg");
+    Model* vikingRoom2 = resourceManager->Get<Model>("cube.obj");
+    Mesh* vikingMesh2 = new Mesh(vikingRoom2, vikingText2, defaultShader);
+    vikingGo2->AddComponent(new MeshRenderer(vikingMesh2));
+
     // Create a sphere model
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(0, 3, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("aoi_todo.jpg");
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-    SphereCollider* sc = new SphereCollider(1.f);
-    ballBaldGo->AddComponent(sc);
-    sc->Begin();
+   
 
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
@@ -121,6 +125,10 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     
     UpdateGameObjects(_camera, _width, _height);    // Always at least one gameobject (world)
 
+    PhysicSystem::PreUpdate();
+    PhysicSystem::Update();
+    PhysicSystem::PostUpdate();
+
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
@@ -146,13 +154,15 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 
     m_world->transform->UpdateSelfAndChilds();
 
-    //PhysicSystem::Update();
-
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
             meshRenderer->Draw(_width, _height, _camera);
+
+        Collider* collider = gameObjects[i]->GetComponent<Collider>();
+        if (collider && collider->owner->IsSelected)
+            collider->Draw(_width, _height, _camera);
     }
 }
 
@@ -187,7 +197,6 @@ bool Scene::IsNameExists(const std::string& _name)
             return true;
         }
     }
-
     return false;
 }
 
@@ -231,7 +240,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
         name = originalName + "_" + std::to_string(suffix++);
     }
 
-    Model* model = resourceManager->Get<Model>(_modelName);
+    Model* model = resourceManager->Get<Model>(_modelName + ".obj");
     Mesh* mesh = new Mesh(model, texture, shader);
     GameObject* gameObject = new GameObject(name, transform);
     gameObject->AddComponent(new MeshRenderer(mesh));
@@ -291,7 +300,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
 
 void Scene::AddLight(Light* _light)
 {
-    // TODO remove and put in lights
     if (PointLight* pL = dynamic_cast<PointLight*>(_light))
     {
         m_pointLights.push_back(pL);
@@ -323,22 +331,22 @@ void Scene::DeleteLight(Light* _light)
     }
 }
 
-std::vector<Terrain*> Scene::GetTerrains()
+std::vector<Terrain*>& Scene::GetTerrains()
 {
     return  m_terrains;
 }
 
-std::vector<DirectionalLight*> Scene::GetDirectionalLights()
+const std::vector<DirectionalLight*>& Scene::GetDirectionalLights()
 {
     return m_dirLights;
 }
 
-std::vector<PointLight*> Scene::GetPointLights()
+const std::vector<PointLight*>& Scene::GetPointLights()
 {
     return m_pointLights;
 }
 
-std::vector<SpotLight*> Scene::GetSpotLights()
+const std::vector<SpotLight*>& Scene::GetSpotLights()
 {
     return m_spotLights;
 }

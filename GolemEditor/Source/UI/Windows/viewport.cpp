@@ -92,7 +92,7 @@ void Viewport::Update()
 
     if (isDisplayed)
     {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize());
     }
 
     else

@@ -61,17 +61,27 @@ void ResourceManager::CreateAndLoadResources()
     m_defaultModel = "default_model";
     m_defaultShader = "default_shader";
 
-    // TODO set default model and texture to cube and default texture
-
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
 
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
 
+    // Needed to avoid same resource reference problem for colliders
+    Model* sphere = resourceManager->Create<Model>("sphereCollider.obj", Tools::FindFile("sphere.obj"));
+    sphere->Load(sphere->path.c_str());
+
+    Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
+    cube->Load(cube->path.c_str());
+
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));
     defaultShader->SetVertexAndFragmentShader(defaultShader->path.c_str(), Tools::FindFile("default.fs").c_str());
 
+    Shader* sphereColliderShader = resourceManager->Create<Shader>("sphereCollider", Tools::FindFile("sphereCollider.vs"));
+    sphereColliderShader->SetVertexAndFragmentShader(sphereColliderShader->path.c_str(), Tools::FindFile("sphereCollider.fs").c_str());
+
+    Shader* boxColliderShader = resourceManager->Create<Shader>("boxCollider", Tools::FindFile("boxCollider.vs"));
+    boxColliderShader->SetVertexAndFragmentShader(boxColliderShader->path.c_str(), Tools::FindFile("boxCollider.fs").c_str());
     Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
     skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
     Skybox::GetInstance().SetTexture();

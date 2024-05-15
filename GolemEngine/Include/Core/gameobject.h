@@ -20,12 +20,12 @@ class GOLEM_ENGINE_API GameObject
 private:
 	size_t m_id;
 	std::vector<Component*> m_components;
-	bool m_selected;
 
 public:
 	Guid guid;
 	std::string name;
 	Transform* transform = nullptr;
+	bool IsSelected;
 
 public:
 	GameObject();
@@ -33,6 +33,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	_NODISCARD bool HasComponent(const std::string& _name) const;
 
 	size_t GetId();
 	void SetId(size_t _id);
@@ -43,6 +44,7 @@ public:
 	void RemoveComponent(Component* _c);
 	void DeleteAllComponents();
 
+	void AddComponent(Component* _type);
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);
 	template<typename TypeT>

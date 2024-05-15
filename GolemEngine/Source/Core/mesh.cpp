@@ -31,6 +31,7 @@ void Mesh::SetupMesh()
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);  
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 Mesh::Mesh(Model* _model, Texture* _texture, Shader* _shader)

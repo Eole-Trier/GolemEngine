@@ -76,5 +76,3 @@ void Model::Load(const char* _modelPath)
     }
     Log::Print("Succeed to load model: %s", _modelPath);
 }
-
-

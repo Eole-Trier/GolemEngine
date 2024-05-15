@@ -41,7 +41,6 @@ Transform::~Transform()
     owner->DeleteTransform(this);
 }
 
-
 void Transform::Update()
 {}
 

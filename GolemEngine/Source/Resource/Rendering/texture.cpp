@@ -23,6 +23,8 @@ Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, m_width, m_height, 0, _format, GL_UNSIGNED_BYTE, NULL);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Texture::~Texture()
@@ -54,9 +56,15 @@ void Texture::Load(const char* _filename)
         Log::Print("Failed to load texture %s", _filename);
     }
     stbi_image_free(data);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::Use()
 {
     glBindTexture(GL_TEXTURE_2D, id);
+}
+
+void Texture::UnUse()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
