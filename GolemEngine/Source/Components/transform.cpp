@@ -133,7 +133,7 @@ void Transform::EditTransformGizmo()
     float newPos[3], newRot[3], newScale[3];
     ImGuizmo::DecomposeMatrixToComponents(mat, newPos, newRot, newScale);
     
-    //set the new values to the selected object's transform
+    //set the new values to the selected object's transform and check if used to avoid gizmos disapearance
     if (ImGuizmo::IsUsing() && currentOperation == ImGuizmo::TRANSLATE)
     {
         localPosition = Vector3(newPos[0], newPos[1], newPos[2]);
