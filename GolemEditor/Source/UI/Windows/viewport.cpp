@@ -65,12 +65,10 @@ void Viewport::Update()
         {
             GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
             int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-            Log::Print("pixelID = %d", pixelData);
             GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
 
             for (int i = 1; i < objects.size(); i++)
             {
-                std::cout << "object name : " << objects[i]->name << "id : " << objects[i]->GetId() << std::endl;;
                 if (objects[i]->GetId() == pixelData)
                 {
                     EditorUi::selected = objects[i];
@@ -84,7 +82,6 @@ void Viewport::Update()
         }
     }
     
-
     ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);

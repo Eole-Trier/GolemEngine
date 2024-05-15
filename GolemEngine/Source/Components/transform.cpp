@@ -129,7 +129,7 @@ void Transform::EditTransformGizmo()
         &cameraProjection.data[0][0], currentOperation, currentMode,
         mat, nullptr, snap ? snapValues : nullptr);
 
-    //decompose the TRS matrix to get 3 vector3 : Translation, rotation, scaling
+    //decompose the TRS matrix to get 3 vector3 : translation, rotation, scaling
     float newPos[3], newRot[3], newScale[3];
     ImGuizmo::DecomposeMatrixToComponents(mat, newPos, newRot, newScale);
     
