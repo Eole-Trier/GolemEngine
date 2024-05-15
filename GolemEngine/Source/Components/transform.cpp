@@ -166,4 +166,3 @@ const std::vector<Transform*>& Transform::GetChildren() const
 {
     return m_children;
 }
-

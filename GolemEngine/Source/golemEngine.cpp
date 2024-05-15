@@ -47,12 +47,14 @@ void GolemEngine::Update()
     SceneManager::GetCurrentScene()->Update(m_camera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
-
-    GraphicWrapper::BindPlaySceneFrambuffer();
-    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
-    GraphicWrapper::ClearBuffer();
-    SceneManager::GetCurrentScene()->Update(m_playerCamera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-    GraphicWrapper::UnbindFramebuffer();
+    if (m_gameMode)
+    {
+        GraphicWrapper::BindPlaySceneFrambuffer();
+        GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
+        GraphicWrapper::ClearBuffer();
+        SceneManager::GetCurrentScene()->Update(m_playerCamera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+        GraphicWrapper::UnbindFramebuffer();
+    }
 }
 
 void GolemEngine::Close()
@@ -79,4 +81,17 @@ float GolemEngine::GetDeltaTime()
 float GolemEngine::GetTime()
 {
     return static_cast<float>(glfwGetTime());
+}
+
+bool GolemEngine::GetGameMode()
+{
+    return m_gameMode;
+}
+
+void GolemEngine::SetGameMode()
+{
+    if (!m_gameMode)
+        m_gameMode = true;
+    else
+        m_gameMode = false;
 }

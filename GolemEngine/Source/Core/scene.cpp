@@ -118,7 +118,7 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     {
         UpdateTerrains(_camera); 
     }
-    
+
     UpdateGameObjects(_camera, _width, _height);    // Always at least one gameobject (world)
 
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())

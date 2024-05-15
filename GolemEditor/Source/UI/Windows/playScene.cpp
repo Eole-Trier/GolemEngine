@@ -2,6 +2,8 @@
 #include "Wrappers/graphicWrapper.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "golemEngine.h"
+
 bool g_isPlayTesting = false;
 
 PlayScene::PlayScene(std::string _name)
@@ -25,6 +27,7 @@ void PlayScene::Update()
         if (ImGui::SmallButton("X"))
         {
             g_isPlayTesting = false;
+            GolemEngine::SetGameMode();
         }
         ImGui::SetCursorPosX(0);
         ImGui::Image((ImTextureID)GraphicWrapper::GetPlaySceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));

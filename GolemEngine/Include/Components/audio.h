@@ -51,7 +51,7 @@ private:
 
 
     // Define serialization and deserialization functions manually because the
-// macro is not used due to the pointer member variable.
+    // macro is not used due to the pointer member variable.
     void ToJson(json& j) const
     {
         j = json

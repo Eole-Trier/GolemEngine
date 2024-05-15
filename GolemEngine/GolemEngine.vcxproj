@@ -36,6 +36,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
     <ClCompile Include="Source\Components\Light\directional.cpp" />
     <ClCompile Include="Source\Components\Light\light.cpp" />
     <ClCompile Include="Source\Components\Light\point.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="External\imgui\ImZoomSlider.h" />
     <ClInclude Include="Include\Components\audio.h" />
     <ClInclude Include="Include\Components\component.h" />
+    <ClInclude Include="Include\Components\GameClasses\movement.h" />
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />

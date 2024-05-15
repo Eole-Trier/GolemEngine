@@ -5,6 +5,7 @@
 #include "Components/Light/spotLight.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/audio.h"
+#include "Components/GameClasses/movement.h"
 
 const char* DisplayType::m_addComponentPopupId = "Components";
 const char* DisplayType::m_addComponentButtonName = "Add Component";
@@ -57,9 +58,21 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 	{
 		if (ImGui::MenuItem("Audio"))
 		{
-			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
+			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<Audio>())
 			{
 				_gameObject->AddComponent(new Audio);
+			}
+		}
+		ImGui::EndPopup();
+	}
+
+	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
+	{
+		if (ImGui::MenuItem("Movement"))
+		{
+			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<Movement>())
+			{
+				_gameObject->AddComponent(new Movement);
 			}
 		}
 		ImGui::EndPopup();
