@@ -12,7 +12,6 @@
 
 Transform::Transform()
 {
-    type = Type::TRANSFORM;
     m_parent = SceneManager::GetCurrentScene()->GetWorld()->transform;
     m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
     if (m_parent)
@@ -22,7 +21,6 @@ Transform::Transform()
 Transform::Transform(Transform* _parent)
     : m_parent(_parent)
 {
-    type = Type::TRANSFORM;
     m_localModel = Matrix4::TRS(Vector3(0, 0, 0), Quaternion::EulerToQuaternion(Vector3(0, 0, 0)), Vector3(1, 1, 1));
     if (m_parent)
         m_parent->AddChild(this);
@@ -32,7 +30,6 @@ Transform::Transform(Transform* _parent)
 Transform::Transform(Vector3 _position, Vector3 _rotation, Vector3 _scaling, Transform* _parent)
 	: localPosition(_position), rotation(_rotation), scaling(_scaling), m_parent(_parent)
 {
-    type = Type::TRANSFORM;
 	m_localModel = Matrix4::TRS(_position, Quaternion::EulerToQuaternion(_rotation), _scaling);
     if (m_parent)
       m_parent->AddChild(this);

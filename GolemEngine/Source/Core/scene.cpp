@@ -53,7 +53,7 @@ void Scene::InitDefaultScene()
     Transform* vikingTransform = new Transform(Vector3(0, 0, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo = new GameObject(vikingName, vikingTransform);
     Texture* vikingText = resourceManager->Get<Texture>("viking_room.jpg");
-    Model* vikingRoom = resourceManager->Get<Model>("cube.obj");
+    Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
     Audio* audio1 = new Audio("music_01.wav");
@@ -62,7 +62,7 @@ void Scene::InitDefaultScene()
     std::string vikingName2 = "viking2";
     Transform* vikingTransform2 = new Transform(Vector3(0, -3, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* vikingGo2 = new GameObject(vikingName2, vikingTransform2);
-    Texture* vikingText2 = resourceManager->Get<Texture>("viking_room.jpg");
+    Texture* vikingText2 = resourceManager->Get<Texture>("aoi_todo.jpg");
     Model* vikingRoom2 = resourceManager->Get<Model>("cube.obj");
     Mesh* vikingMesh2 = new Mesh(vikingRoom2, vikingText2, defaultShader);
     vikingGo2->AddComponent(new MeshRenderer(vikingMesh2));
@@ -71,7 +71,7 @@ void Scene::InitDefaultScene()
     std::string ballBaldName = "ball_bald";
     Transform* ballBaldTransform = new Transform(Vector3(0, 3, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("aoi_todo.jpg");
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));

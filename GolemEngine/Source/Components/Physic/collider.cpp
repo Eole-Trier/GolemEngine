@@ -6,7 +6,6 @@
 Collider::Collider()
 	: m_IsActivated(false), m_MotionType(MotionType::Static), m_model(nullptr), m_modelPath(nullptr)
 {
-	type = Type::COLLIDER;
 	PhysicSystem::AddCollider(this);
 }
 
