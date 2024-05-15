@@ -235,6 +235,26 @@ void PhysicSystem::DeactivateBody(BodyID _bodyId, Vector3 _position)
 	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
 }
 
+void PhysicSystem::SetPosition(BodyID _bodyId, Vector3 _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
+}
+
+void PhysicSystem::UpdatePosition(BodyID _bodyId, Vector3& _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	RVec3 position = bodyInterface.GetPosition(_bodyId);
+	_position = PhysicSystem::ToVector3(position);
+}
+
+
+void PhysicSystem::SetRotation(BodyID _bodyId, Vector3 _rotation)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetRotation(_bodyId, ToJph(Quaternion::EulerToQuaternion(_rotation)), EActivation::DontActivate);
+}
+
 void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -257,4 +277,13 @@ void PhysicSystem::SetBoxShape(BodyID _bodyId, Vector3 _size)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.SetShape(_bodyId, new BoxShape(ToJph(_size)), false, EActivation::Activate);
+}
+
+void PhysicSystem::DeleteBody(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.RemoveBody(_bodyId);
+
+	// Destroy the body. After this the sphere ID is no longer valid.
+	bodyInterface.DestroyBody(_bodyId);
 }

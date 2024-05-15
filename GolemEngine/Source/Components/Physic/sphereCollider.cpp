@@ -36,7 +36,6 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Begin()
 {
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_radius);
 }
 
@@ -48,7 +47,6 @@ void SphereCollider::PreUpdate()
 void SphereCollider::Update()
 {
 	Collider::Update();
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	PhysicSystem::SetSphereShape(id, m_radius);
 }
 

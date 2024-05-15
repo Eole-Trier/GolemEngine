@@ -32,8 +32,6 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::Begin()
 {
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-
 	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_size);
 }
 
@@ -45,7 +43,6 @@ void BoxCollider::PreUpdate()
 void BoxCollider::Update()
 {
 	Collider::Update();
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	PhysicSystem::SetBoxShape(id, m_size);
 }
 

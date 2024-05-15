@@ -11,12 +11,7 @@ Collider::Collider()
 
 Collider::~Collider()
 {
-	BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
-	// Remove the body from the physics system. Note that the body itself keeps all of its state and can be re-added at any time.
-	body_interface.RemoveBody(id);
-
-	// Destroy the body. After this the sphere ID is no longer valid.
-	body_interface.DestroyBody(id);
+	PhysicSystem::DeleteBody(id);
 	PhysicSystem::DeleteCollider(this);
 }
 
@@ -26,8 +21,6 @@ void Collider::Begin()
 
 void Collider::PreUpdate()
 {
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-
 	switch (m_MotionType)
 	{
 	case MotionType::Static:
@@ -50,8 +43,8 @@ void Collider::PreUpdate()
 		PhysicSystem::DeactivateBody(id, owner->transform->localPosition);
 	}
 
-	bodyInterface.SetPosition(id, PhysicSystem::ToJph(owner->transform->localPosition), EActivation::DontActivate);
-	bodyInterface.SetRotation(id, PhysicSystem::ToJph(Quaternion::EulerToQuaternion(owner->transform->rotation)), EActivation::DontActivate);
+	PhysicSystem::SetPosition(id, owner->transform->localPosition);
+	PhysicSystem::SetRotation(id, owner->transform->rotation);
 }
 
 void Collider::Update()
@@ -60,9 +53,7 @@ void Collider::Update()
 
 void Collider::PostUpdate()
 {
-	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-	RVec3 position = bodyInterface.GetPosition(id);
-	owner->transform->localPosition = PhysicSystem::ToVector3(position);
+	PhysicSystem::UpdatePosition(id, owner->transform->localPosition);
 }
 
 Model* Collider::GetModel()
