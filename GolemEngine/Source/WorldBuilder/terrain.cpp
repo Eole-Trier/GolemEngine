@@ -156,25 +156,159 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
 void Terrain::CalculateNormals()
 {
-    // for (int i = 0; i < m_indices.size() / 3; i += 3)
-    // {
-    //     VertexGpu v0 = m_vertices[m_indices[i]];
-    //     VertexGpu v1 = m_vertices[m_indices[i + 1]];
-    //     VertexGpu v2 = m_vertices[m_indices[i + 2]];
-    //
-    //     Vector3 edge1 = v1.position - v0.position;
-    //     Vector3 edge2 = v2.position - v0.position;
-    //     Vector3 normal = (Vector3::Cross(edge1, edge2)).Normalize();
-    //
-    //     v0.normal += normal;
-    //     v1.normal += normal;
-    //     v2.normal += normal;
-    // }
-    // //
-    // for (auto& vertex : m_vertices)
-    // {
-    //     vertex.normal = vertex.normal.Normalize();
-    // }
-    // }
-    std::cout << name << std::endl;
+    
+    for (int i = 0; i < xResolution; i++)
+    {
+        for (int j = 0; j < zResolution; j++)
+        {
+            if ((j == zResolution - 1) || (i == xResolution - 1))    // Check if we are on any edge
+            {
+                if ((j == zResolution - 1) && (i == xResolution - 1))    // Check if we are on last row and column
+                {
+                    std::cout << j + i * xResolution << " is on the last row and column" << std::endl;
+
+                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
+                    VertexGpu topVertex = m_vertices[j - 1 + i * xResolution];
+                    VertexGpu leftVertex = m_vertices[j + (i - 1) * xResolution];
+
+                    Vector3 top = topVertex.position - currentVertex.position;
+                    Vector3 left = leftVertex.position - currentVertex.position;
+
+                    Vector3 normal = Vector3::Cross(top, left);
+
+                    m_vertices[j + i * xResolution].normal = normal;
+
+                    std::cout << "----------------\nVertex: " << j + i * xResolution << std::endl;
+                    std::cout << "Vertex: " << j + i * xResolution << "\tposition: " << m_vertices[j + i * xResolution].position << "\tnormal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j - 1 + i * xResolution << "\tposition: " << m_vertices[j - 1 + i * xResolution].position << "\tnormal: " << m_vertices[j - 1 + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j + (i - 1) * xResolution << "\tposition: " << m_vertices[j + (i - 1) * xResolution].position << "\tnormal: " << m_vertices[j + (i - 1) * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j - 1 + i * xResolution << top << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j + (i - 1) * xResolution << left << std::endl;
+
+                    std::cout << "Vertex: " << j + i * xResolution << " normal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << std::endl;
+                }
+                else if (j == zResolution - 1)    // Check if we are on last row
+                {
+                    std::cout << j + i * xResolution << " is on the last row" << std::endl;
+
+                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
+                    VertexGpu topVertex = m_vertices[j - 1 + i * xResolution];
+                    VertexGpu rightVertex = m_vertices[j + (i + 1) * xResolution];
+
+                    Vector3 top = topVertex.position - currentVertex.position;
+                    Vector3 right = rightVertex.position - currentVertex.position;
+
+                    Vector3 normal = Vector3::Cross(top, right);
+
+                    m_vertices[j + i * xResolution].normal = normal;
+
+                    std::cout << "----------------\nVertex: " << j + i * xResolution << std::endl;
+                    std::cout << "Vertex: " << j + i * xResolution << "\tposition: " << m_vertices[j + i * xResolution].position << "\tnormal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j - 1 + i * xResolution << "\tposition: " << m_vertices[j - 1 + i * xResolution].position << "\tnormal: " << m_vertices[j - 1 + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j + (i + 1) * xResolution << "\tposition: " << m_vertices[j + (i + 1) * xResolution].position << "\tnormal: " << m_vertices[j + (i + 1) * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j - 1 + i * xResolution << top << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j + (i + 1) * xResolution << right << std::endl;
+
+                    std::cout << "Vertex: " << j + i * xResolution << " normal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << std::endl;
+                }
+                else if (i == xResolution -1)    // Check if we are on last column
+                {
+                    std::cout << j + i * xResolution << " is on the last column" << std::endl;
+
+                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
+                    VertexGpu bottomVertex = m_vertices[j + 1 + i * xResolution];
+                    VertexGpu leftVertex = m_vertices[j + (i - 1) * xResolution];
+
+                    Vector3 bottom = bottomVertex.position - currentVertex.position;
+                    Vector3 left = leftVertex.position - currentVertex.position;
+
+                    Vector3 normal = Vector3::Cross(bottom, left);
+
+                    m_vertices[j + i * xResolution].normal = normal;
+
+                    std::cout << "----------------\nVertex: " << j + i * xResolution << std::endl;
+                    std::cout << "Vertex: " << j + i * xResolution << "\tposition: " << m_vertices[j + i * xResolution].position << "\tnormal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j + 1 + i * xResolution << "\tposition: " << m_vertices[j + 1 + i * xResolution].position << "\tnormal: " << m_vertices[j + 1 + i * xResolution].normal << std::endl;
+                    std::cout << "Vertex: " << j + (i - 1) * xResolution << "\tposition: " << m_vertices[j + (i - 1) * xResolution].position << "\tnormal: " << m_vertices[j + (i - 1) * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j + 1 + i * xResolution << bottom << std::endl;
+                    std::cout << "Vector: " << j + i * xResolution << j + (i - 1) * xResolution << left << std::endl;
+
+                    std::cout << "Vertex: " << j + i * xResolution << " normal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                    std::cout << std::endl;
+                    std::cout << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << j + i * xResolution << " is not on any last edge" << std::endl;
+
+                VertexGpu currentVertex = m_vertices[j + i * xResolution];
+                VertexGpu bottomVertex = m_vertices[j + 1 + i * xResolution];
+                VertexGpu rightVertex = m_vertices[j + (i + 1) * xResolution];
+
+                Vector3 bottom = bottomVertex.position - currentVertex.position;
+                Vector3 right = rightVertex.position - currentVertex.position;
+
+                Vector3 normal = Vector3::Cross(bottom, right);
+
+                m_vertices[j + i * xResolution].normal = normal;
+
+                std::cout << "----------------\nVertex: " << j + i * xResolution << std::endl;
+                std::cout << "Vertex: " << j + i * xResolution << "\tposition: " << m_vertices[j + i * xResolution].position << "\tnormal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                std::cout << "Vertex: " << j + 1 + i * xResolution << "\tposition: " << m_vertices[j + 1 + i * xResolution].position << "\tnormal: " << m_vertices[j + 1 + i * xResolution].normal << std::endl;
+                std::cout << "Vertex: " << j + (i + 1) * xResolution << "\tposition: " << m_vertices[j + (i + 1) * xResolution].position << "\tnormal: " << m_vertices[j + (i + 1) * xResolution].normal << std::endl;
+                std::cout << std::endl;
+                std::cout << "Vector: " << j + i * xResolution << j + 1 + i * xResolution << bottom << std::endl;
+                std::cout << "Vector: " << j + i * xResolution << j + (i + 1) * xResolution << right << std::endl;
+
+                std::cout << "Vertex: " << j + i * xResolution << " normal: " << m_vertices[j + i * xResolution].normal << std::endl;
+                std::cout << std::endl;
+                std::cout << std::endl;
+            }
+        }
+    }
+
+
+                // VertexGpu currentVertex = m_vertices[j + i * xResolution];
+                // VertexGpu topVertex = m_vertices[j - 1 + i * xResolution];
+                // VertexGpu rightVertex = m_vertices[j + (i + 1) * xResolution];
+                //
+                // Vector3 top = topVertex.position - currentVertex.position;
+                // Vector3 right = rightVertex.position - currentVertex.position;
+                //
+                // normal = Vector3::Cross(right, top).Normalize();
+                //
+                // m_vertices[j + i * xResolution].normal = normal;
+
+            // if (j + i * xResolution == 4)
+            // {
+                // Vector3 currentVertex = m_vertices[j + i * xResolution].normal;
+                // Vector3 downVertex = m_vertices[j + 1 + i * xResolution].normal;
+                // Vector3 rightVertex = m_vertices[j + (i + 1) * xResolution].normal;
+
+                // std::cout << "currentVertexP " << m_vertices[j + i * xResolution].position << std::endl;
+                // std::cout << "downVertexP " << m_vertices[j + 1 + i * xResolution].position << std::endl;
+                // std::cout << "rightVertexP " << m_vertices[j + (i + 1) * xResolution].position << std::endl;
+            // }
+
+    
+    // Vector3 v47 = m_vertices[7].position - m_vertices[4].position;
+    // Vector3 v45 = m_vertices[5].position - m_vertices[4].position;
+    // Vector3 vN = Vector3::Cross(v47, v45);
+    // Vector3 vNN = vN.Normalize();
+    
+    // std::cout << v47 << std::endl;
+    // std::cout << v45 << std::endl;
+    // std::cout << vN << std::endl;
+    // std::cout << vNN << std::endl;
+
+    // std::cout << "resolution: " << xResolution << " " << zResolution << std::endl;
+    // std::cout << m_vertices.size() << std::endl;
 }
