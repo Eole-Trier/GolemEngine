@@ -116,7 +116,7 @@ void Transform::EditTransformGizmo()
 
     //set snap functionnality and snap value
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
-    float snapValue = 0.2f;
+    float snapValue = 0.5f;
     float snapValues[3] = {snapValue, snapValue, snapValue};
 
     //create TRS matrix
