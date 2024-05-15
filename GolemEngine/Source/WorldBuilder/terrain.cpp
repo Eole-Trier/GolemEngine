@@ -24,7 +24,6 @@ Terrain::~Terrain()
     DeleteAllComponents();
 }
 
-
 void Terrain::SetupMesh()
 {
     glGenVertexArrays(1, &m_vao);
@@ -87,13 +86,17 @@ void Terrain::Draw(Camera* _camera)
     switch (ViewportTools::currentViewMode)
     {
     case DEFAULT:
-        glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         break;
 
     case WIREFRAME:
-        glDrawElements(GL_LINES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         break;
     }
+    
+    glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    // Reset to fill
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void Terrain::GetComputeShaderData(Camera* _camera)
@@ -154,13 +157,25 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
 void Terrain::CalculateNormals()
 {
-    std::cout << "Vertex " << 0 << " position: " << m_vertices[0].position << "\tnormal : " << m_vertices[0].normal << "\ttexCoords : " << m_vertices[0].textureCoords << std::endl;
-    std::cout << "Vertex " << 1 << " position: " << m_vertices[1].position << "\tnormal : " << m_vertices[1].normal << "\ttexCoords : " << m_vertices[1].textureCoords << std::endl;
-    std::cout << "Vertex " << 2 << " position: " << m_vertices[2].position << "\tnormal : " << m_vertices[2].normal << "\ttexCoords : " << m_vertices[2].textureCoords << std::endl;
-    std::cout << "Vertex " << 3 << " position: " << m_vertices[3].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[3].textureCoords << std::endl;
-    // std::cout << "Vertex " << 4 << " position: " << m_vertices[4].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[4].textureCoords << std::endl;
-    // std::cout << "Vertex " << 5 << " position: " << m_vertices[5].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[5].textureCoords << std::endl;
-    // std::cout << "Vertex " << 6 << " position: " << m_vertices[6].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[6].textureCoords << std::endl;
-    // std::cout << "Vertex " << 7 << " position: " << m_vertices[7].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[7].textureCoords << std::endl;
-    // std::cout << "Vertex " << 8 << " position: " << m_vertices[8].position << "\tnormal : " << m_vertices[3].normal << "\ttexCoords : " << m_vertices[8].textureCoords << std::endl;
+    // for (int i = 0; i < m_indices.size() / 3; i += 3)
+    // {
+    //     VertexGpu v0 = m_vertices[m_indices[i]];
+    //     VertexGpu v1 = m_vertices[m_indices[i + 1]];
+    //     VertexGpu v2 = m_vertices[m_indices[i + 2]];
+    //
+    //     Vector3 edge1 = v1.position - v0.position;
+    //     Vector3 edge2 = v2.position - v0.position;
+    //     Vector3 normal = (Vector3::Cross(edge1, edge2)).Normalize();
+    //
+    //     v0.normal += normal;
+    //     v1.normal += normal;
+    //     v2.normal += normal;
+    // }
+    // //
+    // for (auto& vertex : m_vertices)
+    // {
+    //     vertex.normal = vertex.normal.Normalize();
+    // }
+    std::cout << "Vertex " << 555 << "position: " << m_vertices[555].position << "\tnormal: " << m_vertices[555].normal << std::endl;
+    // }
 }

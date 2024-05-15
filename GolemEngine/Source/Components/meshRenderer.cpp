@@ -41,13 +41,17 @@ void MeshRenderer::Draw(Camera* _camera)
         switch (ViewportTools::currentViewMode)
         {
             case DEFAULT:
-                glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 break;
 
             case WIREFRAME:
-                glDrawArrays(GL_LINES, 0, model->vertices.size());
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                 break;
         }
+        
+        glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+        // Reset to fill
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 }
 
