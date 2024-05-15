@@ -18,6 +18,7 @@ Audio::Audio()
     m_isLooping(false),
     m_isPlaying(false)
 {
+    type = Type::AUDIO;
 }
 
 Audio::~Audio()

@@ -29,7 +29,7 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 			{
 				if (!_gameObject->HasComponent(name))
 				{
-					Component* obj = static_cast<Component*>(ClassesManager::Create(name));
+					Component* obj = static_cast<Component*>(ClassesManager::Create(name, _gameObject));
 					if (obj)
 					{
 						_gameObject->AddComponent(obj);

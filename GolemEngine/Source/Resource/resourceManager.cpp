@@ -59,7 +59,6 @@ void ResourceManager::CreateAndLoadResources()
     m_defaultTexture = "default_texture";
     m_defaultModel = "default_model";
     m_defaultShader = "default_shader";
-    // TODO set default model and texture to cube and default texture
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
@@ -67,10 +66,11 @@ void ResourceManager::CreateAndLoadResources()
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
 
-    Model* sphere = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
+    // Needed to avoid same resource reference problem for colliders
+    Model* sphere = resourceManager->Create<Model>("sphereCollider.obj", Tools::FindFile("sphere.obj"));
     sphere->Load(sphere->path.c_str());
 
-    Model* cube = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
+    Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
     cube->Load(cube->path.c_str());
 
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader, Tools::FindFile("default.vs"));

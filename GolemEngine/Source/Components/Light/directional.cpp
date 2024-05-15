@@ -5,13 +5,11 @@
 #include "Resource/sceneManager.h"
 
 DirectionalLight::DirectionalLight()
+	: Light(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f))
 {
 	const std::vector<DirectionalLight*>& dirLights = SceneManager::GetCurrentScene()->GetDirectionalLights();
 	size_t maxDirs = SceneManager::GetCurrentScene()->GetMaxDirectionalLights();
 
-	diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
-	ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
-	specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
 	direction = Vector3(0.f, 0.f, 0.f);
 
 	id = dirLights.size();

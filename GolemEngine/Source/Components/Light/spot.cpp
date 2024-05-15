@@ -8,13 +8,11 @@
 #include "Resource/sceneManager.h"
 
 SpotLight::SpotLight()
+    : Light(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f))
 {
     std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
     size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
 
-    diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
     direction = Vector3(1.f, 0.f, 0.f);
     constant = 1.f;
     linear = 0.f;

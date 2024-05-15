@@ -48,14 +48,14 @@ void* ClassesManager::Create(size_t _hashCode)
 		return nullptr;
 	}
 
-	if (!it->second.createCondition())
+	if (!it->second.createCondition(nullptr))
 		return nullptr;
 
 	// else store it in display func pointer
 	return it->second.create();
 }
 
-void* ClassesManager::Create(const std::string& _name)
+void* ClassesManager::Create(const std::string& _name, GameObject* _obj)
 {
 	auto it = m_classesByName.find(_name);
 
@@ -66,7 +66,7 @@ void* ClassesManager::Create(const std::string& _name)
 		return nullptr;
 	}
 
-	if (!it->second.createCondition())
+	if (!it->second.createCondition(_obj))
 		return nullptr;
 
 	// else store it in display func pointer

@@ -6,11 +6,15 @@
 #include "Resource/Rendering/model.h"
 
 MeshRenderer::MeshRenderer()
-{}
+{
+    type = Type::MESHRENDERER;
+}
 
 MeshRenderer::MeshRenderer(Mesh* _mesh)
     : m_mesh(_mesh)
-{}
+{
+    type = Type::MESHRENDERER;
+}
 
 MeshRenderer::~MeshRenderer()
 {}
