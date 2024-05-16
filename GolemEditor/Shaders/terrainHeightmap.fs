@@ -1,6 +1,6 @@
 #version 460 core
 
-// uniform sampler2D ourTexture;
+uniform sampler2D ourTexture;
 
 in vec3 FragPos;
 in vec2 TexCoord;
@@ -26,5 +26,5 @@ void main()
     
     FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
 
-    // FragColor = texture(ourTexture, TexCoord * 10);
+    FragColor = texture(ourTexture, TexCoord * 1);
 }

@@ -34,8 +34,13 @@ void ResourceManager::CreateAndLoadResources()
     // Set default shader for terrains
     Shader* defaultTerrainShader = resourceManager->Create<Shader>(m_defaultTerrainShader);
     VertexShader* defaultTerrainVertexShader = new VertexShader(defaultTerrainShader, Tools::FindFile("terrain.vs").c_str());
-    FragmentShader* terrainHeightmapFragmentShader = new FragmentShader(defaultTerrainShader, Tools::FindFile("terrainHeightmap.fs").c_str());
-    defaultTerrainShader->SetAllShaders(defaultTerrainVertexShader, terrainHeightmapFragmentShader);
+    FragmentShader* defaultTerrainFragmentShader = new FragmentShader(defaultTerrainShader, Tools::FindFile("terrainHeightmap.fs").c_str());
+    defaultTerrainShader->SetAllShaders(defaultTerrainVertexShader, defaultTerrainFragmentShader);
+
+    // Set default shader for terrains
+    Shader* defaultTerrainTextureShader = resourceManager->Create<Shader>(m_defaultTerrainTextureShader);
+    FragmentShader* defaultTerrainTextureFragmentShader = new FragmentShader(defaultTerrainTextureShader, Tools::FindFile("terrainTexture.fs").c_str());
+    defaultTerrainShader->SetAllShaders(defaultTerrainVertexShader, defaultTerrainFragmentShader);
 
     // Create the default compute shader for terrains
     ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_defaultTerrainComputeShader);

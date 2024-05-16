@@ -1,45 +1,28 @@
-// #version 460 core
-//
-// in vec3 FragPos;
-// in vec3 Normal;
-// in vec2 TexCoord;
-// out vec4 FragColor;
-//
-// struct PointLight
-// {
-//     vec3 position;
-//     
-//     vec4 ambient;
-//     vec4 diffuse;
-//     vec4 specular;
-//
-//     float constant;
-//     float linear;
-//     float quadratic;
-// };
-//
-// struct DirLight
-// {
-//     vec3 direction;
-//     
-//     vec4 ambient;
-//     vec4 diffuse;
-//     vec4 specular;
-// };
-//
-// struct SpotLight
-// {
-//     vec3 position;
-//     vec3 direction;
-//
-//     float cutOff;
-//     float outerCutOff;
-//   
-//     vec4 ambient;
-//     vec4 diffuse;
-//     vec4 specular;
-//     
-//     float constant;
-//     float linear;
-//     float quadratic; 
-// };
+#version 460 core
+
+uniform sampler2D ourTexture;
+
+in vec3 FragPos;
+in vec2 TexCoord;
+in float minY; // Input from vertex shader
+in float maxY; // Input from vertex shader
+
+out vec4 FragColor;
+
+
+void main()
+{
+    float normalizedHeight = 0.0f;
+    
+    if (maxY > 0.0f)
+    {
+        normalizedHeight = FragPos.y / maxY;    // Normalize the y-coordinate of the fragment position for positive maxY
+    }
+    else if (minY < 0.0f)
+    {
+        normalizedHeight = (FragPos.y / minY);    // Normalize the y-coordinate of the fragment position for negative maxY. To have the white shown at the highest point and not
+                                                  // the lowest, add "1 -" before "(FragPos.y / minY);" 
+    }
+    
+    FragColor = vec4(1.0f , 0.0f, 0.0f, 1.0); // Set the fragment color based on the normalized height
+}
