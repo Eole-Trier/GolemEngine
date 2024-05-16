@@ -19,9 +19,9 @@ private:
 	static inline std::string m_defaultShader = "default_shader";
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
-	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
-	static inline std::string m_defaultTerrainTextureShader = "default_terrain_texture_shader";
-	static inline std::string m_defaultTerrainComputeShader = "default_terrain_compute_shader";
+	static inline std::string m_terrainShader0 = "default_terrain_shader";    // For black and white gradient
+	static inline std::string m_terrainShader1 = "default_terrain_texture_shader";    // For texture
+	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
 
 	std::unordered_map<std::string, Resource*> m_resources;
@@ -36,6 +36,7 @@ public:
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
 	static std::string GetDefaultTerrainShader();
+	static std::string GetDefaultTerrainTextureShader();
 	static std::string GetDefaultTerrainComputeShader();
 	static std::string GetDefaultGridTerrainTexture();
 

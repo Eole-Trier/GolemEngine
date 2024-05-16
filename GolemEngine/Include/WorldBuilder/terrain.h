@@ -38,7 +38,7 @@ protected:
     unsigned int m_ebo;
     unsigned int m_ssboIn;
     unsigned int m_ssboOut;
-    Shader* m_shader = nullptr;
+    std::vector<Shader*> m_shaders;
     ComputeShader* m_computeShader = nullptr;
     Texture* m_texture = nullptr;
 

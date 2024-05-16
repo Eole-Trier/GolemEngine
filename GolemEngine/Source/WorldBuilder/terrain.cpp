@@ -13,7 +13,12 @@
 Terrain::Terrain(std::string _name, Transform* _transform)
     : GameObject(_name, _transform)
 {
+    // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
+    m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader()));
+    m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainTextureShader()));
+    m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
+    
     m_texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultGridTerrainTexture());
 
     isTerrain = true;
@@ -25,7 +30,7 @@ Terrain::~Terrain()
 }
 
 void Terrain::SetupMesh()
-{
+{  
     glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
@@ -75,13 +80,13 @@ void Terrain::Draw(Camera* _camera)
     glActiveTexture(GL_TEXTURE0);
     m_texture->Use();
 
-    m_shader->Use();
-    m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
-    m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
-    m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
-    m_shader->GetFragmentShader()->SetInt("ourTexture", 0);
+    m_shaders[0]->Use();
+    m_shaders[0]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
+    m_shaders[0]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+    m_shaders[0]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shaders[0]->GetVertexShader()->SetFloat("minHeight", m_yMin);
+    m_shaders[0]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", 0);
     
     glBindVertexArray(m_vao);
     

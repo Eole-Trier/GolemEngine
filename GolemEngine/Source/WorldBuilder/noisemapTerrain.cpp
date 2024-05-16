@@ -12,10 +12,10 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
 {
     m_noisemapPath = _noisemapPath;
     
-    // Set shader
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
-    m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
+    // // Set shader
+    // ResourceManager* resourceManager = ResourceManager::GetInstance();
+    // m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
+    // m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
 
     // Load noisemap
     stbi_set_flip_vertically_on_load(false);

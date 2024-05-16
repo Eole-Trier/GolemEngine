@@ -25,7 +25,6 @@ void Shader::Use()
     GraphicWrapper::UseShader(id);
 }
 
-
 VertexShader* Shader::GetVertexShader()
 {
     return m_vertexShader;

@@ -26,5 +26,5 @@ void main()
     
     FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
 
-    FragColor = texture(ourTexture, TexCoord * 1);
+    // FragColor = texture(ourTexture, TexCoord * 1);
 }
