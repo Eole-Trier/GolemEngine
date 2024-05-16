@@ -134,7 +134,7 @@ void Terrain::GetComputeShaderData(Camera* _camera)
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
 
-                m_vertices[i].normal = verticesOut[i].normal;
+                // m_vertices[i].normal = verticesOut[i].normal;
             }
             
             m_yMin = yMin;
@@ -156,67 +156,47 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
 void Terrain::CalculateNormals()
 {
-    
-    for (int i = 0; i < xResolution; i++)
+    for (int i = 0; i < xResolution; ++i)
     {
-        for (int j = 0; j < zResolution; j++)
+        for (int j = 0; j < zResolution; ++j)
         {
-            if ((j == zResolution - 1) || (i == xResolution - 1))    // Check if we are on any edge
+            Vector3 normal(0.0f, 0.0f, 0.0f);
+            Vector3 currentPosition = m_vertices[j + i * zResolution].position;
+
+            if (i < xResolution - 1 && j < zResolution - 1) // Bottom-right triangle
             {
-                if ((j == zResolution - 1) && (i == xResolution - 1))    // Check if we are on last row and column
-                {
-                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
-                    VertexGpu topVertex = m_vertices[j - 1 + i * xResolution];
-                    VertexGpu leftVertex = m_vertices[j + (i - 1) * xResolution];
-
-                    Vector3 top = topVertex.position - currentVertex.position;
-                    Vector3 left = leftVertex.position - currentVertex.position;
-
-                    Vector3 normal = Vector3::Cross(top, left);
-
-                    m_vertices[j + i * xResolution].normal = normal;
-                }
-                else if (j == zResolution - 1)    // Check if we are on last row
-                {
-                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
-                    VertexGpu topVertex = m_vertices[j - 1 + i * xResolution];
-                    VertexGpu rightVertex = m_vertices[j + (i + 1) * xResolution];
-
-                    Vector3 top = topVertex.position - currentVertex.position;
-                    Vector3 right = rightVertex.position - currentVertex.position;
-
-                    Vector3 normal = Vector3::Cross(top, right);
-
-                    m_vertices[j + i * xResolution].normal = normal;
-                }
-                else if (i == xResolution - 1)    // Check if we are on last column
-                {
-                    VertexGpu currentVertex = m_vertices[j + i * xResolution];
-                    VertexGpu bottomVertex = m_vertices[j + 1 + i * xResolution];
-                    VertexGpu leftVertex = m_vertices[j + (i - 1) * xResolution];
-
-                    Vector3 bottom = bottomVertex.position - currentVertex.position;
-                    Vector3 left = leftVertex.position - currentVertex.position;
-
-                    Vector3 normal = Vector3::Cross(bottom, left);
-
-                    m_vertices[j + i * xResolution].normal = normal;
-                }
+                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].position;
+                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].position;
+                Vector3 bottom = bottomPosition - currentPosition;
+                Vector3 right = rightPosition - currentPosition;
+                normal += Vector3::Cross(bottom, right);
             }
-            else
+            if (i < xResolution - 1 && j > 0) // Top-right triangle
             {
-                // out of range error 
-                VertexGpu currentVertex = m_vertices[j + i * xResolution];
-                VertexGpu bottomVertex = m_vertices[j + 1 + i * xResolution];
-                VertexGpu rightVertex = m_vertices[j + (i + 1) * xResolution];
-
-                Vector3 bottom = bottomVertex.position - currentVertex.position;
-                Vector3 right = rightVertex.position - currentVertex.position;
-
-                Vector3 normal = Vector3::Cross(bottom, right);
-
-                m_vertices[j + i * xResolution].normal = normal;
+                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].position;
+                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].position;
+                Vector3 top = topPosition - currentPosition;
+                Vector3 right = rightPosition - currentPosition;
+                normal += Vector3::Cross(top, right);
             }
+            if (i > 0 && j < zResolution - 1) // Bottom-left triangle
+            {
+                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].position;
+                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].position;
+                Vector3 bottom = bottomPosition - currentPosition;
+                Vector3 left = leftPosition - currentPosition;
+                normal += Vector3::Cross(bottom, left);
+            }
+            if (i > 0 && j > 0) // Top-left triangle
+            {
+                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].position;
+                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].position;
+                Vector3 top = topPosition - currentPosition;
+                Vector3 left = leftPosition - currentPosition;
+                normal += Vector3::Cross(left, top);
+            }
+
+            m_vertices[j + i * zResolution].normal = normal.Normalize();
         }
     }
 }

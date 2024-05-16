@@ -20,6 +20,7 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
     // Load noisemap
     stbi_set_flip_vertically_on_load(false);
     unsigned char* noisemap = stbi_load(_noisemapPath, &xResolution, &zResolution, &m_nChannel, STBI_grey);
+    
     std::vector<int> noisemapValues;
     
     for (int i = 0; i < xResolution; i++)
