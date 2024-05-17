@@ -22,7 +22,6 @@ public:
 	static inline GameObject* selectedGameObject = nullptr;
 
 public:
-
 	static void Init();
 	static void BeginDockSpace();
 	static void EndDockSpace();

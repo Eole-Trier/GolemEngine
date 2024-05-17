@@ -1,6 +1,7 @@
 #version 460 core
 
-out vec4 FragColor;
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out int FragColor2;
 
 struct PointLight
 {
@@ -18,7 +19,6 @@ struct PointLight
 struct DirLight
 {
     vec3 direction;
-
     vec4 ambient;
     vec4 diffuse;
     vec4 specular;
@@ -46,6 +46,10 @@ in vec3 Normal;
 in vec2 TexCoord;
 
 uniform sampler2D ourTexture;
+
+uniform vec3 viewPos;
+
+uniform int entityID;
 
 uniform int nbrDirLights;
 uniform int nbrPointLights;
@@ -75,6 +79,8 @@ void main()
         light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
     
     FragColor = light * texture(ourTexture, TexCoord);
+    FragColor2 = entityID;
+
 }
 
 vec4 ProcessDirLight(DirLight light, vec3 normal, vec3 viewDir)

@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <filesystem>
 #include <iostream>
 
 #include "dll.h"
@@ -23,6 +24,8 @@ private:
 	static inline std::string m_terrainShader1 = "default_terrain_texture_shader";    // For texture
 	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
+	static inline std::string m_boxColliderShader = "box_collider_shader";
+	static inline std::string m_skyboxShader = "skybox_shader";
 
 	std::unordered_map<std::string, Resource*> m_resources;
 private:
@@ -39,6 +42,9 @@ public:
 	static std::string GetDefaultTerrainTextureShader();
 	static std::string GetDefaultTerrainComputeShader();
 	static std::string GetDefaultGridTerrainTexture();
+
+	void ProcessFile(const std::filesystem::path& _filePath);
+	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);

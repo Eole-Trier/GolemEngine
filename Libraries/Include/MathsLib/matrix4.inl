@@ -183,6 +183,17 @@ Matrix4 Matrix4::Scale(Vector3 _scale) const
 	return (*this) * scale;
 }
 
+Matrix4 Matrix4::ExtractRotationAndScale(const Matrix4& _viewMatrix) const
+{
+	// Extract rotation and scale by taking the upper-left 3x3 submatrix
+	return Matrix4(
+		_viewMatrix.data[0][0], _viewMatrix.data[0][1], _viewMatrix.data[0][2], 0.0f,
+		_viewMatrix.data[1][0], _viewMatrix.data[1][1], _viewMatrix.data[1][2], 0.0f,
+		_viewMatrix.data[2][0], _viewMatrix.data[2][1], _viewMatrix.data[2][2], 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+}
+
 Vector3 Matrix4::TrsToPosition()
 {
 	return Vector3(data[0][3], data[1][3], data[2][3]);
@@ -299,7 +310,10 @@ Matrix4 Matrix4::LookAt(Vector3 _cameraPos, Vector3 _targetPos, Vector3 _up)
 		Z.x, Z.y, Z.z, 0,
 		0, 0, 0, 1
 	);
-	temp = temp.Translate(_cameraPos * -1);
+
+	temp.data[0][3] = Vector3::Dot(X, _cameraPos) * -1;
+	temp.data[1][3] = Vector3::Dot(Y, _cameraPos) * -1;
+	temp.data[2][3] = Vector3::Dot(Z, _cameraPos) * -1;
 
 	return temp;
 }

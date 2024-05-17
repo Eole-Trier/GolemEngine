@@ -1,4 +1,4 @@
-#include "..\..\..\Include\Components\Light\pointLight.h"
+#include "Components\Light\pointLight.h"
 
 #include "Debug/log.h"
 #include "Resource/Rendering/Shader/shader.h"
@@ -8,13 +8,11 @@
 #include "Resource/Rendering/Shader/vertexShader.h"
 
 PointLight::PointLight()
+    : Light(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f))
 {
     std::vector<PointLight*> pointLights = SceneManager::GetCurrentScene()->GetPointLights();
     size_t maxPoints = SceneManager::GetCurrentScene()->GetMaxPointLights();
 
-    diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
     constant = 1.f;
     linear = 0.f;
     quadratic = 0.f;
@@ -34,7 +32,7 @@ PointLight::PointLight(const Vector4& _diffuse, const Vector4& _ambient, const V
     const float _constant, const float _linear, const float _quadratic)
     : Light(_diffuse, _ambient, _specular), position(_position), constant(_constant), linear(_linear), quadratic(_quadratic)
 {
-    std::vector<PointLight*> pointLights = SceneManager::GetCurrentScene()->GetPointLights();
+    const std::vector<PointLight*>& pointLights = SceneManager::GetCurrentScene()->GetPointLights();
     size_t maxPoints = SceneManager::GetCurrentScene()->GetMaxPointLights();
 
     id = pointLights.size();
@@ -66,9 +64,8 @@ void PointLight::SetPointLight(Shader* _shader)
     _shader->GetFragmentShader()->SetFloat("pointLights[" + std::to_string(id) + "].quadratic", quadratic);
 }
 
-void PointLight::Update(Shader* _shader)
+void PointLight::Update()
 {
     if (owner)
         position = owner->transform->globalPosition;
-    SetPointLight(_shader);
 }

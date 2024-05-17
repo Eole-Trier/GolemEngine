@@ -6,6 +6,7 @@
 #include "Components/audio.h"
 
 #include "golemEngine.h"
+#include "Components/transform.h"
 #include "Ui/editorUi.h"
 #include "Wrappers/windowWrapper.h"
 #include "Wrappers/graphicWrapper.h"
@@ -14,6 +15,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuizmo.h"
+#include "MathsLib/utils.h"
 
 Editor::Editor()
 	:
@@ -75,6 +78,9 @@ void Editor::MainLoop()
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::BeginFrame();
+		ImGuizmo::Enable(true);
 
 		EditorUi::BeginDockSpace();
 
@@ -102,6 +108,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
+	ImGui::EndFrame();
 }
 
 void Editor::Run()

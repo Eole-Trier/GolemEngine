@@ -1,16 +1,50 @@
 #include "Resource/resourceManager.h"
-
 #include "Utils/tools.h"
-#include "Resource/Rendering/Shader/shader.h"
-#include "Resource/Rendering/texture.h"
 #include "Resource/Rendering/model.h"
+#include "Resource/Rendering/texture.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Resource/Rendering/Shader/computeShader.h"
 #include "Resource/Rendering/Shader/vertexShader.h"
 #include "Resource/Rendering/Shader/fragmentShader.h"
+#include "Resource/Rendering/skybox.h"
 #include "Utils/viewportTools.h"
 
-
 ResourceManager* ResourceManager::m_instancePtr = nullptr;
+
+void ResourceManager::ProcessFile(const std::filesystem::path& _filePath)
+{
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+    std::string fileName = _filePath.filename().string();
+    std::string extension = _filePath.extension().string();
+    std::string filePath = _filePath.string();
+
+    if (extension == ".obj")
+    {
+        Model* model = resourceManager->Create<Model>(fileName, filePath);
+        model->Load(filePath.c_str());
+    }
+    else if (extension == ".jpg" || extension == ".png")
+    {
+        Texture* texture = resourceManager->Create<Texture>(fileName, filePath);
+        texture->Load(filePath.c_str());
+    }
+}
+
+void ResourceManager::TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath)
+{
+    for (const auto& entry : std::filesystem::directory_iterator(_directoryPath))
+    {
+        if (entry.is_regular_file())
+        {
+            ProcessFile(entry.path());
+        }
+        else if (entry.is_directory())
+        {
+            TraverseDirectoryAndLoadFiles(entry.path());
+        }
+    }
+}
 
 ResourceManager* ResourceManager::GetInstance()
 {
@@ -43,7 +77,18 @@ void ResourceManager::CreateAndLoadResources()
     FragmentShader* terrainTextureFragmentShader = new FragmentShader(terrainTextureShader, Tools::FindFile("terrainTexture.fs").c_str());
     terrainTextureShader->SetAllShaders(terrainVertexTextureShader, terrainTextureFragmentShader);
 
-        
+    Shader* boxColliderShader = resourceManager->Create<Shader>(m_boxColliderShader);
+    VertexShader* boxColliderVertexShader = new VertexShader(boxColliderShader, Tools::FindFile("boxCollider.vs").c_str());
+    FragmentShader* boxColliderFragmentShader = new FragmentShader(boxColliderShader, Tools::FindFile("boxCollider.fs").c_str());
+    boxColliderShader->SetAllShaders(boxColliderVertexShader, boxColliderFragmentShader);
+    
+    Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader);
+    VertexShader* skyboxVertexShader = new VertexShader(skyboxShader, Tools::FindFile("skybox.vs").c_str());
+    FragmentShader* skyboxFragmentShader = new FragmentShader(skyboxShader, Tools::FindFile("skybox.fs").c_str());
+    skyboxShader->SetAllShaders(skyboxVertexShader, skyboxFragmentShader);
+    Skybox::GetInstance().SetTexture();
+    skyboxShader->Use();
+    skyboxShader->GetFragmentShader()->SetInt("skybox", 0);
 
     // Create the default compute shader for terrains
     ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_terrainComputeShader);
@@ -68,11 +113,12 @@ void ResourceManager::CreateAndLoadResources()
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
 
-    Model* sphereModel = resourceManager->Create<Model>("sphere", Tools::FindFile("sphere.obj"));
-    sphereModel->Load(sphereModel->path.c_str());
+    // Needed to avoid same resource reference problem for colliders
+    Model* sphere = resourceManager->Create<Model>("sphereCollider.obj", Tools::FindFile("sphere.obj"));
+    sphere->Load(sphere->path.c_str());
 
-    Model* cubeModel = resourceManager->Create<Model>("cube", Tools::FindFile("cube.obj"));
-    cubeModel->Load(cubeModel->path.c_str());
+    Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
+    cube->Load(cube->path.c_str());
 }
 
 std::string ResourceManager::GetDefaultShader()

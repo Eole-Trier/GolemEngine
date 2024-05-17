@@ -11,10 +11,12 @@
 #include "Ui/Windows/debugWindow.h"
 #include "UI/Windows/inspector.h"
 #include "Utils/viewportTools.h"
+#include "UI/Windows/playScene.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuizmo.h"
 #include "Inputs/inputManager.h"
 #include "Wrappers/windowWrapper.h"
 
@@ -30,10 +32,12 @@ void EditorUi::Init()
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
+    m_windows.push_back(new PlayScene("Playing"));
 
     // Setup ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;

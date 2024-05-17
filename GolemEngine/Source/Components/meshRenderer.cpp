@@ -10,11 +10,13 @@
 
 
 MeshRenderer::MeshRenderer()
-{}
+{
+}
 
 MeshRenderer::MeshRenderer(Mesh* _mesh)
     : m_mesh(_mesh)
-{}
+{
+}
 
 MeshRenderer::~MeshRenderer()
 {}
@@ -50,6 +52,8 @@ void MeshRenderer::Draw(Camera* _camera)
         }
         
         glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+        glBindVertexArray(0);
+        texture->UnUse();
         // Reset to fill
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }

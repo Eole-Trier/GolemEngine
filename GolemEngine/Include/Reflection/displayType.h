@@ -12,6 +12,7 @@
 #include "Reflection/attributes.h"
 #include "Refl/refl.hpp"
 #include "Core/gameObject.h"
+#include "MagicEnum/magic_enum.hpp"
 #include "vector2.h"
 
 class DisplayType
@@ -29,7 +30,10 @@ public:
 	static void BasicsFields(MemberT* _class);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
-	static void DisplayStdVector(MemberT* _member);
+	static void DisplayStdVector(MemberT* _class);
+
+	template<typename TypeT, typename MemberT, typename DescriptorT>
+	static void DisplayEnum(MemberT* _class);
 
 	template<typename TypeT, typename MemberT, typename DescriptorT>
 	static void DisplayIntOrFloat(MemberT* _member);
@@ -60,12 +64,13 @@ void DisplayType::DisplayField(TypeT* _class)
 
 		if constexpr (!refl::descriptor::has_attribute<HideInInspector>(DescriptorT{}))
 		{
-			if constexpr (std::is_array_v<MemberT>) // array case
-			{
-			}
-			else if constexpr (is_std_vector_v<MemberT>) // std::vector case
+			if constexpr (is_std_vector_v<MemberT>) // std::vector case
 			{
 				DisplayStdVector<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
+			}
+			else if constexpr (std::is_enum_v<MemberT>) // enum case
+			{
+				DisplayEnum<TypeT, MemberT, DescriptorT>(&DescriptorT::get(_class));
 			}
 			else // basic case
 			{
@@ -98,22 +103,54 @@ void DisplayType::BasicsFields(MemberT* _class)
 	}
 	else if constexpr (std::is_same_v<Vector3, MemberT>)
 	{
-		ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, .1f);
+		if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
+		{
+			auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 3, 0.1f, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
+		}
+		else
+			ImGui::DragFloat3(DescriptorT::name.c_str(), &_class->x, 0.1f);
 	}
 	else if constexpr (std::is_same_v<Vector4, MemberT>)
 	{
-		ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, .1f);
+		if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
+		{
+			auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+			ImGui::DragScalarN(DescriptorT::name.c_str(), ImGuiDataType_Float, &_class->x, 4, 0.1f, nullptr, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
+		}
+		else
+			ImGui::DragFloat4(DescriptorT::name.c_str(), &_class->x, 0.1f);
 	}
 	ImGui::PopID();
-
 }
 
 template<typename TypeT, typename MemberT, typename DescriptorT>
-void DisplayType::DisplayStdVector(MemberT* _member)
+void DisplayType::DisplayStdVector(MemberT* _class)
 {
-	for (unsigned int i = 0; i < _member->size(); i++)
+	for (unsigned int i = 0; i < _class->size(); i++)
 	{
-		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_member)[i]);
+		BasicsFields<TypeT, MemberT::value_type, DescriptorT>(&(*_class)[i]);
+	}
+}
+
+template<typename TypeT, typename MemberT, typename DescriptorT>
+void DisplayType::DisplayEnum(MemberT* _class)
+{
+	constexpr auto enumName = magic_enum::enum_type_name<MemberT>();
+
+	auto name = magic_enum::enum_name(*_class);
+	std::string nameStr(name);
+	if (ImGui::BeginCombo(enumName.data(), nameStr.c_str()))
+	{
+		for (auto name : magic_enum::enum_names<MemberT>())
+		{
+			std::string nameStr(name);
+			if (ImGui::Selectable(nameStr.c_str(), _class))
+			{
+				*_class = magic_enum::enum_cast<MemberT>(name).value_or(*_class);
+			}
+		}
+		ImGui::EndCombo();
 	}
 }
 
@@ -157,9 +194,12 @@ void DisplayType::DisplayIntOrFloat(MemberT* _member)
 	ImGui::PushID(_member);
 
 	if constexpr (refl::descriptor::has_attribute<Range>(DescriptorT{}))
-		ImGui::SliderScalar(DescriptorT::name.c_str(), type, _member, &refl::descriptor::get_attribute<Range>(DescriptorT{}).min, &refl::descriptor::get_attribute<Range>(DescriptorT{}).max);
+	{
+			auto& range = refl::descriptor::get_attribute<Range>(DescriptorT{});
+			ImGui::DragScalar(DescriptorT::name.c_str(), type, _member, 0.1f, &range.min, &range.max, nullptr, ImGuiSliderFlags_AlwaysClamp);
+	}
 	else
-		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member);
+		ImGui::DragScalar(DescriptorT::name.c_str(), type, _member, 0.1f);
 
 	ImGui::PopID();
 }

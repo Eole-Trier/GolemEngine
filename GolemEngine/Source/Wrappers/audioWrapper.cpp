@@ -4,9 +4,9 @@
 
 void AudioWrapper::UpdatePosition()
 {
-    listenerPos[0] = GolemEngine::GetCamera()->m_position.x;
-    listenerPos[1] = GolemEngine::GetCamera()->m_position.y;
-    listenerPos[2] = GolemEngine::GetCamera()->m_position.z;
+    listenerPos[0] = GolemEngine::GetCamera()->position.x;
+    listenerPos[1] = GolemEngine::GetCamera()->position.y;
+    listenerPos[2] = GolemEngine::GetCamera()->position.z;
 
     alListenerfv(AL_POSITION, listenerPos);
     alListenerfv(AL_VELOCITY, listenerVel);

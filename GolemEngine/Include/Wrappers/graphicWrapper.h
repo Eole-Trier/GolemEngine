@@ -2,8 +2,12 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <vector>
+#include <memory>
+#include <string>
 
 #include "dll.h"
+#include "Resource/Rendering/texture.h"
 
 #define OPENGL_MAJOR_VERSION GLFW_CONTEXT_VERSION_MAJOR
 #define OPENGL_MINOR_VERSION GLFW_CONTEXT_VERSION_MINOR
@@ -28,10 +32,14 @@ private:
 	static unsigned int m_vbo;
 	static unsigned int m_rbo;
 	static unsigned int m_fbo;
-	static unsigned int m_textureId;
 	static int m_width;
 	static int m_height;
 
+	static unsigned int m_playSceneVao;
+	static unsigned int m_playSceneVbo;
+	static unsigned int m_playSceneRbo;
+	static unsigned int m_playSceneFbo;
+	static unsigned int m_playSceneId;
 private:
 	// Private constructors and destructor to make static class
 	GraphicWrapper() = delete;
@@ -43,19 +51,24 @@ private:
 	~GraphicWrapper() = delete;
 
 public:
+	static inline std::vector<std::unique_ptr<Texture>> m_textures;
+
+public:
 	// Initialize library
 	static int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	static void CreateFramebuffer(unsigned int _format, int _width, int _height);
+	static void CreateFramebuffer(int _width, int _height);
 
-	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id);
+	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id, unsigned int _fbo);
 
-	static void CreateRenderBuffer(int _width, int _height);
+	static void CreateRenderBuffer(int _width, int _height, unsigned int _rbo);
 	// Used to clear a buffer for the next draw
 	static void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
 	static void BindFramebuffer();
+
+	static void BindPlaySceneFrambuffer();
 	// Used to UNBIND the scene from a framebuffer to free the framebuffer. 
 	static void UnbindFramebuffer();
 	// Enable a feature of OpenGl
@@ -65,6 +78,9 @@ public:
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();
+
+	// This function is used to renderer a play scene with player view camera
+	static unsigned int GetPlaySceneId();
 
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
 	static void SetBackgroundColor(Vector4 _color);

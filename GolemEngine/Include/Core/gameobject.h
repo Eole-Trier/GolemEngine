@@ -26,11 +26,15 @@ public:
 	std::string name;
 	Transform* transform = nullptr;
 	bool isTerrain = false;
+	bool IsSelected;
 
 public:
 	GameObject();
 	GameObject(const std::string& _name, Transform* _transform);
 	virtual ~GameObject();
+
+	void Update();
+	_NODISCARD bool HasComponent(const std::string& _name) const;
 
 	size_t GetId();
 	void SetId(size_t _id);
@@ -41,6 +45,7 @@ public:
 	void RemoveComponent(Component* _c);
 	void DeleteAllComponents();
 
+	void AddComponent(Component* _type);
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);
 	template<typename TypeT>

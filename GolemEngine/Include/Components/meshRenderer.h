@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component.h"
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 #include "Core/camera.h"
 #include "Refl/refl.hpp"
 
@@ -18,6 +18,7 @@ public:
 	void Draw(Camera* _camera);
 
 	Mesh* GetMesh();
+
 
 
 	// Define serialization and deserialization functions manually because the

@@ -11,9 +11,10 @@
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
+#include "Utils/tools.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Wrappers/windowWrapper.h"
-#include "Resource/Rendering/mesh.h"
+#include "Core/mesh.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
 #include "Utils/tools.h"
@@ -22,12 +23,19 @@
 #include "WorldBuilder/defaultTerrain.h"
 #include "WorldBuilder/noisemapTerrain.h"
 
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
+#include "imgui.h"
+
+using json = nlohmann::json;
+
 
 void SceneManager::Init()
 {
     ResourceManager::CreateAndLoadResources();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
-    GraphicWrapper::CreateFramebuffer(GL_RGBA, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    GraphicWrapper::CreateFramebuffer(1636, 908);
 
     if (Tools::GetFolderSize(Tools::FindFolder("Scenes")) != 0)    // Check if there are already saved scenes
     {
@@ -46,6 +54,7 @@ void SceneManager::Init()
         CreateScene("scene_0");
         SaveScene();
     }
+    GraphicWrapper::CreateFramebuffer(1636, 978);
 }
 
 void SceneManager::SaveScene()

@@ -30,7 +30,7 @@ void FragmentShader::Init()
         fragmentCode = fShaderStream.str();
     }
     catch (std::ifstream::failure e)
-    {
+    { 
         Log::Print("ERROR::SHADER::FRAGMENT::FILE_NOT_SUCCESFULLY_READ\n");
     }
 

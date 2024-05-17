@@ -8,13 +8,11 @@
 #include "Resource/sceneManager.h"
 
 SpotLight::SpotLight()
+    : Light(Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f))
 {
     std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
     size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
 
-    diffuseColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    ambientColor = Vector4(1.f, 1.f, 1.f, 1.f);
-    specularColor = Vector4(1.f, 1.f, 1.f, 1.f);
     direction = Vector3(1.f, 0.f, 0.f);
     constant = 1.f;
     linear = 0.f;
@@ -38,7 +36,7 @@ SpotLight::SpotLight(const Vector4& _diffuse, const Vector4& _ambient, const Vec
     : Light(_diffuse, _ambient, _specular), position(_position), direction(_direction), constant(_constant), linear(_linear), quadratic(_quadratic), 
     cutOff(_cutOff), outerCutOff(_outerCutOff)
 {
-    std::vector<SpotLight*> spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
+    const std::vector<SpotLight*>& spotLights = SceneManager::GetCurrentScene()->GetSpotLights();
     size_t maxSpots = SceneManager::GetCurrentScene()->GetMaxSpotLights();
 
     id = spotLights.size();
@@ -71,9 +69,8 @@ void SpotLight::SetSpotLight(Shader* _shader)
     _shader->GetFragmentShader()->SetFloat("spotLights[" + std::to_string(id) + "].outerCutOff", cos(DegToRad(outerCutOff)));
 }
 
-void SpotLight::Update(Shader* _shader)
+void SpotLight::Update()
 {
     if (owner)
         position = owner->transform->globalPosition;
-    SetSpotLight(_shader);
 }

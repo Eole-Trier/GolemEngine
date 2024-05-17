@@ -19,7 +19,6 @@ class SpotLight;
 class Shader;
 class Mesh;
 
-
 class GOLEM_ENGINE_API Scene
 {
 private:
@@ -33,9 +32,13 @@ private:
 	std::vector<DirectionalLight*> m_dirLights;
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
+	std::vector<Mesh*> m_meshes;
 
 
 public:
+	std::string m_defaultTexture;
+	std::string m_defaultModel;
+	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
 	// std::vector<Terrain*> terrains;
@@ -48,6 +51,7 @@ public:
 	Scene(std::string _name, bool _makeSceneEmpty);
 
 	void InitDefaultScene();
+	void InitLights();
 	void Update(Camera* _camera);
 	void UpdateGameObjects(Camera* _camera);
 	void UpdateLights(Shader* _shader);
@@ -55,21 +59,24 @@ public:
 	bool IsNameExists(const std::string& _name);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
-	void RemoveGameObject(GameObject* _gameObject);
 	void AddLight(Light* _light);
-	void DeleteLight(Light* _light);
 	
-	// std::vector<Terrain*> GetTerrains();
-	std::vector<DirectionalLight*> GetDirectionalLights();
-	std::vector<PointLight*> GetPointLights();
-	std::vector<SpotLight*> GetSpotLights();
+	const std::vector<DirectionalLight*>& GetDirectionalLights();
+	const std::vector<PointLight*>& GetPointLights();
+	const std::vector<SpotLight*>& GetSpotLights();
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
+
+	const std::vector<GameObject*>& GetGameObjects();
+
 	GameObject* GetWorld();
 	Guid GetGuid();
 
+	void AddGameObject(GameObject* _gameObject);
+	void RemoveGameObject(GameObject* _gameObject);
+	void DeleteLight(Light* _light);
 	void SetGuid(Guid _guid);
 
 	

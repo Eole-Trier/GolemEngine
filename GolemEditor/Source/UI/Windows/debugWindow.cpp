@@ -24,7 +24,7 @@ void DebugWindow::Update()
 	ImGui::Text("Screen size: %.0f %.0f", WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
 	ImGui::Text("Mouse position relative to window: %.0f %.0f", InputManager::GetMouseWindowPos().x, InputManager::GetMouseWindowPos().y);
 	ImGui::Text("Mouse position relative to screen: %.0f %.0f", ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-	ImGui::Text("Camera position: %.2f %.2f %.2f", GolemEngine::GetCamera()->m_position.x, GolemEngine::GetCamera()->m_position.y, GolemEngine::GetCamera()->m_position.z);
+	ImGui::Text("Camera position: %.2f %.2f %.2f", GolemEngine::GetCamera()->position.x, GolemEngine::GetCamera()->position.y, GolemEngine::GetCamera()->position.z);
 	DrawFpsGraph();
 	ImGui::End();
 }

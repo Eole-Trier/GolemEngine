@@ -37,7 +37,8 @@ namespace fs = std::filesystem;
     name != "GolemEngine.dll"&& \
     name != "GolemEngine.exp"&& \
     name != "GolemEngine.lib"&& \
-    name != "GolemEngine.pdb")
+    name != "GolemEngine.pdb"&& \
+	name != "golem_engine_icon.aps")
 
 #define UI_SIZE 70
 #define SMALL_WINDOW_SIZE 100

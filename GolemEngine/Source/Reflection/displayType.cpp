@@ -1,9 +1,10 @@
 #include "Reflection/displayType.h"
 #include "Reflection/classesManager.h"
 #include "Resource/sceneManager.h"
-#include "..\..\Include\Components\Light\pointLight.h"
-#include "..\..\Include\Components\Light\spotLight.h"
-#include "..\..\Include\Components\Light\directionalLight.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/spotLight.h"
+#include "Components/Light/directionalLight.h"
+#include "Components/audio.h"
 
 const char* DisplayType::m_addComponentPopupId = "Components";
 const char* DisplayType::m_addComponentButtonName = "Add Component";
@@ -19,35 +20,35 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 	if (ImGui::Button(m_addComponentButtonName, ImVec2(m_addComponentButtonSize.x, m_addComponentButtonSize.y)))
 		ImGui::OpenPopup(m_addComponentPopupId);
 
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
+	std::vector<std::string>&& classes = ClassesManager::GetComponents();
+
+	for (const std::string& name : classes)
 	{
-		if (ImGui::MenuItem("Point Light"))
+		if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
 		{
-			if (SceneManager::GetCurrentScene()->GetPointLights().size() < SceneManager::GetCurrentScene()->GetMaxPointLights() && !_gameObject->GetComponent<PointLight>())
+			if (ImGui::MenuItem(name.c_str()))
 			{
-				_gameObject->AddComponent(new PointLight);
+				if (!_gameObject->HasComponent(name))
+				{
+					Component* obj = static_cast<Component*>(ClassesManager::Create(name, _gameObject));
+					if (obj)
+					{
+						_gameObject->AddComponent(obj);
+						obj->Begin();
+					}
+				}
 			}
+
+			ImGui::EndPopup();
 		}
-		ImGui::EndPopup();
 	}
 	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
 	{
-		if (ImGui::MenuItem("Spot Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetSpotLights().size() < SceneManager::GetCurrentScene()->GetMaxSpotLights() && !_gameObject->GetComponent<SpotLight>())
-			{
-				_gameObject->AddComponent(new SpotLight);
-			}
-		}
-		ImGui::EndPopup();
-	}
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Directional Light"))
+		if (ImGui::MenuItem("Audio"))
 		{
 			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
 			{
-				_gameObject->AddComponent(new DirectionalLight);
+				_gameObject->AddComponent(new Audio);
 			}
 		}
 		ImGui::EndPopup();

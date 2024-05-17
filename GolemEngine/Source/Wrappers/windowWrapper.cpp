@@ -51,16 +51,19 @@ std::unordered_map<std::string, std::optional<GLuint>> textureMap;
 
 GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
-    if (textureMap.find(_filename) != textureMap.end()) {
+    if (textureMap.find(_filename) != textureMap.end()) 
+    {
         // Check if the texture is already loaded
-        if (textureMap[_filename].has_value()) {
+        if (textureMap[_filename].has_value()) 
+        {
             return textureMap[_filename].value();
         }
     }
 
     int width, height, channels;
     unsigned char* data = stbi_load(_filename, &width, &height, &channels, 0);
-    if (!data) {
+    if (!data)
+    {
         return 0;
     }
 
