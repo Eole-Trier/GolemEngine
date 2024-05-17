@@ -78,7 +78,7 @@ void Viewport::Update()
                     EditorUi::selected = objects[i];
                 }
 
-                else if (pixelData == 0)
+                else if (pixelData == -1)
                 {
                     EditorUi::selected = nullptr;
                 }
