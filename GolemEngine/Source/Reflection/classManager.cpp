@@ -9,6 +9,7 @@
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
 #include "Components/GameClasses/movement.h"
+#include "Components/GameClasses/shot.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -23,6 +24,7 @@ void ClassesManager::AddAllClasses()
 	Add<SphereCollider>();
 	Add<BoxCollider>();
 	Add<Movement>();
+	Add<Shot>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

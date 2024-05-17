@@ -2,6 +2,7 @@
 #include "dll.h"
 #include "Refl/refl.hpp"
 #include "Components/component.h"
+#include "Core/gameobject.h"
 #include "vector3.h"
 
 class GOLEM_ENGINE_API Movement : public Component
@@ -20,6 +21,8 @@ public:
     Vector3 up;
     Vector3 right;
     Vector3 worldUp;
+
+    GameObject* flowTarget;
 
     bool moveMode = false;
 
