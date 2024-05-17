@@ -54,7 +54,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
         attachments[i] = GL_COLOR_ATTACHMENT0 + i;
     }
 
-    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id);
+    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id, m_fbo);
     glDrawBuffers(2, attachments);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
@@ -70,7 +70,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
 
-    /*#pragma region playscene textureid
+    #pragma region playscene textureid
     // Create PlayScene framebuffer
     glGenFramebuffers(1, &m_playSceneFbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_playSceneFbo);
@@ -82,19 +82,19 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_playSceneId, 0);
-    AttachTexture(GL_RGBA, _width, _height, 0, m_playSceneId);
+    AttachTexture(GL_RGBA, _width, _height, 0, m_playSceneId, m_playSceneFbo);
 
     CreateRenderBuffer(_width, _height, m_playSceneRbo);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
     glBindRenderbuffer(GL_RENDERBUFFER, 0); // Unbind renderbuffer
-    #pragma endregion playscene textureid*/
+    #pragma endregion playscene textureid
 }
 
-void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
+void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id, unsigned int _fbo)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     glBindTexture(GL_TEXTURE_2D, _id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
