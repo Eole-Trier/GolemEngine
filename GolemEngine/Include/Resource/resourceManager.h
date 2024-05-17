@@ -21,6 +21,7 @@ private:
 	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
+	static inline std::string m_skyboxShader = "skybox_shader";
 
 	std::unordered_map<std::string, Resource*> m_resources;
 private:
@@ -34,6 +35,7 @@ public:
 	static std::string GetDefaultTerrainShader();
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
+	static std::string GetSkyboxShader();
 
 	void ProcessFile(const std::filesystem::path& _filePath);
 	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);

@@ -60,6 +60,7 @@ void ResourceManager::CreateAndLoadResources()
     m_defaultTexture = "default_texture";
     m_defaultModel = "default_model";
     m_defaultShader = "default_shader";
+    m_skyboxShader = "skybox_shader";
 
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
@@ -82,10 +83,10 @@ void ResourceManager::CreateAndLoadResources()
 
     Shader* boxColliderShader = resourceManager->Create<Shader>("boxCollider", Tools::FindFile("boxCollider.vs"));
     boxColliderShader->SetVertexAndFragmentShader(boxColliderShader->path.c_str(), Tools::FindFile("boxCollider.fs").c_str());
-    Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
+
+    Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader, Tools::FindFile("skybox.vs"));
     skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
     Skybox::GetInstance().SetTexture();
-    skyboxShader->Use();
     skyboxShader->SetInt("skybox", 0);
 }
 
@@ -107,4 +108,9 @@ std::string ResourceManager::GetDefaultTexture()
 std::string ResourceManager::GetDefaultModel()
 {
     return m_defaultModel;
+}
+
+std::string ResourceManager::GetSkyboxShader()
+{
+    return m_skyboxShader;
 }
