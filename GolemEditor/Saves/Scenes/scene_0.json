@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "20744e50-c933-8f01-0900-cccccccccccc",
+            "guid": "fb1867c9-f744-de96-de00-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "6955ddf3-71fb-fa5d-1700-cccccccccccc",
+      "guid": "ba8d01e8-496c-f84d-7800-cccccccccccc",
       "isTerrain": false,
       "name": "World"
     },
@@ -71,7 +71,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "564145e7-ce05-7988-2600-cccccccccccc",
+            "guid": "be8f313b-4fc3-67f9-6900-cccccccccccc",
             "localPosition": {
               "x": 3.0,
               "y": 0.0,
@@ -99,11 +99,11 @@
           "name": "meshRenderer"
         }
       ],
-      "guid": "c904403b-6600-3c6d-4e00-cccccccccccc",
+      "guid": "c344bce4-fa5c-bfe6-2100-cccccccccccc",
       "isTerrain": false,
       "name": "ball_bald"
     }
   ],
-  "guid": "9b55b6b8-b880-f2b5-c61e-90c414401d16",
+  "guid": "82176d2f-0942-d4c0-19bd-b4e16957541b",
   "name": "scene_0"
 }

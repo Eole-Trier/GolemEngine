@@ -217,8 +217,4 @@ void GraphicWrapper::SetShaderMat4(GLuint _program, const std::string& _name, co
     glUniformMatrix4fv(glGetUniformLocation(_program, _name.c_str()), 1, GL_TRUE, &_mat.data[0][0]);
 }
 
-void GraphicWrapper::SetShaderViewPos(GLuint _program, Vector3& _viewPos)
-{
-    SetShaderVec3(_program, "viewPos", _viewPos);
-}
 #pragma endregion Shader functions

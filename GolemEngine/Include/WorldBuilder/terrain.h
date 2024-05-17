@@ -58,6 +58,7 @@ public:
     void SetupMesh();
     void UseComputeShader();
     void Draw(Camera* _camera);
+    void UpdateLights(Shader* _shader);
     void GetComputeShaderData(Camera* _camera);
     void CalculateNormals();
     

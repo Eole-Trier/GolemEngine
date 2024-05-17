@@ -69,7 +69,6 @@ void Scene::Update(Camera* _camera)
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
-    defaultShader->GetVertexShader()->SetViewPos(_camera->m_position);
 
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
 
@@ -280,11 +279,6 @@ void Scene::DeleteLight(Light* _light)
         std::erase(m_dirLights, dL);
     }
 }
-
-// std::vector<Terrain*> Scene::GetTerrains()
-// {
-    // return  terrains;
-// }
 
 std::vector<DirectionalLight*> Scene::GetDirectionalLights()
 {

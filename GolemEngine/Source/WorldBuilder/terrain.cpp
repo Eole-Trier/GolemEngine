@@ -2,6 +2,9 @@
 
 #include <utils.h>
 
+#include "Components/Light/directionalLight.h"
+#include "Components/Light/pointLight.h"
+#include "Components/Light/spotLight.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
@@ -77,16 +80,30 @@ void Terrain::UseComputeShader()
 
 void Terrain::Draw(Camera* _camera)
 {
-    glActiveTexture(GL_TEXTURE0);
-    m_texture->Use();
 
-    m_shaders[0]->Use();
-    m_shaders[0]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
-    m_shaders[0]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
-    m_shaders[0]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shaders[0]->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    m_shaders[0]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
-    m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", 0);
+    m_shaders[1]->Use();
+    m_shaders[1]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
+    m_shaders[1]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+    m_shaders[1]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shaders[1]->GetVertexShader()->SetFloat("minHeight", m_yMin);
+    m_shaders[1]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    if (m_texture != nullptr)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        m_texture->Use();
+        m_shaders[1]->GetFragmentShader()->SetInt("ourTexture", 0);
+    }
+    else
+    {
+        m_shaders[1]->GetFragmentShader()->SetInt("ourTexture", -1);
+    }
+
+    if (!SceneManager::GetCurrentScene()->GetDirectionalLights().empty() ||
+        !SceneManager::GetCurrentScene()->GetPointLights().empty() ||
+        !SceneManager::GetCurrentScene()->GetSpotLights().empty())
+    {
+        UpdateLights(m_shaders[1]);
+    }
     
     glBindVertexArray(m_vao);
     
@@ -105,6 +122,28 @@ void Terrain::Draw(Camera* _camera)
     glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
     // Reset to fill
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void Terrain::UpdateLights(Shader* _shader)
+{
+    _shader->Use();
+
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", SceneManager::GetCurrentScene()->GetDirectionalLights().size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", SceneManager::GetCurrentScene()->GetPointLights().size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", SceneManager::GetCurrentScene()->GetSpotLights().size());
+
+    for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetDirectionalLights().size(); ++i)
+    {
+        SceneManager::GetCurrentScene()->GetDirectionalLights()[i]->Update(_shader);
+    }
+    for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetPointLights().size(); ++i)
+    {
+        SceneManager::GetCurrentScene()->GetPointLights()[i]->Update(_shader);
+    }
+    for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetSpotLights().size(); ++i)
+    {
+        SceneManager::GetCurrentScene()->GetSpotLights()[i]->Update(_shader);
+    }
 }
 
 void Terrain::GetComputeShaderData(Camera* _camera)

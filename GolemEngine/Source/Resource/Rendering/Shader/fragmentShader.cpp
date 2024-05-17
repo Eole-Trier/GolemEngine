@@ -100,9 +100,3 @@ void FragmentShader::SetMat4(const std::string& _name, const Matrix4& _value) co
     GraphicWrapper::SetShaderMat4(m_shader->id, _name, _value);
 }
 
-void FragmentShader::SetViewPos(Vector3& _viewPos)
-{
-    SetVec3("viewPos", _viewPos);
-}
-
-

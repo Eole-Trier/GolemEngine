@@ -101,9 +101,3 @@ void VertexShader::SetMat4(const std::string& _name, const Matrix4& _value) cons
     GraphicWrapper::SetShaderMat4(m_shader->id, _name, _value);
 }
 
-void VertexShader::SetViewPos(Vector3& _viewPos)
-{
-    SetVec3("viewPos", _viewPos);
-}
-
-

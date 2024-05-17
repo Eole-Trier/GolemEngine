@@ -4,8 +4,8 @@ uniform sampler2D ourTexture;
 
 in vec3 FragPos;
 in vec2 TexCoord;
-in float minY; // Input from vertex shader
-in float maxY; // Input from vertex shader
+in float minY;    // Input from vertex shader
+in float maxY;    // Input from vertex shader
 
 out vec4 FragColor;
 
@@ -25,6 +25,4 @@ void main()
     }
     
     FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
-
-    // FragColor = texture(ourTexture, TexCoord * 1);
 }

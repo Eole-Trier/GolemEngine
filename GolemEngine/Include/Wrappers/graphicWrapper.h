@@ -107,7 +107,6 @@ public:
 	static void SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value);
 	static void SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w);
 	static void SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat);
-	static void SetShaderViewPos(GLuint _program, Vector3& _viewPos);
 
 #pragma endregion Shader functions
 };
