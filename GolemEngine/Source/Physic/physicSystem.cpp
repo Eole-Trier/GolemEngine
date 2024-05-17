@@ -161,6 +161,8 @@ void PhysicSystem::Update()
 	// of your own job scheduler. JobSystemThreadPool is an example implementation.
 	JobSystemThreadPool job_system(cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1);
 
+	contactListener.UpdateAllContacts();
+
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
@@ -176,6 +178,16 @@ void PhysicSystem::PostUpdate()
 void PhysicSystem::AddCollider(Collider* _collider)
 {
 	m_colliders.push_back(_collider);
+}
+
+Collider* PhysicSystem::GetCollider(BodyID _bodyId)
+{
+	for (Collider* c : m_colliders)
+	{
+		if (c->id == _bodyId)
+			return c;
+	}
+	return nullptr;
 }
 
 void PhysicSystem::DeleteCollider(Collider* _collider)

@@ -17,12 +17,14 @@ class Collider : public Component
 {
 private:
 	bool m_IsActivated;
+
 	MotionType m_MotionType;
 	Model* m_model = nullptr;
 	const char* m_modelPath;
 
 public:
 	BodyID id;
+	ColliderState colliderState;
 
 public:
 	Collider();
@@ -42,6 +44,10 @@ public:
 	void SetModel(Model* _model); 
 	const char* GetModelPath();
 	void SetModelPath(const char* _path);
+
+	void OnCollisionEnter(Collider* _other);
+	void OnCollisionStay(Collider* _other);
+	void OnCollisionLeave(Collider* _other);
 
 	friend refl_impl::metadata::type_info__<Collider>; // needed to reflect private members
 };

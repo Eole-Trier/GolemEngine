@@ -55,6 +55,7 @@ public:
 	static void PostUpdate();
 
 	static void AddCollider(Collider* _collider);
+	static Collider* GetCollider(BodyID _bodyId);
 	static void DeleteCollider(Collider* _collider);
 
 	static BodyID CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
