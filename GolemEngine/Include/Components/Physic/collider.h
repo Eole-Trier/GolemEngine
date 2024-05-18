@@ -25,6 +25,12 @@ private:
 public:
 	BodyID id;
 	ColliderState colliderState;
+	std::function<void (Collider* _collider, Collider* _other)> onCollisionEnter;
+	std::function<void (Collider* _collider, Collider* _other)> onCollisionStay;
+	std::function<void(Collider* _collider, Collider* _other)> onCollisionExit;
+	std::function<void(Collider* _collider, Collider* _other)> onTriggerEnter;
+	std::function<void(Collider* _collider, Collider* _other)> onTriggerStay;
+	std::function<void(Collider* _collider, Collider* _other)> onTriggerExit;
 
 public:
 	Collider();
@@ -47,7 +53,7 @@ public:
 
 	void OnCollisionEnter(Collider* _other);
 	void OnCollisionStay(Collider* _other);
-	void OnCollisionLeave(Collider* _other);
+	void OnCollisionExit(Collider* _other);
 
 	friend refl_impl::metadata::type_info__<Collider>; // needed to reflect private members
 };

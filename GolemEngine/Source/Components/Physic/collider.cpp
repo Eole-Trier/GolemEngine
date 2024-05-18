@@ -92,16 +92,19 @@ void Collider::SetModelPath(const char* _path)
 
 void Collider::OnCollisionEnter(Collider* _other)
 {
-	std::cout << this->owner->name << " enter in collision with " << _other->owner->name << std::endl;
+	if (onCollisionEnter)
+		onCollisionEnter(this, _other);
 }
 
 void Collider::OnCollisionStay(Collider* _other)
 {
-	std::cout << this->owner->name << " stay in collision with " << _other->owner->name << std::endl;
+	if (onCollisionStay)
+		onCollisionStay(this, _other);
 }
 
-void Collider::OnCollisionLeave(Collider* _other)
+void Collider::OnCollisionExit(Collider* _other)
 {
-	std::cout << "Leave" << std::endl;
+	if (onCollisionExit)
+		onCollisionExit(this, _other);
 }
 
