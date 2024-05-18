@@ -9,10 +9,6 @@ struct Vertex {
     vec2 padding3;
 };
 
-//struct Vertex {
-//    float data[8];
-//};
-
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
 layout(std430, binding = 0) readonly buffer ssboVerticesIn {
@@ -22,6 +18,7 @@ layout(std430, binding = 0) readonly buffer ssboVerticesIn {
 layout(std430, binding = 1) buffer ssboVerticesOut {
     Vertex verticesOut[];
 };
+
 
 void main()
 {
