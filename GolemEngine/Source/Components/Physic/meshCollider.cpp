@@ -13,7 +13,6 @@
 
 MeshCollider::MeshCollider()
 {
-	ResourceManager* resourceManager = ResourceManager::GetInstance();
 }
 
 MeshCollider::~MeshCollider()
@@ -22,7 +21,13 @@ MeshCollider::~MeshCollider()
 
 void MeshCollider::Begin()
 {
-	SetModel(owner->GetComponent<MeshRenderer>()->GetMesh()->GetModel());
+	ResourceManager* resourceManager = ResourceManager::GetInstance();
+
+	Model* model = owner->GetComponent<MeshRenderer>()->GetMesh()->GetModel();
+	Model* newModel = resourceManager->Create<Model>(owner->name + "Collider", model->path);
+	newModel->Load(newModel->path.c_str());
+
+	SetModel(newModel);
 	id = PhysicSystem::CreateMeshCollider(GetModel()->vertices, owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation));
 }
 
@@ -34,7 +39,6 @@ void MeshCollider::PreUpdate()
 void MeshCollider::Update()
 {
 	Collider::Update();
-	//PhysicSystem::SetBoxShape(id, m_size);
 }
 
 void MeshCollider::PostUpdate()

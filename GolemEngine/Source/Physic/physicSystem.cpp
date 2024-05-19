@@ -215,7 +215,7 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Quaternion _rotation, 
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
-BodyID PhysicSystem::CreateMeshCollider(std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
+BodyID PhysicSystem::CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 

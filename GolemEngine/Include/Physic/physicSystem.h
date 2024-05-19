@@ -64,7 +64,7 @@ public:
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, 
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
-	static BodyID CreateMeshCollider(std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation,
+	static BodyID CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation,
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
 	static void MakeBodyStatic(BodyID _bodyId);
