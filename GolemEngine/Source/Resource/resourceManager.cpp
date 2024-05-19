@@ -82,6 +82,10 @@ void ResourceManager::CreateAndLoadResources()
 
     Shader* boxColliderShader = resourceManager->Create<Shader>("boxCollider", Tools::FindFile("boxCollider.vs"));
     boxColliderShader->SetVertexAndFragmentShader(boxColliderShader->path.c_str(), Tools::FindFile("boxCollider.fs").c_str());
+
+    Shader* meshColliderShader = resourceManager->Create<Shader>("meshCollider", Tools::FindFile("meshCollider.vs"));
+    meshColliderShader->SetVertexAndFragmentShader(meshColliderShader->path.c_str(), Tools::FindFile("meshCollider.fs").c_str());
+
     Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
     skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
     Skybox::GetInstance().SetTexture();

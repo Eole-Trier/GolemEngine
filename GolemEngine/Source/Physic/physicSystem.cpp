@@ -10,8 +10,10 @@
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
+#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
+#include <Jolt/Physics/Collision/Shape/Shape.h>
 
 // STL includes
 #include <iostream>
@@ -213,6 +215,25 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Quaternion _rotation, 
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
+BodyID PhysicSystem::CreateMeshCollider(std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	std::vector<Vec3> vecPoints;
+
+	for (Vertex v : _vertices)
+	{
+		vecPoints.push_back(Vec3(v.position.x, v.position.y, v.position.z));
+	}
+	Array<Vec3> points(vecPoints);
+
+	ConvexHullShapeSettings convexHullSettings(points);
+	ShapeSettings::ShapeResult shapeResult;
+	ConvexHullShape* convex = new ConvexHullShape(convexHullSettings, shapeResult);
+	BodyCreationSettings meshSettings(convex, ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	meshSettings.mAllowDynamicOrKinematic = true;
+	return bodyInterface.CreateAndAddBody(meshSettings, EActivation::DontActivate);
+}
 
 void PhysicSystem::MakeBodyStatic(BodyID _bodyId)
 {

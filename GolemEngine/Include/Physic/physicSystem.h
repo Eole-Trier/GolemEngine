@@ -9,6 +9,7 @@
 #include "Physic/objectLayerVsObjectLayer.h"
 #include "Physic/broadPhaseLayerInterface.h"
 #include "MathsLib/vector3.h"
+#include "Resource/Rendering/vertex.h"
 
 #include "dll.h"
 
@@ -22,6 +23,7 @@ enum class MotionType : uint8
 	Kinematic,					
 	Dynamic,
 };
+
 
 class PhysicSystem
 {
@@ -58,8 +60,12 @@ public:
 	static Collider* GetCollider(BodyID _bodyId);
 	static void DeleteCollider(Collider* _collider);
 
-	static BodyID CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
-	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, 
+		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, 
+		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateMeshCollider(std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation,
+		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
 	static void MakeBodyStatic(BodyID _bodyId);
 	static void MakeBodyDynamic(BodyID _bodyId);

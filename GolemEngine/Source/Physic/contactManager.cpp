@@ -55,12 +55,6 @@ void ContactManager::UpdateAllContacts()
 			break;
 		case ON_COLLISION_EXIT:
 			break;
-		case ON_TRIGGER_ENTER:
-			break;
-		case ON_TRIGGER_STAY:
-			break;
-		case ON_TRIGGER_EXIT:
-			break;
 		default:
 			break;
 		}

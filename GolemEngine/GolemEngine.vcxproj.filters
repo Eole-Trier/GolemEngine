@@ -67,6 +67,7 @@
     <ClCompile Include="External\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
+    <ClCompile Include="Source\Components\Physic\meshCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -167,5 +168,6 @@
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
     <ClInclude Include="Include\Utils\tools.h" />
+    <ClInclude Include="Include\Components\Physic\meshCollider.h" />
   </ItemGroup>
 </Project>

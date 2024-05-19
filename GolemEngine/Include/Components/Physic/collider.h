@@ -28,9 +28,6 @@ public:
 	std::function<void (Collider* _collider, Collider* _other)> onCollisionEnter;
 	std::function<void (Collider* _collider, Collider* _other)> onCollisionStay;
 	std::function<void(Collider* _collider, Collider* _other)> onCollisionExit;
-	std::function<void(Collider* _collider, Collider* _other)> onTriggerEnter;
-	std::function<void(Collider* _collider, Collider* _other)> onTriggerStay;
-	std::function<void(Collider* _collider, Collider* _other)> onTriggerExit;
 
 public:
 	Collider();
