@@ -146,6 +146,7 @@
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
+    <ClCompile Include="Source\WorldBuilder\brush.cpp" />
     <ClCompile Include="Source\WorldBuilder\defaultTerrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\noisemapTerrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Include\Resource\sceneManager.h" />
     <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Utils\viewportTools.h" />
+    <ClInclude Include="Include\WorldBuilder\brush.h" />
     <ClInclude Include="Include\WorldBuilder\defaultTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />

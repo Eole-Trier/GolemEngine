@@ -66,16 +66,11 @@ void ResourceManager::CreateAndLoadResources()
     defaultShader->SetAllShaders(defaultVertexShader, defaultFragmentShader);
 
 #pragma region Terrain Shaders
-    Shader* terrainShader = resourceManager->Create<Shader>(m_terrainShader0);
+    Shader* terrainShader = resourceManager->Create<Shader>(m_terrainShader);
     VertexShader* terrainVertexShader = new VertexShader(terrainShader, Tools::FindFile("terrain.vs").c_str());
-    FragmentShader* terrainFragmentShader = new FragmentShader(terrainShader, Tools::FindFile("terrainHeightmap.fs").c_str());
+    FragmentShader* terrainFragmentShader = new FragmentShader(terrainShader, Tools::FindFile("terrain.fs").c_str());
     terrainShader->SetAllShaders(terrainVertexShader, terrainFragmentShader); 
     
-    Shader* terrainTextureShader = resourceManager->Create<Shader>(m_terrainShader1);
-    VertexShader* terrainVertexTextureShader = new VertexShader(terrainTextureShader, Tools::FindFile("terrain.vs").c_str());
-    FragmentShader* terrainTextureFragmentShader = new FragmentShader(terrainTextureShader, Tools::FindFile("terrainTexture.fs").c_str());
-    terrainTextureShader->SetAllShaders(terrainVertexTextureShader, terrainTextureFragmentShader);
-
     ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_terrainComputeShader);
     defaultTerrainComputeShader->SetComputePath(Tools::FindFile("terrain.comp"));
     defaultTerrainComputeShader->Init();
@@ -144,12 +139,7 @@ std::string ResourceManager::GetDefaultModel()
 
 std::string ResourceManager::GetTerrainShader()
 {
-    return m_terrainShader0;
-}
-
-std::string ResourceManager::GetTerrainTextureShader()
-{
-    return m_terrainShader1;
+    return m_terrainShader;
 }
 
 std::string ResourceManager::GetTerrainComputeShader()

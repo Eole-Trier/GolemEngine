@@ -19,7 +19,6 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetTerrainShader()));
-    m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetTerrainTextureShader()));
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
     
     m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
@@ -81,28 +80,30 @@ void Terrain::UseComputeShader()
 void Terrain::Draw(Camera* _camera)
 {
 
-    m_shaders[1]->Use();
-    m_shaders[1]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
-    m_shaders[1]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
-    m_shaders[1]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shaders[1]->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    m_shaders[1]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    m_shaders[0]->Use();
+    m_shaders[0]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
+    m_shaders[0]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+    m_shaders[0]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shaders[0]->GetVertexShader()->SetFloat("minHeight", m_yMin);
+    m_shaders[0]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
     if (m_texture != nullptr)
     {
         glActiveTexture(GL_TEXTURE0);
         m_texture->Use();
-        m_shaders[1]->GetFragmentShader()->SetInt("ourTexture", 0);
+        m_shaders[0]->GetFragmentShader()->SetBool("useTexture", true);
+        m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", 0);
     }
     else
     {
-        m_shaders[1]->GetFragmentShader()->SetInt("ourTexture", -1);
+        m_shaders[0]->GetFragmentShader()->SetBool("useTexture", false);
+        m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", -1);
     }
 
     if (!SceneManager::GetCurrentScene()->GetDirectionalLights().empty() ||
         !SceneManager::GetCurrentScene()->GetPointLights().empty() ||
         !SceneManager::GetCurrentScene()->GetSpotLights().empty())
     {
-        UpdateLights(m_shaders[1]);
+        UpdateLights(m_shaders[0]);
     }
     
     glBindVertexArray(m_vao);

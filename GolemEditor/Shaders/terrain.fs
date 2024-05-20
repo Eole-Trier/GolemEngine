@@ -40,6 +40,7 @@ struct SpotLight
 };
 
 uniform sampler2D ourTexture;
+uniform bool useTexture;
 uniform int nbrDirLights;
 uniform int nbrPointLights;
 uniform int nbrSpotLights;
@@ -62,20 +63,39 @@ out vec4 FragColor;
 
 void main()
 {
-    vec3 viewDir = normalize(-FragPos);
-
-    vec4 light = vec4(0);
-
-    for (int i = 0; i < nbrDirLights; i++)
-        light += ProcessDirLight(dirLights[i], Normal, viewDir);
-
-    for (int i = 0; i < nbrPointLights; i++)
-        light += ProcessPointLight(pointLights[i], Normal, FragPos, viewDir);
-
-    for (int i = 0; i < nbrSpotLights; i++)
-        light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
+    if (useTexture)
+    {
+        vec3 viewDir = normalize(-FragPos);
     
-    FragColor = light * texture(ourTexture, TexCoord *10);
+        vec4 light = vec4(0);
+    
+        for (int i = 0; i < nbrDirLights; i++)
+            light += ProcessDirLight(dirLights[i], Normal, viewDir);
+    
+        for (int i = 0; i < nbrPointLights; i++)
+            light += ProcessPointLight(pointLights[i], Normal, FragPos, viewDir);
+    
+        for (int i = 0; i < nbrSpotLights; i++)
+            light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
+        
+        FragColor = light * texture(ourTexture, TexCoord *10);
+    }
+    else
+    {
+        float normalizedHeight = 0.0f;
+        
+        if (maxY > 0.0f)
+        {
+            normalizedHeight = FragPos.y / maxY;    // Normalize the y-coordinate of the fragment position for positive maxY
+        }
+        else if (minY < 0.0f)
+        {
+            normalizedHeight = (FragPos.y / minY);    // Normalize the y-coordinate of the fragment position for negative maxY. To have the white shown at the highest point and not
+                                                      // the lowest, add "1 -" before "(FragPos.y / minY);" 
+        }
+        
+        FragColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0); // Set the fragment color based on the normalized height
+    }
 }
 
 vec4 ProcessDirLight(DirLight light, vec3 normal, vec3 viewDir)
