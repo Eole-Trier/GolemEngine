@@ -11,6 +11,7 @@
 #include "Components/meshRenderer.h"
 #include "MathsLib/utils.h"
 #include "Wrappers/windowWrapper.h"
+#include "WorldBuilder/terrain.h"
 
 MeshCollider::MeshCollider()
 {
@@ -24,12 +25,27 @@ void MeshCollider::Begin()
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Model* model = owner->GetComponent<MeshRenderer>()->GetMesh()->GetModel();
-	Model* newModel = resourceManager->Create<Model>(owner->name + "Collider", model->path);
-	newModel->Load(newModel->path.c_str());
+	if (owner->GetComponent<MeshRenderer>() != nullptr)
+	{
+		Model* model = owner->GetComponent<MeshRenderer>()->GetMesh()->GetModel();
+		Model* newModel = resourceManager->Create<Model>(owner->name + "Collider", model->path);
+		newModel->Load(newModel->path.c_str());
 
-	SetModel(newModel);
-	id = PhysicSystem::CreateMeshCollider(GetModel()->vertices, owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation));
+		SetModel(newModel);
+		id = PhysicSystem::CreateMeshCollider(GetModel()->vertices, owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation));
+	}
+	else if (Terrain* terrain = dynamic_cast<Terrain*>(owner))
+	{
+		Model* newModel = resourceManager->Create<Model>(owner->name + "Collider", "");
+		newModel->Load(terrain->GetVertices());
+
+		SetModel(newModel);
+		id = PhysicSystem::CreateMeshCollider(GetModel()->vertices, owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation));
+	}
+	else
+	{
+		Log::Print("Can't set a mesh collider to an object which don't have a model");
+	}
 }
 
 void MeshCollider::PreUpdate()
@@ -40,6 +56,10 @@ void MeshCollider::PreUpdate()
 void MeshCollider::Update()
 {
 	Collider::Update();
+	if (owner->transform->oldScaling != owner->transform->scaling)
+	{
+		PhysicSystem::SetConvexHullShape(id, GetModel()->vertices);
+	}
 }
 
 void MeshCollider::PostUpdate()
@@ -59,7 +79,7 @@ void MeshCollider::Draw(Camera* _camera)
 
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
-	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
+	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), owner->transform->scaling);
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

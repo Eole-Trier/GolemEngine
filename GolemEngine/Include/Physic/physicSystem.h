@@ -82,6 +82,8 @@ public:
 
 	static void SetSphereShape(BodyID _bodyId, float _radius);
 	static void SetBoxShape(BodyID _bodyId, Vector3 _size);
+	static void SetConvexHullShape(BodyID _bodyId, std::vector<Vertex>& _vertices);
+
 
 	static void DeleteBody(BodyID _bodyId);
 };
