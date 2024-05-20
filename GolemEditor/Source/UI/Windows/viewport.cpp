@@ -71,14 +71,14 @@ void Viewport::Update()
             int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
             GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id, GraphicWrapper::GetFbo());
 
-            for (int i = 1; i < objects.size(); i++)
+            for (int i = 0; i < objects.size(); i++)
             {
                 if (objects[i]->GetId() == pixelData)
                 {
                     EditorUi::selectedGameObject = objects[i];
                 }
 
-                else if (pixelData >= 1000000)
+                else if (pixelData == -1)
                 {
                     EditorUi::selectedGameObject = nullptr;
                 }

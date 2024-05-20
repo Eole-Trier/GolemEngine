@@ -65,23 +65,32 @@ void ResourceManager::CreateAndLoadResources()
     FragmentShader* defaultFragmentShader = new FragmentShader(defaultShader, Tools::FindFile("default.fs").c_str());
     defaultShader->SetAllShaders(defaultVertexShader, defaultFragmentShader);
 
-    // Set default shader for terrains
+#pragma region Terrain Shaders
     Shader* terrainShader = resourceManager->Create<Shader>(m_terrainShader0);
     VertexShader* terrainVertexShader = new VertexShader(terrainShader, Tools::FindFile("terrain.vs").c_str());
     FragmentShader* terrainFragmentShader = new FragmentShader(terrainShader, Tools::FindFile("terrainHeightmap.fs").c_str());
     terrainShader->SetAllShaders(terrainVertexShader, terrainFragmentShader); 
     
-    // Set default texture shader for terrains
     Shader* terrainTextureShader = resourceManager->Create<Shader>(m_terrainShader1);
     VertexShader* terrainVertexTextureShader = new VertexShader(terrainTextureShader, Tools::FindFile("terrain.vs").c_str());
     FragmentShader* terrainTextureFragmentShader = new FragmentShader(terrainTextureShader, Tools::FindFile("terrainTexture.fs").c_str());
     terrainTextureShader->SetAllShaders(terrainVertexTextureShader, terrainTextureFragmentShader);
 
+    ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_terrainComputeShader);
+    defaultTerrainComputeShader->SetComputePath(Tools::FindFile("terrain.comp"));
+    defaultTerrainComputeShader->Init();
+#pragma endregion Terrain Shaders
+
+    Shader* sphereColliderShader = resourceManager->Create<Shader>(m_sphereColliderShader);
+    VertexShader* sphereColliderVertexShader = new VertexShader(sphereColliderShader, Tools::FindFile("sphereCollider.vs").c_str());
+    FragmentShader* sphereColliderFragmentShader = new FragmentShader(sphereColliderShader, Tools::FindFile("sphereCollider.fs").c_str());
+    sphereColliderShader->SetAllShaders(sphereColliderVertexShader, sphereColliderFragmentShader);
+
     Shader* boxColliderShader = resourceManager->Create<Shader>(m_boxColliderShader);
     VertexShader* boxColliderVertexShader = new VertexShader(boxColliderShader, Tools::FindFile("boxCollider.vs").c_str());
     FragmentShader* boxColliderFragmentShader = new FragmentShader(boxColliderShader, Tools::FindFile("boxCollider.fs").c_str());
     boxColliderShader->SetAllShaders(boxColliderVertexShader, boxColliderFragmentShader);
-    
+
     Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader);
     VertexShader* skyboxVertexShader = new VertexShader(skyboxShader, Tools::FindFile("skybox.vs").c_str());
     FragmentShader* skyboxFragmentShader = new FragmentShader(skyboxShader, Tools::FindFile("skybox.fs").c_str());
@@ -91,10 +100,6 @@ void ResourceManager::CreateAndLoadResources()
     skyboxShader->Use();
     skyboxShader->GetFragmentShader()->SetInt("skybox", 0);
 
-    // Create the default compute shader for terrains
-    ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_terrainComputeShader);
-    defaultTerrainComputeShader->SetComputePath(Tools::FindFile("terrain.comp"));
-    defaultTerrainComputeShader->Init();
     
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
@@ -155,4 +160,8 @@ std::string ResourceManager::GetDefaultTerrainComputeShader()
 std::string ResourceManager::GetDefaultGridTerrainTexture()
 {
     return m_defaultGridTerrainTexture;
+}
+std::string ResourceManager::GetSkyboxShader()
+{
+    return m_skyboxShader;
 }
