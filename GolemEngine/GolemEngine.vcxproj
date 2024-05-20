@@ -34,7 +34,6 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Include\Resource\Rendering\Shader\vertexShader.h" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
     <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
@@ -153,7 +152,6 @@
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
     <ClCompile Include="Source\Wrappers\windowWrapper.cpp" />
-    <ClCompile Include="tt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\glm\platform.h" />
@@ -235,7 +233,6 @@
     <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
-    <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
