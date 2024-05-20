@@ -4,7 +4,7 @@
 #include "Wrappers/graphicWrapper.h"
 
 Collider::Collider()
-	: m_IsActivated(true), m_MotionType(MotionType::Kinematic), m_model(nullptr), m_modelPath(nullptr)
+	: m_IsActivated(true), m_MotionType(MotionType::Dynamic), m_model(nullptr), m_modelPath(nullptr)
 {
 	PhysicSystem::AddCollider(this);
 }

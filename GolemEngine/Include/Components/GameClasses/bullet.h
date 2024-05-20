@@ -9,7 +9,7 @@
 #include "vector3.h"
 #include <string>
 
-class GOLEM_ENGINE_API Bullet : public GameObject
+class GOLEM_ENGINE_API Bullet
 {
 private:
 	Transform* m_transform;
@@ -19,6 +19,8 @@ public:
 	Shader* shader;
 	Model* model;
 	Mesh* mesh;
+
+	GameObject* b_ptr;
 
 	Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName = "", std::string _name = "bullet", std::string _textureName = "", std::string _shaderName = "");
 	float speed;

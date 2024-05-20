@@ -42,7 +42,8 @@ Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _dire
 
     GameObject* gameObject = new GameObject(name, m_transform);
     gameObject->AddComponent(new MeshRenderer(mesh));
-    //SceneManager::GetCurrentScene()->gameObjects.push_back(gameObject);
+    b_ptr = gameObject;
+    SceneManager::GetCurrentScene()->gameObjects.push_back(b_ptr);
  
     //gameObject->AddComponent(new SphereCollider);
 
@@ -53,17 +54,15 @@ Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _dire
 
 void Bullet::Update()
 {
-
+    m_transform->localPosition += forward * speed;
+    lifetime += GolemEngine::GetDeltaTime();
     if (lifetime > maxLifetime)
     {
         Destroy();
     }
-    m_transform->localPosition += forward * speed;
-    lifetime += GolemEngine::GetDeltaTime();
 }
 
 void Bullet::Destroy()
 {
     isDead = true;
-    //delete this;
 }
