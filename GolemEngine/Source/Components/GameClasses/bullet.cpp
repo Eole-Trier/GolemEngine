@@ -7,6 +7,7 @@
 #include "Core/gameobject.h"
 #include "Resource/sceneManager.h"
 #include "Resource/resourceManager.h"
+#include "golemEngine.h"
 #include "vector3.h"
 
 Bullet::Bullet(std::string _modelName, std::string _name, std::string _textureName, std::string _shaderName)
@@ -54,4 +55,5 @@ Bullet::Bullet(std::string _modelName, std::string _name, std::string _textureNa
 void Bullet::Update()
 {
     m_transform->localPosition.z -= 0.1f;
+    GolemEngine::GetDeltaTime();
 }
