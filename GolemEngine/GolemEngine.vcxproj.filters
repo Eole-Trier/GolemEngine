@@ -45,7 +45,6 @@
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Components\audio.cpp" />
-    <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
@@ -68,6 +67,7 @@
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
     <ClCompile Include="Source\Components\Physic\meshCollider.cpp" />
+    <ClCompile Include="Source\Resource\guid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />

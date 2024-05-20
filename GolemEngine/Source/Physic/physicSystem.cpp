@@ -219,7 +219,7 @@ BodyID PhysicSystem::CreateMeshCollider(const std::vector<Vertex>& _vertices, Ve
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	std::vector<Vec3> vecPoints;
+	std::vector<Vec3, STLAllocator<Vec3>> vecPoints;
 
 	for (Vertex v : _vertices)
 	{

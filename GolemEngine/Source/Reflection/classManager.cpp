@@ -2,7 +2,7 @@
 #include "Debug/log.h"
 #include "Components/transform.h"
 #include "Components/meshRenderer.h"
-#include "Components/Light/directionalLight.h"
+#include "Components/Light/directionalLight.h"6
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
 #include "Components/audio.h"
