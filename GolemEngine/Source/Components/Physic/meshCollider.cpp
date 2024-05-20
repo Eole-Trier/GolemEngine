@@ -1,66 +1,58 @@
-#include "Components/Physic/sphereCollider.h"
+#include "Components/Physic/meshCollider.h"
 
 #include <Jolt/Physics/Body/BodyInterface.h>
-#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 
 #include <iostream>
 
 #include "Physic/physicSystem.h"
 #include "Physic/layers.h"
-#include "MathsLib/utils.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Resource/resourceManager.h"
+#include "Components/meshRenderer.h"
+#include "MathsLib/utils.h"
 #include "Wrappers/windowWrapper.h"
 
-using namespace JPH;
-using namespace JPH::literals;
+MeshCollider::MeshCollider()
+{
+}
 
-SphereCollider::SphereCollider()
-	: m_radius(1.f)
+MeshCollider::~MeshCollider()
+{
+}
+
+void MeshCollider::Begin()
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("sphereCollider.obj");
-	SetModel(resourceManager->Get<Model>(GetModelPath()));
+
+	Model* model = owner->GetComponent<MeshRenderer>()->GetMesh()->GetModel();
+	Model* newModel = resourceManager->Create<Model>(owner->name + "Collider", model->path);
+	newModel->Load(newModel->path.c_str());
+
+	SetModel(newModel);
+	id = PhysicSystem::CreateMeshCollider(GetModel()->vertices, owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation));
 }
 
-SphereCollider::SphereCollider(float _radius)
-	: m_radius(_radius)
-{
-	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("sphereCollider.obj");
-	SetModel(resourceManager->Get<Model>(GetModelPath()));
-}
-
-SphereCollider::~SphereCollider()
-{
-}
-
-void SphereCollider::Begin()
-{
-	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_radius);
-}
-
-void SphereCollider::PreUpdate()
+void MeshCollider::PreUpdate()
 {
 	Collider::PreUpdate();
 }
 
-void SphereCollider::Update()
+void MeshCollider::Update()
 {
 	Collider::Update();
-	PhysicSystem::SetSphereShape(id, m_radius);
 }
 
-void SphereCollider::PostUpdate()
+void MeshCollider::PostUpdate()
 {
 	Collider::PostUpdate();
 }
 
-void SphereCollider::Draw(Camera* _camera)
+void MeshCollider::Draw(Camera* _camera)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetSphereColliderShader());
+	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetMeshColliderShader());
+
 	Model* model = GetModel();
 
 	shader->Use();
@@ -68,7 +60,6 @@ void SphereCollider::Draw(Camera* _camera)
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
 	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
-	shader->GetVertexShader()->SetFloat("radius", m_radius);
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

@@ -10,6 +10,7 @@
 #include "Debug/log.h"
 #include "Components/Light/light.h"
 #include "WorldBuilder/terrain.h"
+#include "Components/Physic/collider.h"
 
 using json = nlohmann::json;
 
@@ -50,6 +51,7 @@ public:
 	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
 	Scene(std::string _name, bool _makeSceneEmpty);
 
+	void Test(Collider* _collider, Collider* _other);
 	void InitDefaultScene();
 	void InitLights();
 	void Update(Camera* _camera);

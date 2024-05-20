@@ -42,6 +42,12 @@ Scene::Scene(std::string _name, bool _makeSceneEmpty)
     }
 }
 
+void Scene::Test(Collider* _collider, Collider* _other)
+{
+    PhysicSystem::SetVelocity(_collider->id, Vector3(0, 10, 0));
+}
+
+
 void Scene::InitDefaultScene()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
@@ -74,7 +80,9 @@ void Scene::InitDefaultScene()
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-   
+    SphereCollider* sc = new SphereCollider;
+    ballBaldGo->AddComponent(sc);
+    sc->Begin();
 
     std::string ballBaldName2 = "ball_bald2";
     Transform* ballBaldTransform2 = new Transform(Vector3(-3, 0, 0), Vector3(0), Vector3(1), m_world->transform);
@@ -83,6 +91,8 @@ void Scene::InitDefaultScene()
     Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
+    
+    sc->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { Test(_collider, _other); };
 }
 
 void Scene::InitLights()
@@ -242,7 +252,7 @@ void Scene::CreateNewObject(std::string _name, std::string _modelName, std::stri
         name = originalName + "_" + std::to_string(suffix++);
     }
 
-    Model* model = resourceManager->Get<Model>(_modelName + ".obj");
+    Model* model = resourceManager->Get<Model>(_modelName);
     Mesh* mesh = new Mesh(model, texture, shader);
     GameObject* gameObject = new GameObject(name, transform);
     gameObject->AddComponent(new MeshRenderer(mesh));

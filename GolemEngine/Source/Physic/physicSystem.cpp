@@ -10,8 +10,10 @@
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
+#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
+#include <Jolt/Physics/Collision/Shape/Shape.h>
 
 // STL includes
 #include <iostream>
@@ -161,6 +163,8 @@ void PhysicSystem::Update()
 	// of your own job scheduler. JobSystemThreadPool is an example implementation.
 	JobSystemThreadPool job_system(cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1);
 
+	contactListener.UpdateAllContacts();
+
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
@@ -176,6 +180,16 @@ void PhysicSystem::PostUpdate()
 void PhysicSystem::AddCollider(Collider* _collider)
 {
 	m_colliders.push_back(_collider);
+}
+
+Collider* PhysicSystem::GetCollider(BodyID _bodyId)
+{
+	for (Collider* c : m_colliders)
+	{
+		if (c->id == _bodyId)
+			return c;
+	}
+	return nullptr;
 }
 
 void PhysicSystem::DeleteCollider(Collider* _collider)
@@ -201,6 +215,25 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Quaternion _rotation, 
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
+BodyID PhysicSystem::CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	std::vector<Vec3, STLAllocator<Vec3>> vecPoints;
+
+	for (Vertex v : _vertices)
+	{
+		vecPoints.push_back(Vec3(v.position.x, v.position.y, v.position.z));
+	}
+	Array<Vec3> points(vecPoints);
+
+	ConvexHullShapeSettings convexHullSettings(points);
+	ShapeSettings::ShapeResult shapeResult;
+	ConvexHullShape* convex = new ConvexHullShape(convexHullSettings, shapeResult);
+	BodyCreationSettings meshSettings(convex, ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	meshSettings.mAllowDynamicOrKinematic = true;
+	return bodyInterface.CreateAndAddBody(meshSettings, EActivation::DontActivate);
+}
 
 void PhysicSystem::MakeBodyStatic(BodyID _bodyId)
 {
@@ -235,6 +268,26 @@ void PhysicSystem::DeactivateBody(BodyID _bodyId, Vector3 _position)
 	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
 }
 
+void PhysicSystem::SetPosition(BodyID _bodyId, Vector3 _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
+}
+
+void PhysicSystem::UpdatePosition(BodyID _bodyId, Vector3& _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	RVec3 position = bodyInterface.GetPosition(_bodyId);
+	_position = PhysicSystem::ToVector3(position);
+}
+
+
+void PhysicSystem::SetRotation(BodyID _bodyId, Vector3 _rotation)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetRotation(_bodyId, ToJph(Quaternion::EulerToQuaternion(_rotation)), EActivation::DontActivate);
+}
+
 void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -257,4 +310,13 @@ void PhysicSystem::SetBoxShape(BodyID _bodyId, Vector3 _size)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.SetShape(_bodyId, new BoxShape(ToJph(_size)), false, EActivation::Activate);
+}
+
+void PhysicSystem::DeleteBody(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.RemoveBody(_bodyId);
+
+	// Destroy the body. After this the sphere ID is no longer valid.
+	bodyInterface.DestroyBody(_bodyId);
 }

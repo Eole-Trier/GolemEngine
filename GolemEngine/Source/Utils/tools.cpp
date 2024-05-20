@@ -14,7 +14,7 @@ using json = nlohmann::json;
 
 namespace Tools
 {
-    std::string GOLEM_ENGINE_API FindFile(const std::string& _file) 
+    std::string GOLEM_ENGINE_API FindFile(const std::string& _file)
     {
         std::string targetFileName;
         for (const auto& file : std::filesystem::recursive_directory_iterator(std::filesystem::current_path()))

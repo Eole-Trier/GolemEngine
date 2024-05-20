@@ -42,6 +42,7 @@ void Viewport::Update()
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
+
     ImVec2 minBound = ImGui::GetWindowPos(); 
 
     minBound.x += viewportOffset.x;

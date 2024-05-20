@@ -25,15 +25,17 @@ private:
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
 	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
 	static inline std::string m_boxColliderShader = "box_collider_shader";
+	static inline std::string m_meshColliderShader = "mesh_collider_shader";
 	static inline std::string m_skyboxShader = "skybox_shader";
 
-	std::unordered_map<std::string, Resource*> m_resources;
+	static inline std::unordered_map<std::string, Resource*> m_resources;
 private:
 	ResourceManager() {}
 
 public:
 	static ResourceManager* GetInstance();
 	static void CreateAndLoadResources();
+	static void DeleteAllResouces();
 
 	static std::string GetDefaultShader();
 	static std::string GetDefaultTexture();
@@ -42,6 +44,9 @@ public:
 	static std::string GetTerrainComputeShader();
 	static std::string GetGridTerrainTexture();
 	static std::string GetSkyboxShader();
+	static std::string GetBoxColliderShader();
+	static std::string GetSphereColliderShader();
+	static std::string GetMeshColliderShader();
 
 	void ProcessFile(const std::filesystem::path& _filePath);
 	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
