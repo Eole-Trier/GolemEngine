@@ -1,4 +1,5 @@
 #include "Components/GameClasses/movement.h"
+#include "Components/GameClasses/bullet.h"
 #include <iostream>
 #include "Core/gameobject.h"
 #include "golemEngine.h"
@@ -77,5 +78,4 @@ void Movement::Update()
         }
         
 	}
-    
 }
