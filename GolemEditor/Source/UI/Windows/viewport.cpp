@@ -37,7 +37,7 @@ void Viewport::Update()
     if (ImGui::Button("Play"))
     {
         g_isPlayTesting = true;
-        //GolemEngine::SetGameMode();
+        GolemEngine::StartGameMode();
     }
 
     auto viewportOffset = ImGui::GetCursorPos();

@@ -47,5 +47,6 @@ public:
 	static float GetDeltaTime();
 	static float GetTime();
 	static bool GetGameMode();
-	//static void SetGameMode();
+	static void StartGameMode();
+	static void StopGameMode();
 };
