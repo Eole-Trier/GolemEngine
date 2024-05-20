@@ -134,15 +134,15 @@ void Terrain::UpdateLights(Shader* _shader)
 
     for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetDirectionalLights().size(); ++i)
     {
-        SceneManager::GetCurrentScene()->GetDirectionalLights()[i]->Update();
+        SceneManager::GetCurrentScene()->GetDirectionalLights()[i]->SetDirectionalLight(_shader);
     }
     for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetPointLights().size(); ++i)
     {
-        SceneManager::GetCurrentScene()->GetPointLights()[i]->Update();
+        SceneManager::GetCurrentScene()->GetPointLights()[i]->SetPointLight(_shader);
     }
     for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetSpotLights().size(); ++i)
     {
-        SceneManager::GetCurrentScene()->GetSpotLights()[i]->Update();
+        SceneManager::GetCurrentScene()->GetSpotLights()[i]->SetSpotLight(_shader);
     }
 }
 

@@ -85,6 +85,7 @@ void ResourceManager::CreateAndLoadResources()
     Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader);
     VertexShader* skyboxVertexShader = new VertexShader(skyboxShader, Tools::FindFile("skybox.vs").c_str());
     FragmentShader* skyboxFragmentShader = new FragmentShader(skyboxShader, Tools::FindFile("skybox.fs").c_str());
+
     skyboxShader->SetAllShaders(skyboxVertexShader, skyboxFragmentShader);
     Skybox::GetInstance().SetTexture();
     skyboxShader->Use();
