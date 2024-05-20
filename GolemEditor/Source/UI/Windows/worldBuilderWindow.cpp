@@ -29,22 +29,16 @@ void WorldBuilderWindow::Update()
 
     ImGui::Begin(name.c_str());
 
-    ImGui::SetWindowFontScale(1.2f);
-
-    if (ImGui::TreeNode("Terrain"))
+    if (ImGui::Button("Create new terrain"))
     {
-        if (ImGui::Button("Create new terrain"))
-        {
-            m_isCreateDefaultTerrainPopupActive = true;
-        }
-
-        if (ImGui::Button("Create new noisemap terrain"))
-        {
-            m_isCreateDefaultNoisemapTerrainPopupActive = true;
-        }
-
-        ImGui::TreePop();
+        m_isCreateDefaultTerrainPopupActive = true;
     }
+
+    if (ImGui::Button("Create new noisemap terrain"))
+    {
+        m_isCreateDefaultNoisemapTerrainPopupActive = true;
+    }
+
     
     if (m_isCreateDefaultTerrainPopupActive)
     {
