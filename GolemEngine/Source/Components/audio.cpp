@@ -15,9 +15,10 @@
 Audio::Audio()
     :musicPath(Tools::FindFile("music_01.wav")),
     m_position(0, 0, 0),
-    m_isLooping(false),
+    m_isLooping(true),
     m_isPlaying(false)
 {
+    SetUpAudio();
 }
 
 Audio::~Audio()
