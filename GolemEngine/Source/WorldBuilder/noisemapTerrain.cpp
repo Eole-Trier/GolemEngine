@@ -12,17 +12,13 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
 {
     m_noisemapPath = _noisemapPath;
     
-    // // Set shader
-    // ResourceManager* resourceManager = ResourceManager::GetInstance();
-    // m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
-    // m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
-
     // Load noisemap
     stbi_set_flip_vertically_on_load(false);
     unsigned char* noisemap = stbi_load(_noisemapPath, &xResolution, &zResolution, &m_nChannel, STBI_grey);
     
     std::vector<int> noisemapValues;
-    
+
+    // Make a grid of vertices using the noisemap's dimensions
     for (int i = 0; i < xResolution; i++)
     {
         for (int j = 0; j < zResolution; j++)

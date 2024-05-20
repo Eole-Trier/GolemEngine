@@ -142,22 +142,22 @@ std::string ResourceManager::GetDefaultModel()
     return m_defaultModel;
 }
 
-std::string ResourceManager::GetDefaultTerrainShader()
+std::string ResourceManager::GetTerrainShader()
 {
     return m_terrainShader0;
 }
 
-std::string ResourceManager::GetDefaultTerrainTextureShader()
+std::string ResourceManager::GetTerrainTextureShader()
 {
     return m_terrainShader1;
 }
 
-std::string ResourceManager::GetDefaultTerrainComputeShader()
+std::string ResourceManager::GetTerrainComputeShader()
 {
     return m_terrainComputeShader;
 }
 
-std::string ResourceManager::GetDefaultGridTerrainTexture()
+std::string ResourceManager::GetGridTerrainTexture()
 {
     return m_defaultGridTerrainTexture;
 }

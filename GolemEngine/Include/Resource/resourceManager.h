@@ -39,10 +39,10 @@ public:
 	static std::string GetDefaultShader();
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
-	static std::string GetDefaultTerrainShader();
-	static std::string GetDefaultTerrainTextureShader();
-	static std::string GetDefaultTerrainComputeShader();
-	static std::string GetDefaultGridTerrainTexture();
+	static std::string GetTerrainShader();
+	static std::string GetTerrainTextureShader();
+	static std::string GetTerrainComputeShader();
+	static std::string GetGridTerrainTexture();
 	static std::string GetSkyboxShader();
 
 	void ProcessFile(const std::filesystem::path& _filePath);

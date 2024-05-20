@@ -12,11 +12,6 @@ void DefaultTerrain::Init(int _xResolution, int _zResolution)
     xResolution = _xResolution;
     zResolution = _zResolution;
     
-    // // Set shader
-    // ResourceManager* resourceManager = ResourceManager::GetInstance();
-    // m_shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultTerrainShader());
-    // m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetDefaultTerrainComputeShader());
-    
     // Make a grid of vertices using the terrain's dimensions
     for (int i = 0; i < xResolution; i++)
     {
