@@ -1,0 +1,109 @@
+{
+  "gameObjects": [
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "fb1867c9-f744-de96-de00-cccccccccccc",
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "ambientColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "diffuseColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "id": 0,
+            "specularColor": {
+              "w": 1.0,
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "directionalLight"
+        }
+      ],
+      "guid": "ba8d01e8-496c-f84d-7800-cccccccccccc",
+      "isTerrain": false,
+      "name": "World"
+    },
+    {
+      "components": [
+        {
+          "data": {
+            "globalPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "guid": "be8f313b-4fc3-67f9-6900-cccccccccccc",
+            "localPosition": {
+              "x": 3.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "scaling": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          },
+          "name": "transform"
+        },
+        {
+          "data": {
+            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "shaderPath": "",
+            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
+          },
+          "name": "meshRenderer"
+        }
+      ],
+      "guid": "c344bce4-fa5c-bfe6-2100-cccccccccccc",
+      "isTerrain": false,
+      "name": "ball_bald"
+    }
+  ],
+  "guid": "82176d2f-0942-d4c0-19bd-b4e16957541b",
+  "name": "scene_0"
+}

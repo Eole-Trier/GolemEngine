@@ -5,28 +5,58 @@
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 
+#include "Physic/physicSystem.h"
 #include "Components/component.h"
+#include "Resource/Rendering/model.h"
+#include "Core/camera.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
 
 class Collider : public Component
 {
+private:
+	bool m_IsActivated;
+
+	MotionType m_MotionType;
+	Model* m_model = nullptr;
+	const char* m_modelPath;
+
 public:
 	BodyID id;
+	ColliderState colliderState;
+	std::function<void (Collider* _collider, Collider* _other)> onCollisionEnter;
+	std::function<void (Collider* _collider, Collider* _other)> onCollisionStay;
+	std::function<void(Collider* _collider, Collider* _other)> onCollisionExit;
 
 public:
 	Collider();
-	~Collider();
+	virtual ~Collider();
 
-	void Begin() override;
+	virtual void Begin() override;
 
-	void Update() override;
+	virtual void PreUpdate();
+	virtual void Update() override;
+	virtual void PostUpdate();
 
-	void ToJson(json& j) const {}
+	virtual void Draw(Camera* _camera) {};
+
+	virtual void ToJson(json& j) const {}
+
+	Model* GetModel();
+	void SetModel(Model* _model); 
+	const char* GetModelPath();
+	void SetModelPath(const char* _path);
+
+	void OnCollisionEnter(Collider* _other);
+	void OnCollisionStay(Collider* _other);
+	void OnCollisionExit(Collider* _other);
+
+	friend refl_impl::metadata::type_info__<Collider>; // needed to reflect private members
 };
 
 REFL_AUTO(
-	type(Collider, bases<Component>)
-	
+	type(Collider, bases<Component>),
+	field(m_IsActivated),
+	field(m_MotionType)
 )

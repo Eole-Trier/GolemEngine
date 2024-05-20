@@ -23,4 +23,5 @@ public :
 	void Load(const char* _filename);
 
 	void Use();
+	void UnUse();
 };

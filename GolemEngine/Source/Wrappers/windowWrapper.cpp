@@ -48,6 +48,7 @@ void WindowWrapper::MakeContext(GLFWwindow* _window)
 }
 
 std::unordered_map<std::string, std::optional<GLuint>> textureMap;
+
 GLuint WindowWrapper::LoadUiTexture(const char* _filename)
 {
     if (textureMap.find(_filename) != textureMap.end()) 

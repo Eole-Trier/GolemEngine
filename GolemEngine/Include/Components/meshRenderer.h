@@ -15,9 +15,11 @@ public:
 	MeshRenderer(Mesh* _mesh);
 	~MeshRenderer() override;
 
-	void Draw(float _width, float _height, Camera* _camera);
+	void Draw(Camera* _camera);
 
 	Mesh* GetMesh();
+
+
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.

@@ -2,10 +2,13 @@
 #include "Components/component.h"
 #include "golemEngine.h"
 #include "Resource/sceneManager.h"
+#include "WorldBuilder/terrain.h"
 #include "golemEngine.h"
+#include "Reflection/classesManager.h"
+
 
 GameObject::GameObject()
-	: m_selected(false)
+	: IsSelected(false)
 {
 	name = "New GameObject";
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
@@ -15,7 +18,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::string& _name, Transform* _transform) 
-	: name(_name), m_selected(false)
+	: name(_name), IsSelected(false)
 {
 	m_id = SceneManager::GetCurrentScene()->gameObjects.size();
 	AddComponent(_transform);
@@ -35,6 +38,24 @@ void GameObject::Update()
 	{
 		c->Update();
 	}
+}
+
+bool GameObject::HasComponent(const std::string& _name) const
+{
+	size_t hash = ClassesManager::GetHashCodeFromName(_name);
+
+	for (Component* c : m_components)
+	{
+		size_t otherHash = typeid(*c).hash_code();
+
+		if (hash == otherHash)
+		{
+			Log::Print("The GameObject already has a Component of this type");
+			return true;
+		}
+	}
+
+	return false;
 }
 
 size_t GameObject::GetId()
@@ -80,3 +101,38 @@ void GameObject::DeleteAllComponents()
 	}
 }
 
+void GameObject::AddComponent(Component* _type)
+{
+	m_components.push_back(_type);
+	_type->owner = this;
+}
+
+void GameObject::ToJson(json& _j) const
+{
+	_j = json
+	{
+		{"name", name},
+		{"guid", guid.ToString()},
+		{"isTerrain", isTerrain}
+	};
+	if (!m_components.empty())
+	{
+		json jComponents;
+		for (int i = 0; i < m_components.size(); i++)
+		{
+			json jComponentPtr;
+			m_components[i]->ToJson(jComponentPtr);
+			jComponents.push_back(jComponentPtr);
+		}
+		
+		_j["components"] = jComponents;
+	}
+	
+	const Terrain* terrainPtr = dynamic_cast<const Terrain*>(this);
+	if (terrainPtr)
+	{
+		json jTerrainData;
+		terrainPtr->ToJson(jTerrainData);
+		_j["terrainData"] = jTerrainData;
+	}
+}

@@ -4,8 +4,8 @@
 #include <nlohmann/json.hpp>
 
 #include "golemEngine.h"
-#include "Core/mesh.h"
 #include "Core/gameobject.h"
+#include "Resource/Rendering/Shader/shader.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/spotLight.h"
@@ -16,8 +16,6 @@
 #include "Components/Physic/boxCollider.h"
 #include "Resource/Rendering/model.h"
 #include "Resource/Rendering/texture.h"
-#include "Resource/Rendering/shader.h"
-#include "Resource/Rendering/shader.h"
 #include "Resource/Rendering/skybox.h"
 #include "Resource/resourceManager.h"
 #include "Resource/sceneManager.h"
@@ -28,7 +26,8 @@
 
 using json = nlohmann::json;
 
-Scene::Scene(std::string _name, bool _isEmpty)
+
+Scene::Scene(std::string _name, bool _makeSceneEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
@@ -37,11 +36,17 @@ Scene::Scene(std::string _name, bool _isEmpty)
     InitLights();
 
     
-    if (!_isEmpty)    // If there is already a save of the world, don't init a default scene
+    if (!_makeSceneEmpty)    // If there is already a save of the world, don't init a default scene
     { 
         InitDefaultScene();
     }
 }
+
+void Scene::Test(Collider* _collider, Collider* _other)
+{
+    PhysicSystem::SetVelocity(_collider->id, Vector3(0, 10, 0));
+}
+
 
 void Scene::InitDefaultScene()
 {
@@ -56,21 +61,26 @@ void Scene::InitDefaultScene()
     Model* vikingRoom = resourceManager->Get<Model>("viking_room.obj");
     Mesh* vikingMesh = new Mesh(vikingRoom, vikingText, defaultShader);
     vikingGo->AddComponent(new MeshRenderer(vikingMesh));
-    BoxCollider* box = new BoxCollider(Vector3(1.f));
-    vikingGo->AddComponent(box);
-    box->Begin();
     Audio* audio1 = new Audio("music_01.wav");
     vikingGo->AddComponent(audio1);
 
+    std::string vikingName2 = "viking2";
+    Transform* vikingTransform2 = new Transform(Vector3(0, -3, -5), Vector3(0), Vector3(1), m_world->transform);
+    GameObject* vikingGo2 = new GameObject(vikingName2, vikingTransform2);
+    Texture* vikingText2 = resourceManager->Get<Texture>("aoi_todo.jpg");
+    Model* vikingRoom2 = resourceManager->Get<Model>("cube.obj");
+    Mesh* vikingMesh2 = new Mesh(vikingRoom2, vikingText2, defaultShader);
+    vikingGo2->AddComponent(new MeshRenderer(vikingMesh2));
+
     // Create a sphere model
     std::string ballBaldName = "ball_bald";
-    Transform* ballBaldTransform = new Transform(Vector3(0, 10, -5), Vector3(0), Vector3(1), m_world->transform);
+    Transform* ballBaldTransform = new Transform(Vector3(0, 3, -5), Vector3(0), Vector3(1), m_world->transform);
     GameObject* ballBaldGo = new GameObject(ballBaldName, ballBaldTransform);
-    Texture* ballBaldTexture = resourceManager->Get<Texture>("all_bald.jpg");
+    Texture* ballBaldTexture = resourceManager->Get<Texture>("aoi_todo.jpg");
     Model* ballBald = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh = new Mesh(ballBald, ballBaldTexture, defaultShader);
     ballBaldGo->AddComponent(new MeshRenderer(ballBaldMesh));
-    SphereCollider* sc = new SphereCollider(1.f);
+    SphereCollider* sc = new SphereCollider;
     ballBaldGo->AddComponent(sc);
     sc->Begin();
 
@@ -81,6 +91,8 @@ void Scene::InitDefaultScene()
     Model* ballBald2 = resourceManager->Get<Model>("sphere.obj");
     Mesh* ballBaldMesh2 = new Mesh(ballBald2, ballBaldTexture2, defaultShader);
     ballBald2Go->AddComponent(new MeshRenderer(ballBaldMesh2));
+    
+    sc->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { Test(_collider, _other); };
 }
 
 void Scene::InitLights()
@@ -90,12 +102,11 @@ void Scene::InitLights()
     m_world->AddComponent(dir);
 }
 
-void Scene::Update(Camera* _camera, float _width, float _height)
+void Scene::Update(Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
-    defaultShader->SetViewPos(_camera->position);
 
     // Skybox shader load
     Shader* skyboxShader = resourceManager->Get<Shader>("skybox_shader");
@@ -103,9 +114,9 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     skyboxShader->Use();
     Matrix4 viewMatrix = _camera->GetViewMatrix();
     Matrix4 view = viewMatrix.ExtractRotationAndScale(viewMatrix);
-    Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), _width / _height, _camera->GetNear(), _camera->GetFar());
-    skyboxShader->SetMat4("view", view);
-    skyboxShader->SetMat4("projection", projection);
+    Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x  / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
+    skyboxShader->GetVertexShader()->SetMat4("view", view);
+    skyboxShader->GetVertexShader()->SetMat4("projection", projection);
     // skybox cube
     glBindVertexArray(Skybox::GetInstance().GetSkyboxVAO());
     glActiveTexture(GL_TEXTURE0);
@@ -114,30 +125,23 @@ void Scene::Update(Camera* _camera, float _width, float _height)
     glBindVertexArray(0);
     glDepthFunc(GL_LESS);
 
-    if (!m_terrains.empty())
-    {
-        UpdateTerrains(_camera); 
-    }
+    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
 
-    UpdateGameObjects(_camera, _width, _height);    // Always at least one gameobject (world)
-
+    PhysicSystem::PreUpdate();
+    PhysicSystem::Update();
+    PhysicSystem::PostUpdate();
+    
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
     }
 }
 
-void Scene::UpdateTerrains(Camera* _camera)
+void Scene::UpdateGameObjects(Camera* _camera)
 {
-    for (int i = 0; i < m_terrains.size(); i++)
-    {
-        m_terrains[i]->Draw(_camera);
-    }
-}
+    ResourceManager* resourceManager = ResourceManager::GetInstance();
+    Shader* shader = resourceManager->Get<Shader>("default_shader");
 
-void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
-{
-    // Drag and drop
     if (isNewObjectDropped)
     {
         CreateNewObject(loadingObject.c_str(), loadingObject.c_str());
@@ -146,13 +150,36 @@ void Scene::UpdateGameObjects(Camera* _camera, float _width, float _height)
 
     m_world->transform->UpdateSelfAndChilds();
 
-    //PhysicSystem::Update();
-
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
+        shader->GetFragmentShader()->SetInt("entityID", gameObjects[i]->GetId());
+
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
-            meshRenderer->Draw(_width, _height, _camera);
+        {
+            meshRenderer->Draw(_camera);
+        }
+
+        Collider* collider = gameObjects[i]->GetComponent<Collider>();
+        if (collider && collider->owner->IsSelected)
+        {
+            collider->Draw(_camera);
+        }
+
+        if (gameObjects[i]->isTerrain)
+        {
+            Terrain* terrain = dynamic_cast<Terrain*>(gameObjects[i]);
+            if (terrain)
+            {
+                terrain->UseComputeShader();
+                terrain->Draw(_camera);
+        
+                if (GolemEngine::selectedGameObject == terrain)    // Use compute shader only if terrain is being selected
+                {
+                    terrain->GetComputeShaderData(_camera);
+                }
+            }
+        }
     }
 }
 
@@ -160,9 +187,9 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->SetInt("nbrDirLights", m_dirLights.size());
-    _shader->SetInt("nbrPointLights", m_pointLights.size());
-    _shader->SetInt("nbrSpotLights", m_spotLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", m_dirLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", m_pointLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", m_spotLights.size());
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
@@ -187,13 +214,7 @@ bool Scene::IsNameExists(const std::string& _name)
             return true;
         }
     }
-
     return false;
-}
-
-void Scene::AddTerrain(Terrain* _terrain)
-{
-    m_terrains.push_back(_terrain);
 }
 
 void Scene::CreateNewObject(std::string _name, std::string _modelName, std::string _textureName, std::string _shaderName)
@@ -291,7 +312,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
 
 void Scene::AddLight(Light* _light)
 {
-    // TODO remove and put in lights
     if (PointLight* pL = dynamic_cast<PointLight*>(_light))
     {
         m_pointLights.push_back(pL);
@@ -323,22 +343,17 @@ void Scene::DeleteLight(Light* _light)
     }
 }
 
-std::vector<Terrain*> Scene::GetTerrains()
-{
-    return  m_terrains;
-}
-
-std::vector<DirectionalLight*> Scene::GetDirectionalLights()
+const std::vector<DirectionalLight*>& Scene::GetDirectionalLights()
 {
     return m_dirLights;
 }
 
-std::vector<PointLight*> Scene::GetPointLights()
+const std::vector<PointLight*>& Scene::GetPointLights()
 {
     return m_pointLights;
 }
 
-std::vector<SpotLight*> Scene::GetSpotLights()
+const std::vector<SpotLight*>& Scene::GetSpotLights()
 {
     return m_spotLights;
 }
@@ -362,6 +377,11 @@ std::string Scene::GetFileName(const std::string& _filePath)
 {
     std::filesystem::path path(_filePath);
     return path.stem().string();
+}
+
+const std::vector<GameObject*>& Scene::GetGameObjects()
+{
+    return gameObjects;
 }
 
 GameObject* Scene::GetWorld()

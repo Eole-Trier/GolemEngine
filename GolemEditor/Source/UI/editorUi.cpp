@@ -2,13 +2,15 @@
 
 #include "golemEngine.h"
 #include "UI/Windows/window.h"
-#include "Ui/Windows/basicActors.h"
+#include "Ui/Windows/basicActorsWindow.h"
 #include "Ui/Windows/worldBuilderWindow.h"
+#include "UI/Windows/viewportToolsWindow.h"
 #include "Ui/Windows/viewport.h"
 #include "Ui/Windows/fileBrowser.h"
 #include "Ui/Windows/sceneGraph.h"
 #include "Ui/Windows/debugWindow.h"
 #include "UI/Windows/inspector.h"
+#include "Utils/viewportTools.h"
 #include "UI/Windows/playScene.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -23,8 +25,9 @@ void EditorUi::Init()
 {
     // Add windows to be used in dockspace later
     m_windows.push_back(new Viewport("Viewport"));
-    m_windows.push_back(new BasicActors("Basic_Actors"));
+    m_windows.push_back(new BasicActorsWindow("Basic_Actors"));
     m_windows.push_back(new WorldBuilderWindow("World_Builder"));
+    m_windows.push_back(new ViewportToolsWindow("Viewport_Tools"));
     m_windows.push_back(new FileBrowser("File_Browser"));
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
@@ -137,6 +140,7 @@ void EditorUi::BeginDockSpace()
             // For defining the position of the dock
             ImGui::DockBuilderDockWindow(GetWindowByName("Basic_Actors")->name.c_str(), dock_id_topLeft);
             ImGui::DockBuilderDockWindow(GetWindowByName("World_Builder")->name.c_str(), dock_id_topLeft);
+            ImGui::DockBuilderDockWindow(GetWindowByName("Viewport_Tools")->name.c_str(), dock_id_topLeft);
             ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottom);
             ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_middle);
             ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);
@@ -157,6 +161,7 @@ void EditorUi::EndDockSpace()
 
 void EditorUi::UpdateWindows()
 {
+    GolemEngine::selectedGameObject = selectedGameObject;
     for (Window* window : m_windows)
     {
         window->Update();

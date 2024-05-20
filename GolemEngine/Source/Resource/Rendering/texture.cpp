@@ -5,7 +5,7 @@
 #include "glad/glad.h"
 #include "Debug/log.h"
 #include "Wrappers/graphicWrapper.h"
-
+#include "Utils/tools.h"
 Texture::Texture()
 {
 
@@ -23,6 +23,8 @@ Texture::Texture(unsigned int _width, unsigned int _height, unsigned int _format
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, m_width, m_height, 0, _format, GL_UNSIGNED_BYTE, NULL);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Texture::~Texture()
@@ -45,9 +47,19 @@ void Texture::Load(const char* _filename)
     unsigned char* data = stbi_load(_filename, &width, &height, &nrChannels, 0);
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
+        else
+            format = GL_RGB;  // Default to RGB if nrChannels is unexpected
+
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-        Log::Print("Succeed to load texture %s", _filename);
+        Log::Print("Succeeded to load texture %s", _filename);
     }
     else
     {
@@ -59,4 +71,9 @@ void Texture::Load(const char* _filename)
 void Texture::Use()
 {
     glBindTexture(GL_TEXTURE_2D, id);
+}
+
+void Texture::UnUse()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

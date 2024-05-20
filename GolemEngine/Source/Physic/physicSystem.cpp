@@ -10,8 +10,10 @@
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
+#include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
+#include <Jolt/Physics/Collision/Shape/Shape.h>
 
 // STL includes
 #include <iostream>
@@ -19,6 +21,7 @@
 #include <thread>
 
 #include "Components/Physic/sphereCollider.h"
+
 
 // Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
 JPH_SUPPRESS_WARNINGS
@@ -138,6 +141,14 @@ Quaternion PhysicSystem::ToQuaternion(const Quat _q)
 	return Quaternion(_q.GetW(), _q.GetX(), _q.GetY(), _q.GetZ());
 }
 
+void PhysicSystem::PreUpdate()
+{
+	for (Collider* c : m_colliders)
+	{
+		c->PreUpdate();
+	}
+}
+
 void PhysicSystem::Update()
 {
 	// We need a temp allocator for temporary allocations during the physics update. We're
@@ -152,29 +163,76 @@ void PhysicSystem::Update()
 	// of your own job scheduler. JobSystemThreadPool is an example implementation.
 	JobSystemThreadPool job_system(cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() - 1);
 
+	contactListener.UpdateAllContacts();
+
 	physicsSystem.Update(cDeltaTime, cCollisionSteps, &temp_allocator, &job_system);
 }
 
-BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, float _radius)
+
+void PhysicSystem::PostUpdate()
+{
+	for (Collider* c : m_colliders)
+	{
+		c->PostUpdate();
+	}
+}
+
+void PhysicSystem::AddCollider(Collider* _collider)
+{
+	m_colliders.push_back(_collider);
+}
+
+Collider* PhysicSystem::GetCollider(BodyID _bodyId)
+{
+	for (Collider* c : m_colliders)
+	{
+		if (c->id == _bodyId)
+			return c;
+	}
+	return nullptr;
+}
+
+void PhysicSystem::DeleteCollider(Collider* _collider)
+{
+	std::erase(m_colliders, _collider);
+}
+
+BodyID PhysicSystem::CreateSphereCollider(Vector3 _position, Quaternion _rotation, float _radius, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	 BodyInterface& body_interface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), Quat::sIdentity(), EMotionType::Dynamic, ObjectLayers::NON_MOVING);
+	 BodyCreationSettings sphere_settings(new SphereShape(_radius), ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	 sphere_settings.mAllowDynamicOrKinematic = true;
 	 return body_interface.CreateAndAddBody(sphere_settings, EActivation::DontActivate);
 }
 
-BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Vector3 _size)
+BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 
-	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), Quat::sIdentity(), EMotionType::Static, ObjectLayers::NON_MOVING);
+	BodyCreationSettings boxSettings(new BoxShape(ToJph(_size)), ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	boxSettings.mAllowDynamicOrKinematic = true;
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
-void PhysicSystem::AddForce(BodyID _bodyId, const Vector3 _force)
+BodyID PhysicSystem::CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_force));
+
+	std::vector<Vec3, STLAllocator<Vec3>> vecPoints;
+
+	for (Vertex v : _vertices)
+	{
+		vecPoints.push_back(Vec3(v.position.x, v.position.y, v.position.z));
+	}
+	Array<Vec3> points(vecPoints);
+
+	ConvexHullShapeSettings convexHullSettings(points);
+	ShapeSettings::ShapeResult shapeResult;
+	ConvexHullShape* convex = new ConvexHullShape(convexHullSettings, shapeResult);
+	BodyCreationSettings meshSettings(convex, ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	meshSettings.mAllowDynamicOrKinematic = true;
+	return bodyInterface.CreateAndAddBody(meshSettings, EActivation::DontActivate);
 }
 
 void PhysicSystem::MakeBodyStatic(BodyID _bodyId)
@@ -191,13 +249,74 @@ void PhysicSystem::MakeBodyDynamic(BodyID _bodyId)
 	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::MOVING);
 }
 
+void PhysicSystem::MakeBodyKinematic(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetMotionType(_bodyId, EMotionType::Kinematic, EActivation::DontActivate);
+	bodyInterface.SetObjectLayer(_bodyId, ObjectLayers::MOVING);
+}
+
 void PhysicSystem::ActivateBody(BodyID _bodyId)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.ActivateBody(_bodyId);
 }
-void PhysicSystem::DesactivateActivateBody(BodyID _bodyId)
+void PhysicSystem::DeactivateBody(BodyID _bodyId, Vector3 _position)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.DeactivateBody(_bodyId);
+	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
+}
+
+void PhysicSystem::SetPosition(BodyID _bodyId, Vector3 _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetPosition(_bodyId, ToJph(_position), EActivation::DontActivate);
+}
+
+void PhysicSystem::UpdatePosition(BodyID _bodyId, Vector3& _position)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	RVec3 position = bodyInterface.GetPosition(_bodyId);
+	_position = PhysicSystem::ToVector3(position);
+}
+
+
+void PhysicSystem::SetRotation(BodyID _bodyId, Vector3 _rotation)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetRotation(_bodyId, ToJph(Quaternion::EulerToQuaternion(_rotation)), EActivation::DontActivate);
+}
+
+void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_velocity));
+}
+
+void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.AddForce(_bodyId, ToJph(_force * _power));
+}
+
+void PhysicSystem::SetSphereShape(BodyID _bodyId, float _radius)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetShape(_bodyId, new SphereShape(_radius), false, EActivation::Activate);
+}
+
+void PhysicSystem::SetBoxShape(BodyID _bodyId, Vector3 _size)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetShape(_bodyId, new BoxShape(ToJph(_size)), false, EActivation::Activate);
+}
+
+void PhysicSystem::DeleteBody(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.RemoveBody(_bodyId);
+
+	// Destroy the body. After this the sphere ID is no longer valid.
+	bodyInterface.DestroyBody(_bodyId);
 }

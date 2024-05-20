@@ -9,7 +9,6 @@
 #include "Resource/sceneManager.h"
 #include "Utils/tools.h"
 #include "Inputs/inputManager.h"
-#include "Core/scene.h"
 #include "UI/EditorUi.h"
 #include "vector4.h"
 #include "imgui_impl_glfw.h"
@@ -19,6 +18,7 @@
 #include "ImGuizmo.h"
 #include "MathsLib/utils.h"
 #include "Components/transform.h"
+#include "ImGuizmo.h"
 #include "UI/Windows/playScene.h"
 
 bool g_isFromFileBrowser = false;
@@ -37,12 +37,13 @@ void Viewport::Update()
     if (ImGui::Button("Play"))
     {
         g_isPlayTesting = true;
-        GolemEngine::SetGameMode();
+        //GolemEngine::SetGameMode();
     }
 
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
+
     ImVec2 minBound = ImGui::GetWindowPos(); 
 
     minBound.x += viewportOffset.x;
@@ -57,49 +58,38 @@ void Viewport::Update()
     my -= m_viewportBounds[0].y;
 
     Vector2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
-    //my = viewportSize.y - my; 
+    my = viewportSize.y - my; 
 
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
-    if (ImGui::IsKeyDown(ImGuiKey_V))
+    std::vector<GameObject*> objects = SceneManager::GetCurrentScene()->GetGameObjects();
+
+    if (!ImGuizmo::IsOver())
     {
-        isDisplayed = true;
-    }
-
-    else
-    {
-        isDisplayed = false;
-    }
-
-
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
-    {
-        GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id);
-        int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-        GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id);
-
-        if(pixelData == 5)
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
         {
-            //GameObject::m_selected = true;
+            GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id, GraphicWrapper::GetFbo());
+            int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
+            GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id, GraphicWrapper::GetFbo());
+
+            for (int i = 0; i < objects.size(); i++)
+            {
+                if (objects[i]->GetId() == pixelData)
+                {
+                    EditorUi::selectedGameObject = objects[i];
+                }
+
+                else if (pixelData == -1)
+                {
+                    EditorUi::selectedGameObject = nullptr;
+                }
+            }
         }
-
-        if (pixelData != 5)
-        {
-            //GameObject::m_selected = false;
-        }
-    }
-
-    if (isDisplayed)
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[1]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
-    }
-
-    else
-    {
-        ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
     }
     
+    ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
+
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 
     DragDropModel();
@@ -113,7 +103,7 @@ void Viewport::Update()
         m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         // Update camera speed depending on scroll
         m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
-        InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change bt has a value
+        InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change but has a value
         m_camera->ProcessMouseInput();
     }
 
@@ -124,9 +114,9 @@ void Viewport::Update()
         m_camera->isFirstMouse = true;  // Important so the next time you move in the viewport, it doesn't teleport the camera to the cursor
     }
 
-    if (EditorUi::selected)
+    if (EditorUi::selectedGameObject)
     {
-        EditorUi::selected->transform->EditTransformGizmo();
+        EditorUi::selectedGameObject->transform->EditTransformGizmo();
     }
 
     ImGui::End();
@@ -164,7 +154,7 @@ void Viewport::DragDropModel()
 
 Vector2 Viewport::GetViewportSize()
 {
-    return Vector2();
+    return Vector2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 }
 
 Camera* Viewport::GetCamera()

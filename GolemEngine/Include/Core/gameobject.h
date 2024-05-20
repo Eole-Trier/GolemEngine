@@ -20,12 +20,13 @@ class GOLEM_ENGINE_API GameObject
 private:
 	size_t m_id;
 	std::vector<Component*> m_components;
-	bool m_selected;
 
 public:
 	Guid guid;
 	std::string name;
 	Transform* transform = nullptr;
+	bool isTerrain = false;
+	bool IsSelected;
 
 public:
 	GameObject();
@@ -33,6 +34,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	_NODISCARD bool HasComponent(const std::string& _name) const;
 
 	size_t GetId();
 	void SetId(size_t _id);
@@ -43,6 +45,7 @@ public:
 	void RemoveComponent(Component* _c);
 	void DeleteAllComponents();
 
+	void AddComponent(Component* _type);
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);
 	template<typename TypeT>
@@ -58,27 +61,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& j) const
-	{
-		j = json
-		{
-			{"name", name},
-			{"guid", guid.ToString()}
-		};
-		if (!m_components.empty())
-		{
-			json jComponents;
-			for (int i = 0; i < m_components.size(); i++)
-			{
-				json jComponentPtr;
-				m_components[i]->ToJson(jComponentPtr);
-				jComponents.push_back(jComponentPtr);
-			}
-			
-			j["components"] = jComponents;
-		}
-	}
-
+	void ToJson(json& _j) const;
 };
 
 template<typename TypeT>

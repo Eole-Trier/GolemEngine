@@ -9,6 +9,7 @@
 #include "vector3.h"
 #include "vector4.h"
 #include "matrix4.h"
+#include "Wrappers/windowWrapper.h"
 
 unsigned int GraphicWrapper::m_vao;
 unsigned int GraphicWrapper::m_vbo;
@@ -36,7 +37,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
     // Create renderBuffer
-    CreateRenderBuffer(_width, _height);
+    CreateRenderBuffer(_width, _height, m_rbo);
 
     // Create textureBuffer
     for (int i = 0; i < m_textures.size(); i++)
@@ -54,7 +55,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
         attachments[i] = GL_COLOR_ATTACHMENT0 + i;
     }
 
-    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id);
+    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id, m_fbo);
     glDrawBuffers(2, attachments);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
@@ -82,9 +83,9 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_playSceneId, 0);
-    AttachTexture(GL_RGBA, _width, _height, 0, m_playSceneId);
+    AttachTexture(GL_RGBA, _width, _height, 0, m_playSceneId, m_playSceneFbo);
 
-    CreateRenderBuffer(_width, _height);
+    CreateRenderBuffer(_width, _height, m_playSceneRbo);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);   // Unbind framebuffer
     glBindTexture(GL_TEXTURE_2D, 0);    // Unbind texture
@@ -92,9 +93,9 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     #pragma endregion playscene textureid
 }
 
-void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id)
+void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height, unsigned int _attachment, unsigned int _id, unsigned int _fbo)
 {
-    //glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     glBindTexture(GL_TEXTURE_2D, _id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -102,19 +103,13 @@ void GraphicWrapper::AttachTexture(unsigned int _format, int _width, int _height
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + _attachment, GL_TEXTURE_2D, _id, 0);
 }
 
-void GraphicWrapper::CreateRenderBuffer(int _width, int _height)
+void GraphicWrapper::CreateRenderBuffer(int _width, int _height, unsigned int _rbo)
 {
     // Create renderbuffer
-    glGenRenderbuffers(1, &m_rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+    glGenRenderbuffers(1, &_rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, _rbo);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-
-    // Create renderbuffer
-    glGenRenderbuffers(1, &m_playSceneRbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_playSceneRbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_playSceneRbo);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _rbo);
 }
 
 int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
@@ -278,8 +273,4 @@ void GraphicWrapper::SetShaderMat4(GLuint _program, const std::string& _name, co
     glUniformMatrix4fv(glGetUniformLocation(_program, _name.c_str()), 1, GL_TRUE, &_mat.data[0][0]);
 }
 
-void GraphicWrapper::SetShaderViewPos(GLuint _program, Vector3& _viewPos)
-{
-    SetShaderVec3(_program, "viewPos", _viewPos);
-}
 #pragma endregion Shader functions

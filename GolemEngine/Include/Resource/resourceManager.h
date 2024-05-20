@@ -18,28 +18,43 @@ private:
 	static ResourceManager* m_instancePtr;
 
 	static inline std::string m_defaultShader = "default_shader";
-	static inline std::string m_defaultTerrainShader = "default_terrain_shader";
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
+	static inline std::string m_terrainShader = "default_terrain_shader";    // For black and white gradient
+	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
+	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
+	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
+	static inline std::string m_boxColliderShader = "box_collider_shader";
+	static inline std::string m_meshColliderShader = "mesh_collider_shader";
+	static inline std::string m_skyboxShader = "skybox_shader";
 
-	std::unordered_map<std::string, Resource*> m_resources;
+	static inline std::unordered_map<std::string, Resource*> m_resources;
 private:
 	ResourceManager() {}
 
 public:
 	static ResourceManager* GetInstance();
 	static void CreateAndLoadResources();
+	static void DeleteAllResouces();
 
 	static std::string GetDefaultShader();
-	static std::string GetDefaultTerrainShader();
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
+	static std::string GetTerrainShader();
+	static std::string GetTerrainComputeShader();
+	static std::string GetGridTerrainTexture();
+	static std::string GetSkyboxShader();
+	static std::string GetBoxColliderShader();
+	static std::string GetSphereColliderShader();
+	static std::string GetMeshColliderShader();
 
 	void ProcessFile(const std::filesystem::path& _filePath);
 	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);
+	template<class T>
+	T* Create(std::string _name);
 	template<class T>
 	T* Get(std::string _name);
 	void Delete(std::string _name);
@@ -57,6 +72,18 @@ inline T* ResourceManager::Create(std::string _name, std::string _path)
 	T* resource = new T;
 	m_resources[_name] = resource;
 	m_resources[_name]->path = _path;
+	return resource;
+}
+
+template<class T>
+inline T* ResourceManager::Create(std::string _name)
+{
+	if (m_resources[_name] != nullptr)
+	{
+		Delete(_name);
+	}
+	T* resource = new T;
+	m_resources[_name] = resource;
 	return resource;
 }
 

@@ -26,7 +26,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& j) const
+	void ToJson(json& j) const override
 	{
 		j = json
 		{

@@ -37,7 +37,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	}
 	
-	if (_gameObject == EditorUi::selected)
+	if (_gameObject == EditorUi::selectedGameObject)
 	{
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
@@ -46,22 +46,20 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	const char* name = n.c_str();
 	size_t id = _gameObject->GetId();
 
-	const char* res = std::to_string(id).c_str();
-
-	if (m_renaming == _gameObject)
+	if (m_renamingGameObject == _gameObject)
 	{
 		name = "##input";
 	}
 	
 	if (ImGui::TreeNodeEx(name, flags) && _gameObject)
 	{
-		if (m_renaming == _gameObject)
+		if (m_renamingGameObject == _gameObject)
 		{
 			ImGui::SameLine();
 			ImGui::SetKeyboardFocusHere();
 			if (ImGui::InputText(name, &_gameObject->name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll))
 			{
-				m_renaming = nullptr;
+				m_renamingGameObject = nullptr;
 			}
 		}
 		else
@@ -71,7 +69,7 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 			{
 				if (ImGui::MenuItem("Rename"))
 				{
-					m_renaming = _gameObject;
+					m_renamingGameObject = _gameObject;
 				}
 				ImGui::EndPopup();
 			}
@@ -92,7 +90,8 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 				if (ImGui::MenuItem("Delete") && _gameObject != SceneManager::GetCurrentScene()->GetWorld())
 				{
 					delete _gameObject;
-					EditorUi::selected = nullptr;
+					EditorUi::selectedGameObject->IsSelected = false;
+					EditorUi::selectedGameObject = nullptr;
 				}
 				ImGui::EndPopup();
 			}
@@ -125,7 +124,10 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	
 			if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			{
-				EditorUi::selected = _gameObject;
+				if (EditorUi::selectedGameObject)
+					EditorUi::selectedGameObject->IsSelected = false;
+				EditorUi::selectedGameObject = _gameObject;
+				EditorUi::selectedGameObject->IsSelected = true;
 			}
 		}
 	
@@ -140,7 +142,9 @@ void SceneGraph::DisplayObjects(GameObject* _gameObject)
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 		{
-			EditorUi::selected = _gameObject;
+			EditorUi::selectedGameObject = _gameObject;
 		}
 	}
 }
+
+

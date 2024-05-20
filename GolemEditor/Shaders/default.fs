@@ -19,7 +19,6 @@ struct PointLight
 struct DirLight
 {
     vec3 direction;
-    
     vec4 ambient;
     vec4 diffuse;
     vec4 specular;
@@ -66,8 +65,7 @@ vec4 ProcessSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
-    // Get view direction
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(-FragPos);
 
     vec4 light = vec4(0);
 

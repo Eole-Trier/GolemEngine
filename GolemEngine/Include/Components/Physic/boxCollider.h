@@ -6,6 +6,7 @@
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include "Components/Physic/collider.h"
 #include "Core/gameobject.h"
+#include "Core/camera.h"
 #include "Refl/refl.hpp"
 
 using namespace JPH;
@@ -16,16 +17,16 @@ private:
 	Vector3 m_size;
 
 public:
-	BodyID id;
-
-public:
 	BoxCollider();
 	BoxCollider(Vector3 _size);
 	~BoxCollider();
 
 	void Begin() override;
-
+	void PreUpdate() override;
 	void Update() override;
+	void PostUpdate() override;
+
+	void Draw(Camera* _camera);
 
 	void ToJson(json& j) const {}
 
@@ -33,6 +34,6 @@ public:
 };
 
 REFL_AUTO(
-	type(BoxCollider, bases<Component>),
-	field(m_size)
+	type(BoxCollider, bases<Collider>),
+	field(m_size, Range(0.1f, 100.f))
 )

@@ -22,38 +22,27 @@ void DisplayType::AddComponentHandler(GameObject* _gameObject)
 	if (ImGui::Button(m_addComponentButtonName, ImVec2(m_addComponentButtonSize.x, m_addComponentButtonSize.y)))
 		ImGui::OpenPopup(m_addComponentPopupId);
 
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
+	std::vector<std::string>&& classes = ClassesManager::GetComponents();
+
+	for (const std::string& name : classes)
 	{
-		if (ImGui::MenuItem("Point Light"))
+		if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
 		{
-			if (SceneManager::GetCurrentScene()->GetPointLights().size() < SceneManager::GetCurrentScene()->GetMaxPointLights() && !_gameObject->GetComponent<PointLight>())
+			if (ImGui::MenuItem(name.c_str()))
 			{
-				_gameObject->AddComponent(new PointLight);
+				if (!_gameObject->HasComponent(name))
+				{
+					Component* obj = static_cast<Component*>(ClassesManager::Create(name, _gameObject));
+					if (obj)
+					{
+						_gameObject->AddComponent(obj);
+						obj->Begin();
+					}
+				}
 			}
+
+			ImGui::EndPopup();
 		}
-		ImGui::EndPopup();
-	}
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Spot Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetSpotLights().size() < SceneManager::GetCurrentScene()->GetMaxSpotLights() && !_gameObject->GetComponent<SpotLight>())
-			{
-				_gameObject->AddComponent(new SpotLight);
-			}
-		}
-		ImGui::EndPopup();
-	}
-	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
-	{
-		if (ImGui::MenuItem("Directional Light"))
-		{
-			if (SceneManager::GetCurrentScene()->GetDirectionalLights().size() < SceneManager::GetCurrentScene()->GetMaxDirectionalLights() && !_gameObject->GetComponent<DirectionalLight>())
-			{
-				_gameObject->AddComponent(new DirectionalLight);
-			}
-		}
-		ImGui::EndPopup();
 	}
 	if (ImGui::BeginPopupContextItem(m_addComponentPopupId))
 	{

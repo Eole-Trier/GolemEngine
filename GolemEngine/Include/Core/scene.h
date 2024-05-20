@@ -10,6 +10,7 @@
 #include "Debug/log.h"
 #include "Components/Light/light.h"
 #include "WorldBuilder/terrain.h"
+#include "Components/Physic/collider.h"
 
 using json = nlohmann::json;
 
@@ -17,9 +18,7 @@ class DirectionalLight;
 class PointLight;
 class SpotLight;
 class Shader;
-class GameObject;
 class Mesh;
-
 
 class GOLEM_ENGINE_API Scene
 {
@@ -36,7 +35,6 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 	std::vector<Mesh*> m_meshes;
 
-	std::vector<Terrain*> m_terrains;
 
 public:
 	std::string m_defaultTexture;
@@ -44,38 +42,37 @@ public:
 	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
+	// std::vector<Terrain*> terrains;
 	bool isNewObjectDropped = false;
 	std::string loadingObject;
 	
 public:
 	// Create a scene by giving it a name and setting _isEmpty to 0 or 1. 0 means the scene will be a default
 	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
-	Scene(std::string _name, bool _isEmpty);
+	Scene(std::string _name, bool _makeSceneEmpty);
 
+	void Test(Collider* _collider, Collider* _other);
 	void InitDefaultScene();
 	void InitLights();
-	void Update(Camera* _camera, float _width, float _height);
-	void UpdateTerrains(Camera* _camera);
-	void UpdateGameObjects(Camera* _camera, float _width, float _height);
+	void Update(Camera* _camera);
+	void UpdateGameObjects(Camera* _camera);
 	void UpdateLights(Shader* _shader);
-	// Check the gameobject's name is already in the vector or not.
+	// Check if the gameobject's name is already in the vector or not.
 	bool IsNameExists(const std::string& _name);
-	// To add a new gameobject in the scene
-	void AddTerrain(Terrain* _terrain);
 	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
 	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
 	void AddLight(Light* _light);
 	
-	std::vector<Terrain*> GetTerrains();
-	std::vector<DirectionalLight*> GetDirectionalLights();
-	std::vector<PointLight*> GetPointLights();
-	std::vector<SpotLight*> GetSpotLights();
+	const std::vector<DirectionalLight*>& GetDirectionalLights();
+	const std::vector<PointLight*>& GetPointLights();
+	const std::vector<SpotLight*>& GetSpotLights();
 	size_t GetMaxDirectionalLights();
 	size_t GetMaxPointLights();
 	size_t GetMaxSpotLights();
 	std::string GetFileName(const std::string& _filePath);
 
 	const std::vector<GameObject*>& GetGameObjects();
+
 	GameObject* GetWorld();
 	Guid GetGuid();
 
@@ -96,7 +93,6 @@ public:
 		};
 		if (!gameObjects.empty())
 		{
-			std::cout << "Game object size: " << gameObjects.size() << std::endl;
 			json jGameObjects;
 			for (int i = 0; i < gameObjects.size(); i++)
 			{

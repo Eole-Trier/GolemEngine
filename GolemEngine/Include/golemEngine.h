@@ -20,6 +20,9 @@ private:
 	static inline float m_deltaTime = 0.0f;
 	static inline bool m_gameMode = false;
 
+public:
+	static inline GameObject* selectedGameObject = nullptr;
+
 private:
 	// Private constructors and destructor to make static class
 	GolemEngine() = delete;
@@ -29,6 +32,8 @@ private:
 	GolemEngine& operator=(GolemEngine&& _other) = delete;
 	void operator=(const GolemEngine&) = delete;
 	~GolemEngine() = delete;
+
+	static void PerformComputShaderComputations();
 
 public:
 	static void Init();
@@ -42,5 +47,5 @@ public:
 	static float GetDeltaTime();
 	static float GetTime();
 	static bool GetGameMode();
-	static void SetGameMode();
+	//static void SetGameMode();
 };

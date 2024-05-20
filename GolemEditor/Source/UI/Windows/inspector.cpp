@@ -9,6 +9,7 @@
 #include "Refl/refl.hpp"
 #include "UI/editorUi.h"
 #include "Reflection/displayType.h"
+#include "Resource/sceneManager.h"
 
 Inspector::Inspector(std::string _name)
 	: Window(_name)
@@ -21,12 +22,13 @@ void Inspector::Update()
 {
 	ImGui::Begin(name.c_str());
 
-	if (EditorUi::selected)
+	if (EditorUi::selectedGameObject)
 	{
-		DisplayType::DisplayField(EditorUi::selected);
-		DisplayType::AddComponentHandler(EditorUi::selected);
-		
+		DisplayType::DisplayField(EditorUi::selectedGameObject);
+		DisplayType::AddComponentHandler(EditorUi::selectedGameObject);
 	}
+
+	
 	ImGui::End();
 }
 

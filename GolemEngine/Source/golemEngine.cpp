@@ -9,6 +9,11 @@
 #include "vector4.h"
 #include "Reflection/classesManager.h"
 
+
+void GolemEngine::PerformComputShaderComputations()
+{
+}
+
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
@@ -44,17 +49,15 @@ void GolemEngine::Update()
     // Clear buffer
     GraphicWrapper::ClearBuffer();
     // Render the scene to the framebuffer
-    SceneManager::GetCurrentScene()->Update(m_camera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+    SceneManager::GetCurrentScene()->Update(m_camera);
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
-    if (m_gameMode)
-    {
-        GraphicWrapper::BindPlaySceneFrambuffer();
-        GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
-        GraphicWrapper::ClearBuffer();
-        SceneManager::GetCurrentScene()->Update(m_playerCamera, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
-        GraphicWrapper::UnbindFramebuffer();
-    }
+    
+    GraphicWrapper::BindPlaySceneFrambuffer();
+    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
+    GraphicWrapper::ClearBuffer();
+    SceneManager::GetCurrentScene()->Update(m_playerCamera);
+    GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()
@@ -88,10 +91,10 @@ bool GolemEngine::GetGameMode()
     return m_gameMode;
 }
 
-void GolemEngine::SetGameMode()
-{
-    if (!m_gameMode)
-        m_gameMode = true;
-    else
-        m_gameMode = false;
-}
+//void GolemEngine::SetGameMode()
+//{
+//    if (!m_gameMode)
+//        m_gameMode = true;
+//    else
+//        m_gameMode = false;
+//}

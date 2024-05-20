@@ -34,18 +34,20 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="glad.c" />
+    <ClInclude Include="Include\Components\Physic\meshCollider.h" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
     <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
     <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
-    <ClCompile Include="Source\Components\Light\directional.cpp" />
     <ClCompile Include="Source\Components\Light\light.cpp" />
-    <ClCompile Include="Source\Components\Light\point.cpp" />
-    <ClCompile Include="Source\Components\Light\spot.cpp" />
+    <ClCompile Include="Source\Components\Light\pointLight.cpp" />
+    <ClCompile Include="Source\Components\Light\spotLight.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
     <ClCompile Include="Source\Components\Physic\collider.cpp" />
+    <ClCompile Include="Source\Components\Physic\meshCollider.cpp" />
     <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
     <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
     <ClCompile Include="Source\Physic\contactManager.cpp" />
@@ -62,90 +64,22 @@
     <ClCompile Include="Source\golemEngine.cpp" />
     <ClCompile Include="Source\Inputs\inputManager.cpp" />
     <ClCompile Include="Source\mainDll.cpp" />
-    <ClCompile Include="Source\Physic\bodiesManager.cpp" />
     <ClCompile Include="Source\Reflection\classManager.cpp" />
     <ClCompile Include="Source\Reflection\displayType.cpp" />
-    <ClCompile Include="Source\Resource\guid.cpp">
-      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <Optimization>Disabled</Optimization>
-      <SupportJustMyCode>true</SupportJustMyCode>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-      <CompileAs>Default</CompileAs>
-      <ConformanceMode>true</ConformanceMode>
-      <DiagnosticsFormat>Column</DiagnosticsFormat>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <ErrorReporting>Prompt</ErrorReporting>
-      <ExpandAttributedSource>false</ExpandAttributedSource>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <EnableASAN>false</EnableASAN>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Precise</FloatingPointModel>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <GenerateModuleDependencies>false</GenerateModuleDependencies>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-      <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-      <OmitDefaultLibName>false</OmitDefaultLibName>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ObjectFileName>x64\Debug\</ObjectFileName>
-      <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>x64\Debug\vc142.pdb</ProgramDataBaseFileName>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\GolemEngine.pch</PrecompiledHeaderOutputFile>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-      <ShowIncludes>false</ShowIncludes>
-      <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <SmallerTypeCheck>false</SmallerTypeCheck>
-      <SpectreMitigation>false</SpectreMitigation>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\GolemEngine.tlog\</TrackerLogDirectory>
-      <TranslateIncludes>false</TranslateIncludes>
-      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <UseFullPaths>true</UseFullPaths>
-      <WarningLevel>Level3</WarningLevel>
-      <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <IntelJCCErratum>false</IntelJCCErratum>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_WINDLL;_UNICODE;UNICODE;;GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>Include;C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\GolemEngine\External;C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\GolemEngine\External\imgui;C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\GolemEngine\External\imgui\backends;C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Libraries\Include\MathsLib;C:\Users\m.leguevacques\Documents\Projects\2023_gp_2027_gp_2027_projet_moteur-golem\Libraries\Include</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LinkCompiled>true</LinkCompiled>
-    </ClCompile>
+    <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\Shader\computeShader.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\Shader\fragmentShader.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\Shader\shader.cpp" />
+    <ClCompile Include="Source\Resource\Rendering\Shader\vertexShader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Utils\tools.cpp" />
+    <ClCompile Include="Source\WorldBuilder\brush.cpp" />
+    <ClCompile Include="Source\WorldBuilder\defaultTerrain.cpp" />
+    <ClCompile Include="Source\WorldBuilder\noisemapTerrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
@@ -203,7 +137,6 @@
     <ClInclude Include="Include\Physic\objectLayerVsBroadPhaseLayer.h" />
     <ClInclude Include="Include\Physic\objectLayerVsObjectLayer.h" />
     <ClInclude Include="Include\Physic\physicSystem.h" />
-    <ClInclude Include="Include\Physic\bodiesManager.h" />
     <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
     <ClInclude Include="Include\Core\camera.h" />
     <ClInclude Include="Include\Core\gameobject.h" />
@@ -220,20 +153,24 @@
     <ClInclude Include="Include\Reflection\displayType.h" />
     <ClInclude Include="Include\Reflection\refl.hpp" />
     <ClInclude Include="Include\Resource\guid.h" />
-    <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
-    <ClInclude Include="Include\Resource\Rendering\mesh.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
-    <ClInclude Include="Include\Resource\Rendering\shader.h" />
+    <ClInclude Include="Include\Resource\Rendering\Shader\computeShader.h" />
+    <ClInclude Include="Include\Resource\Rendering\Shader\fragmentShader.h" />
+    <ClInclude Include="Include\Resource\Rendering\Shader\vertexShader.h" />
+    <ClInclude Include="Include\Resource\Rendering\Shader\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\skybox.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Resource\sceneManager.h" />
-    <ClInclude Include="Include\Resource\tools.h" />
+    <ClInclude Include="Include\Utils\tools.h" />
+    <ClInclude Include="Include\Utils\viewportTools.h" />
+    <ClInclude Include="Include\WorldBuilder\brush.h" />
+    <ClInclude Include="Include\WorldBuilder\defaultTerrain.h" />
+    <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
-    <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Wrappers\audioWrapper.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
     <ClInclude Include="Include\Wrappers\windowWrapper.h" />
@@ -309,8 +246,7 @@
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Include;$(SolutionDir)Libraries\Include\MathsLib;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
     <ExternalIncludePath>$(SolutionDir)Libraries/Include</ExternalIncludePath>
   </PropertyGroup>
@@ -359,6 +295,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -376,19 +313,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GOLEM_ENGINE_EXPORTS;IMGUI_EXPORT;JPH_SHARED_LIBRARY;JPH_DEBUG_RENDERER;JPH_DISABLE_CUSTOM_ALLOCATOR;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_PROFILE_ENABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\Libs\OpenAL;Include;$(ProjectDir)External;$(ProjectDir)External\imgui;$(ProjectDir)External\imgui\backends;$(SolutionDir)Libraries\Include\MathsLib;$(SolutionDir)Libraries\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Libraries\Libs\GLFW\glfw3.lib;opengl32.lib;OpenAL32.lib;Jolt.lib;$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Libs\OpenAL;$(SolutionDir)Libraries\Libs\Jolt</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)Libraries\Libs\OpenAL\libsndfile-1.dll" "$(OutDir)" &amp; xcopy /y /d "$(SolutionDir)Libraries\Libs\Jolt\Jolt.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

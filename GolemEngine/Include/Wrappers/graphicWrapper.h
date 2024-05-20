@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "dll.h"
 #include "Resource/Rendering/texture.h"
@@ -14,8 +15,9 @@
 #pragma region Shader macros
 #define SHADER_COMPILE_STATUS GL_COMPILE_STATUS
 #define SHADER_LINK_STATUS GL_LINK_STATUS
-#define SHADER_TYPE GL_VERTEX_SHADER
-#define FRAGMENT_SHADER_TYPE GL_FRAGMENT_SHADER
+#define SHADER_TYPE_VERTEX GL_VERTEX_SHADER
+#define SHADER_TYPE_FRAGMENT GL_FRAGMENT_SHADER
+#define SHADER_TYPE_COMPUTE GL_COMPUTE_SHADER
 #pragma endregion Shader macros
 
 class Vector2;
@@ -57,9 +59,9 @@ public:
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	static void CreateFramebuffer(int _width, int _height);
 
-	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id);
+	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id, unsigned int _fbo);
 
-	static void CreateRenderBuffer(int _width, int _height);
+	static void CreateRenderBuffer(int _width, int _height, unsigned int _rbo);
 	// Used to clear a buffer for the next draw
 	static void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
@@ -121,7 +123,6 @@ public:
 	static void SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value);
 	static void SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w);
 	static void SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat);
-	static void SetShaderViewPos(GLuint _program, Vector3& _viewPos);
 
 #pragma endregion Shader functions
 };

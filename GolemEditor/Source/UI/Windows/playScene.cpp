@@ -27,7 +27,7 @@ void PlayScene::Update()
         if (ImGui::SmallButton("X"))
         {
             g_isPlayTesting = false;
-            GolemEngine::SetGameMode();
+            //GolemEngine::SetGameMode();
         }
         ImGui::SetCursorPosX(0);
         ImGui::Image((ImTextureID)GraphicWrapper::GetPlaySceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));

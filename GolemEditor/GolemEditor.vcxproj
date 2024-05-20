@@ -192,6 +192,7 @@
     <ClCompile Include="Source\editor.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\UI\editorUi.cpp" />
+    <ClCompile Include="Source\UI\Windows\viewportToolsWindow.cpp" />
     <ClCompile Include="Source\UI\Windows\window.cpp" />
     <ClCompile Include="Source\UI\Windows\worldBuilderWindow.cpp" />
   </ItemGroup>
@@ -199,13 +200,14 @@
     <ClInclude Include="Include\editor.h" />
     <ClInclude Include="Include\UI\editorUi.h" />
     <ClInclude Include="Include\UI\toolbar.h" />
-    <ClInclude Include="Include\UI\Windows\basicActors.h" />
+    <ClInclude Include="Include\UI\Windows\basicActorsWindow.h" />
     <ClInclude Include="Include\UI\Windows\debugWindow.h" />
     <ClInclude Include="Include\UI\Windows\fileBrowser.h" />
     <ClInclude Include="Include\UI\Windows\inspector.h" />
     <ClInclude Include="Include\UI\Windows\playScene.h" />
     <ClInclude Include="Include\UI\Windows\viewport.h" />
     <ClInclude Include="Include\UI\Windows\sceneGraph.h" />
+    <ClInclude Include="Include\UI\Windows\viewportToolsWindow.h" />
     <ClInclude Include="Include\UI\Windows\window.h" />
     <ClInclude Include="Include\UI\Windows\worldBuilderWindow.h" />
   </ItemGroup>
