@@ -20,11 +20,9 @@ using json = nlohmann::json;
 
 struct VertexGpu
 {
-    Vector3 position;
+    Vertex vertex;
     float padding1;
-    Vector3 normal;
     float padding2;
-    Vector2 textureCoords;
     Vector2 padding3;
 };
 
@@ -60,6 +58,8 @@ public:
     void Draw(Camera* _camera);
     void UpdateLights(Shader* _shader);
     void GetComputeShaderData(Camera* _camera);
+    std::vector<VertexGpu> GetVerticesGpu();
+    std::vector<Vertex> GetVertices();
     void CalculateNormals();
     
     virtual void Init(int _xResolution, int _zResolution) {}

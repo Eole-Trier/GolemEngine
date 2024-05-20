@@ -61,5 +61,5 @@ void MeshRenderer::Draw(Camera* _camera)
 
 Mesh* MeshRenderer::GetMesh()
 {
-    return  m_mesh;
+    return m_mesh;
 }

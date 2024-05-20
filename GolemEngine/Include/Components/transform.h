@@ -24,6 +24,7 @@ public:
 	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;
+	Vector3 oldScaling;
 
 public:
 	GOLEM_ENGINE_API Transform();
@@ -74,5 +75,6 @@ REFL_AUTO(
 	type(Transform, bases<Component>),
 	field(localPosition),
 	field(rotation),
-	field(scaling)
+	field(scaling),
+	field(oldScaling)
 )

@@ -17,6 +17,7 @@ public:
 	Model();
 	~Model();
 
-    void Load(const char* _modelPath);
+	void Load(const char* _modelPath);
+	void Load(std::vector<Vertex> _vertices);
 };
 
