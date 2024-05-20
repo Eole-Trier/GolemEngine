@@ -36,8 +36,8 @@ public:
 	{
 		Tools::FindFile("skybox_right.jpg"),
 		Tools::FindFile("skybox_left.jpg"),
-		Tools::FindFile("skybox_top.jpg"),
 		Tools::FindFile("skybox_bottom.jpg"),
+		Tools::FindFile("skybox_top.jpg"),
 		Tools::FindFile("skybox_front.jpg"),
 		Tools::FindFile("skybox_back.jpg"),
 	};
