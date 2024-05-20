@@ -4,8 +4,7 @@
 int main()
 {
 	Editor* editor = new Editor();
-	editor->Init();
-	//editor->Run();
+	editor->Run();
 	delete editor;
 	std::cout << "Project Closed" << std::endl;
 	return 0;
