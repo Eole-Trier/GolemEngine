@@ -25,7 +25,6 @@
     <ClCompile Include="Source\Components\transform.cpp" />
     <ClCompile Include="Source\Debug\log.cpp" />
     <ClCompile Include="Source\Resource\Rendering\model.cpp" />
-    <ClCompile Include="Source\Resource\Rendering\shader.cpp" />
     <ClCompile Include="Source\Resource\Rendering\texture.cpp" />
     <ClCompile Include="Source\Resource\resourceManager.cpp" />
     <ClCompile Include="Source\Wrappers\graphicWrapper.cpp" />
@@ -41,7 +40,6 @@
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Components\audio.cpp" />
-    <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Resource\sceneManager.cpp" />
     <ClCompile Include="Source\Wrappers\audioWrapper.cpp" />
     <ClCompile Include="Source\Resource\Rendering\skybox.cpp" />
@@ -63,6 +61,8 @@
     <ClCompile Include="External\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Source\WorldBuilder\terrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
+    <ClCompile Include="Source\Components\Physic\meshCollider.cpp" />
+    <ClCompile Include="Source\Resource\guid.cpp" />
     <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
     <ClCompile Include="Source\Components\Light\pointLight.cpp" />
     <ClCompile Include="Source\Components\Light\spotLight.cpp" />
@@ -110,9 +110,7 @@
     <ClInclude Include="Include\Debug\assertion.h" />
     <ClInclude Include="Include\Debug\log.h" />
     <ClInclude Include="Include\Resource\Rendering\model.h" />
-    <ClInclude Include="Include\Resource\Rendering\shader.h" />
     <ClInclude Include="Include\Resource\Rendering\texture.h" />
-    <ClInclude Include="Include\Resource\Rendering\vertex.h" />
     <ClInclude Include="Include\Resource\resource.h" />
     <ClInclude Include="Include\Resource\resourceManager.h" />
     <ClInclude Include="Include\Wrappers\graphicWrapper.h" />
@@ -174,5 +172,7 @@
     <ClInclude Include="Include\Utils\viewportTools.h" />
     <ClInclude Include="Include\WorldBuilder\defaultTerrain.h" />
     <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
+    <ClInclude Include="Include\Components\Physic\meshCollider.h" />
+    <ClInclude Include="Include\Resource\Rendering\vertex.h" />
   </ItemGroup>
 </Project>

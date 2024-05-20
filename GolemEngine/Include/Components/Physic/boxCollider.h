@@ -26,7 +26,7 @@ public:
 	void Update() override;
 	void PostUpdate() override;
 
-	void Draw(float _width, float _height, Camera* _camera);
+	void Draw(Camera* _camera);
 
 	void ToJson(json& j) const {}
 

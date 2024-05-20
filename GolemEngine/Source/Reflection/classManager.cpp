@@ -9,6 +9,7 @@
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
 #include "WorldBuilder/terrain.h"
+#include "Components/Physic/meshCollider.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -22,6 +23,7 @@ void ClassesManager::AddAllClasses()
 	Add<Audio>();
 	Add<SphereCollider>();
 	Add<BoxCollider>();
+	Add<MeshCollider>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

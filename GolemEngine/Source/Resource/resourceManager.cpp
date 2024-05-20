@@ -59,6 +59,8 @@ void ResourceManager::CreateAndLoadResources()
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
 
+    resourceManager->TraverseDirectoryAndLoadFiles(Tools::FindFolder("Assets"));
+
     // Set default shader for general stuff
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader);
     VertexShader* defaultVertexShader = new VertexShader(defaultShader, Tools::FindFile("default.vs").c_str());
@@ -90,6 +92,11 @@ void ResourceManager::CreateAndLoadResources()
     VertexShader* boxColliderVertexShader = new VertexShader(boxColliderShader, Tools::FindFile("boxCollider.vs").c_str());
     FragmentShader* boxColliderFragmentShader = new FragmentShader(boxColliderShader, Tools::FindFile("boxCollider.fs").c_str());
     boxColliderShader->SetAllShaders(boxColliderVertexShader, boxColliderFragmentShader);
+
+    Shader* meshColliderShader = resourceManager->Create<Shader>(m_meshColliderShader);
+    VertexShader* meshColliderVertexShader = new VertexShader(meshColliderShader, Tools::FindFile("meshCollider.vs").c_str());
+    FragmentShader* meshColliderFragmentShader = new FragmentShader(meshColliderShader, Tools::FindFile("meshCollider.fs").c_str());
+    meshColliderShader->SetAllShaders(meshColliderVertexShader, meshColliderFragmentShader);
 
     Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader);
     VertexShader* skyboxVertexShader = new VertexShader(skyboxShader, Tools::FindFile("skybox.vs").c_str());
@@ -125,7 +132,17 @@ void ResourceManager::CreateAndLoadResources()
 
     Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
     cube->Load(cube->path.c_str());
+
 }
+
+void ResourceManager::DeleteAllResouces()
+{
+    for (auto& resource : m_resources)
+    {
+        delete resource.second;
+    }
+}
+
 
 std::string ResourceManager::GetDefaultShader()
 {
@@ -164,4 +181,19 @@ std::string ResourceManager::GetGridTerrainTexture()
 std::string ResourceManager::GetSkyboxShader()
 {
     return m_skyboxShader;
+}
+
+std::string ResourceManager::GetBoxColliderShader()
+{
+    return m_boxColliderShader;
+}
+
+std::string ResourceManager::GetSphereColliderShader()
+{
+    return m_sphereColliderShader;
+}
+
+std::string ResourceManager::GetMeshColliderShader()
+{
+    return m_meshColliderShader;
 }

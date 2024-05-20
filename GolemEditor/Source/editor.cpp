@@ -108,6 +108,7 @@ void Editor::MainLoop()
 
 void Editor::Cleanup()
 {
+	ResourceManager::DeleteAllResouces();
 	ImGui::EndFrame();
 }
 
