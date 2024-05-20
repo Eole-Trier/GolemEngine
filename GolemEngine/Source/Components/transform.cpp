@@ -190,6 +190,19 @@ bool Transform::IsChildOf(Transform* const _parent)
     return (m_parent == _parent);
 }
 
+GOLEM_ENGINE_API Vector3 Transform::GetForward() const
+{
+    float yaw = rotation.y * (M_PI / 180.0f);
+    float pitch = rotation.x * (M_PI / 180.0f);
+
+    Vector3 forward;
+    forward.x = cos(yaw) * cos(pitch);
+    forward.y = sin(pitch);
+    forward.z = sin(yaw) * cos(pitch);
+
+    return forward;
+}
+
 bool Transform::IsAParentOf(Transform* const _t)
 {
     if (m_children.size() != 0)

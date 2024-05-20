@@ -21,6 +21,8 @@ public:
 
 	std::vector<Bullet*> bullets;
 
+    float radius = 0.1f;
+
     void ToJson(json& j) const
     {
         j = json
@@ -31,5 +33,6 @@ public:
 };
 
 REFL_AUTO(
-    type(Shot)
+    type(Shot),
+    field(radius)
 )

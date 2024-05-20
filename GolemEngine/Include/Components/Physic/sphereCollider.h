@@ -15,7 +15,7 @@ class SphereCollider : public Collider
 {
 private:
 	float m_radius;
-
+	
 public:
 	SphereCollider();
 	SphereCollider(float _radius);

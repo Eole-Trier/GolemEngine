@@ -1,6 +1,8 @@
 #include "Components/GameClasses/shot.h"
 #include "Components/GameClasses/bullet.h"
 #include "Inputs/inputManager.h"
+#include "Resource/sceneManager.h"
+#include "golemEngine.h"
 #include <iostream>
 
 Shot::Shot()
@@ -11,6 +13,11 @@ Shot::Shot()
 
 Shot::~Shot()
 {
+    for (auto b : bullets)
+    {
+        delete b;
+    }
+    bullets.clear();
 }
 
 void Shot::Update()
@@ -20,10 +27,10 @@ void Shot::Update()
 		instantiate();
 	}
 
-	for (auto &b : bullets)
-	{
+    for (auto b : bullets)
+    {
 		b->Update();
-	}
+    }
 }
 
 void Shot::instantiate()
@@ -31,7 +38,7 @@ void Shot::instantiate()
 	// Instantiate a bullet
 	std::cout << "Shot !!" << std::endl;
 
-	//Bullet bullet;
-
-	bullets.push_back(new Bullet());
+    Bullet *bullet = new Bullet(owner->transform->localPosition, 0, radius, owner->transform->GetForward());
+	bullets.push_back(bullet);
+    //SceneManager::GetCurrentScene()->gameObjects.push_back(bullet);
 }
