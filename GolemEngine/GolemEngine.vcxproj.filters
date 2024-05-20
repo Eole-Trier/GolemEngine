@@ -70,6 +70,7 @@
     <ClCompile Include="Source\WorldBuilder\worldBuilder.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
     <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />

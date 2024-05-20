@@ -36,6 +36,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
     <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
     <ClCompile Include="Source\Components\Light\directional.cpp" />

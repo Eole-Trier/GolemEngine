@@ -5,6 +5,8 @@
 #include "Core/gameobject.h"
 #include "Inputs/inputManager.h"
 #include "Components/GameClasses/bullet.h"
+#include <vector>
+
 
 class GOLEM_ENGINE_API Shot : public Component
 {
@@ -17,7 +19,7 @@ public:
 
     void instantiate();
 
-	Bullet* bullet;
+	std::vector<Bullet*> bullets;
 
     void ToJson(json& j) const
     {
