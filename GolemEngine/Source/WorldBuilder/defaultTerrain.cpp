@@ -29,7 +29,6 @@ void DefaultTerrain::Init(int _xResolution, int _zResolution)
             m_vertices.push_back(vertex);
         }
     }
-    m_vertices[4].position.y = 0.3f;
     // Setup indices
     for (int i = 0; i < xResolution; i++)
     {
