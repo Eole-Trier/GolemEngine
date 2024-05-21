@@ -25,6 +25,7 @@ private:
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
 	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
 	static inline std::string m_boxColliderShader = "box_collider_shader";
+	static inline std::string m_capsuleColliderShader = "box_collider_shader";
 	static inline std::string m_meshColliderShader = "mesh_collider_shader";
 	static inline std::string m_skyboxShader = "skybox_shader";
 
@@ -44,8 +45,9 @@ public:
 	static std::string GetTerrainComputeShader();
 	static std::string GetGridTerrainTexture();
 	static std::string GetSkyboxShader();
-	static std::string GetBoxColliderShader();
 	static std::string GetSphereColliderShader();
+	static std::string GetBoxColliderShader();
+	static std::string GetCapsuleColliderShader();
 	static std::string GetMeshColliderShader();
 
 	void ProcessFile(const std::filesystem::path& _filePath);

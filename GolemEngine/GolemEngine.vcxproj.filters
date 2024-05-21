@@ -75,6 +75,8 @@
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
     <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
     <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
+    <ClCompile Include="Source\WorldBuilder\brush.cpp" />
+    <ClCompile Include="Source\Components\Physic\capsuleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -177,16 +179,14 @@
     <ClInclude Include="Include\WorldBuilder\noisemapTerrain.h" />
     <ClInclude Include="Include\Components\Physic\meshCollider.h" />
     <ClInclude Include="Include\Resource\Rendering\vertex.h" />
-    <ClInclude Include="Include\Physic\bodiesManager.h" />
     <ClInclude Include="Include\Components\Physic\sphereCollider.h" />
-    <ClInclude Include="Include\Resource\Rendering\framebuffer.h" />
-    <ClInclude Include="Include\Resource\Rendering\mesh.h" />
-    <ClInclude Include="Include\Resource\tools.h" />
     <ClInclude Include="Include\WorldBuilder\terrain.h" />
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
     <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Components\GameClasses\movement.h" />
     <ClInclude Include="Include\Components\GameClasses\shot.h" />
     <ClInclude Include="Include\Components\GameClasses\bullet.h" />
+    <ClInclude Include="Include\WorldBuilder\brush.h" />
+    <ClInclude Include="Include\Components\Physic\capsuleCollider.h" />
   </ItemGroup>
 </Project>

@@ -45,15 +45,17 @@ void ContactManager::UpdateAllContacts()
 	{
 		switch (collisionData.colliderState)
 		{
-		case ON_COLLISION_ENTER:
+		case ColliderState::DEFAULT:
+			break;
+		case ColliderState::ON_COLLISION_ENTER:
 			collisionData.collider1->OnCollisionEnter(collisionData.collider2);
 			collisionData.collider2->OnCollisionEnter(collisionData.collider1);
 			break;
-		case ON_COLLISION_STAY:
+		case ColliderState::ON_COLLISION_STAY:
 			collisionData.collider1->OnCollisionStay(collisionData.collider2);
 			collisionData.collider2->OnCollisionStay(collisionData.collider1);
 			break;
-		case ON_COLLISION_EXIT:
+		case ColliderState::ON_COLLISION_EXIT:
 			break;
 		default:
 			break;

@@ -12,13 +12,13 @@
 #include "Components/GameClasses/shot.h"
 #include "WorldBuilder/terrain.h"
 #include "Components/Physic/meshCollider.h"
+#include "Components/Physic/capsuleCollider.h"
 
 void ClassesManager::AddAllClasses()
 {
 	Add<Component>();
 	Add<Transform>();
 	Add<MeshRenderer>();
-	Add<Light>();
 	Add<DirectionalLight>();
 	Add<PointLight>();
 	Add<SpotLight>();
@@ -28,6 +28,7 @@ void ClassesManager::AddAllClasses()
 	Add<Movement>();
 	Add<Shot>();
 	Add<MeshCollider>();
+	Add<CapsuleCollider>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

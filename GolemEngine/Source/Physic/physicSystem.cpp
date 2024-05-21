@@ -10,6 +10,7 @@
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
+#include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
 #include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
@@ -215,6 +216,14 @@ BodyID PhysicSystem::CreateBoxCollider(Vector3 _position, Quaternion _rotation, 
 	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
 }
 
+BodyID PhysicSystem::CreateCapsuleCollider(Vector3 _position, Quaternion _rotation, float _height, float _radius, EMotionType _motionType, ObjectLayer _objectLayer)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	BodyCreationSettings boxSettings(new CapsuleShape(_height, _radius), ToJph(_position), ToJph(_rotation), _motionType, _objectLayer);
+	boxSettings.mAllowDynamicOrKinematic = true;
+	return bodyInterface.CreateAndAddBody(boxSettings, EActivation::DontActivate);
+}
 BodyID PhysicSystem::CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation, EMotionType _motionType, ObjectLayer _objectLayer)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -293,6 +302,13 @@ void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_velocity));
 }
 
+void PhysicSystem::SetGravityFactor(BodyID _bodyId, float _gravityFactor)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetGravityFactor(_bodyId, _gravityFactor);
+}
+
+
 void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -309,6 +325,12 @@ void PhysicSystem::SetBoxShape(BodyID _bodyId, Vector3 _size)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.SetShape(_bodyId, new BoxShape(ToJph(_size)), false, EActivation::Activate);
+}
+
+void PhysicSystem::SetCapsuleShape(BodyID _bodyId, float _height, float _radius)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetShape(_bodyId, new CapsuleShape(_height, _radius), false, EActivation::Activate);
 }
 
 void PhysicSystem::SetConvexHullShape(BodyID _bodyId, std::vector<Vertex>& _vertices)

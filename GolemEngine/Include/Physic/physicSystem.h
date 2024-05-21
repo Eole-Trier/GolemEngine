@@ -64,6 +64,8 @@ public:
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, 
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateCapsuleCollider(Vector3 _position, Quaternion _rotation, float _height, float _radius,
+		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation,
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
@@ -75,15 +77,18 @@ public:
 	static void DeactivateBody(BodyID _bodyId, Vector3 _position);
 
 	static void SetPosition(BodyID _bodyId, Vector3 _position);
-	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
 	static void SetRotation(BodyID _bodyId, Vector3 _rotation);
 	static void SetVelocity(BodyID _bodyId, Vector3 _velocity);
+	static void SetGravityFactor(BodyID _bodyId, float _gravityFactor);
+
+	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
+
 	static void AddForce(BodyID _bodyId, Vector3 _force, float _power = 1.0f);
 
 	static void SetSphereShape(BodyID _bodyId, float _radius);
 	static void SetBoxShape(BodyID _bodyId, Vector3 _size);
+	static void SetCapsuleShape(BodyID _bodyId, float _height, float _radius);
 	static void SetConvexHullShape(BodyID _bodyId, std::vector<Vertex>& _vertices);
-
 
 	static void DeleteBody(BodyID _bodyId);
 };

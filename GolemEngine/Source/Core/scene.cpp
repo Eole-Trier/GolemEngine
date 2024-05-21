@@ -105,8 +105,6 @@ void Scene::InitLights()
 void Scene::Update(Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-    defaultShader->Use();
 
     // Skybox shader load
     Shader* skyboxShader = resourceManager->Get<Shader>("skybox_shader");
@@ -124,6 +122,9 @@ void Scene::Update(Camera* _camera)
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     glDepthFunc(GL_LESS);
+
+    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+    defaultShader->Use();
 
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
 
