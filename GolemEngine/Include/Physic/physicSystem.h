@@ -75,10 +75,14 @@ public:
 	static void DeactivateBody(BodyID _bodyId, Vector3 _position);
 
 	static void SetPosition(BodyID _bodyId, Vector3 _position);
-	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
 	static void SetRotation(BodyID _bodyId, Vector3 _rotation);
 	static void SetVelocity(BodyID _bodyId, Vector3 _velocity);
+	static void SetGravityFactor(BodyID _bodyId, float _gravityFactor);
+
+	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
+
 	static void AddForce(BodyID _bodyId, Vector3 _force, float _power = 1.0f);
+
 
 	static void SetSphereShape(BodyID _bodyId, float _radius);
 	static void SetBoxShape(BodyID _bodyId, Vector3 _size);

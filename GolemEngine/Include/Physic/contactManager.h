@@ -8,11 +8,12 @@ using namespace JPH;
 
 class Collider;
 
-enum ColliderState
+enum class ColliderState
 {
+	DEFAULT,
 	ON_COLLISION_ENTER,
 	ON_COLLISION_STAY,
-	ON_COLLISION_EXIT,
+	ON_COLLISION_EXIT
 };
 
 struct CollisionData

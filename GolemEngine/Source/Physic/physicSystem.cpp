@@ -293,6 +293,13 @@ void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_velocity));
 }
 
+void PhysicSystem::SetGravityFactor(BodyID _bodyId, float _gravityFactor)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetGravityFactor(_bodyId, _gravityFactor);
+}
+
+
 void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
