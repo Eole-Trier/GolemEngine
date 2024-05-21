@@ -145,7 +145,6 @@ void SceneManager::SetupWorldFromJson(Scene* _scene, json _jScene, int _i)
         // Setup directional light
         if (_jScene["gameObjects"][_i]["components"][j]["name"] == "directionalLight")
         {
-            _scene->GetWorld()->AddComponent<DirectionalLight>();
             _scene->GetWorld()->GetComponent<DirectionalLight>()->id = _jScene["gameObjects"][_i]["components"][j]["data"]["id"];
             _scene->GetWorld()->GetComponent<DirectionalLight>()->diffuseColor = _jScene["gameObjects"][_i]["components"][j]["data"]["diffuseColor"];
             _scene->GetWorld()->GetComponent<DirectionalLight>()->ambientColor = _jScene["gameObjects"][_i]["components"][j]["data"]["ambientColor"];
