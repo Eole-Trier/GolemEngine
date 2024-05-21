@@ -18,7 +18,6 @@ void ClassesManager::AddAllClasses()
 	Add<Component>();
 	Add<Transform>();
 	Add<MeshRenderer>();
-	Add<Light>();
 	Add<DirectionalLight>();
 	Add<PointLight>();
 	Add<SpotLight>();
