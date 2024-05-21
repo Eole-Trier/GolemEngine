@@ -20,9 +20,11 @@ using json = nlohmann::json;
 
 struct VertexGpu
 {
-    Vertex vertex;
+    Vector3 position;
     float padding1;
+    Vector3 normal;
     float padding2;
+    Vector2 textureCoords;
     Vector2 padding3;
 };
 

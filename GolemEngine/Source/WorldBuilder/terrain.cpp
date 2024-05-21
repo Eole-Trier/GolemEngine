@@ -46,10 +46,10 @@ void Terrain::SetupMesh()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)0);
     glEnableVertexAttribArray(0);
     // normal attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu,  vertex.normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu,  normal));
     glEnableVertexAttribArray(1);
     // texture attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, vertex.textureCoords));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, textureCoords));
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
@@ -171,20 +171,20 @@ void Terrain::GetComputeShaderData(Camera* _camera)
             for (int i = 0; i < m_vertices.size(); ++i)
             {
                 // Get the original vertex position
-                Vector4 originalPosition = Vector4(verticesOut[i].vertex.position.x, verticesOut[i].vertex.position.y, verticesOut[i].vertex.position.z, 1.0f);
+                Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
                 // Apply the model matrix
                 Vector4 transformedPosition = modelMatrix * originalPosition;
                 // Set final position
                 Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
                 // Update the vertex position in the CPU buffer
-                m_vertices[i].vertex.position = finalPosition;
+                m_vertices[i].position = finalPosition;
                 // Set min and max point of the heightmap
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
 
                 // m_vertices[i].vertex.normal = verticesOut[i].vertex.normal;
             }
-                std::cout << "pos y: " << verticesOut[100].vertex.position.y << std::endl;
+            std::cout << "pos y: " << verticesOut[100].position.y << std::endl;
             
             m_yMin = yMin;
             m_yMax = yMax;
@@ -213,7 +213,8 @@ std::vector<Vertex> Terrain::GetVertices()
     std::vector<Vertex> vertices;
     for (VertexGpu v : m_vertices)
     {
-        vertices.push_back(v.vertex);
+        Vertex vert = {v.position, v.normal, v.textureCoords};
+        vertices.push_back(vert);
     }
     return vertices;
 }
@@ -225,42 +226,42 @@ void Terrain::CalculateNormals()
         for (int j = 0; j < zResolution; ++j)
         {
             Vector3 normal(0.0f, 0.0f, 0.0f);
-            Vector3 currentPosition = m_vertices[j + i * zResolution].vertex.position;
+            Vector3 currentPosition = m_vertices[j + i * zResolution].position;
 
             if (i < xResolution - 1 && j < zResolution - 1) // Bottom-right triangle
             {
-                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].vertex.position;
-                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].vertex.position;
+                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].position;
+                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].position;
                 Vector3 bottom = bottomPosition - currentPosition;
                 Vector3 right = rightPosition - currentPosition;
                 normal += Vector3::Cross(bottom, right);
             }
             if (i < xResolution - 1 && j > 0) // Top-right triangle
             {
-                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].vertex.position;
-                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].vertex.position;
+                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].position;
+                Vector3 rightPosition = m_vertices[j + (i + 1) * zResolution].position;
                 Vector3 top = topPosition - currentPosition;
                 Vector3 right = rightPosition - currentPosition;
                 normal += Vector3::Cross(top, right);
             }
             if (i > 0 && j < zResolution - 1) // Bottom-left triangle
             {
-                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].vertex.position;
-                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].vertex.position;
+                Vector3 bottomPosition = m_vertices[j + 1 + i * zResolution].position;
+                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].position;
                 Vector3 bottom = bottomPosition - currentPosition;
                 Vector3 left = leftPosition - currentPosition;
                 normal += Vector3::Cross(bottom, left);
             }
             if (i > 0 && j > 0) // Top-left triangle
             {
-                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].vertex.position;
-                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].vertex.position;
+                Vector3 topPosition = m_vertices[j - 1 + i * zResolution].position;
+                Vector3 leftPosition = m_vertices[j + (i - 1) * zResolution].position;
                 Vector3 top = topPosition - currentPosition;
                 Vector3 left = leftPosition - currentPosition;
                 normal += Vector3::Cross(left, top);
             }
 
-            m_vertices[j + i * zResolution].vertex.normal = normal.Normalize();
+            m_vertices[j + i * zResolution].normal = normal.Normalize();
         }
     }
 }

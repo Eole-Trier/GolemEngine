@@ -26,19 +26,19 @@ void NoisemapTerrain::Init(const char* _noisemapPath)
             unsigned int noisemapValue = (noisemap + (i + xResolution * j))[0];
             // Set the vertex position
             VertexGpu vertex;
-            vertex.vertex.position.x = (i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.vertex.position.z = (j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.vertex.position.y = noisemapValue / 255.0f;
+            vertex.position.x = (i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.z = (j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.position.y = noisemapValue / 255.0f;
 
             // Set highest vertex for the shader
-            if (vertex.vertex.position.y > m_yMax)
+            if (vertex.position.y > m_yMax)
             {
-                m_yMax = vertex.vertex.position.y;
+                m_yMax = vertex.position.y;
             }
             
             // Set the vertex texture postion
-            vertex.vertex.textureCoords.x = (j / (float)zResolution);
-            vertex.vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
+            vertex.textureCoords.x = (j / (float)zResolution);
+            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
 
             m_vertices.push_back(vertex);
         }
