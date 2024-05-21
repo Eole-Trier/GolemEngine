@@ -88,6 +88,12 @@ void ResourceManager::CreateAndLoadResources()
     FragmentShader* boxColliderFragmentShader = new FragmentShader(boxColliderShader, Tools::FindFile("boxCollider.fs").c_str());
     boxColliderShader->SetAllShaders(boxColliderVertexShader, boxColliderFragmentShader);
 
+    Shader* capsuleColliderShader = resourceManager->Create<Shader>(m_capsuleColliderShader);
+    VertexShader* capsuleColliderVertexShader = new VertexShader(capsuleColliderShader, Tools::FindFile("capsuleCollider.vs").c_str());
+    FragmentShader* capsuleColliderFragmentShader = new FragmentShader(capsuleColliderShader, Tools::FindFile("capsuleCollider.fs").c_str());
+    capsuleColliderShader->SetAllShaders(capsuleColliderVertexShader, capsuleColliderFragmentShader);
+
+
     Shader* meshColliderShader = resourceManager->Create<Shader>(m_meshColliderShader);
     VertexShader* meshColliderVertexShader = new VertexShader(meshColliderShader, Tools::FindFile("meshCollider.vs").c_str());
     FragmentShader* meshColliderFragmentShader = new FragmentShader(meshColliderShader, Tools::FindFile("meshCollider.fs").c_str());
@@ -127,6 +133,9 @@ void ResourceManager::CreateAndLoadResources()
 
     Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
     cube->Load(cube->path.c_str());
+
+    Model* capsule = resourceManager->Create<Model>("capsuleCollider.obj", Tools::FindFile("capsule.obj"));
+    capsule->Load(capsule->path.c_str());
 
     // Skybox Init
     //Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
@@ -182,6 +191,11 @@ std::string ResourceManager::GetSkyboxShader()
 std::string ResourceManager::GetBoxColliderShader()
 {
     return m_boxColliderShader;
+}
+
+std::string ResourceManager::GetCapsuleColliderShader()
+{
+    return m_capsuleColliderShader;
 }
 
 std::string ResourceManager::GetSphereColliderShader()
