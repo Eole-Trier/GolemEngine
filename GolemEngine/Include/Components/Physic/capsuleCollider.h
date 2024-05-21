@@ -37,6 +37,6 @@ public:
 
 REFL_AUTO(
 	type(CapsuleCollider, bases<Collider>),
-	field(m_height),
-	field(m_radius)
+	field(m_height, Range(0.1f, 100.f)),
+	field(m_radius, Range(0.1f, 100.f))
 )
