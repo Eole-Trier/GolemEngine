@@ -1,7 +1,7 @@
 #pragma once
 
 
-constexpr float M_PI = 3.14159265358979323846;
+constexpr double M_PI = 3.14159265358979323846;
 
 float DegToRad(float _deg);
 float RadToDeg(float _rad);

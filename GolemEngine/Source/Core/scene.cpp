@@ -154,7 +154,7 @@ void Scene::UpdateGameObjects(Camera* _camera)
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
-        shader->GetFragmentShader()->SetInt("entityID", gameObjects[i]->GetId());
+        shader->GetFragmentShader()->SetInt("entityID", (int)gameObjects[i]->GetId());
 
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
         {
@@ -188,9 +188,9 @@ void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->GetFragmentShader()->SetInt("nbrDirLights", m_dirLights.size());
-    _shader->GetFragmentShader()->SetInt("nbrPointLights", m_pointLights.size());
-    _shader->GetFragmentShader()->SetInt("nbrSpotLights", m_spotLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", (int)m_dirLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", (int)m_pointLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", (int)m_spotLights.size());
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
@@ -380,7 +380,7 @@ std::string Scene::GetFileName(const std::string& _filePath)
     return path.stem().string();
 }
 
-const std::vector<GameObject*>& Scene::GetGameObjects()
+std::vector<GameObject*>& Scene::GetGameObjects()
 {
     return gameObjects;
 }

@@ -4,7 +4,25 @@
 
 #include "vector3.h"
 
-Matrix4::Matrix4() { }
+Matrix4::Matrix4() 
+{ 
+	data[0][0] = 0.0f;
+	data[0][1] = 0.0f;
+	data[0][2] = 0.0f;
+	data[0][3] = 0.0f;
+	data[1][0] = 0.0f;
+	data[1][1] = 0.0f;
+	data[1][2] = 0.0f;
+	data[1][3] = 0.0f;
+	data[2][0] = 0.0f;
+	data[2][1] = 0.0f;
+	data[2][2] = 0.0f;
+	data[2][3] = 0.0f;
+	data[3][0] = 0.0f;
+	data[3][1] = 0.0f;
+	data[3][2] = 0.0f;
+	data[3][3] = 0.0f;
+}
 
 Matrix4::~Matrix4() { }
 
@@ -106,7 +124,7 @@ Matrix4 Matrix4::Inverse() const
 		std::cout << "The Matrix can't be inverted, determinant is 0" << std::endl;
 		return Matrix4(0);
 	}
-	det = 1.0 / det;
+	det = 1.0f / det;
 
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)

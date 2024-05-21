@@ -11,7 +11,7 @@
 
 class Shader;
 
-class GOLEM_ENGINE_API PointLight : public Light
+class PointLight : public Light
 {
 public:
     size_t id;
@@ -21,18 +21,18 @@ public:
     float quadratic;
 
 public:
-    PointLight();
-    PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position, 
+    GOLEM_ENGINE_API PointLight();
+    GOLEM_ENGINE_API PointLight(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular, const Vector3& _position,
         const float _constant, const float _linear, const float _quadratic);
-    ~PointLight();
-    void SetPointLight(Shader* _shader);
+    GOLEM_ENGINE_API~PointLight();
+    GOLEM_ENGINE_API void SetPointLight(Shader* _shader);
    
-    void Update() override;
+    GOLEM_ENGINE_API void Update() override;
 
     
     // Define serialization and deserialization functions manually because the
     // macro is not used due to the pointer member variable.
-    void ToJson(json& j) const override
+    GOLEM_ENGINE_API void ToJson(json& j) const override
     {
         j = json
         {

@@ -15,27 +15,27 @@
 #include "Refl/refl.hpp"
 #include "component.h"
 
-class GOLEM_ENGINE_API Audio : public Component
+class Audio : public Component
 {
 public:
-    Audio();
-    Audio(std::string _fileName, bool _isLooping = false);
-    ~Audio();
+    GOLEM_ENGINE_API Audio();
+    GOLEM_ENGINE_API Audio(std::string _fileName, bool _isLooping = false);
+    GOLEM_ENGINE_API ~Audio();
     
     std::string musicPath;
     ALuint source;
     ALuint buffer;
 
-    bool LoadAudioResource(const char* _fileName, std::vector<char>& _data, ALenum& _format, ALsizei& _frequency);
-    bool SetUpAudio();
-    void SetLoop(bool _isLooping);
-    void SetVolume(int _volume);
-    void StopMusic(bool _isPlaying);
-    void SetPositon();
-    void CleanUp();
-    void Play();
+    GOLEM_ENGINE_API bool LoadAudioResource(const char* _fileName, std::vector<char>& _data, ALenum& _format, ALsizei& _frequency);
+    GOLEM_ENGINE_API bool SetUpAudio();
+    GOLEM_ENGINE_API void SetLoop(bool _isLooping);
+    GOLEM_ENGINE_API void SetVolume(int _volume);
+    GOLEM_ENGINE_API void StopMusic(bool _isPlaying);
+    GOLEM_ENGINE_API void SetPositon();
+    GOLEM_ENGINE_API void CleanUp();
+    GOLEM_ENGINE_API void Play();
 
-    void Update() override;
+    GOLEM_ENGINE_API void Update() override;
 
 private:
     bool m_isInit = false;
@@ -52,7 +52,7 @@ private:
 
     // Define serialization and deserialization functions manually because the
     // macro is not used due to the pointer member variable.
-    void ToJson(json& j) const
+    GOLEM_ENGINE_API void ToJson(json& j) const
     {
         j = json
         {

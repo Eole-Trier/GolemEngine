@@ -6,15 +6,15 @@
 #include "dll.h"
 
 
-class GOLEM_ENGINE_API Log
+class Log
 {
 private:
 	static std::fstream m_file;
 
 public:
-	Log() {};
-	~Log();
+	GOLEM_ENGINE_API Log() {};
+	GOLEM_ENGINE_API ~Log();
 
-	static void OpenFile(std::filesystem::path const& _filename);
-	static void Print(const char* _format, ...);
+	GOLEM_ENGINE_API static void OpenFile(std::filesystem::path const& _filename);
+	GOLEM_ENGINE_API static void Print(const char* _format, ...);
 };

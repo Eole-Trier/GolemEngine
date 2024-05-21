@@ -58,7 +58,7 @@ void InputManager::MouseButtonCallback(GLFWwindow* _window, int _button, int _ac
 void InputManager::MouseScrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)
 {
     ImGui_ImplGlfw_ScrollCallback(_window, _xOffset, _yOffset);
-    m_mouseScrollValue = _yOffset;
+    m_mouseScrollValue = (float)_yOffset;
 }
 
 bool InputManager::IsKeyPressed(int _key)

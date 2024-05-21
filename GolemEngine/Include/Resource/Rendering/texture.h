@@ -7,7 +7,7 @@
 #include "Resource/resource.h"
 
 
-class GOLEM_ENGINE_API Texture : public Resource
+class Texture : public Resource
 {
 public:
 	unsigned int id = 0;
@@ -16,12 +16,12 @@ public:
 	std::string name;
 
 public :
-	Texture();
-	Texture(unsigned int _width, unsigned int _height, unsigned int _format, unsigned int _internalFormat);
-	~Texture();
+	GOLEM_ENGINE_API Texture();
+	GOLEM_ENGINE_API Texture(unsigned int _width, unsigned int _height, unsigned int _format, unsigned int _internalFormat);
+	GOLEM_ENGINE_API ~Texture();
 
-	void Load(const char* _filename);
+	GOLEM_ENGINE_API void Load(const char* _filename);
 
-	void Use();
-	void UnUse();
+	GOLEM_ENGINE_API void Use();
+	GOLEM_ENGINE_API void UnUse();
 };

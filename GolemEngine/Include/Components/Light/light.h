@@ -10,7 +10,7 @@
 #include "Refl/refl.hpp"
 
 
-class GOLEM_ENGINE_API Light : public Component
+class Light : public Component
 {
 public:
 	Vector4 diffuseColor;
@@ -18,10 +18,10 @@ public:
 	Vector4 specularColor;
 
 public:
-	Light() = default;
-	Light(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular);
-	virtual ~Light();
-	virtual void Update() override {};
+	GOLEM_ENGINE_API Light() = default;
+	GOLEM_ENGINE_API Light(const Vector4& _diffuse, const Vector4& _ambient, const Vector4& _specular);
+	GOLEM_ENGINE_API virtual ~Light();
+	GOLEM_ENGINE_API virtual void Update() override {};
 };
 
 REFL_AUTO(

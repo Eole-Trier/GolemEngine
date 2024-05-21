@@ -7,17 +7,17 @@
 #include "vertex.h"
 
 
-class GOLEM_ENGINE_API Model : public Resource
+class Model : public Resource
 {
 public:
 	unsigned int VAO, VBO;
 	std::vector<Vertex> vertices;
 
 public:
-	Model();
-	~Model();
+	GOLEM_ENGINE_API Model();
+	GOLEM_ENGINE_API ~Model();
 
-	void Load(const char* _modelPath);
-	void Load(std::vector<Vertex> _vertices);
+	GOLEM_ENGINE_API void Load(const char* _modelPath);
+	GOLEM_ENGINE_API void Load(std::vector<Vertex> _vertices);
 };
 

@@ -9,7 +9,7 @@
 
 #include "Utils/tools.h"
 
-class GOLEM_ENGINE_API Skybox
+class Skybox
 {
 private:
 	Skybox();
@@ -25,12 +25,12 @@ private:
 	std::unordered_map<std::string, unsigned int> m_loadedTextures;
 
 public:
-	static Skybox& GetInstance();
-	unsigned int LoadCubemap(std::vector<std::string> faces);
-	void SetTexture();
-	void SetSpaceSkybox();
-	unsigned int GetSkyboxCubeMapId();
-	unsigned int GetSkyboxVAO();
+	GOLEM_ENGINE_API static Skybox& GetInstance();
+	GOLEM_ENGINE_API unsigned int LoadCubemap(std::vector<std::string> faces);
+	GOLEM_ENGINE_API void SetTexture();
+	GOLEM_ENGINE_API void SetSpaceSkybox();
+	GOLEM_ENGINE_API unsigned int GetSkyboxCubeMapId();
+	GOLEM_ENGINE_API unsigned int GetSkyboxVAO();
 
 	std::vector<std::string> faces
 	{

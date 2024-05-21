@@ -8,22 +8,22 @@
 #include <vector>
 
 
-class GOLEM_ENGINE_API Shot : public Component
+class Shot : public Component
 {
 private:
 public:
-	Shot();
-	~Shot();
+    GOLEM_ENGINE_API Shot();
+    GOLEM_ENGINE_API ~Shot();
 
-	void Update() override;
+    GOLEM_ENGINE_API void Update() override;
 
-    void instantiate();
+    GOLEM_ENGINE_API void instantiate();
 
 	std::vector<Bullet*> bullets;
 
     float radius = 0.1f;
 
-    void ToJson(json& j) const
+    GOLEM_ENGINE_API void ToJson(json& j) const
     {
         j = json
         {

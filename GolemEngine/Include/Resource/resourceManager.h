@@ -11,7 +11,7 @@
 #include "Debug/log.h"
 
 
-class GOLEM_ENGINE_API ResourceManager
+class ResourceManager
 {
 private:
 	// Static pointer which points to the only instance of this class
@@ -34,24 +34,24 @@ private:
 	ResourceManager() {}
 
 public:
-	static ResourceManager* GetInstance();
-	static void CreateAndLoadResources();
-	static void DeleteAllResouces();
+	GOLEM_ENGINE_API static ResourceManager* GetInstance();
+	GOLEM_ENGINE_API static void CreateAndLoadResources();
+	GOLEM_ENGINE_API static void DeleteAllResouces();
 
-	static std::string GetDefaultShader();
-	static std::string GetDefaultTexture();
-	static std::string GetDefaultModel();
-	static std::string GetTerrainShader();
-	static std::string GetTerrainComputeShader();
-	static std::string GetGridTerrainTexture();
-	static std::string GetSkyboxShader();
-	static std::string GetSphereColliderShader();
-	static std::string GetBoxColliderShader();
-	static std::string GetCapsuleColliderShader();
-	static std::string GetMeshColliderShader();
+	GOLEM_ENGINE_API static std::string GetDefaultShader();
+	GOLEM_ENGINE_API static std::string GetDefaultTexture();
+	GOLEM_ENGINE_API static std::string GetDefaultModel();
+	GOLEM_ENGINE_API static std::string GetTerrainShader();
+	GOLEM_ENGINE_API static std::string GetTerrainComputeShader();
+	GOLEM_ENGINE_API static std::string GetGridTerrainTexture();
+	GOLEM_ENGINE_API static std::string GetSkyboxShader();
+	GOLEM_ENGINE_API static std::string GetSphereColliderShader();
+	GOLEM_ENGINE_API static std::string GetBoxColliderShader();
+	GOLEM_ENGINE_API static std::string GetCapsuleColliderShader();
+	GOLEM_ENGINE_API static std::string GetMeshColliderShader();
 
-	void ProcessFile(const std::filesystem::path& _filePath);
-	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
+	GOLEM_ENGINE_API void ProcessFile(const std::filesystem::path& _filePath);
+	GOLEM_ENGINE_API void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);
@@ -61,7 +61,7 @@ public:
 	T* Get(std::string _name);
 	void Delete(std::string _name);
 
-	std::unordered_map<std::string, Resource*> GetResources();
+	GOLEM_ENGINE_API std::unordered_map<std::string, Resource*> GetResources();
 };
 
 template<class T>

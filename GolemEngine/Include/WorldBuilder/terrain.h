@@ -26,7 +26,7 @@ struct VertexGpu
     Vector2 padding3;
 };
 
-class GOLEM_ENGINE_API Terrain : public GameObject
+class Terrain : public GameObject
 {
 protected:
     std::vector<VertexGpu> m_vertices;
@@ -50,27 +50,27 @@ public:
     int zResolution = 2;    // To set the amount of vertices in z
 
 public:
-    Terrain(std::string _name, Transform* _transform);
-    ~Terrain();
+    GOLEM_ENGINE_API Terrain(std::string _name, Transform* _transform);
+    GOLEM_ENGINE_API ~Terrain();
 
-    void SetupMesh();
-    void UseComputeShader();
-    void Draw(Camera* _camera);
-    void UpdateLights(Shader* _shader);
-    void GetComputeShaderData(Camera* _camera);
-    std::vector<VertexGpu> GetVerticesGpu();
-    std::vector<Vertex> GetVertices();
-    void CalculateNormals();
+    GOLEM_ENGINE_API void SetupMesh();
+    GOLEM_ENGINE_API void UseComputeShader();
+    GOLEM_ENGINE_API void Draw(Camera* _camera);
+    GOLEM_ENGINE_API void UpdateLights(Shader* _shader);
+    GOLEM_ENGINE_API void GetComputeShaderData(Camera* _camera);
+    GOLEM_ENGINE_API std::vector<VertexGpu> GetVerticesGpu();
+    GOLEM_ENGINE_API std::vector<Vertex> GetVertices();
+    GOLEM_ENGINE_API void CalculateNormals();
     
-    virtual void Init(int _xResolution, int _zResolution) {}
-    virtual void Init(const char* _noisemapPath) {}
+    GOLEM_ENGINE_API virtual void Init(int _xResolution, int _zResolution) {}
+    GOLEM_ENGINE_API virtual void Init(const char* _noisemapPath) {}
 
 #pragma region Noisemap terrain functions
-    virtual std::string GetNoisemapPath() { return {}; }
+    GOLEM_ENGINE_API virtual std::string GetNoisemapPath() { return {}; }
 
-    virtual void SetNoisemapPath(std::string _noisemapPath) {}
+    GOLEM_ENGINE_API virtual void SetNoisemapPath(std::string _noisemapPath) {}
 #pragma endregion Noisemap terrain functions
 
 
-    virtual void ToJson(json& _j) const {};    // Virtual function to serialize component to JSON
+    GOLEM_ENGINE_API virtual void ToJson(json& _j) const {};    // Virtual function to serialize component to JSON
 };

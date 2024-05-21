@@ -4,7 +4,10 @@
 #include "vector3.h"
 #include "utils.h"
 
-Quaternion::Quaternion() { }
+Quaternion::Quaternion()
+	: w(0.0f), x(0.0f), y(0.0f), z(0.0f)
+{ 
+}
 
 Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 	: w(_w), x(_x), y(_y), z(_z)
@@ -38,10 +41,10 @@ Quaternion Quaternion::UnitNorm()
 	Quaternion q = (*this);
 
 	float angle = DegToRad(q.w);
-	q.w = cosf(angle * 0.5);
+	q.w = cosf(angle * 0.5f);
 
 	Vector3 normalize = Vector3(x, y, z).Normalize();
-	normalize = normalize * sinf(angle * 0.5);
+	normalize = normalize * sinf(angle * 0.5f);
 	q.x = normalize.x;
 	q.y = normalize.y;
 	q.z = normalize.z;
@@ -95,12 +98,12 @@ Quaternion Quaternion::EulerToQuaternion(Vector3 _xyzAngles)
 {
 	_xyzAngles = Vector3(DegToRad(_xyzAngles.x), DegToRad(_xyzAngles.y), DegToRad(_xyzAngles.z));
 
-	double cr = cos(_xyzAngles.x * 0.5);
-	double sr = sin(_xyzAngles.x * 0.5);
-	double cp = cos(_xyzAngles.y * 0.5);
-	double sp = sin(_xyzAngles.y * 0.5);
-	double cy = cos(_xyzAngles.z * 0.5);
-	double sy = sin(_xyzAngles.z * 0.5);
+	float cr = (float)cos(_xyzAngles.x * 0.5);
+	float sr = (float)sin(_xyzAngles.x * 0.5);
+	float cp = (float)cos(_xyzAngles.y * 0.5);
+	float sp = (float)sin(_xyzAngles.y * 0.5);
+	float cy = (float)cos(_xyzAngles.z * 0.5);
+	float sy = (float)sin(_xyzAngles.z * 0.5);
 
 	Quaternion q;
 	q.w = cr * cp * cy + sr * sp * sy;
