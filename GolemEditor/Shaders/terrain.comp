@@ -23,5 +23,5 @@ layout(std430, binding = 1) buffer ssboVerticesOut {
 void main()
 {
     uint currentIndex = gl_GlobalInvocationID.x;
-//    verticesOut[currentIndex].position.y = 5.0;
+    verticesOut[currentIndex] = verticesIn[currentIndex];
 }

@@ -21,7 +21,7 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetTerrainShader()));
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
     
-    m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
+    // m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
 
     isTerrain = true;
 }
