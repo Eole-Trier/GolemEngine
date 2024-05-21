@@ -18,6 +18,7 @@ private:
 	static inline Camera* m_camera = nullptr;
 	static inline Camera* m_playerCamera = nullptr;
 	static inline float m_deltaTime = 0.0f;
+	static inline bool m_gameMode = false;
 
 public:
 	static inline GameObject* selectedGameObject = nullptr;
@@ -45,4 +46,7 @@ public:
 	static Camera* GetPlayerCamera();
 	static float GetDeltaTime();
 	static float GetTime();
+	static bool GetGameMode();
+	static void StartGameMode();
+	static void StopGameMode();
 };

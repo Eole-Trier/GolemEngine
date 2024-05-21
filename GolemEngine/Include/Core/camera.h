@@ -48,6 +48,8 @@ public:
 	float GetNear();
 	float GetFar();
 	Vector3 GetFront();
+	Vector3 GetUp();
+	Vector3 GetRight();
 
 	friend refl_impl::metadata::type_info__<Camera>;
 };

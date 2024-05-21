@@ -8,6 +8,8 @@
 #include "Components/audio.h"
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
+#include "Components/GameClasses/movement.h"
+#include "Components/GameClasses/shot.h"
 #include "WorldBuilder/terrain.h"
 #include "Components/Physic/meshCollider.h"
 
@@ -16,13 +18,14 @@ void ClassesManager::AddAllClasses()
 	Add<Component>();
 	Add<Transform>();
 	Add<MeshRenderer>();
-	Add<Light>();
 	Add<DirectionalLight>();
 	Add<PointLight>();
 	Add<SpotLight>();
 	Add<Audio>();
 	Add<SphereCollider>();
 	Add<BoxCollider>();
+	Add<Movement>();
+	Add<Shot>();
 	Add<MeshCollider>();
 }
 

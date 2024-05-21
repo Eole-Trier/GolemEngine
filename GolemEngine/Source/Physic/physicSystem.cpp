@@ -281,7 +281,6 @@ void PhysicSystem::UpdatePosition(BodyID _bodyId, Vector3& _position)
 	_position = PhysicSystem::ToVector3(position);
 }
 
-
 void PhysicSystem::SetRotation(BodyID _bodyId, Vector3 _rotation)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
@@ -293,6 +292,13 @@ void PhysicSystem::SetVelocity (BodyID _bodyId, const Vector3 _velocity)
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.SetLinearVelocity(_bodyId, ToJph(_velocity));
 }
+
+void PhysicSystem::SetGravityFactor(BodyID _bodyId, float _gravityFactor)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.SetGravityFactor(_bodyId, _gravityFactor);
+}
+
 
 void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
 {
@@ -310,6 +316,24 @@ void PhysicSystem::SetBoxShape(BodyID _bodyId, Vector3 _size)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
 	bodyInterface.SetShape(_bodyId, new BoxShape(ToJph(_size)), false, EActivation::Activate);
+}
+
+void PhysicSystem::SetConvexHullShape(BodyID _bodyId, std::vector<Vertex>& _vertices)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+
+	std::vector<Vec3, STLAllocator<Vec3>> vecPoints;
+
+	for (Vertex v : _vertices)
+	{
+		vecPoints.push_back(Vec3(v.position.x, v.position.y, v.position.z));
+	}
+	Array<Vec3> points(vecPoints);
+
+	ConvexHullShapeSettings convexHullSettings(points);
+	ShapeSettings::ShapeResult shapeResult;
+	ConvexHullShape* convex = new ConvexHullShape(convexHullSettings, shapeResult);
+	bodyInterface.SetShape(_bodyId, convex, false, EActivation::Activate);
 }
 
 void PhysicSystem::DeleteBody(BodyID _bodyId)

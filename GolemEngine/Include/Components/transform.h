@@ -24,6 +24,7 @@ public:
 	Vector3 localPosition;
 	Vector3 rotation;
 	Vector3 scaling;
+	Vector3 oldScaling;
 
 public:
 	GOLEM_ENGINE_API Transform();
@@ -39,6 +40,7 @@ public:
 	GOLEM_ENGINE_API void RemoveChild(Transform* const _t);
 	GOLEM_ENGINE_API void SetParent(Transform* const _t);
 	GOLEM_ENGINE_API bool IsChildOf(Transform* const _parent);
+	GOLEM_ENGINE_API Vector3 GetForward() const;
 	_NODISCARD GOLEM_ENGINE_API bool IsAParentOf(Transform* const _t);
 
 

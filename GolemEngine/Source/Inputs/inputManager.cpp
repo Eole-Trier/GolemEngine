@@ -24,7 +24,6 @@ void InputManager::KeyCallback(GLFWwindow* _window, int _key, int _scancode, int
     if (_action == KEY_PRESSED)
     {
         m_keyboardKeys[_key] = true;
-        std::cout << _key << std::endl;
     }
     else if (_action == KEY_RELEASED)
     {

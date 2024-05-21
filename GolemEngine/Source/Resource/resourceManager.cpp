@@ -128,6 +128,12 @@ void ResourceManager::CreateAndLoadResources()
     Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
     cube->Load(cube->path.c_str());
 
+    // Skybox Init
+    //Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
+    //skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
+    //Skybox::GetInstance().SetTexture();
+    //skyboxShader->Use();
+    //skyboxShader->SetInt("skybox", 0);
 }
 
 void ResourceManager::DeleteAllResouces()

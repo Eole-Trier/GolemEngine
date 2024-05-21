@@ -38,6 +38,9 @@
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
     <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
     <ClCompile Include="Source\Components\Light\light.cpp" />
     <ClCompile Include="Source\Components\Light\pointLight.cpp" />
     <ClCompile Include="Source\Components\Light\spotLight.cpp" />
@@ -117,6 +120,9 @@
     <ClInclude Include="External\imgui\ImZoomSlider.h" />
     <ClInclude Include="Include\Components\audio.h" />
     <ClInclude Include="Include\Components\component.h" />
+    <ClInclude Include="Include\Components\GameClasses\bullet.h" />
+    <ClInclude Include="Include\Components\GameClasses\movement.h" />
+    <ClInclude Include="Include\Components\GameClasses\shot.h" />
     <ClInclude Include="Include\Components\Light\directionalLight.h" />
     <ClInclude Include="Include\Components\Light\light.h" />
     <ClInclude Include="Include\Components\Light\pointLight.h" />

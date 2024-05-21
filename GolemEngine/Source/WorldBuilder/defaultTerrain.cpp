@@ -19,12 +19,12 @@ void DefaultTerrain::Init(int _xResolution, int _zResolution)
         {
             // Set the vertex position
             VertexGpu vertex;
-            vertex.position.x = (i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.position.z = (j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
-            vertex.position.y = 0.0f;
+            vertex.vertex.position.x = (i / (float)xResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.vertex.position.z = (j / (float)zResolution) - 0.5f;    // - 0.5f to center to center origin
+            vertex.vertex.position.y = 0.0f;
             // Set the vertex texture postion
-            vertex.textureCoords.x = (j / (float)zResolution);
-            vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
+            vertex.vertex.textureCoords.x = (j / (float)zResolution);
+            vertex.vertex.textureCoords.y = 1.0f - (i / (float)xResolution);
             
             m_vertices.push_back(vertex);
         }
