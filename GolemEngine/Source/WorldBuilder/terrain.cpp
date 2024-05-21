@@ -182,8 +182,9 @@ void Terrain::GetComputeShaderData(Camera* _camera)
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
 
-                // m_vertices[i].normal = verticesOut[i].normal;
+                // m_vertices[i].vertex.normal = verticesOut[i].vertex.normal;
             }
+                std::cout << "pos y: " << verticesOut[100].vertex.position.y << std::endl;
             
             m_yMin = yMin;
             m_yMax = yMax;
