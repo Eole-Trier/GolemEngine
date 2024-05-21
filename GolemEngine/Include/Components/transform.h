@@ -76,6 +76,5 @@ REFL_AUTO(
 	type(Transform, bases<Component>),
 	field(localPosition),
 	field(rotation),
-	field(scaling),
-	field(oldScaling)
+	field(scaling)
 )

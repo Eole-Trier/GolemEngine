@@ -48,7 +48,6 @@ void Transform::Update() {}
 
 void Transform::UpdateSelfAndChilds()
 {
-    oldScaling = scaling;
     m_localModel = Matrix4::TRS(localPosition, Quaternion::EulerToQuaternion(rotation), scaling);
 
     if (m_parent)
