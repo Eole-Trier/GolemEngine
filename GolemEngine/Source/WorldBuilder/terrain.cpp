@@ -32,28 +32,7 @@ Terrain::~Terrain()
 }
 
 void Terrain::SetupMesh()
-{  
-    glGenVertexArrays(1, &m_vao);
-    glGenBuffers(1, &m_vbo);
-    glGenBuffers(1, &m_ebo);
-    // Bindings
-    glBindVertexArray(m_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)0);
-    glEnableVertexAttribArray(0);
-    // normal attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu,  normal));
-    glEnableVertexAttribArray(1);
-    // texture attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, textureCoords));
-    glEnableVertexAttribArray(2);
-
-    glBindVertexArray(0);
-
+{
     // Setup the compute shader
     // Input buffer
     glGenBuffers(1, &m_ssboIn);
@@ -61,18 +40,46 @@ void Terrain::SetupMesh()
     glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
     // Output buffer
-    glGenBuffers(1, &m_ssboOut);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
+    // glGenBuffers(1, &m_ssboOut);
+    // glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
+    // glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
+    // glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
+
+    glCreateBuffers(1, &m_ssboOut);
+    glNamedBufferStorage(m_ssboOut, sizeof(VertexGpu) * m_vertices.size(), (const void*)m_vertices.data(), GL_DYNAMIC_STORAGE_BIT);
+
+    // glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+    
+    // glGenVertexArrays(1, &m_vao);
+    // // glGenBuffers(1, &m_vbo);
+    // // glGenBuffers(1, &m_ebo);
+    // // Bindings
+    // glBindVertexArray(m_vao);
+    // // glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    // glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_STATIC_DRAW);
+    // // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+    // // glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
+    // // position attribute
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)0);
+    // glEnableVertexAttribArray(0);
+    // // normal attribute
+    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, normal));
+    // glEnableVertexAttribArray(1);
+    // // texture attribute
+    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, textureCoords));
+    // glEnableVertexAttribArray(2);
+    //
+    // glBindVertexArray(0);
 }
 
 void Terrain::UseComputeShader()
 {
     m_computeShader->Use();
-    glDispatchCompute(10, 10, 1);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
+    glDispatchCompute(m_vertices.size(), 1, 1);
     
     glMemoryBarrier(GL_ALL_BARRIER_BITS);
 }
@@ -106,7 +113,8 @@ void Terrain::Draw(Camera* _camera)
         UpdateLights(m_shaders[0]);
     }
     
-    glBindVertexArray(m_vao);
+    // glBindVertexArray(m_ssboOut);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboOut);
     
     // Switch draw mode depending on view mode
     switch (ViewportTools::currentViewMode)
@@ -120,7 +128,9 @@ void Terrain::Draw(Camera* _camera)
         break;
     }
     
-    glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    glUseProgram(m_shaders[0]->id);
+    // glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
     // Reset to fill
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
@@ -150,7 +160,7 @@ void Terrain::UpdateLights(Shader* _shader)
 void Terrain::GetComputeShaderData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut); 
     // Create a buffer to store the output of the gpu
     GLint bufferSize;
     glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);
@@ -184,7 +194,7 @@ void Terrain::GetComputeShaderData(Camera* _camera)
 
                 // m_vertices[i].vertex.normal = verticesOut[i].vertex.normal;
             }
-            std::cout << "pos y: " << verticesOut[100].position.y << std::endl;
+            std::cout << "out: " << verticesOut[3].position << std::endl;
             
             m_yMin = yMin;
             m_yMax = yMax;

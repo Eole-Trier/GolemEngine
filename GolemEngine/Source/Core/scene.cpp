@@ -171,11 +171,11 @@ void Scene::UpdateGameObjects(Camera* _camera)
             Terrain* terrain = dynamic_cast<Terrain*>(gameObjects[i]);
             if (terrain)
             {
-                terrain->UseComputeShader();
                 terrain->Draw(_camera);
         
                 if (GolemEngine::selectedGameObject == terrain)    // Use compute shader only if terrain is being selected
                 {
+                    terrain->UseComputeShader();
                     terrain->GetComputeShaderData(_camera);
                 }
             }
