@@ -16,7 +16,7 @@ using namespace JPH;
 using namespace JPH::literals;
 
 SphereCollider::SphereCollider()
-	: m_radius(0.09f)
+	: m_radius(1.f)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("sphereCollider.obj");
