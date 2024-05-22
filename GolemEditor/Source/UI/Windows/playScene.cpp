@@ -2,7 +2,10 @@
 #include "Wrappers/graphicWrapper.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
+#include "imgui.h"
 #include "golemEngine.h"
+#include "Inputs/inputManager.h"
 
 bool g_isPlayTesting = false;
 
@@ -23,13 +26,13 @@ void PlayScene::Update()
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
 
         ImGui::Begin("Playing", nullptr, window_flags);
-        ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 20);
-        if (ImGui::SmallButton("X"))
+        GolemEngine::GetCamera()->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, Vector4(width, height, 0, 0), (int)ImGui::GetMousePos().x, (int)ImGui::GetMousePos().y);
+        if (ImGui::SmallButton("X") || InputManager::IsKeyPressed(KEY_ESCAPE))
         {
             g_isPlayTesting = false;
             GolemEngine::StopGameMode();
         }
-        ImGui::SetCursorPosX(0);
+
         ImGui::Image((ImTextureID)GraphicWrapper::GetPlaySceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();

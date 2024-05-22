@@ -6,9 +6,9 @@
 class Script : public Component
 {
 public:
-	void Begin() override {};
+	void Begin() override;
 
-	void Update() override {};
+	void Update() override;
 
 	virtual void ToJson(json& j) const {}
 

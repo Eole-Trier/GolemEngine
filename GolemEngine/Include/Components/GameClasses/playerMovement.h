@@ -21,7 +21,6 @@ public:
 	void MoveArround();
 	void OnCollisionEnter(Collider* _collider, Collider* _other);
 
-
 	void ToJson(json& j) const {}
 };
 

@@ -163,10 +163,11 @@ void Scene::UpdateGameObjects(Camera* _camera)
             meshRenderer->Draw(_camera);
         }
 
-        Collider* collider = gameObjects[i]->GetComponent<Collider>();
-        if (collider && collider->owner->IsSelected)
+        if (!GolemEngine::GetGameMode())
         {
-            collider->Draw(_camera);
+            Collider* collider = gameObjects[i]->GetComponent<Collider>();
+            if (collider && collider->owner->IsSelected)
+                collider->Draw(_camera);
         }
 
         if (gameObjects[i]->isTerrain)
