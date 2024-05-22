@@ -47,9 +47,6 @@ void Terrain::UseComputeShader()
 {
     m_computeShader->Use();
 
-    m_computeShader->SetBool("isBrushActive", true);
-    Vector2 mousePosition = {ImGui::GetMousePos().x, ImGui::GetMousePos().y};
-    // m_computeShader->SetVec2("brushPosition", GraphicWrapper::ReadPixelFromUVBuffer());
     m_computeShader->SetFloat("brushRadius", 0.5f);
     m_computeShader->SetFloat("brushForce", 0.0f);
     
@@ -266,4 +263,9 @@ std::vector<VertexGpu> Terrain::GetVerticesGpu()
 Shader* Terrain::GetShader()
 {
     return  m_shader;
+}
+
+ComputeShader* Terrain::GetComputeShader()
+{
+    return m_computeShader;
 }

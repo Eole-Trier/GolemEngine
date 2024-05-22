@@ -37,8 +37,6 @@ protected:
     unsigned int m_vbo;
     unsigned int m_ebo;
     unsigned int m_ssbo;
-    // unsigned int m_ssboIn;
-    // unsigned int m_ssboOut;
     Shader* m_shader = nullptr;
     Shader* m_shaderTerrainUv = nullptr;
     ComputeShader* m_computeShader = nullptr;
@@ -69,6 +67,7 @@ public:
     std::vector<Vertex> GetVertices();
     std::vector<VertexGpu> GetVerticesGpu();
     Shader* GetShader();
+    ComputeShader* GetComputeShader();
     
     virtual void Init(int _xResolution, int _zResolution) {}
     virtual void Init(const char* _noisemapPath) {}

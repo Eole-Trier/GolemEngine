@@ -49,19 +49,28 @@ void WorldBuilderWindow::Update()
 
     if (dynamic_cast<Terrain*>(GolemEngine::selectedGameObject))
     {
+        Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
+        
         if (ImGui::Button("Calculate normals"))
         {
-            Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
             selectedTerrain->CalculateNormals();
         }
 
-        ImGui::Checkbox("edit mode", &WorldBuilder::isBrushActive);
-        if (WorldBuilder::isBrushActive)
+        ImGui::Checkbox("edit mode", &WorldBuilder::brush->isActive);
+        if (WorldBuilder::brush->isActive)
         {
             ImGui::Text("Brush settings");
             ImGui::SliderFloat("Force", &WorldBuilder::brush->force, 0.0f, 1.0f);
             ImGui::SliderFloat("Radius", &WorldBuilder::brush->radius, 0.1f, 1.0f);
-        }            
+
+            selectedTerrain->GetComputeShader()->SetBool("isBrushActive", true);
+            selectedTerrain->GetComputeShader()->SetFloat("brushRadius", WorldBuilder::brush->radius);
+            selectedTerrain->GetComputeShader()->SetFloat("brushForce", WorldBuilder::brush->force);
+        }
+        else
+        {
+            selectedTerrain->GetComputeShader()->SetBool("isBrushActive", false);
+        }
     }
 
     if (ImGui::TreeNode("Skybox"))

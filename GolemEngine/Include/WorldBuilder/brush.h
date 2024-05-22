@@ -7,6 +7,7 @@
 class GOLEM_ENGINE_API Brush
 {
 public:
+    bool isActive = false;
     float radius;
     float force;
 

@@ -9,7 +9,6 @@ class GOLEM_ENGINE_API WorldBuilder
 {
 public:
     static inline Brush* brush = new Brush();
-    static inline bool isBrushActive = false;
     
 private:
     // Private constructors and destructor to make static class

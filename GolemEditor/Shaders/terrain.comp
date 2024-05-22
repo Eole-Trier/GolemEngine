@@ -25,11 +25,18 @@ void main()
 {
     uint currentIndex = gl_GlobalInvocationID.x;
     VertexGpu vIn = vertices[currentIndex];
-    
     if (isBrushActive)
     {
-
+        vec2 vertex2dPosition = vec2(vIn.position.x, vIn.position.z);
+        float distance = length(brushPosition - vertex2dPosition);
+        
+        if (distance < brushRadius)
+        {
+            float influence = 1.0 - (distance / brushRadius);
+            vIn.position.y = 1.0;
+        }
     }
-    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
+    
+//    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
     vertices[currentIndex] = vIn;
 }

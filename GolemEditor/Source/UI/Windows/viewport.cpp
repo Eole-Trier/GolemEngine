@@ -72,10 +72,12 @@ void Viewport::Update()
     {
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
         {
-            if (WorldBuilder::isBrushActive)
+            if (WorldBuilder::brush->isActive)
             {
                 Vector2 brushUv = GraphicWrapper::ReadPixelFromUVBuffer(mouseX, mouseY);
                 std::cout << "uv: " << brushUv << std::endl;
+                Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
+                selectedTerrain->GetComputeShader()->SetVec2("brushPosition", brushUv);
             }
             else
             {
