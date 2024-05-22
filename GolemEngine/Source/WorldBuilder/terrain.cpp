@@ -66,6 +66,7 @@ void Terrain::Draw(Camera* _camera)
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
     m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    
     if (m_texture == nullptr)
     {
         useGradient = true;
@@ -227,11 +228,7 @@ void Terrain::UpdateVertices(Camera* _camera)
                 // Set min and max point of the heightmap
                 yMin = std::min(yMin, finalPosition.y);
                 yMax = std::max(yMax, finalPosition.y);
-    
-                // m_vertices[i].vertex.normal = m_vertices[i].vertex.normal;
             }
-            std::cout << "out: " << m_vertices[3].position << std::endl;
-            
             m_yMin = yMin;
             m_yMax = yMax;
         }

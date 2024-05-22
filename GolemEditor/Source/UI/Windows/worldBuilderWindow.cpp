@@ -33,18 +33,15 @@ void WorldBuilderWindow::Update()
     {
         m_isCreateDefaultTerrainPopupActive = true;
     }
+    if (m_isCreateDefaultTerrainPopupActive)
+    {
+        UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ);
+    }
 
     if (ImGui::Button("Create new noisemap terrain"))
     {
         m_isCreateDefaultNoisemapTerrainPopupActive = true;
     }
-
-    
-    if (m_isCreateDefaultTerrainPopupActive)
-    {
-        UpdateCreateDefaultTerrainPopup(m_newDefaultTerrainResolutionX, m_newDefaultTerrainResolutionZ);
-    }
-    
     if (m_isCreateDefaultNoisemapTerrainPopupActive)
     {
         UpdateCreateDefaultNoisemapeTerrainPopup();
@@ -71,6 +68,10 @@ void WorldBuilderWindow::Update()
         }
         ImGui::TreePop();
     }
+
+    ImGui::Text("Brush settings");
+    ImGui::SliderFloat("Force", &WorldBuilder::brush->force, 0.0f, 1.0f);
+    ImGui::SliderFloat("Radius", &WorldBuilder::brush->radius, 0.1f, 1.0f);
 
     ImGui::End();
 

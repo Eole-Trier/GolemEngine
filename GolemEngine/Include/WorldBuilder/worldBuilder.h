@@ -2,10 +2,14 @@
 
 #include "dll.h"
 #include "vector2.h"
+#include "brush.h"
 
 
 class GOLEM_ENGINE_API WorldBuilder
 {
+public:
+    static inline Brush* brush = new Brush();
+    
 private:
     // Private constructors and destructor to make static class
     WorldBuilder() = delete;
@@ -17,7 +21,6 @@ private:
     ~WorldBuilder() = delete;
 
 public:
-    static void Init();
     static void CreateDefaultTerrain(int _xResolution, int _zResolution);
     static void CreateNoisemapTerrain(const char* _noisemapPath);
 };
