@@ -28,7 +28,7 @@ void main()
     
     if (isBrushActive)
     {
-        if ()
+
     }
 //    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
     vertices[currentIndex] = vIn;
