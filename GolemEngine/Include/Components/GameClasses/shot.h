@@ -19,7 +19,7 @@ public:
 
 	float radius;
 
-	float interval = 0.5f;
+	float interval = 1.5f;
 	float currentInteval;
 	float bulletLifetime = 2.0f;
 

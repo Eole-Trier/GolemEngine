@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "Components/GameClasses/bullet.h"
 #include "Components/GameClasses/movement.h"
 #include "Components/meshRenderer.h"
@@ -63,5 +64,8 @@ void Bullet::Update()
 
 void Bullet::FunctionThatIGiveToACollider(Collider* _collider, Collider* _other)
 {
-	SceneManager::GetCurrentScene()->AddDeletedGameObject(_other->owner);
+	//_other->owner->~GameObject();
+	//SceneManager::GetCurrentScene()->AddDeletedGameObject(_other->owner);
+	_other->owner->GetComponent<MeshRenderer>()->~MeshRenderer();
+	_other->owner->GetComponent<Collider>()->~Collider();
 }

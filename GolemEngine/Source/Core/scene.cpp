@@ -127,7 +127,7 @@ void Scene::Update(Camera* _camera)
     defaultShader->Use();
 
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
-    if (GolemEngine::GetGameMode())
+    if (GolemEngine::GetGameMode() && _camera == GolemEngine::GetPlayerCamera())
     {
         PhysicSystem::PreUpdate();
         PhysicSystem::Update();
@@ -189,7 +189,6 @@ void Scene::UpdateGameObjects(Camera* _camera)
         delete m_deletedGameObjects[i];
     }
     m_deletedGameObjects.clear();
-
 }
 
 void Scene::UpdateLights(Shader* _shader)
