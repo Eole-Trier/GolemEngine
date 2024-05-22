@@ -112,8 +112,8 @@ void Transform::EditTransformGizmo()
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
-        ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
+    ImGuizmo::SetRect(450, -350,
+        io.DisplaySize.x, io.DisplaySize.y);
 
     //set snap functionnality and snap value
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
