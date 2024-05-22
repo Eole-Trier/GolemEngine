@@ -66,5 +66,5 @@ void Bullet::Update()
 void Bullet::Destroy()
 {
     isDead = true;
-    b_ptr->DeleteAllComponents();
+    b_ptr->~GameObject();
 }
