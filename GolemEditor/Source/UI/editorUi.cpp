@@ -18,6 +18,7 @@
 #include "imgui_internal.h"
 #include "ImGuizmo.h"
 #include "Inputs/inputManager.h"
+#include "Utils/tools.h"
 #include "Wrappers/windowWrapper.h"
 
 
@@ -51,6 +52,7 @@ void EditorUi::Init()
     {
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        SetColorStyles();
         style.WindowRounding = 4;
         style.FrameRounding = 4;
         style.GrabRounding = 3;
@@ -60,6 +62,105 @@ void EditorUi::Init()
 
     ImGui_ImplGlfw_InitForOpenGL(WindowWrapper::window, true);
     ImGui_ImplOpenGL3_Init("#version 460");
+}
+
+void EditorUi::SetColorStyles()
+{
+    ImGuiStyle& style = ImGui::GetStyle();
+    ImVec4* colors = style.Colors;
+
+    // Custom colors provided
+    ImVec4 color1 = ImVec4(0.012f, 0.514f, 0.996f, 1.0f); // Darkest
+    ImVec4 color2 = ImVec4(0.047f, 0.651f, 0.996f, 1.0f);
+    ImVec4 color3 = ImVec4(0.125f, 0.827f, 0.996f, 1.0f);
+    ImVec4 color4 = ImVec4(0.533f, 1.0f, 0.996f, 1.0f);
+    ImVec4 color5 = ImVec4(0.808f, 1.0f, 0.996f, 1.0f); // Lightest
+
+    // Custom background color
+    ImVec4 backgroundColor = ImVec4(0.027f * 0.5f, 0.173f * 0.5f, 0.31f * 0.5f, 1.0f);
+
+    // Background
+    colors[ImGuiCol_WindowBg]            = backgroundColor;
+    colors[ImGuiCol_ChildBg]             = backgroundColor;
+    colors[ImGuiCol_PopupBg]             = backgroundColor;
+
+    // Borders
+    colors[ImGuiCol_Border]              = color1;
+    colors[ImGuiCol_BorderShadow]        = backgroundColor;
+
+    // Text
+    colors[ImGuiCol_Text]                = color4;
+    colors[ImGuiCol_TextDisabled]        = color3;
+
+    // Headers
+    colors[ImGuiCol_Header]              = color2;
+    colors[ImGuiCol_HeaderHovered]       = color3;
+    colors[ImGuiCol_HeaderActive]        = color1;
+
+    // Buttons
+    colors[ImGuiCol_Button]              = color1;
+    colors[ImGuiCol_ButtonHovered]       = color2;
+    colors[ImGuiCol_ButtonActive]        = color3;
+
+    // Frame
+    colors[ImGuiCol_FrameBg]             = color1;
+    colors[ImGuiCol_FrameBgHovered]      = color2;
+    colors[ImGuiCol_FrameBgActive]       = color3;
+
+    // Tabs
+    colors[ImGuiCol_Tab]                 = color1;
+    colors[ImGuiCol_TabHovered]          = color2;
+    colors[ImGuiCol_TabActive]           = color3;
+    colors[ImGuiCol_TabUnfocused]        = color1;
+    colors[ImGuiCol_TabUnfocusedActive]  = color2;
+
+    // Title
+    colors[ImGuiCol_TitleBg]             = backgroundColor;
+    colors[ImGuiCol_TitleBgActive]       = color1;
+    colors[ImGuiCol_TitleBgCollapsed]    = backgroundColor;
+
+    // Resize Grip
+    colors[ImGuiCol_ResizeGrip]          = color1;
+    colors[ImGuiCol_ResizeGripHovered]   = color2;
+    colors[ImGuiCol_ResizeGripActive]    = color3;
+
+    // Scrollbar
+    colors[ImGuiCol_ScrollbarBg]         = backgroundColor;
+    colors[ImGuiCol_ScrollbarGrab]       = color1;
+    colors[ImGuiCol_ScrollbarGrabHovered]= color2;
+    colors[ImGuiCol_ScrollbarGrabActive] = color3;
+
+    // Other
+    colors[ImGuiCol_CheckMark]           = color4;
+    colors[ImGuiCol_SliderGrab]          = color2;
+    colors[ImGuiCol_SliderGrabActive]    = color3;
+
+    // Plot
+    colors[ImGuiCol_PlotLines]           = color4;
+    colors[ImGuiCol_PlotLinesHovered]    = color3;
+    colors[ImGuiCol_PlotHistogram]       = color4;
+    colors[ImGuiCol_PlotHistogramHovered]= color5;
+
+    // Table
+    colors[ImGuiCol_TableHeaderBg]       = color1;
+    colors[ImGuiCol_TableBorderStrong]   = color2;
+    colors[ImGuiCol_TableBorderLight]    = color1;
+
+    // Separator
+    colors[ImGuiCol_Separator]           = color1;
+    colors[ImGuiCol_SeparatorHovered]    = color2;
+    colors[ImGuiCol_SeparatorActive]     = color3;
+
+    // Tooltip
+    colors[ImGuiCol_TextSelectedBg]      = color3;
+    colors[ImGuiCol_ModalWindowDimBg]    = backgroundColor;
+    colors[ImGuiCol_DragDropTarget]      = color4;
+
+    // Nav
+    colors[ImGuiCol_NavHighlight]        = color3;
+    colors[ImGuiCol_NavWindowingHighlight] = color4;
+    colors[ImGuiCol_NavWindowingDimBg]   = backgroundColor;
+    colors[ImGuiCol_NavHighlight]        = color4;
 }
 
 void EditorUi::BeginDockSpace()

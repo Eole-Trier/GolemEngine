@@ -23,6 +23,7 @@ public:
 
 public:
 	static void Init();
+	static void SetColorStyles();
 	static void BeginDockSpace();
 	static void EndDockSpace();
 	static void UpdateWindows();
