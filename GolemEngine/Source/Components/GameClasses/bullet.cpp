@@ -5,6 +5,7 @@
 #include "Components/component.h"
 #include "Components/Physic/sphereCollider.h"
 #include "Core/mesh.h"
+#include "Core/scene.h"
 #include "Core/gameobject.h"
 #include "Resource/sceneManager.h"
 #include "Resource/resourceManager.h"
@@ -12,57 +13,50 @@
 #include "vector3.h"
 
 Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName, std::string _name, std::string _textureName, std::string _shaderName)
-    : lifetime(0.0f),
-    name(_name)
+	: lifetime(0.0f),
+	forward(_direction),
+	speed(0.1f)
 {
-    ResourceManager* resourceManager = ResourceManager::GetInstance();
+	this->name = _name;
 
-    m_transform = new Transform(_initPosition, Vector3(0), Vector3(_radius), SceneManager::GetCurrentScene()->GetWorld()->transform);
+	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-    if (_textureName.empty())
-        texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
-    else
-        texture = resourceManager->Get<Texture>(_textureName);
+	transform->localPosition = _initPosition;
+	transform->rotation = 0;
+	transform->scaling = _radius;
+	//transform->SetParent(SceneManager::GetCurrentScene()->GetWorld()->transform);
+	
+	if (_textureName.empty())
+	    texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
+	else
+	    texture = resourceManager->Get<Texture>(_textureName);
+	
+	if (_shaderName.empty())
+	    shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+	else
+	    shader = resourceManager->Get<Shader>(_shaderName);
+	
+	model = resourceManager->Get<Model>("sphere.obj");
+	mesh = new Mesh(model, texture, shader);
+	
+	this->AddComponent(new MeshRenderer(mesh));
 
-    if (_shaderName.empty())
-        shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-    else
-        shader = resourceManager->Get<Shader>(_shaderName);
-
-    // Using the rename functions
-    int suffix = 2; // start at 2 because of two objects having the same name
-    std::string originalName = name;
-    while (SceneManager::GetCurrentScene()->IsNameExists(name))
-    {
-        name = originalName + "_" + std::to_string(suffix++);
-    }
-
-    model = resourceManager->Get<Model>("sphere.obj");
-    mesh = new Mesh(model, texture, shader);
-
-    GameObject* gameObject = new GameObject(name, m_transform);
-    gameObject->AddComponent(new MeshRenderer(mesh));
-    b_ptr = gameObject;
-    SceneManager::GetCurrentScene()->gameObjects.push_back(b_ptr);
- 
-    //gameObject->AddComponent(new SphereCollider);
-
-    forward = _direction;
-    speed = 0.1f;
-    isDead = false;
+	m_sphereCollider = new SphereCollider();
+	AddComponent(m_sphereCollider);
+	m_sphereCollider->Begin();
+	m_sphereCollider->radius = _radius;
+	m_sphereCollider->motionType = MotionType::Dynamic;
+	m_sphereCollider->isActivated = true;
+	//m_sphereCollider->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { FunctionThatIGiveToACollider(m_sphereCollider, _other); };
 }
 
 void Bullet::Update()
 {
-    m_transform->localPosition += forward * speed;
-    lifetime += GolemEngine::GetDeltaTime();
-    if (lifetime > maxLifetime)
-    {
-        Destroy();
-    }
-}
+	transform->localPosition += forward * speed;
 
-void Bullet::Destroy()
-{
-    isDead = true;
+	lifetime += GolemEngine::GetDeltaTime();
+	if (lifetime > maxLifetime)
+	{
+		SceneManager::GetCurrentScene()->AddDeletedGameObject(this);
+	}
 }

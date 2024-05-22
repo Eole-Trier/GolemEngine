@@ -34,10 +34,12 @@ private:
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
 	std::vector<Mesh*> m_meshes;
+	std::vector<GameObject*> m_deletedGameObjects;
 
 public:
 	std::string name;
 	std::vector<GameObject*> gameObjects;
+
 	// std::vector<Terrain*> terrains;
 	bool isNewObjectDropped = false;
 	std::string loadingObject;
@@ -72,6 +74,8 @@ public:
 	GOLEM_ENGINE_API GameObject* GetWorld();
 	GOLEM_ENGINE_API Guid GetGuid();
 
+	GOLEM_ENGINE_API void AddGameObject(GameObject* _gameObject);
+	GOLEM_ENGINE_API void AddDeletedGameObject(GameObject* _gameObject);
 	GOLEM_ENGINE_API void RemoveGameObject(GameObject* _gameObject);
 	GOLEM_ENGINE_API void DeleteLight(Light* _light);
 	GOLEM_ENGINE_API void SetGuid(Guid _guid);

@@ -7,57 +7,42 @@
 
 Shot::Shot()
 {
-	// Set bullet
-
+	radius = 0.1f;
 }
 
 Shot::~Shot()
 {
-    for (auto b : bullets)
-    {
-        delete b;
-    }
-    bullets.clear();
+}
+
+void Shot::Begin()
+{
+	currentInteval = interval;
 }
 
 void Shot::Update()
 {
-	if (InputManager::IsKeyPressed(KEY_SPACE))
+	currentInteval -= GolemEngine::GetDeltaTime();
+	if (currentInteval <= 0)
 	{
-		instantiate();
-	}
-
-    for (auto b : bullets)
-    {
-		if (b->isDead)
+		if (InputManager::IsKeyPressed(KEY_SPACE))
 		{
-			SceneManager::GetCurrentScene()->gameObjects.erase(std::remove(SceneManager::GetCurrentScene()->gameObjects.begin(), SceneManager::GetCurrentScene()->gameObjects.end(), b->b_ptr), SceneManager::GetCurrentScene()->gameObjects.end());
+			instantiateBullet();
 		}
-		b->Update();
-    }
-	// TODO
-	//for (auto it = bullets.begin(); it != bullets.end();)
-	//{
-	//	Bullet* b = *it;
-	//	b->Update();
-	//	if (b->isDead)
-	//	{
-	//		SceneManager::GetCurrentScene()->gameObjects.erase(std::remove(SceneManager::GetCurrentScene()->gameObjects.begin(), SceneManager::GetCurrentScene()->gameObjects.end(), b->b_ptr), SceneManager::GetCurrentScene()->gameObjects.end());
-	//		delete b;
-	//		it = bullets.erase(it);
-	//	}
-	//	else
-	//	{
-	//		++it;
-	//	}
-	//}
+	}
 }
 
-void Shot::instantiate()
+void Shot::instantiateBullet()
 {
-	// Instantiate a bullet
-	std::cout << "Shot !!" << std::endl;
+	std::string name = "bullet";
+	// Using the rename functions
+	int suffix = 2; // start at 2 because of two objects having the same name
+	std::string originalName = name;
+	while (SceneManager::GetCurrentScene()->IsNameExists(name))
+	{
+		name = originalName + "_" + std::to_string(suffix++);
+	}
 
-    Bullet *bullet = new Bullet(owner->transform->localPosition, 0, radius, owner->transform->GetForward());
-	bullets.push_back(bullet);
+	Bullet* bullet = new Bullet(owner->transform->localPosition, 0, radius, owner->transform->GetForward(),"", name);
+
+	currentInteval = interval;
 }

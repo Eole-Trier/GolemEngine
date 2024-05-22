@@ -184,6 +184,12 @@ void Scene::UpdateGameObjects(Camera* _camera)
             }
         }
     }
+    for (int i = 0; i < m_deletedGameObjects.size(); i++)
+    {
+        delete m_deletedGameObjects[i];
+    }
+    m_deletedGameObjects.clear();
+
 }
 
 void Scene::UpdateLights(Shader* _shader)
@@ -295,6 +301,12 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
+void Scene::AddDeletedGameObject(GameObject* _gameObject)
+{
+    m_deletedGameObjects.push_back(_gameObject);
+}
+
+
 void Scene::RemoveGameObject(GameObject* _gameObject)
 {
     bool removed = false;
@@ -309,7 +321,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
             gameObjects[i]->SetId(i - 1);
         }
     }
-    
     std::erase(gameObjects, _gameObject);
 }
 
