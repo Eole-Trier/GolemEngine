@@ -33,7 +33,8 @@ public:
 	GOLEM_ENGINE_API GameObject(const std::string& _name, Transform* _transform);
 	GOLEM_ENGINE_API virtual ~GameObject();
 
-	GOLEM_ENGINE_API void Update();
+	GOLEM_ENGINE_API void UpdateAllComponents();
+	GOLEM_ENGINE_API void virtual Update();
 	GOLEM_ENGINE_API _NODISCARD bool HasComponent(const std::string& _name) const;
 
 	GOLEM_ENGINE_API size_t GetId();

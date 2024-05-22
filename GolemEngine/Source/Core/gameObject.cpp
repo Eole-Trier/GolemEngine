@@ -32,13 +32,19 @@ GameObject::~GameObject()
 	DeleteAllComponents();
 }
 
-void GameObject::Update()
+void GameObject::UpdateAllComponents()
 {
 	for (Component* c : m_components)
 	{
 		c->Update();
 	}
 }
+
+void GameObject::Update() 
+{
+	UpdateAllComponents();
+}
+
 
 bool GameObject::HasComponent(const std::string& _name) const
 {
