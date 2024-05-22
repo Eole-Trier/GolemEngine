@@ -42,7 +42,7 @@ void Shot::instantiateBullet()
 		name = originalName + "_" + std::to_string(suffix++);
 	}
 
-	Bullet* bullet = new Bullet(owner->transform->localPosition, 0, radius, owner->transform->GetForward(),"", name);
+	Bullet* bullet = new Bullet(owner->transform->localPosition, bulletLifetime, radius, owner->transform->GetForward(),"", name);
 
 	currentInteval = interval;
 }

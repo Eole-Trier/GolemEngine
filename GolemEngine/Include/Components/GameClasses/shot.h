@@ -19,8 +19,9 @@ public:
 
 	float radius;
 
-	float interval = 0.3f;
+	float interval = 0.5f;
 	float currentInteval;
+	float bulletLifetime = 2.0f;
 
 
 	void Begin() override;
@@ -33,6 +34,7 @@ public:
 
 REFL_AUTO(
 	type(Shot, bases<Script>),
-    field(radius),
-	field(interval)
+	field(radius),
+	field(interval),
+	field(bulletLifetime)
 )

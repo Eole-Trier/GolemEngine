@@ -24,11 +24,12 @@ public:
 	Vector3 forward;
 
 
-	Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName = "", std::string _name = "bullet", std::string _textureName = "", std::string _shaderName = "");
+	Bullet(Vector3 _initPosition, float _lifeTime, float _radius, Vector3 _direction, std::string _modelName = "", std::string _name = "bullet", std::string _textureName = "", std::string _shaderName = "");
 
 	void Update() override;
 
+	void FunctionThatIGiveToACollider(Collider* _collider, Collider* _other);
+
 	float speed;
 	float lifetime;
-	const float maxLifetime = 2.0f;
 };

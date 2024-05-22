@@ -12,8 +12,8 @@
 #include "golemEngine.h"
 #include "vector3.h"
 
-Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName, std::string _name, std::string _textureName, std::string _shaderName)
-	: lifetime(0.0f),
+Bullet::Bullet(Vector3 _initPosition, float _lifeTime, float _radius, Vector3 _direction, std::string _modelName, std::string _name, std::string _textureName, std::string _shaderName)
+	: lifetime(_lifeTime),
 	forward(_direction),
 	speed(0.1f)
 {
@@ -47,16 +47,21 @@ Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _dire
 	m_sphereCollider->radius = _radius;
 	m_sphereCollider->motionType = MotionType::Dynamic;
 	m_sphereCollider->isActivated = true;
-	//m_sphereCollider->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { FunctionThatIGiveToACollider(m_sphereCollider, _other); };
+	m_sphereCollider->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { FunctionThatIGiveToACollider(m_sphereCollider, _other); };
 }
 
 void Bullet::Update()
 {
 	transform->localPosition += forward * speed;
 
-	lifetime += GolemEngine::GetDeltaTime();
-	if (lifetime > maxLifetime)
+	lifetime -= GolemEngine::GetDeltaTime();
+	if (lifetime < 0)
 	{
 		SceneManager::GetCurrentScene()->AddDeletedGameObject(this);
 	}
+}
+
+void Bullet::FunctionThatIGiveToACollider(Collider* _collider, Collider* _other)
+{
+	SceneManager::GetCurrentScene()->AddDeletedGameObject(_other->owner);
 }
