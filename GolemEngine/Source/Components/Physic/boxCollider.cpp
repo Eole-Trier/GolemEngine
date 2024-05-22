@@ -12,7 +12,7 @@
 #include "Wrappers/windowWrapper.h"
 
 BoxCollider::BoxCollider()
-	: m_size(Vector3(1.f, 1.f, 1.f))
+	: size(Vector3(1.f, 1.f, 1.f))
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("cubeCollider.obj");
@@ -20,7 +20,7 @@ BoxCollider::BoxCollider()
 }
 
 BoxCollider::BoxCollider(Vector3 _size)
-	: m_size(_size)
+	: size(_size)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("cubeCollider.obj");
@@ -33,7 +33,7 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::Begin()
 {
-	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_size);
+	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), size);
 }
 
 void BoxCollider::PreUpdate()
@@ -44,7 +44,7 @@ void BoxCollider::PreUpdate()
 void BoxCollider::Update()
 {
 	Collider::Update();
-	PhysicSystem::SetBoxShape(id, m_size);
+	PhysicSystem::SetBoxShape(id, size);
 }
 
 void BoxCollider::PostUpdate()
@@ -64,7 +64,7 @@ void BoxCollider::Draw(Camera* _camera)
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
 	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
-	shader->GetVertexShader()->SetVec3("size", m_size);
+	shader->GetVertexShader()->SetVec3("size", size);
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

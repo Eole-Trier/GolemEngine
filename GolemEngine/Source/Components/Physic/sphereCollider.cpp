@@ -16,7 +16,7 @@ using namespace JPH;
 using namespace JPH::literals;
 
 SphereCollider::SphereCollider()
-	: m_radius(1.f)
+	: radius(1.f)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("sphereCollider.obj");
@@ -24,7 +24,7 @@ SphereCollider::SphereCollider()
 }
 
 SphereCollider::SphereCollider(float _radius)
-	: m_radius(_radius)
+	: radius(_radius)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("sphereCollider.obj");
@@ -37,7 +37,7 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Begin()
 {
-	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_radius);
+	id = PhysicSystem::CreateSphereCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), radius);
 }
 
 void SphereCollider::PreUpdate()
@@ -48,7 +48,7 @@ void SphereCollider::PreUpdate()
 void SphereCollider::Update()
 {
 	Collider::Update();
-	PhysicSystem::SetSphereShape(id, m_radius);
+	PhysicSystem::SetSphereShape(id, radius);
 }
 
 void SphereCollider::PostUpdate()
@@ -68,7 +68,7 @@ void SphereCollider::Draw(Camera* _camera)
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
 	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(1));
-	shader->GetVertexShader()->SetFloat("radius", m_radius);
+	shader->GetVertexShader()->SetFloat("radius", radius);
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

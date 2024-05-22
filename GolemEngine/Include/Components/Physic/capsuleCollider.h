@@ -15,9 +15,9 @@ using namespace JPH;
 
 class CapsuleCollider : public Collider
 {
-private:
-	float m_height;
-	float m_radius;
+public:
+	float height;
+	float radius;
 public:
 	CapsuleCollider();
 	CapsuleCollider(float _height, float _radius);
@@ -37,6 +37,6 @@ public:
 
 REFL_AUTO(
 	type(CapsuleCollider, bases<Collider>),
-	field(m_height, Range(0.1f, 100.f)),
-	field(m_radius, Range(0.1f, 100.f))
+	field(height, Range(0.1f, 100.f)),
+	field(radius, Range(0.1f, 100.f))
 )
