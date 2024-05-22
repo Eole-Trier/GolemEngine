@@ -36,7 +36,6 @@ private:
 	std::vector<Mesh*> m_meshes;
 	std::vector<GameObject*> m_deletedGameObjects;
 
-
 public:
 	std::string m_defaultTexture;
 	std::string m_defaultModel;

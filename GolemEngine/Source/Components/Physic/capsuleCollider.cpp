@@ -56,7 +56,7 @@ void CapsuleCollider::Draw(Camera* _camera)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetCapsuleColliderShader());
+	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetColliderShader());
 	Model* model = GetModel();
 
 	shader->Use();
@@ -64,8 +64,6 @@ void CapsuleCollider::Draw(Camera* _camera)
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
 	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(radius, height, radius));
-	shader->GetVertexShader()->SetFloat("height", height);
-	shader->GetVertexShader()->SetFloat("radius", radius);
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

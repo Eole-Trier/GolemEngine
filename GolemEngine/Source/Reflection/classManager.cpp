@@ -13,7 +13,7 @@
 #include "WorldBuilder/terrain.h"
 #include "Components/Physic/meshCollider.h"
 #include "Components/Physic/capsuleCollider.h"
-#include "Components/GameClasses/test.h"
+#include "Components/GameClasses/playerMovement.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -30,7 +30,7 @@ void ClassesManager::AddAllClasses()
 	Add<CapsuleCollider>();
 	Add<Movement>();
 	Add<Shot>();
-	Add<Test>();
+	Add<PlayerMovement>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)
