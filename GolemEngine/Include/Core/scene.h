@@ -36,9 +36,6 @@ private:
 	std::vector<Mesh*> m_meshes;
 
 public:
-	std::string m_defaultTexture;
-	std::string m_defaultModel;
-	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
 	// std::vector<Terrain*> terrains;

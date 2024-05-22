@@ -10,7 +10,7 @@ private:
 	CapsuleCollider* m_capsuleCollider;
 
 public:
-	float bounceForce = 1.0f;
+	float bounceForce = 5.0f;
 public:
 	PlayerMovement();
 	~PlayerMovement();

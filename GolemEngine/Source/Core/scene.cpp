@@ -127,10 +127,12 @@ void Scene::Update(Camera* _camera)
     defaultShader->Use();
 
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
-
-    PhysicSystem::PreUpdate();
-    PhysicSystem::Update();
-    PhysicSystem::PostUpdate();
+    if (GolemEngine::GetGameMode())
+    {
+        PhysicSystem::PreUpdate();
+        PhysicSystem::Update();
+        PhysicSystem::PostUpdate();
+    }
     
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
