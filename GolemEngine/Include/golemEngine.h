@@ -22,6 +22,7 @@ private:
 
 public:
 	static inline GameObject* selectedGameObject = nullptr;
+	static inline Vector2 mouseViewportPos = {0.0f, 0.0f};
 
 private:
 	// Private constructors and destructor to make static class

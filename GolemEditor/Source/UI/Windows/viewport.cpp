@@ -63,6 +63,8 @@ void Viewport::Update()
     int mouseX = (int)mx;
     int mouseY = (int)my;
 
+    GolemEngine::mouseViewportPos = {(float)mouseX, (float)mouseY};
+
     std::vector<GameObject*> objects = SceneManager::GetCurrentScene()->GetGameObjects();
 
     if (!ImGuizmo::IsOver())

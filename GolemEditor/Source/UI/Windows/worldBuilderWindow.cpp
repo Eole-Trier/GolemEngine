@@ -54,6 +54,14 @@ void WorldBuilderWindow::Update()
             Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
             selectedTerrain->CalculateNormals();
         }
+
+        ImGui::Checkbox("edit mode", &WorldBuilder::isBrushActive);
+        if (WorldBuilder::isBrushActive)
+        {
+            ImGui::Text("Brush settings");
+            ImGui::SliderFloat("Force", &WorldBuilder::brush->force, 0.0f, 1.0f);
+            ImGui::SliderFloat("Radius", &WorldBuilder::brush->radius, 0.1f, 1.0f);
+        }            
     }
 
     if (ImGui::TreeNode("Skybox"))
@@ -69,9 +77,6 @@ void WorldBuilderWindow::Update()
         ImGui::TreePop();
     }
 
-    ImGui::Text("Brush settings");
-    ImGui::SliderFloat("Force", &WorldBuilder::brush->force, 0.0f, 1.0f);
-    ImGui::SliderFloat("Radius", &WorldBuilder::brush->radius, 0.1f, 1.0f);
 
     ImGui::End();
 
