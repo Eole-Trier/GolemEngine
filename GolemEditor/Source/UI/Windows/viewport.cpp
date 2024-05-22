@@ -25,7 +25,8 @@ bool g_isFromFileBrowser = false;
 
 Viewport::Viewport(std::string _name)
     : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0)
-{}
+{
+}
 
 Viewport::~Viewport() {}
 
@@ -45,6 +46,9 @@ void Viewport::Update()
     auto windowSize = ImGui::GetWindowSize();
     std::cout << windowSize.x << std::endl;
     std::cout << windowSize.y << std::endl;
+
+    /*std::cout << ImGui::GetWindowPos().x << std::endl;
+    std::cout << ImGui::GetWindowPos().y << std::endl;*/
 
     ImVec2 minBound = ImGui::GetWindowPos(); 
 

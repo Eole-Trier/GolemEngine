@@ -112,7 +112,7 @@ void Transform::EditTransformGizmo()
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    ImGuizmo::SetRect(450, -350,
+    ImGuizmo::SetRect(450, -300,
         io.DisplaySize.x, io.DisplaySize.y);
 
     //set snap functionnality and snap value
@@ -122,7 +122,7 @@ void Transform::EditTransformGizmo()
 
     //create TRS matrix
     float mat[16];
-    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, 
+    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x,
         &rotation.x, &scaling.x, mat);
 
     //used to manipulate the gizmos
@@ -149,6 +149,7 @@ void Transform::EditTransformGizmo()
     {
         rotation = Vector3(newRot[0], newRot[1], newRot[2]);
     }
+
 }
 
 void Transform::AddChild(Transform* const _t)
