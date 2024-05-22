@@ -69,7 +69,7 @@ Vector3 Vector3::QuaternionToEuler(Quaternion _q)
 
     float sinp = std::sqrt(1 + 2 * (_q.w * _q.y - _q.x * _q.z));
     float cosp = std::sqrt(1 - 2 * (_q.w * _q.y - _q.x * _q.z));
-    angles.y = 2 * std::atan2(sinp, cosp) - M_PI / 2;
+    angles.y = (2.f * std::atan2(sinp, cosp) - (float)M_PI / 2.f);
 
     float siny_cosp = 2 * (_q.w * _q.z + _q.x * _q.y);
     float cosy_cosp = 1 - 2 * (_q.y * _q.y + _q.z * _q.z);

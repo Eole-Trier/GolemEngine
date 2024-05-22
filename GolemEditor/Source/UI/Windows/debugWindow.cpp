@@ -40,5 +40,5 @@ void DebugWindow::DrawFpsGraph()
 		fpsHistory.erase(fpsHistory.begin());
 	}
 
-	ImGui::PlotLines("FPS", fpsHistory.data(), fpsHistory.size(), 0, "FPS", 0, 120, ImVec2(0, 80));
+	ImGui::PlotLines("FPS", fpsHistory.data(), (int)fpsHistory.size(), 0, "FPS", 0, 120, ImVec2(0, 80));
 }

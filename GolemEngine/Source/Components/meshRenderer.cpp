@@ -51,7 +51,7 @@ void MeshRenderer::Draw(Camera* _camera)
                 break;
         }
         
-        glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)model->vertices.size());
         glBindVertexArray(0);
         texture->UnUse();
         // Reset to fill

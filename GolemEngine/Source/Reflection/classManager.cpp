@@ -25,10 +25,10 @@ void ClassesManager::AddAllClasses()
 	Add<Audio>();
 	Add<SphereCollider>();
 	Add<BoxCollider>();
-	Add<Movement>();
-	Add<Shot>();
 	Add<MeshCollider>();
 	Add<CapsuleCollider>();
+	Add<Movement>();
+	Add<Shot>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

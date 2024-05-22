@@ -9,7 +9,7 @@
 #include "fragmentShader.h"
 
 
-class GOLEM_ENGINE_API Shader : public Resource
+class Shader : public Resource
 {
 private:
     VertexShader* m_vertexShader = nullptr;
@@ -19,12 +19,12 @@ public:
     unsigned int id = 0;
     
 public:
-    Shader();
+    GOLEM_ENGINE_API Shader();
 
-    void SetAllShaders(VertexShader* _vertexShader, FragmentShader* _fragmentShader);
+    GOLEM_ENGINE_API void SetAllShaders(VertexShader* _vertexShader, FragmentShader* _fragmentShader);
 
-    void Use();
+    GOLEM_ENGINE_API void Use();
 
-    VertexShader* GetVertexShader();
-    FragmentShader* GetFragmentShader();
+    GOLEM_ENGINE_API VertexShader* GetVertexShader();
+    GOLEM_ENGINE_API FragmentShader* GetFragmentShader();
 };

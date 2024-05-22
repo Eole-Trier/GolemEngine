@@ -13,7 +13,7 @@ class GameObject;
 class Component
 {
 public:
-	GameObject* owner;
+	GameObject* owner = nullptr;
 
 public:
 	virtual ~Component();

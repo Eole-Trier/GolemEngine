@@ -36,7 +36,7 @@ Editor::~Editor() {}
 void Editor::InitWindow()
 {
 	WindowWrapper::InitWindow();
-    WindowWrapper::window = WindowWrapper::NewWindow(WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y, m_name.c_str(), NULL, NULL);
+    WindowWrapper::window = WindowWrapper::NewWindow((int)WindowWrapper::GetScreenSize().x, (int)WindowWrapper::GetScreenSize().y, m_name.c_str(), NULL, NULL);
     if (WindowWrapper::window == NULL)
     {
         std::cout << "Failed to create GLFW window : " << m_name << std::endl;
@@ -70,7 +70,7 @@ void Editor::Init()
 void Editor::MainLoop()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	GraphicWrapper::SetViewport(0, 0, WindowWrapper::GetScreenSize().x, WindowWrapper::GetScreenSize().y);
+	GraphicWrapper::SetViewport(0, 0, (GLsizei)WindowWrapper::GetScreenSize().x, (GLsizei)WindowWrapper::GetScreenSize().y);
 
 	while (!WindowWrapper::ShouldWindowClose(WindowWrapper::window))
 	{

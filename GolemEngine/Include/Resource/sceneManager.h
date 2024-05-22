@@ -11,7 +11,7 @@
 using json = nlohmann::json;
 
 
-class GOLEM_ENGINE_API SceneManager
+class SceneManager
 {
 private:
     static inline std::vector<Scene*> m_scenes;
@@ -28,20 +28,20 @@ private:
     ~SceneManager() = delete;
 
 public:
-    static void Init();
+    GOLEM_ENGINE_API static void Init();
 
-    static void SaveScene();
-    static void LoadScene(int _id);
-    static void CreateScene(std::string _sceneName);
-    static void CreateSceneFromFile(std::string _sceneFileName);
-    static void SetupWorldFromJson(Scene* _scene, json _jScene, int _i);
-    static void SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i);
-    static void SetupDefaultTerrainsFromJson(Scene* _scene, json _jScene, int _i);
-    static void SetupNoisemapTerrainsFromJson(Scene* _scene, json _jScene, int _i);
+    GOLEM_ENGINE_API static void SaveScene();
+    GOLEM_ENGINE_API static void LoadScene(int _id);
+    GOLEM_ENGINE_API static void CreateScene(std::string _sceneName);
+    GOLEM_ENGINE_API static void CreateSceneFromFile(std::string _sceneFileName);
+    GOLEM_ENGINE_API static void SetupWorldFromJson(Scene* _scene, json _jScene, int _i);
+    GOLEM_ENGINE_API static void SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i);
+    GOLEM_ENGINE_API static void SetupDefaultTerrainsFromJson(Scene* _scene, json _jScene, int _i);
+    GOLEM_ENGINE_API static void SetupNoisemapTerrainsFromJson(Scene* _scene, json _jScene, int _i);
 
-    static Scene* GetCurrentScene();
-    static Scene* GetScene(int _id);
-    static int GetSceneCount();
-    
-    static void SetCurrentScene(Scene* _scene);
+    GOLEM_ENGINE_API static Scene* GetCurrentScene();
+    GOLEM_ENGINE_API static Scene* GetScene(int _id);
+    GOLEM_ENGINE_API static size_t GetSceneCount();
+
+    GOLEM_ENGINE_API static void SetCurrentScene(Scene* _scene);
 };

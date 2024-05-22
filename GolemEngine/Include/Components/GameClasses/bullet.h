@@ -9,7 +9,7 @@
 #include "vector3.h"
 #include <string>
 
-class GOLEM_ENGINE_API Bullet
+class Bullet
 {
 private:
 	Transform* m_transform;
@@ -22,7 +22,7 @@ public:
 
 	GameObject* b_ptr;
 
-	Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName = "", std::string _name = "bullet", std::string _textureName = "", std::string _shaderName = "");
+	GOLEM_ENGINE_API Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _direction, std::string _modelName = "", std::string _name = "bullet", std::string _textureName = "", std::string _shaderName = "");
 	float speed;
 	float lifetime;
 	const float maxLifetime = 2.0f;
@@ -31,6 +31,6 @@ public:
 	
 	Vector3 forward;
 
-	void Update();
-	void Destroy();
+	GOLEM_ENGINE_API void Update();
+	GOLEM_ENGINE_API void Destroy();
 };

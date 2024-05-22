@@ -84,25 +84,25 @@ void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch,
     // Teleport mouse 
     if (_mousePosX <= _windowDimension.x + SCREEN_SIZE_LEFT_X_BORDER_MARGIN)   // Mouse exits from left of Viewport
     {
-        SetCursorPos(_windowDimension.x + _windowDimension.y - SCREEN_SIZE_RIGHT_X_BORDER_MARGIN, _mousePosY);
+        SetCursorPos((int)(_windowDimension.x + _windowDimension.y - SCREEN_SIZE_RIGHT_X_BORDER_MARGIN), _mousePosY);
         m_lastMousePos = InputManager::GetMouseWindowPos();
         m_isMouseTp = true;
     }
     if (_mousePosX >= _windowDimension.x + _windowDimension.y - SCREEN_SIZE_RIGHT_X_BORDER_MARGIN)  // Mouse exits from right of Viewport
     {
-        SetCursorPos(_windowDimension.x + SCREEN_SIZE_LEFT_X_BORDER_MARGIN, _mousePosY);
+        SetCursorPos((int)(_windowDimension.x + SCREEN_SIZE_LEFT_X_BORDER_MARGIN), _mousePosY);
         m_lastMousePos = InputManager::GetMouseWindowPos();
         m_isMouseTp = true;
     }
     if (_mousePosY <= _windowDimension.z + SCREEN_SIZE_TOP_Y_BORDER_MARGIN)   // Mouse exits from top of Viewport
     {
-        SetCursorPos(_mousePosX, _windowDimension.z + _windowDimension.w - TP_LEFT_Y_BOTTOM_MARGIN);
+        SetCursorPos(_mousePosX, (int)(_windowDimension.z + _windowDimension.w - TP_LEFT_Y_BOTTOM_MARGIN));
         m_lastMousePos = InputManager::GetMouseWindowPos();
         m_isMouseTp = true;
     }
     if (_mousePosY >= _windowDimension.z + _windowDimension.w - SCREEN_SIZE_BOTTOM_Y_BORDER_MARGIN)  // Mouse exits from bottom of Viewport
     {
-        SetCursorPos(_mousePosX, _windowDimension.z + TP_TOP_Y_POS_MARGIN);
+        SetCursorPos(_mousePosX, (int)(_windowDimension.z + TP_TOP_Y_POS_MARGIN));
         m_lastMousePos = InputManager::GetMouseWindowPos();
         m_isMouseTp = true;
     }

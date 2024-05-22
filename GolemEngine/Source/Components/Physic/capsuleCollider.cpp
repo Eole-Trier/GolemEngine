@@ -72,7 +72,7 @@ void CapsuleCollider::Draw(Camera* _camera)
 
 	glBindVertexArray(model->VAO);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+	glDrawArrays(GL_TRIANGLES, 0, (GLsizei)model->vertices.size());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(0);
 }

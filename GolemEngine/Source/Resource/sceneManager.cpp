@@ -341,7 +341,7 @@ Scene* SceneManager::GetScene(int _id)
     return  scene;
 }
 
-int SceneManager::GetSceneCount()
+size_t SceneManager::GetSceneCount()
 {
     return  m_scenes.size();
 }

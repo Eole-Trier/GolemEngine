@@ -7,12 +7,12 @@
 
 float DegToRad(float _deg) 
 { 
-	return (_deg * M_PI / 180.f); 
+	return (float)(_deg * M_PI / 180.f);
 }
 
 float RadToDeg(float _rad) 
 {	
-	return (_rad * 180.0f / M_PI); 
+	return (float)(_rad * 180.0f / M_PI); 
 }
 
 float Lerp(float _a, float _b, float _t) 
