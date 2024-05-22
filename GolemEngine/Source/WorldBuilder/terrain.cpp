@@ -18,7 +18,7 @@ Terrain::Terrain(std::string _name, Transform* _transform)
 {
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    m_shaders.push_back(resourceManager->Get<Shader>(ResourceManager::GetTerrainShader()));
+    m_shader = resourceManager->Get<Shader>(ResourceManager::GetTerrainShader());
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
     
     // m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
@@ -34,51 +34,16 @@ Terrain::~Terrain()
 void Terrain::SetupMesh()
 {
     // Setup the compute shader
-    // Input buffer
-    glGenBuffers(1, &m_ssboIn);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboIn);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
-    // Output buffer
-    // glGenBuffers(1, &m_ssboOut);
-    // glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut);
-    // glBufferData(GL_SHADER_STORAGE_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_DYNAMIC_DRAW);
-    // glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
-
-    glCreateBuffers(1, &m_ssboOut);
-    glNamedBufferStorage(m_ssboOut, sizeof(VertexGpu) * m_vertices.size(), (const void*)m_vertices.data(), GL_DYNAMIC_STORAGE_BIT);
-
-    // glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-    
-
-    
-    // glGenVertexArrays(1, &m_vao);
-    // // glGenBuffers(1, &m_vbo);
-    // // glGenBuffers(1, &m_ebo);
-    // // Bindings
-    // glBindVertexArray(m_vao);
-    // // glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    // glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(VertexGpu), m_vertices.data(), GL_STATIC_DRAW);
-    // // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    // // glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), m_indices.data(), GL_STATIC_DRAW);
-    // // position attribute
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)0);
-    // glEnableVertexAttribArray(0);
-    // // normal attribute
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, normal));
-    // glEnableVertexAttribArray(1);
-    // // texture attribute
-    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexGpu), (void*)offsetof(VertexGpu, textureCoords));
-    // glEnableVertexAttribArray(2);
-    //
-    // glBindVertexArray(0);
+    glGenBuffers(1, &m_ssbo);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo);
+    glNamedBufferStorage(m_ssbo, sizeof(VertexGpu) * m_vertices.size(), (const void*)m_vertices.data(), GL_DYNAMIC_STORAGE_BIT);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
 }
 
 void Terrain::UseComputeShader()
 {
     m_computeShader->Use();
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboIn);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_ssboOut);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
     glDispatchCompute(m_vertices.size(), 1, 1);
     
     glMemoryBarrier(GL_ALL_BARRIER_BITS);
@@ -86,35 +51,34 @@ void Terrain::UseComputeShader()
 
 void Terrain::Draw(Camera* _camera)
 {
-
-    m_shaders[0]->Use();
-    m_shaders[0]->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
-    m_shaders[0]->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
-    m_shaders[0]->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shaders[0]->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    m_shaders[0]->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    m_shader->Use();
+    m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
+    m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
+    m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
+    m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
+    m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
     if (m_texture != nullptr)
     {
         glActiveTexture(GL_TEXTURE0);
         m_texture->Use();
-        m_shaders[0]->GetFragmentShader()->SetBool("useTexture", true);
-        m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", 0);
+        m_shader->GetFragmentShader()->SetBool("useTexture", true);
+        m_shader->GetFragmentShader()->SetInt("ourTexture", 0);
     }
     else
     {
-        m_shaders[0]->GetFragmentShader()->SetBool("useTexture", false);
-        m_shaders[0]->GetFragmentShader()->SetInt("ourTexture", -1);
+        m_shader->GetFragmentShader()->SetBool("useTexture", false);
+        m_shader->GetFragmentShader()->SetInt("ourTexture", -1);
     }
 
     if (!SceneManager::GetCurrentScene()->GetDirectionalLights().empty() ||
         !SceneManager::GetCurrentScene()->GetPointLights().empty() ||
         !SceneManager::GetCurrentScene()->GetSpotLights().empty())
     {
-        UpdateLights(m_shaders[0]);
+        UpdateLights(m_shader);
     }
     
     // glBindVertexArray(m_ssboOut);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssboOut);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
     
     // Switch draw mode depending on view mode
     switch (ViewportTools::currentViewMode)
@@ -128,8 +92,7 @@ void Terrain::Draw(Camera* _camera)
         break;
     }
     
-    glUseProgram(m_shaders[0]->id);
-    // glDrawElements(GL_TRIANGLES, (xResolution - 1) * (zResolution - 1) * 6, GL_UNSIGNED_INT, 0);
+    glUseProgram(m_shader->id);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
     // Reset to fill
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -160,7 +123,7 @@ void Terrain::UpdateLights(Shader* _shader)
 void Terrain::GetComputeShaderData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssboOut); 
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo); 
     // Create a buffer to store the output of the gpu
     GLint bufferSize;
     glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);

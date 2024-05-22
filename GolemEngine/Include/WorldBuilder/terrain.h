@@ -36,9 +36,10 @@ protected:
     unsigned int m_vao;
     unsigned int m_vbo;
     unsigned int m_ebo;
-    unsigned int m_ssboIn;
-    unsigned int m_ssboOut;
-    std::vector<Shader*> m_shaders;
+    unsigned int m_ssbo;
+    // unsigned int m_ssboIn;
+    // unsigned int m_ssboOut;
+    Shader* m_shader = nullptr;
     ComputeShader* m_computeShader = nullptr;
     Texture* m_texture = nullptr;
 
