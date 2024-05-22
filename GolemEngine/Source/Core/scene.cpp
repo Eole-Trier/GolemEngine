@@ -176,7 +176,8 @@ void Scene::UpdateGameObjects(Camera* _camera)
                 if (GolemEngine::selectedGameObject == terrain)    // Use compute shader only if terrain is being selected
                 {
                     terrain->UseComputeShader();
-                    terrain->GetComputeShaderData(_camera);
+                    terrain->RetrieveComputeData();
+                    terrain->UpdateVertices(_camera);
                 }
             }
         }

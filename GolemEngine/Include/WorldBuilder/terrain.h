@@ -60,10 +60,11 @@ public:
     void UseComputeShader();
     void Draw(Camera* _camera);
     void UpdateLights(Shader* _shader);
-    void GetComputeShaderData(Camera* _camera);
-    std::vector<VertexGpu> GetVerticesGpu();
-    std::vector<Vertex> GetVertices();
     void CalculateNormals();
+    void RetrieveComputeData();
+    void UpdateVertices(Camera* _camera);
+    std::vector<Vertex> GetVertices();
+    std::vector<VertexGpu> GetVerticesGpu();
     
     virtual void Init(int _xResolution, int _zResolution) {}
     virtual void Init(const char* _noisemapPath) {}

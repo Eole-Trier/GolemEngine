@@ -77,7 +77,6 @@ void Terrain::Draw(Camera* _camera)
         UpdateLights(m_shader);
     }
     
-    // glBindVertexArray(m_ssboOut);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
     
     // Switch draw mode depending on view mode
@@ -118,78 +117,6 @@ void Terrain::UpdateLights(Shader* _shader)
     {
         SceneManager::GetCurrentScene()->GetSpotLights()[i]->SetSpotLight(_shader);
     }
-}
-
-void Terrain::GetComputeShaderData(Camera* _camera)
-{
-    // Bind the SSBO containing the vertex data
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo); 
-    // Create a buffer to store the output of the gpu
-    GLint bufferSize;
-    glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);
-    // Store the output to the buffer
-    std::vector<VertexGpu> verticesOut(bufferSize / sizeof(VertexGpu));
-    glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bufferSize, verticesOut.data());
-    
-    if (!verticesOut.empty())
-    {
-        // Get the model matrix to use them for calculation after
-        Matrix4 modelMatrix = transform->GetGlobalModel();
-
-        float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
-        float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
-
-        if (m_oldModelMatrix != modelMatrix)
-        {
-            for (int i = 0; i < m_vertices.size(); ++i)
-            {
-                // Get the original vertex position
-                Vector4 originalPosition = Vector4(verticesOut[i].position.x, verticesOut[i].position.y, verticesOut[i].position.z, 1.0f);
-                // Apply the model matrix
-                Vector4 transformedPosition = modelMatrix * originalPosition;
-                // Set final position
-                Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
-                // Update the vertex position in the CPU buffer
-                m_vertices[i].position = finalPosition;
-                // Set min and max point of the heightmap
-                yMin = std::min(yMin, finalPosition.y);
-                yMax = std::max(yMax, finalPosition.y);
-
-                // m_vertices[i].vertex.normal = verticesOut[i].vertex.normal;
-            }
-            std::cout << "out: " << verticesOut[3].position << std::endl;
-            
-            m_yMin = yMin;
-            m_yMax = yMax;
-        }
-
-        m_oldModelMatrix = modelMatrix;
-
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-    }
-    else
-    {
-        std::cout << "ERROR: vertex output from the compute shader is null" << std::endl;
-    }
-
-    // Don't forget to unbind the buffer after use
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-std::vector<VertexGpu> Terrain::GetVerticesGpu()
-{
-    return m_vertices;
-}
-
-std::vector<Vertex> Terrain::GetVertices()
-{
-    std::vector<Vertex> vertices;
-    for (VertexGpu v : m_vertices)
-    {
-        Vertex vert = {v.position, v.normal, v.textureCoords};
-        vertices.push_back(vert);
-    }
-    return vertices;
 }
 
 void Terrain::CalculateNormals()
@@ -237,4 +164,89 @@ void Terrain::CalculateNormals()
             m_vertices[j + i * zResolution].normal = normal.Normalize();
         }
     }
+}
+
+void Terrain::RetrieveComputeData()
+{
+    // Bind the SSBO containing the vertex data
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo); 
+    // Create a buffer to store the output of the gpu
+    GLint bufferSize;
+    glGetBufferParameteriv(GL_SHADER_STORAGE_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    // Store the output to the buffer
+    std::vector<VertexGpu> verticesOut(bufferSize / sizeof(VertexGpu));
+    glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bufferSize, verticesOut.data());
+    
+    // Ensure m_vertices has the same size as the output data
+    if (m_vertices.size() != verticesOut.size())
+    {
+        m_vertices.resize(verticesOut.size());
+    }
+
+    // Copy the data from the temporary buffer to m_vertices
+    std::copy(verticesOut.begin(), verticesOut.end(), m_vertices.begin());
+}
+
+void Terrain::UpdateVertices(Camera* _camera)
+{
+    
+    if (!m_vertices.empty())
+    {
+        // Get the model matrix to use them for calculation after
+        Matrix4 modelMatrix = transform->GetGlobalModel();
+    
+        float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
+        float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
+    
+        if (m_oldModelMatrix != modelMatrix)
+        {
+            for (int i = 0; i < m_vertices.size(); ++i)
+            {
+                // Get the original vertex position
+                Vector4 originalPosition = Vector4(m_vertices[i].position.x, m_vertices[i].position.y, m_vertices[i].position.z, 1.0f);
+                // Apply the model matrix
+                Vector4 transformedPosition = modelMatrix * originalPosition;
+                // Set final position
+                Vector3 finalPosition = Vector3(transformedPosition.x, transformedPosition.y, transformedPosition.z);
+                // Update the vertex position in the CPU buffer
+                m_vertices[i].position = finalPosition;
+                // Set min and max point of the heightmap
+                yMin = std::min(yMin, finalPosition.y);
+                yMax = std::max(yMax, finalPosition.y);
+    
+                // m_vertices[i].vertex.normal = m_vertices[i].vertex.normal;
+            }
+            std::cout << "out: " << m_vertices[3].position << std::endl;
+            
+            m_yMin = yMin;
+            m_yMax = yMax;
+        }
+    
+        m_oldModelMatrix = modelMatrix;
+    
+        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+    }
+    else
+    {
+        std::cout << "ERROR: vertex output from the compute shader is null" << std::endl;
+    }
+    
+    // Don't forget to unbind the buffer after use
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+std::vector<Vertex> Terrain::GetVertices()
+{
+    std::vector<Vertex> vertices;
+    for (VertexGpu v : m_vertices)
+    {
+        Vertex vert = {v.position, v.normal, v.textureCoords};
+        vertices.push_back(vert);
+    }
+    return vertices;
+}
+
+std::vector<VertexGpu> Terrain::GetVerticesGpu()
+{
+    return m_vertices;
 }
