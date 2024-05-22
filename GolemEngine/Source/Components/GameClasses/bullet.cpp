@@ -45,7 +45,7 @@ Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _dire
     b_ptr = gameObject;
     SceneManager::GetCurrentScene()->gameObjects.push_back(b_ptr);
  
-    //gameObject->AddComponent(new SphereCollider);
+    //b_ptr->AddComponent(new SphereCollider);
 
     forward = _direction;
     speed = 0.1f;
@@ -55,6 +55,7 @@ Bullet::Bullet(Vector3 _initPosition, float _force, float _radius, Vector3 _dire
 void Bullet::Update()
 {
     m_transform->localPosition += forward * speed;
+
     lifetime += GolemEngine::GetDeltaTime();
     if (lifetime > maxLifetime)
     {
@@ -65,4 +66,5 @@ void Bullet::Update()
 void Bullet::Destroy()
 {
     isDead = true;
+    b_ptr->DeleteAllComponents();
 }
