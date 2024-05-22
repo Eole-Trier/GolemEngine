@@ -2,6 +2,8 @@
 
 #include <utils.h>
 
+#include "golemEngine.h"
+#include "imgui.h"
 #include "Components/Light/directionalLight.h"
 #include "Components/Light/pointLight.h"
 #include "Components/Light/spotLight.h"
@@ -43,6 +45,13 @@ void Terrain::SetupMesh()
 void Terrain::UseComputeShader()
 {
     m_computeShader->Use();
+
+    m_computeShader->SetBool("isBrushActive", true);
+    Vector2 mousePosition = {ImGui::GetMousePos().x, ImGui::GetMousePos().y};
+    m_computeShader->SetVec2("brushPosition", mousePosition);
+    m_computeShader->SetFloat("brushRadius", 0.5f);
+    m_computeShader->SetFloat("brushForce", 0.0f);
+    
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
     glDispatchCompute(m_vertices.size(), 1, 1);
     
