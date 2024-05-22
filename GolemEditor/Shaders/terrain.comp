@@ -30,6 +30,6 @@ void main()
     {
 
     }
-//    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
+    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
     vertices[currentIndex] = vIn;
 }
