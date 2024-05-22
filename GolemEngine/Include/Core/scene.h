@@ -37,9 +37,6 @@ private:
 	std::vector<GameObject*> m_deletedGameObjects;
 
 public:
-	std::string m_defaultTexture;
-	std::string m_defaultModel;
-	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
 

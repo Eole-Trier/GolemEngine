@@ -29,7 +29,7 @@ class PhysicSystem
 {
 private:
 	static inline std::vector<Collider*> m_colliders;
-	static constexpr int m_cDecentForceFactor = 100000;
+	static constexpr int m_cDecentForceFactor = 1000000;
 
 public:
 	// We simulate the physics world in discrete time steps. 60 Hz is a good rate to update the physics system.
