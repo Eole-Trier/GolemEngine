@@ -71,7 +71,7 @@ void MeshCollider::Draw(Camera* _camera)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetMeshColliderShader());
+	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetColliderShader());
 
 	Model* model = GetModel();
 

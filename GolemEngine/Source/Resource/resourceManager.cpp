@@ -78,26 +78,10 @@ void ResourceManager::CreateAndLoadResources()
     defaultTerrainComputeShader->Init();
 #pragma endregion Terrain Shaders
 
-    Shader* sphereColliderShader = resourceManager->Create<Shader>(m_sphereColliderShader);
-    VertexShader* sphereColliderVertexShader = new VertexShader(sphereColliderShader, Tools::FindFile("sphereCollider.vs").c_str());
-    FragmentShader* sphereColliderFragmentShader = new FragmentShader(sphereColliderShader, Tools::FindFile("sphereCollider.fs").c_str());
-    sphereColliderShader->SetAllShaders(sphereColliderVertexShader, sphereColliderFragmentShader);
-
-    Shader* boxColliderShader = resourceManager->Create<Shader>(m_boxColliderShader);
-    VertexShader* boxColliderVertexShader = new VertexShader(boxColliderShader, Tools::FindFile("boxCollider.vs").c_str());
-    FragmentShader* boxColliderFragmentShader = new FragmentShader(boxColliderShader, Tools::FindFile("boxCollider.fs").c_str());
-    boxColliderShader->SetAllShaders(boxColliderVertexShader, boxColliderFragmentShader);
-
-    Shader* capsuleColliderShader = resourceManager->Create<Shader>(m_capsuleColliderShader);
-    VertexShader* capsuleColliderVertexShader = new VertexShader(capsuleColliderShader, Tools::FindFile("capsuleCollider.vs").c_str());
-    FragmentShader* capsuleColliderFragmentShader = new FragmentShader(capsuleColliderShader, Tools::FindFile("capsuleCollider.fs").c_str());
-    capsuleColliderShader->SetAllShaders(capsuleColliderVertexShader, capsuleColliderFragmentShader);
-
-
-    Shader* meshColliderShader = resourceManager->Create<Shader>(m_meshColliderShader);
-    VertexShader* meshColliderVertexShader = new VertexShader(meshColliderShader, Tools::FindFile("meshCollider.vs").c_str());
-    FragmentShader* meshColliderFragmentShader = new FragmentShader(meshColliderShader, Tools::FindFile("meshCollider.fs").c_str());
-    meshColliderShader->SetAllShaders(meshColliderVertexShader, meshColliderFragmentShader);
+    Shader* ColliderShader = resourceManager->Create<Shader>(m_colliderShader);
+    VertexShader* colliderVertexShader = new VertexShader(ColliderShader, Tools::FindFile("collider.vs").c_str());
+    FragmentShader* colliderFragmentShader = new FragmentShader(ColliderShader, Tools::FindFile("collider.fs").c_str());
+    ColliderShader->SetAllShaders(colliderVertexShader, colliderFragmentShader);
 
     Shader* skyboxShader = resourceManager->Create<Shader>(m_skyboxShader);
     VertexShader* skyboxVertexShader = new VertexShader(skyboxShader, Tools::FindFile("skybox.vs").c_str());
@@ -188,22 +172,7 @@ std::string ResourceManager::GetSkyboxShader()
     return m_skyboxShader;
 }
 
-std::string ResourceManager::GetBoxColliderShader()
+std::string ResourceManager::GetColliderShader()
 {
-    return m_boxColliderShader;
-}
-
-std::string ResourceManager::GetCapsuleColliderShader()
-{
-    return m_capsuleColliderShader;
-}
-
-std::string ResourceManager::GetSphereColliderShader()
-{
-    return m_sphereColliderShader;
-}
-
-std::string ResourceManager::GetMeshColliderShader()
-{
-    return m_meshColliderShader;
+    return m_colliderShader;
 }

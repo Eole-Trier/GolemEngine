@@ -77,7 +77,7 @@
     <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\WorldBuilder\brush.cpp" />
     <ClCompile Include="Source\Components\Physic\capsuleCollider.cpp" />
-    <ClCompile Include="Source\Components\GameClasses\test.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\playerMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\backends\imgui_impl_glfw.h" />
@@ -190,6 +190,6 @@
     <ClInclude Include="Include\WorldBuilder\brush.h" />
     <ClInclude Include="Include\Components\Physic\capsuleCollider.h" />
     <ClInclude Include="Include\Components\script.h" />
-    <ClInclude Include="Include\Components\GameClasses\test.h" />
+    <ClInclude Include="Include\Components\GameClasses\playerMovement.h" />
   </ItemGroup>
 </Project>

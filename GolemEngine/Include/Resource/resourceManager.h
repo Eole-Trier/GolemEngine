@@ -23,10 +23,7 @@ private:
 	static inline std::string m_terrainShader = "default_terrain_shader";    // For black and white gradient
 	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
-	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
-	static inline std::string m_boxColliderShader = "box_collider_shader";
-	static inline std::string m_capsuleColliderShader = "box_collider_shader";
-	static inline std::string m_meshColliderShader = "mesh_collider_shader";
+	static inline std::string m_colliderShader = "collider_shader";
 	static inline std::string m_skyboxShader = "skybox_shader";
 
 	static inline std::unordered_map<std::string, Resource*> m_resources;
@@ -45,10 +42,7 @@ public:
 	GOLEM_ENGINE_API static std::string GetTerrainComputeShader();
 	GOLEM_ENGINE_API static std::string GetGridTerrainTexture();
 	GOLEM_ENGINE_API static std::string GetSkyboxShader();
-	GOLEM_ENGINE_API static std::string GetSphereColliderShader();
-	GOLEM_ENGINE_API static std::string GetBoxColliderShader();
-	GOLEM_ENGINE_API static std::string GetCapsuleColliderShader();
-	GOLEM_ENGINE_API static std::string GetMeshColliderShader();
+	GOLEM_ENGINE_API static std::string GetColliderShader();
 
 	GOLEM_ENGINE_API void ProcessFile(const std::filesystem::path& _filePath);
 	GOLEM_ENGINE_API void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);

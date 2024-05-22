@@ -35,7 +35,6 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 	std::vector<Mesh*> m_meshes;
 
-
 public:
 	std::string m_defaultTexture;
 	std::string m_defaultModel;
@@ -76,7 +75,6 @@ public:
 	GOLEM_ENGINE_API GameObject* GetWorld();
 	GOLEM_ENGINE_API Guid GetGuid();
 
-	GOLEM_ENGINE_API void AddGameObject(GameObject* _gameObject);
 	GOLEM_ENGINE_API void RemoveGameObject(GameObject* _gameObject);
 	GOLEM_ENGINE_API void DeleteLight(Light* _light);
 	GOLEM_ENGINE_API void SetGuid(Guid _guid);
