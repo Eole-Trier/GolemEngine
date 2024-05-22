@@ -2,6 +2,4 @@
 
 Brush::Brush() {}
 
-void Brush::Update()
-{
-}
+void Brush::Update() {}

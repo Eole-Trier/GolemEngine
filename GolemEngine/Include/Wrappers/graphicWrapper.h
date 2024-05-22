@@ -40,6 +40,10 @@ private:
 	static unsigned int m_playSceneRbo;
 	static unsigned int m_playSceneFbo;
 	static unsigned int m_playSceneId;
+
+public:
+	static inline std::vector<std::unique_ptr<Texture>> textures;
+
 private:
 	// Private constructors and destructor to make static class
 	GraphicWrapper() = delete;
@@ -49,9 +53,6 @@ private:
 	GraphicWrapper& operator=(GraphicWrapper&& _other) = delete;
 	void operator=(const GraphicWrapper&) = delete;
 	~GraphicWrapper() = delete;
-
-public:
-	static inline std::vector<std::unique_ptr<Texture>> m_textures;
 
 public:
 	// Initialize library
@@ -74,7 +75,8 @@ public:
 	// Enable a feature of OpenGl
 	static void EnableDepth();
 
-	static int ReadPixel(uint32_t _attachmentIndex, int _x, int _y);
+	static int ReadPixelFromIndexBuffer(int _x, int _y);
+	static Vector2 ReadPixelFromUVBuffer(int _x, int _y);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
 	static unsigned int GetTextureId();

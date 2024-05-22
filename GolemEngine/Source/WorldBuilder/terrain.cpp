@@ -21,6 +21,7 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     // Set shader
     ResourceManager* resourceManager = ResourceManager::GetInstance();
     m_shader = resourceManager->Get<Shader>(ResourceManager::GetTerrainShader());
+    m_shaderTerrainUv = resourceManager->Get<Shader>(ResourceManager::GetTerrainUvShader());
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
     
     m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
@@ -48,7 +49,7 @@ void Terrain::UseComputeShader()
 
     m_computeShader->SetBool("isBrushActive", true);
     Vector2 mousePosition = {ImGui::GetMousePos().x, ImGui::GetMousePos().y};
-    m_computeShader->SetVec2("brushPosition", mousePosition);
+    // m_computeShader->SetVec2("brushPosition", GraphicWrapper::ReadPixelFromUVBuffer());
     m_computeShader->SetFloat("brushRadius", 0.5f);
     m_computeShader->SetFloat("brushForce", 0.0f);
     

@@ -54,15 +54,18 @@ vec4 ProcessSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoord;
+in vec2 terrainPos;
 
 in float minY;    // Input from vertex shader
 in float maxY;    // Input from vertex shader
 
-out vec4 FragColor;
+layout(location = 0) out vec4 FragColor;
+layout(location = 2) out vec2 FragUv;
 
 
 void main()
 {
+    FragUv = terrainPos;
     if (useTexture)
     {
         vec3 viewDir = normalize(-FragPos);

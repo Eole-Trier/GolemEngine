@@ -6,6 +6,8 @@
 #include "Debug/log.h"
 #include "Wrappers/graphicWrapper.h"
 #include "Utils/tools.h"
+
+
 Texture::Texture()
 {
 

@@ -24,13 +24,13 @@ unsigned int GraphicWrapper::m_playSceneId;
 
 int GraphicWrapper::Init()
 {
-    m_textures.resize(2);
+    textures.resize(3);
     return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
 void GraphicWrapper::CreateFramebuffer(int _width, int _height)
 {
-    unsigned int attachments[2];
+    unsigned int attachments[3];
 
     // Create framebuffer
     glGenFramebuffers(1, &m_fbo);
@@ -40,23 +40,27 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
     CreateRenderBuffer(_width, _height, m_rbo);
 
     // Create textureBuffer
-    for (int i = 0; i < m_textures.size(); i++)
+    for (int i = 0; i < textures.size(); i++)
     {
         if (i == 0)
         {
-            m_textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA, GL_RGBA);
+            textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA, GL_RGBA);
         }
-
+        else if (i ==1)
+        {
+            textures[i] = std::make_unique<Texture>(_width, _height, GL_RED_INTEGER, GL_R32I);
+        }
         else
         {
-            m_textures[i] = std::make_unique<Texture>(_width, _height, GL_RED_INTEGER, GL_R32I);
+            textures[i] = std::make_unique<Texture>(_width, _height, GL_RG, GL_RG32F);
         }
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i]->id, 0);
+        
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, textures[i]->id, 0);
         attachments[i] = GL_COLOR_ATTACHMENT0 + i;
     }
 
-    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, m_textures[0]->id, m_fbo);
-    glDrawBuffers(2, attachments);
+    AttachTexture(GL_RGBA, _width, _height, GL_COLOR_ATTACHMENT0, textures[0]->id, m_fbo);
+    glDrawBuffers(3, attachments);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
     
@@ -112,11 +116,19 @@ void GraphicWrapper::CreateRenderBuffer(int _width, int _height, unsigned int _r
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _rbo);
 }
 
-int GraphicWrapper::ReadPixel(uint32_t _attachmentIndex, int _x, int _y)
+int GraphicWrapper::ReadPixelFromIndexBuffer(int _x, int _y)
 {
-    glReadBuffer(GL_COLOR_ATTACHMENT0 + _attachmentIndex);
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + 1);
     int pixelData;
     glReadPixels(_x, _y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+    return pixelData;
+}
+
+Vector2 GraphicWrapper::ReadPixelFromUVBuffer(int _x, int _y)
+{
+    glReadBuffer(GL_COLOR_ATTACHMENT0 + 2);
+    Vector2 pixelData;
+    glReadPixels(_x, _y, 1, 1, GL_RG, GL_FLOAT, &pixelData);
     return pixelData;
 }
 
@@ -147,7 +159,7 @@ void GraphicWrapper::EnableDepth()
 
 unsigned int GraphicWrapper::GetTextureId()
 {
-    return m_textures[0]->id;
+    return textures[0]->id;
 }
 
 unsigned int GraphicWrapper::GetPlaySceneId()

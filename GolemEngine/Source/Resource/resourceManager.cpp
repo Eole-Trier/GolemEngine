@@ -71,7 +71,12 @@ void ResourceManager::CreateAndLoadResources()
     Shader* terrainShader = resourceManager->Create<Shader>(m_terrainShader);
     VertexShader* terrainVertexShader = new VertexShader(terrainShader, Tools::FindFile("terrain.vs").c_str());
     FragmentShader* terrainFragmentShader = new FragmentShader(terrainShader, Tools::FindFile("terrain.fs").c_str());
-    terrainShader->SetAllShaders(terrainVertexShader, terrainFragmentShader); 
+    terrainShader->SetAllShaders(terrainVertexShader, terrainFragmentShader);
+
+    Shader* terrainUvShader = resourceManager->Create<Shader>(m_terrainUvShader);
+    VertexShader* terrainVertexUvShader = new VertexShader(terrainUvShader, Tools::FindFile("terrainUv.vs").c_str());
+    FragmentShader* terrainFragmentUvShader = new FragmentShader(terrainUvShader, Tools::FindFile("terrainUv.fs").c_str());
+    terrainUvShader->SetAllShaders(terrainVertexUvShader, terrainFragmentUvShader);
     
     ComputeShader* defaultTerrainComputeShader = resourceManager->Create<ComputeShader>(m_terrainComputeShader);
     defaultTerrainComputeShader->SetComputePath(Tools::FindFile("terrain.comp"));
@@ -163,6 +168,11 @@ std::string ResourceManager::GetDefaultModel()
 std::string ResourceManager::GetTerrainShader()
 {
     return m_terrainShader;
+}
+
+std::string ResourceManager::GetTerrainUvShader()
+{
+    return m_terrainUvShader;
 }
 
 std::string ResourceManager::GetTerrainComputeShader()

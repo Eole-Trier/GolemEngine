@@ -44,7 +44,6 @@ void SceneManager::Init()
         for (int i = 0; i < Tools::GetFolderSize(Tools::FindFolder("Scenes")); i++)
         {
             CreateSceneFromFile(Tools::RemoveExtension(sceneNames[i]));
-            
         }
         // Load the first scene
         LoadScene(0);
@@ -54,7 +53,6 @@ void SceneManager::Init()
         CreateScene("scene_0");
         SaveScene();
     }
-    GraphicWrapper::CreateFramebuffer(1636, 978);
 }
 
 void SceneManager::SaveScene()

@@ -20,6 +20,7 @@
 #include "Components/transform.h"
 #include "ImGuizmo.h"
 #include "UI/Windows/playScene.h"
+#include "WorldBuilder/worldBuilder.h"
 
 bool g_isFromFileBrowser = false;
 
@@ -71,26 +72,34 @@ void Viewport::Update()
     {
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
         {
-            GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::m_textures[1]->m_width, GraphicWrapper::m_textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::m_textures[1]->id, GraphicWrapper::GetFbo());
-            int pixelData = GraphicWrapper::ReadPixel(1, mouseX, mouseY);
-            GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::m_textures[0]->m_width, GraphicWrapper::m_textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::m_textures[0]->id, GraphicWrapper::GetFbo());
-
-            for (int i = 0; i < objects.size(); i++)
+            if (WorldBuilder::isBrushActive)
             {
-                if (objects[i]->GetId() == pixelData)
+                Vector2 brushUv = GraphicWrapper::ReadPixelFromUVBuffer(mouseX, mouseY);
+                std::cout << "uv: " << brushUv << std::endl;
+            }
+            else
+            {
+                GraphicWrapper::AttachTexture(GL_RED_INTEGER, GraphicWrapper::textures[1]->m_width, GraphicWrapper::textures[1]->m_height, GL_COLOR_ATTACHMENT0 + 1, GraphicWrapper::textures[1]->id, GraphicWrapper::GetFbo());
+                int pixelData = GraphicWrapper::ReadPixelFromIndexBuffer(mouseX, mouseY);
+                GraphicWrapper::AttachTexture(GL_RGBA, GraphicWrapper::textures[0]->m_width, GraphicWrapper::textures[0]->m_height, GL_COLOR_ATTACHMENT0, GraphicWrapper::textures[0]->id, GraphicWrapper::GetFbo());
+    
+                for (int i = 0; i < objects.size(); i++)
                 {
-                    EditorUi::selectedGameObject = objects[i];
-                }
-
-                else if (pixelData == -1)
-                {
-                    EditorUi::selectedGameObject = nullptr;
+                    if (objects[i]->GetId() == pixelData)
+                    {
+                        EditorUi::selectedGameObject = objects[i];
+                    }
+    
+                    else if (pixelData == -1)
+                    {
+                        EditorUi::selectedGameObject = nullptr;
+                    }
                 }
             }
         }
     }
     
-    ImGui::Image((ImTextureID)GraphicWrapper::m_textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Image((ImTextureID)GraphicWrapper::textures[0]->id, ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
     Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
 

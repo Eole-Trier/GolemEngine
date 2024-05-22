@@ -40,6 +40,7 @@ protected:
     // unsigned int m_ssboIn;
     // unsigned int m_ssboOut;
     Shader* m_shader = nullptr;
+    Shader* m_shaderTerrainUv = nullptr;
     ComputeShader* m_computeShader = nullptr;
     Texture* m_texture = nullptr;
 

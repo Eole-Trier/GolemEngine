@@ -21,6 +21,7 @@ private:
 	static inline std::string m_defaultTexture = "default_texture";
 	static inline std::string m_defaultModel = "default_model";
 	static inline std::string m_terrainShader = "default_terrain_shader";    // For black and white gradient
+	static inline std::string m_terrainUvShader = "default_terrain_uv_shader";    // For selecting terrain
 	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
 	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
@@ -41,6 +42,7 @@ public:
 	static std::string GetDefaultTexture();
 	static std::string GetDefaultModel();
 	static std::string GetTerrainShader();
+	static std::string GetTerrainUvShader();
 	static std::string GetTerrainComputeShader();
 	static std::string GetGridTerrainTexture();
 	static std::string GetSkyboxShader();
