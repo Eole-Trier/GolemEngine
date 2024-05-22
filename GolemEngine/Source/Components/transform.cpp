@@ -112,7 +112,7 @@ void Transform::EditTransformGizmo()
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    ImGuizmo::SetRect(450, -300,
+    ImGuizmo::SetRect(450, -350,
         io.DisplaySize.x, io.DisplaySize.y);
 
     //set snap functionnality and snap value
