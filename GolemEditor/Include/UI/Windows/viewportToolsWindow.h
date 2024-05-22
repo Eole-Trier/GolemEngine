@@ -7,6 +7,7 @@ class ViewportToolsWindow : public Window
 {
 public:
     bool isWireframeViewActive = false;
+    bool isTerrainGradientViewActive = false;
     
 public:
     ViewportToolsWindow(std::string _name);

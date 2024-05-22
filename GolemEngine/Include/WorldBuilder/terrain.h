@@ -51,6 +51,7 @@ protected:
 public:
     int xResolution = 2;    // To set the amount of vertices in x (a terrin with 4 vertices or 255 will have a similar, so it's for vertex details)
     int zResolution = 2;    // To set the amount of vertices in z
+    bool useGradient = true;
 
 public:
     Terrain(std::string _name, Transform* _transform);
@@ -63,8 +64,10 @@ public:
     void CalculateNormals();
     void RetrieveComputeData();
     void UpdateVertices(Camera* _camera);
+
     std::vector<Vertex> GetVertices();
     std::vector<VertexGpu> GetVerticesGpu();
+    Shader* GetShader();
     
     virtual void Init(int _xResolution, int _zResolution) {}
     virtual void Init(const char* _noisemapPath) {}

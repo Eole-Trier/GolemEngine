@@ -23,7 +23,7 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     m_shader = resourceManager->Get<Shader>(ResourceManager::GetTerrainShader());
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
     
-    // m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
+    m_texture = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
 
     isTerrain = true;
 }
@@ -66,17 +66,22 @@ void Terrain::Draw(Camera* _camera)
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
     m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
     m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
-    if (m_texture != nullptr)
+    if (m_texture == nullptr)
+    {
+        useGradient = true;
+    }
+
+    if (useGradient)
+    {
+        m_shader->GetFragmentShader()->SetBool("useTexture", false);
+        m_shader->GetFragmentShader()->SetInt("ourTexture", -1);
+    }
+    else
     {
         glActiveTexture(GL_TEXTURE0);
         m_texture->Use();
         m_shader->GetFragmentShader()->SetBool("useTexture", true);
         m_shader->GetFragmentShader()->SetInt("ourTexture", 0);
-    }
-    else
-    {
-        m_shader->GetFragmentShader()->SetBool("useTexture", false);
-        m_shader->GetFragmentShader()->SetInt("ourTexture", -1);
     }
 
     if (!SceneManager::GetCurrentScene()->GetDirectionalLights().empty() ||
@@ -258,4 +263,9 @@ std::vector<Vertex> Terrain::GetVertices()
 std::vector<VertexGpu> Terrain::GetVerticesGpu()
 {
     return m_vertices;
+}
+
+Shader* Terrain::GetShader()
+{
+    return  m_shader;
 }
