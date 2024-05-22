@@ -13,8 +13,8 @@ using namespace JPH;
 
 class SphereCollider : public Collider
 {
-private:
-	float m_radius;
+public:
+	float radius;
 	
 public:
 	SphereCollider();
@@ -36,5 +36,5 @@ public:
 
 REFL_AUTO(
 	type(SphereCollider, bases<Collider>),
-	field(m_radius, Range(0.1f, 100))
+	field(radius, Range(0.1f, 100))
 )
