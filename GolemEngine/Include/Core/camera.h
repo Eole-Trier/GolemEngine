@@ -51,6 +51,7 @@ public:
 	Vector3 GetUp();
 	Vector3 GetRight();
 
+
 	friend refl_impl::metadata::type_info__<Camera>;
 };
 

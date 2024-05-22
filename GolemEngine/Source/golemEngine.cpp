@@ -33,10 +33,6 @@ void GolemEngine::UpdateDeltaTime()
 
 void GolemEngine::ProcessInput()
 {
-    if (InputManager::IsKeyPressed(KEY_ESCAPE))
-    {
-        glfwSetWindowShouldClose(WindowWrapper::window, true);
-    }
 }
 
 void GolemEngine::Update()
