@@ -26,7 +26,8 @@ bool g_isFromFileBrowser = false;
 
 Viewport::Viewport(std::string _name)
     : Window(_name), m_lastX(0), m_lastY(0), m_yaw(0), m_pitch(0)
-{}
+{
+}
 
 Viewport::~Viewport() {}
 
@@ -44,6 +45,10 @@ void Viewport::Update()
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
+   
+
+    /*std::cout << ImGui::GetWindowPos().x << std::endl;
+    std::cout << ImGui::GetWindowPos().y << std::endl;*/
 
     ImVec2 minBound = ImGui::GetWindowPos(); 
 
@@ -113,7 +118,7 @@ void Viewport::Update()
         m_camera->ProcessKeyboardInput(GolemEngine::GetDeltaTime());
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         // Update camera with mouse position
-        m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+        m_camera->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, (int)ImGui::GetMousePos().x, (int)ImGui::GetMousePos().y);
         // Update camera speed depending on scroll
         m_camera->ProcessMouseScroll(InputManager::GetMouseScroll());
         InputManager::SetMouseScroll(0.0f);     // Otherwise the camera will continue to change since GetMouseScroll value doesn't change but has a value

@@ -43,6 +43,9 @@ public:
 	// Process changes on mouse scrool
 	void ProcessMouseScroll(float _yOffset);
 
+	void MouseMovement(float mousePosX, float mousePosY, float mouseLastPosX, float mouseLastPosY, bool _constraintPitch = true);
+
+
 	Matrix4 GetViewMatrix();
 	float GetZoom();
 	float GetNear();
@@ -50,6 +53,7 @@ public:
 	Vector3 GetFront();
 	Vector3 GetUp();
 	Vector3 GetRight();
+
 
 	friend refl_impl::metadata::type_info__<Camera>;
 };

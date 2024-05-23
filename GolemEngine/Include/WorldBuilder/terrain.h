@@ -28,7 +28,7 @@ struct VertexGpu
     Vector2 padding3;
 };
 
-class GOLEM_ENGINE_API Terrain : public GameObject
+class Terrain : public GameObject
 {
 protected:
     std::vector<VertexGpu> m_vertices;
@@ -56,31 +56,30 @@ public:
     bool useGradient = true;
 
 public:
-    Terrain(std::string _name, Transform* _transform);
-    ~Terrain();
+    GOLEM_ENGINE_API Terrain(std::string _name, Transform* _transform);
+    GOLEM_ENGINE_API ~Terrain();
 
-    void SetupMesh();
-    void UseComputeShader();
-    void Draw(Camera* _camera);
-    void UpdateLights(Shader* _shader);
-    void CalculateNormals();
-    void RetrieveComputeData();
-    void UpdateVertices(Camera* _camera);
-
-    std::vector<Vertex> GetVertices();
-    std::vector<VertexGpu> GetVerticesGpu();
-    Shader* GetShader();
-    ComputeShader* GetComputeShader();
+    GOLEM_ENGINE_API void SetupMesh();
+    GOLEM_ENGINE_API void UseComputeShader();
+    GOLEM_ENGINE_API void Draw(Camera* _camera);
+    GOLEM_ENGINE_API void UpdateLights(Shader* _shader);
+    GOLEM_ENGINE_API void CalculateNormals();
+    GOLEM_ENGINE_API void RetrieveComputeData();
+    GOLEM_ENGINE_API void UpdateVertices(Camera* _camera);
+    GOLEM_ENGINE_API std::vector<Vertex> GetVertices();
+    GOLEM_ENGINE_API std::vector<VertexGpu> GetVerticesGpu();
+    GOLEM_ENGINE_API Shader* GetShader();
+    GOLEM_ENGINE_API ComputeShader* GetComputeShader();
     
-    virtual void Init(int _xResolution, int _zResolution) {}
-    virtual void Init(const char* _noisemapPath) {}
+    GOLEM_ENGINE_API virtual void Init(int _xResolution, int _zResolution) {}
+    GOLEM_ENGINE_API virtual void Init(const char* _noisemapPath) {}
 
 #pragma region Noisemap terrain functions
-    virtual std::string GetNoisemapPath() { return {}; }
+    GOLEM_ENGINE_API virtual std::string GetNoisemapPath() { return {}; }
 
-    virtual void SetNoisemapPath(std::string _noisemapPath) {}
+    GOLEM_ENGINE_API virtual void SetNoisemapPath(std::string _noisemapPath) {}
 #pragma endregion Noisemap terrain functions
 
 
-    virtual void ToJson(json& _j) const {};    // Virtual function to serialize component to JSON
+    GOLEM_ENGINE_API virtual void ToJson(json& _j) const {};    // Virtual function to serialize component to JSON
 };

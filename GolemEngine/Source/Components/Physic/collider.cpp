@@ -4,7 +4,7 @@
 #include "Wrappers/graphicWrapper.h"
 
 Collider::Collider()
-	: m_isActivated(false), m_motionType(MotionType::Static), m_model(nullptr), m_modelPath(nullptr), colliderState(ColliderState::DEFAULT), m_gravityFactor(1.0f)
+	: isActivated(false), motionType(MotionType::Static), m_model(nullptr), m_modelPath(nullptr), colliderState(ColliderState::DEFAULT), gravityFactor(1.0f)
 {
 	PhysicSystem::AddCollider(this);
 }
@@ -21,7 +21,7 @@ void Collider::Begin()
 
 void Collider::PreUpdate()
 {
-	switch (m_motionType)
+	switch (motionType)
 	{
 	case MotionType::Static:
 		PhysicSystem::MakeBodyStatic(id);
@@ -34,7 +34,7 @@ void Collider::PreUpdate()
 	default:
 		break;
 	}
-	if (m_isActivated)
+	if (isActivated)
 	{
 		PhysicSystem::ActivateBody(id);
 	}
@@ -49,7 +49,7 @@ void Collider::PreUpdate()
 
 void Collider::Update()
 {
-	PhysicSystem::SetGravityFactor(id, m_gravityFactor);
+	PhysicSystem::SetGravityFactor(id, gravityFactor);
 }
 
 void Collider::PostUpdate()

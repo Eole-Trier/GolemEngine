@@ -25,7 +25,7 @@ class Vector3;
 class Vector4;
 class Matrix4;
 
-class GOLEM_ENGINE_API GraphicWrapper
+class GraphicWrapper
 {
 private:
 	static unsigned int m_vao;
@@ -42,7 +42,7 @@ private:
 	static unsigned int m_playSceneId;
 
 public:
-	static inline std::vector<std::unique_ptr<Texture>> textures;
+	GOLEM_ENGINE_API static inline std::vector<std::unique_ptr<Texture>> textures;
 
 private:
 	// Private constructors and destructor to make static class
@@ -56,75 +56,75 @@ private:
 
 public:
 	// Initialize library
-	static int Init();
+	GOLEM_ENGINE_API static int Init();
 	// Used to CREATE the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
-	static void CreateFramebuffer(int _width, int _height);
+	GOLEM_ENGINE_API static void CreateFramebuffer(int _width, int _height);
 
-	static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id, unsigned int _fbo);
+	GOLEM_ENGINE_API static void AttachTexture(unsigned int _format, int _width, int _heigh, unsigned int _attachment, unsigned int _id, unsigned int _fbo);
 
-	static void CreateRenderBuffer(int _width, int _height, unsigned int _rbo);
+	GOLEM_ENGINE_API static void CreateRenderBuffer(int _width, int _height, unsigned int _rbo);
 	// Used to clear a buffer for the next draw
-	static void ClearBuffer();
+	GOLEM_ENGINE_API static void ClearBuffer();
 	// Used to BIND the scene in a framebuffer to be used as a texture. We do this in order to pass the texture to an ImGUI window so it can display it. 
 	// The result is that we get a movable viewport in an ImGUI window.
-	static void BindFramebuffer();
+	GOLEM_ENGINE_API static void BindFramebuffer();
 
-	static void BindPlaySceneFrambuffer();
+	GOLEM_ENGINE_API static void BindPlaySceneFrambuffer();
 	// Used to UNBIND the scene from a framebuffer to free the framebuffer. 
-	static void UnbindFramebuffer();
+	GOLEM_ENGINE_API static void UnbindFramebuffer();
 	// Enable a feature of OpenGl
-	static void EnableDepth();
+	GOLEM_ENGINE_API static void EnableDepth();
 
-	static int ReadPixelFromIndexBuffer(int _x, int _y);
-	static Vector2 ReadPixelFromUVBuffer(int _x, int _y);
+	GOLEM_ENGINE_API static int ReadPixelFromIndexBuffer(int _x, int _y);
+	GOLEM_ENGINE_API static Vector2 ReadPixelFromUVBuffer(int _x, int _y);
 
 	// This function is used to retrieve the texture of a framebuffer to use in the viewport to show the scene as a texture.
-	static unsigned int GetTextureId();
+	GOLEM_ENGINE_API static unsigned int GetTextureId();
 
 	// This function is used to renderer a play scene with player view camera
-	static unsigned int GetPlaySceneId();
+	GOLEM_ENGINE_API static unsigned int GetPlaySceneId();
 
 	// Used to set the background color of a buffer. Color is in the form of rgba vector. 
-	static void SetBackgroundColor(Vector4 _color);
+	GOLEM_ENGINE_API static void SetBackgroundColor(Vector4 _color);
 	// Used to set the viewport that will be used
-	static void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
+	GOLEM_ENGINE_API static void SetViewport(GLint _xMin, GLint _yMin, GLsizei _xMax, GLsizei _yMax);
 
-	static unsigned int GetFbo();
+	GOLEM_ENGINE_API static unsigned int GetFbo();
 
 #pragma region Shader functions
 	// These functions should only be used through the Shader class and not through this GraphicWrapper class
 
 	// Get parameters of the shader
-	static void GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params);
+	GOLEM_ENGINE_API static void GetShaderIv(GLuint _shader, GLenum _pName, GLint* _params);
 	// Get info log of shader
-	static void GetShaderLog(GLuint _shader, GLsizei _bufSize, GLsizei* _length, GLchar* _infoLog);
+	GOLEM_ENGINE_API static void GetShaderLog(GLuint _shader, GLsizei _bufSize, GLsizei* _length, GLchar* _infoLog);
 	// Create shader
-	static GLuint CreateShader(GLenum _shaderType);
+	GOLEM_ENGINE_API static GLuint CreateShader(GLenum _shaderType);
 	// Set the source code of the shader
-	static void SetShaderSourceCode(GLuint _shader, GLsizei _count, const GLchar** _string, const GLint* _length);
+	GOLEM_ENGINE_API static void SetShaderSourceCode(GLuint _shader, GLsizei _count, const GLchar** _string, const GLint* _length);
 	// Compile shader
-	static void CompileShader(GLuint _shader);
+	GOLEM_ENGINE_API static void CompileShader(GLuint _shader);
 	// Create and return the program to set, use and manage shaders
-	static GLuint CreateShaderProgram();
+	GOLEM_ENGINE_API static GLuint CreateShaderProgram();
 	// Attach shader to the program
-	static void AttachShaderToProgram(GLuint _program, GLuint _shader);
+	GOLEM_ENGINE_API static void AttachShaderToProgram(GLuint _program, GLuint _shader);
 	// Link the shader program
-	static void LinkProgram(GLuint _program);
+	GOLEM_ENGINE_API static void LinkProgram(GLuint _program);
 	// Delete the shader object
-	static void DeleteShaderObject(GLuint _shader);
+	GOLEM_ENGINE_API static void DeleteShaderObject(GLuint _shader);
 	// Use shader
-	static void UseShader(GLuint _program);
+	GOLEM_ENGINE_API static void UseShader(GLuint _program);
 
-	static void SetShaderBool(GLuint _program, const std::string& _name, bool _value);
-	static void SetShaderInt(GLuint _program, const std::string& _name, int _value);
-	static void SetShaderFloat(GLuint _program, const std::string& _name, float _value);
-	static void SetShaderVec2(GLuint _program, const std::string& _name, const Vector2& _value);
-	static void SetShaderVec2(GLuint _program, const std::string& _name, float _x, float _y);
-	static void SetShaderVec3(GLuint _program, const std::string& _name, const Vector3& _value);
-	static void SetShaderVec3(GLuint _program, const std::string& _name, float _x, float _y, float _z);
-	static void SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value);
-	static void SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w);
-	static void SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat);
+	GOLEM_ENGINE_API static void SetShaderBool(GLuint _program, const std::string& _name, bool _value);
+	GOLEM_ENGINE_API static void SetShaderInt(GLuint _program, const std::string& _name, int _value);
+	GOLEM_ENGINE_API static void SetShaderFloat(GLuint _program, const std::string& _name, float _value);
+	GOLEM_ENGINE_API static void SetShaderVec2(GLuint _program, const std::string& _name, const Vector2& _value);
+	GOLEM_ENGINE_API static void SetShaderVec2(GLuint _program, const std::string& _name, float _x, float _y);
+	GOLEM_ENGINE_API static void SetShaderVec3(GLuint _program, const std::string& _name, const Vector3& _value);
+	GOLEM_ENGINE_API static void SetShaderVec3(GLuint _program, const std::string& _name, float _x, float _y, float _z);
+	GOLEM_ENGINE_API static void SetShaderVec4(GLuint _program, const std::string& _name, const Vector4& _value);
+	GOLEM_ENGINE_API static void SetShaderVec4(GLuint _program, const std::string& _name, float _x, float _y, float _z, float _w);
+	GOLEM_ENGINE_API static void SetShaderMat4(GLuint _program, const std::string& _name, const Matrix4& _mat);
 
 #pragma endregion Shader functions
 };

@@ -1,4 +1,4 @@
-#include "Components/Physic/boxCollider.h"
+#include "Components/Physic/capsuleCollider.h"
 
 #include <Jolt/Physics/Body/BodyInterface.h>
 
@@ -11,48 +11,48 @@
 #include "MathsLib/utils.h"
 #include "Wrappers/windowWrapper.h"
 
-BoxCollider::BoxCollider()
-	: size(Vector3(1.f, 1.f, 1.f))
+CapsuleCollider::CapsuleCollider()
+	: height(1.0f), radius(1.0f)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("cubeCollider.obj");
+	SetModelPath("capsuleCollider.obj");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 
-BoxCollider::BoxCollider(Vector3 _size)
-	: size(_size)
+CapsuleCollider::CapsuleCollider(float _height, float _radius)
+	: height(_height), radius(_radius)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
-	SetModelPath("cubeCollider.obj");
+	SetModelPath("capsuleCollider.obj");
 	SetModel(resourceManager->Get<Model>(GetModelPath()));
 }
 
-BoxCollider::~BoxCollider()
+CapsuleCollider::~CapsuleCollider()
 {
 }
 
-void BoxCollider::Begin()
+void CapsuleCollider::Begin()
 {
-	id = PhysicSystem::CreateBoxCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), size);
+	id = PhysicSystem::CreateCapsuleCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), height, radius);
 }
 
-void BoxCollider::PreUpdate()
+void CapsuleCollider::PreUpdate()
 {
 	Collider::PreUpdate();
 }
 
-void BoxCollider::Update()
+void CapsuleCollider::Update()
 {
 	Collider::Update();
-	PhysicSystem::SetBoxShape(id, size);
+	PhysicSystem::SetCapsuleShape(id, height, radius);
 }
 
-void BoxCollider::PostUpdate()
+void CapsuleCollider::PostUpdate()
 {
 	Collider::PostUpdate();
 }
 
-void BoxCollider::Draw(Camera* _camera)
+void CapsuleCollider::Draw(Camera* _camera)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
@@ -63,7 +63,7 @@ void BoxCollider::Draw(Camera* _camera)
 
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
-	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), size);
+	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(radius, height, radius));
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

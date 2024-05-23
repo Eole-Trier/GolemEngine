@@ -112,8 +112,8 @@ void Transform::EditTransformGizmo()
 
     Matrix4 cameraView = camera->GetViewMatrix().Transpose();
 
-    ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
-        ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
+    ImGuizmo::SetRect(450, -350,
+        io.DisplaySize.x, io.DisplaySize.y);
 
     //set snap functionnality and snap value
     bool snap = InputManager::IsKeyPressed(KEY_LEFT_CTRL);
@@ -122,7 +122,7 @@ void Transform::EditTransformGizmo()
 
     //create TRS matrix
     float mat[16];
-    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x, 
+    ImGuizmo::RecomposeMatrixFromComponents(&localPosition.x,
         &rotation.x, &scaling.x, mat);
 
     //used to manipulate the gizmos
@@ -149,6 +149,7 @@ void Transform::EditTransformGizmo()
     {
         rotation = Vector3(newRot[0], newRot[1], newRot[2]);
     }
+
 }
 
 void Transform::AddChild(Transform* const _t)
@@ -192,33 +193,26 @@ bool Transform::IsChildOf(Transform* const _parent)
 
 GOLEM_ENGINE_API Vector3 Transform::GetForward() const
 {
-    float yaw = rotation.y * (M_PI / 180.0f);
-    float pitch = rotation.x * (M_PI / 180.0f);
+    double yaw = rotation.y * (M_PI / 180.0f);
+    double pitch = rotation.x * (M_PI / 180.0f);
 
     Vector3 forward;
-    forward.x = cos(yaw) * cos(pitch);
-    forward.y = sin(pitch);
-    forward.z = sin(yaw) * cos(pitch);
+    forward.x = (float)(cos(yaw) * cos(pitch));
+    forward.y = (float)sin(pitch);
+    forward.z = (float)(sin(yaw) * cos(pitch));
 
     return forward;
 }
 
-bool Transform::IsAParentOf(Transform* const _t)
+bool Transform::IsAParentOf(Transform* _t)
 {
-    if (m_children.size() != 0)
+    while (_t->m_parent != nullptr)
     {
-        for (Transform* child : m_children)
-        {
-            if (child == _t)
-                return true;
-        }
-        for (Transform* child : m_children)
-        {
-            return child->IsAParentOf(_t);
-        }
+        if (_t->m_parent == this)
+            return true;
+        _t = _t->m_parent;
     }
-    else
-        return false;
+    return false;
 }
 
 Transform* Transform::GetParent()

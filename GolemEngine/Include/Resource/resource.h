@@ -5,11 +5,11 @@
 #include <string>
 
 
-class GOLEM_ENGINE_API Resource
+class Resource
 {
 public:
-	Resource() {};
-	virtual ~Resource() {};
+	GOLEM_ENGINE_API Resource() {};
+	GOLEM_ENGINE_API virtual ~Resource() {};
 
 	std::string path;
 };

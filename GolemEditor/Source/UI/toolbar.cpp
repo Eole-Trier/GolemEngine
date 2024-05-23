@@ -54,26 +54,6 @@ void Toolbar::Update()
             
             ImGui::EndMenu();
         }
-
-        // Menu widget
-        if (ImGui::BeginMenu("Setting"))
-        {
-            ImGui::Text(" ");
-            if (ImGui::BeginMenu("Skybox"))
-            {
-                if (ImGui::Button("Space"))
-                {
-                    Skybox::GetInstance().SetSpaceSkybox();
-                }
-                if (ImGui::Button("Blue Sky"))
-                {
-                    Skybox::GetInstance().SetTexture();
-                }
-                ImGui::EndMenu();
-            }
-            ImGui::Text(" ");
-            ImGui::EndMenu();
-        }
         
         ImGui::EndMenuBar();
     }

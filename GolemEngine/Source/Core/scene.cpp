@@ -31,7 +31,6 @@ Scene::Scene(std::string _name, bool _makeSceneEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
-    ResourceManager::CreateAndLoadResources();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     InitLights();
 
@@ -105,8 +104,6 @@ void Scene::InitLights()
 void Scene::Update(Camera* _camera)
 {
     ResourceManager* resourceManager = ResourceManager::GetInstance();
-    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-    defaultShader->Use();
 
     // Skybox shader load
     Shader* skyboxShader = resourceManager->Get<Shader>("skybox_shader");
@@ -125,11 +122,16 @@ void Scene::Update(Camera* _camera)
     glBindVertexArray(0);
     glDepthFunc(GL_LESS);
 
-    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+    Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
+    defaultShader->Use();
 
-    PhysicSystem::PreUpdate();
-    PhysicSystem::Update();
-    PhysicSystem::PostUpdate();
+    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+    if (GolemEngine::GetGameMode() && _camera == GolemEngine::GetPlayerCamera())
+    {
+        PhysicSystem::PreUpdate();
+        PhysicSystem::Update();
+        PhysicSystem::PostUpdate();
+    }
     
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
@@ -153,17 +155,18 @@ void Scene::UpdateGameObjects(Camera* _camera)
     for (int i = 0; i < gameObjects.size(); i++)
     {
         gameObjects[i]->Update();
-        shader->GetFragmentShader()->SetInt("entityID", gameObjects[i]->GetId());
+        shader->GetFragmentShader()->SetInt("entityID", (int)gameObjects[i]->GetId());
 
         if (MeshRenderer* meshRenderer = gameObjects[i]->GetComponent<MeshRenderer>())
         {
             meshRenderer->Draw(_camera);
         }
 
-        Collider* collider = gameObjects[i]->GetComponent<Collider>();
-        if (collider && collider->owner->IsSelected)
+        if (!GolemEngine::GetGameMode())
         {
-            collider->Draw(_camera);
+            Collider* collider = gameObjects[i]->GetComponent<Collider>();
+            if (collider && collider->owner->IsSelected)
+                collider->Draw(_camera);
         }
 
         if (gameObjects[i]->isTerrain)
@@ -182,15 +185,20 @@ void Scene::UpdateGameObjects(Camera* _camera)
             }
         }
     }
+    for (int i = 0; i < m_deletedGameObjects.size(); i++)
+    {
+        delete m_deletedGameObjects[i];
+    }
+    m_deletedGameObjects.clear();
 }
 
 void Scene::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->GetFragmentShader()->SetInt("nbrDirLights", m_dirLights.size());
-    _shader->GetFragmentShader()->SetInt("nbrPointLights", m_pointLights.size());
-    _shader->GetFragmentShader()->SetInt("nbrSpotLights", m_spotLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", (int)m_dirLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", (int)m_pointLights.size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", (int)m_spotLights.size());
 
     for (unsigned int i = 0; i < m_dirLights.size(); ++i)
     {
@@ -293,6 +301,12 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
+void Scene::AddDeletedGameObject(GameObject* _gameObject)
+{
+    m_deletedGameObjects.push_back(_gameObject);
+}
+
+
 void Scene::RemoveGameObject(GameObject* _gameObject)
 {
     bool removed = false;
@@ -307,7 +321,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
             gameObjects[i]->SetId(i - 1);
         }
     }
-    
     std::erase(gameObjects, _gameObject);
 }
 
@@ -380,7 +393,7 @@ std::string Scene::GetFileName(const std::string& _filePath)
     return path.stem().string();
 }
 
-const std::vector<GameObject*>& Scene::GetGameObjects()
+std::vector<GameObject*>& Scene::GetGameObjects()
 {
     return gameObjects;
 }

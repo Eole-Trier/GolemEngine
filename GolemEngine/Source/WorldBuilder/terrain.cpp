@@ -128,9 +128,9 @@ void Terrain::UpdateLights(Shader* _shader)
 {
     _shader->Use();
 
-    _shader->GetFragmentShader()->SetInt("nbrDirLights", SceneManager::GetCurrentScene()->GetDirectionalLights().size());
-    _shader->GetFragmentShader()->SetInt("nbrPointLights", SceneManager::GetCurrentScene()->GetPointLights().size());
-    _shader->GetFragmentShader()->SetInt("nbrSpotLights", SceneManager::GetCurrentScene()->GetSpotLights().size());
+    _shader->GetFragmentShader()->SetInt("nbrDirLights", (int)SceneManager::GetCurrentScene()->GetDirectionalLights().size());
+    _shader->GetFragmentShader()->SetInt("nbrPointLights", (int)SceneManager::GetCurrentScene()->GetPointLights().size());
+    _shader->GetFragmentShader()->SetInt("nbrSpotLights", (int)SceneManager::GetCurrentScene()->GetSpotLights().size());
 
     for (unsigned int i = 0; i < SceneManager::GetCurrentScene()->GetDirectionalLights().size(); ++i)
     {

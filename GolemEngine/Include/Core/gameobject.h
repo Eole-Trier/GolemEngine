@@ -15,7 +15,7 @@
 using json = nlohmann::json;
 
 
-class GOLEM_ENGINE_API GameObject
+class GameObject
 {
 private:
 	size_t m_id;
@@ -29,23 +29,24 @@ public:
 	bool IsSelected;
 
 public:
-	GameObject();
-	GameObject(const std::string& _name, Transform* _transform);
-	virtual ~GameObject();
+	GOLEM_ENGINE_API GameObject();
+	GOLEM_ENGINE_API GameObject(const std::string& _name, Transform* _transform);
+	GOLEM_ENGINE_API virtual ~GameObject();
 
-	void Update();
-	_NODISCARD bool HasComponent(const std::string& _name) const;
+	GOLEM_ENGINE_API void UpdateAllComponents();
+	GOLEM_ENGINE_API void virtual Update();
+	GOLEM_ENGINE_API _NODISCARD bool HasComponent(const std::string& _name) const;
 
-	size_t GetId();
-	void SetId(size_t _id);
+	GOLEM_ENGINE_API size_t GetId();
+	GOLEM_ENGINE_API void SetId(size_t _id);
 
-	void DeleteTransform(Transform* _t);
-	void DeleteLight(Light* _l);
+	GOLEM_ENGINE_API void DeleteTransform(Transform* _t);
+	GOLEM_ENGINE_API void DeleteLight(Light* _l);
 
-	void RemoveComponent(Component* _c);
-	void DeleteAllComponents();
+	GOLEM_ENGINE_API void RemoveComponent(Component* _c);
+	GOLEM_ENGINE_API void DeleteAllComponents();
 
-	void AddComponent(Component* _type);
+	GOLEM_ENGINE_API void AddComponent(Component* _type);
 	template<typename TypeT>
 	void AddComponent(TypeT* _type);
 	template<typename TypeT>
@@ -61,7 +62,7 @@ public:
 
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& _j) const;
+	GOLEM_ENGINE_API void ToJson(json& _j) const;
 };
 
 template<typename TypeT>

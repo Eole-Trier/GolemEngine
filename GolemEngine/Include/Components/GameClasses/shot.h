@@ -7,32 +7,34 @@
 #include "Components/GameClasses/bullet.h"
 #include <vector>
 
+#include "Components/script.h"
 
-class GOLEM_ENGINE_API Shot : public Component
+class GOLEM_ENGINE_API Shot : public Script
 {
 private:
+
 public:
 	Shot();
 	~Shot();
 
+	float radius;
+
+	float interval = 1.5f;
+	float currentInteval;
+	float bulletLifetime = 2.0f;
+
+
+	void Begin() override;
 	void Update() override;
 
-    void instantiate();
+	void instantiateBullet();
 
-	std::vector<Bullet*> bullets;
-
-    float radius = 0.1f;
-
-    void ToJson(json& j) const
-    {
-        j = json
-        {
-
-        };
-    }
+	void ToJson(json& j) const {}
 };
 
 REFL_AUTO(
-    type(Shot),
-    field(radius)
+	type(Shot, bases<Script>),
+	field(radius),
+	field(interval),
+	field(bulletLifetime)
 )

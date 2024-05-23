@@ -20,7 +20,7 @@ class SpotLight;
 class Shader;
 class Mesh;
 
-class GOLEM_ENGINE_API Scene
+class Scene
 {
 private:
 	Guid m_guid;
@@ -34,14 +34,12 @@ private:
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
 	std::vector<Mesh*> m_meshes;
-
+	std::vector<GameObject*> m_deletedGameObjects;
 
 public:
-	std::string m_defaultTexture;
-	std::string m_defaultModel;
-	std::string m_defaultShader;
 	std::string name;
 	std::vector<GameObject*> gameObjects;
+
 	// std::vector<Terrain*> terrains;
 	bool isNewObjectDropped = false;
 	std::string loadingObject;
@@ -49,42 +47,43 @@ public:
 public:
 	// Create a scene by giving it a name and setting _isEmpty to 0 or 1. 0 means the scene will be a default
 	// scene with a few objects to start, 1 means the scene will have nothing in it (useful for creating scenes from files)
-	Scene(std::string _name, bool _makeSceneEmpty);
+	GOLEM_ENGINE_API Scene(std::string _name, bool _makeSceneEmpty);
 
-	void Test(Collider* _collider, Collider* _other);
-	void InitDefaultScene();
-	void InitLights();
-	void Update(Camera* _camera);
-	void UpdateGameObjects(Camera* _camera);
-	void UpdateLights(Shader* _shader);
+	GOLEM_ENGINE_API void Test(Collider* _collider, Collider* _other);
+	GOLEM_ENGINE_API void InitDefaultScene();
+	GOLEM_ENGINE_API void InitLights();
+	GOLEM_ENGINE_API void Update(Camera* _camera);
+	GOLEM_ENGINE_API void UpdateGameObjects(Camera* _camera);
+	GOLEM_ENGINE_API void UpdateLights(Shader* _shader);
 	// Check if the gameobject's name is already in the vector or not.
-	bool IsNameExists(const std::string& _name);
-	void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
-	void CreateNewModel(std::string _filePath, std::string _resourceName = "");
-	void AddLight(Light* _light);
+	GOLEM_ENGINE_API bool IsNameExists(const std::string& _name);
+	GOLEM_ENGINE_API void CreateNewObject(std::string _name, std::string _modelName, std::string _textureName = "", std::string _shaderName = "");
+	GOLEM_ENGINE_API void CreateNewModel(std::string _filePath, std::string _resourceName = "");
+	GOLEM_ENGINE_API void AddLight(Light* _light);
 	
-	const std::vector<DirectionalLight*>& GetDirectionalLights();
-	const std::vector<PointLight*>& GetPointLights();
-	const std::vector<SpotLight*>& GetSpotLights();
-	size_t GetMaxDirectionalLights();
-	size_t GetMaxPointLights();
-	size_t GetMaxSpotLights();
-	std::string GetFileName(const std::string& _filePath);
+	GOLEM_ENGINE_API const std::vector<DirectionalLight*>& GetDirectionalLights();
+	GOLEM_ENGINE_API const std::vector<PointLight*>& GetPointLights();
+	GOLEM_ENGINE_API const std::vector<SpotLight*>& GetSpotLights();
+	GOLEM_ENGINE_API size_t GetMaxDirectionalLights();
+	GOLEM_ENGINE_API size_t GetMaxPointLights();
+	GOLEM_ENGINE_API size_t GetMaxSpotLights();
+	GOLEM_ENGINE_API std::string GetFileName(const std::string& _filePath);
 
-	const std::vector<GameObject*>& GetGameObjects();
+	GOLEM_ENGINE_API std::vector<GameObject*>& GetGameObjects();
 
-	GameObject* GetWorld();
-	Guid GetGuid();
+	GOLEM_ENGINE_API GameObject* GetWorld();
+	GOLEM_ENGINE_API Guid GetGuid();
 
-	void AddGameObject(GameObject* _gameObject);
-	void RemoveGameObject(GameObject* _gameObject);
-	void DeleteLight(Light* _light);
-	void SetGuid(Guid _guid);
+	GOLEM_ENGINE_API void AddGameObject(GameObject* _gameObject);
+	GOLEM_ENGINE_API void AddDeletedGameObject(GameObject* _gameObject);
+	GOLEM_ENGINE_API void RemoveGameObject(GameObject* _gameObject);
+	GOLEM_ENGINE_API void DeleteLight(Light* _light);
+	GOLEM_ENGINE_API void SetGuid(Guid _guid);
 
-	
+
 	// Define serialization and deserialization functions manually because the
 	// macro is not used due to the pointer member variable.
-	void ToJson(json& _j) const
+	GOLEM_ENGINE_API void ToJson(json& _j) const
 	{
 		_j = json
 		{

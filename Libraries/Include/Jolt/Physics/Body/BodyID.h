@@ -69,7 +69,7 @@ public:
 	/// Equals check
 	inline bool				operator == (const BodyID &inRHS) const
 	{
-		return mID == inRHS.mID;
+   		return mID == inRHS.mID;
 	}
 
 	/// Not equals check

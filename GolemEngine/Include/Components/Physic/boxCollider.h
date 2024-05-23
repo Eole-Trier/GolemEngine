@@ -13,8 +13,8 @@ using namespace JPH;
 
 class BoxCollider : public Collider
 {
-private:
-	Vector3 m_size;
+public:
+	Vector3 size;
 
 public:
 	BoxCollider();
@@ -35,5 +35,5 @@ public:
 
 REFL_AUTO(
 	type(BoxCollider, bases<Collider>),
-	field(m_size, Range(0.1f, 100.f))
+	field(size, Range(0.1f, 100.f))
 )

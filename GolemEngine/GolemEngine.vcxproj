@@ -34,9 +34,13 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="glad.c" />
+    <ClInclude Include="Include\Components\GameClasses\playerCamera.h" />
+    <ClInclude Include="Include\Components\GameClasses\playerMovement.h" />
+    <ClInclude Include="Include\Components\Physic\capsuleCollider.h" />
     <ClInclude Include="Include\Components\Physic\meshCollider.h" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\playerCamera.cpp" />
     <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
     <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
@@ -46,8 +50,11 @@
     <ClCompile Include="Source\Components\Light\spotLight.cpp" />
     <ClCompile Include="Source\Components\meshRenderer.cpp" />
     <ClCompile Include="Source\Components\Physic\boxCollider.cpp" />
+    <ClCompile Include="Source\Components\Physic\capsuleCollider.cpp" />
     <ClCompile Include="Source\Components\Physic\collider.cpp" />
     <ClCompile Include="Source\Components\Physic\meshCollider.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\playerMovement.cpp" />
+    <ClCompile Include="Source\Components\script.cpp" />
     <ClCompile Include="Source\Physic\bodyActivationManager.cpp" />
     <ClCompile Include="Source\Physic\broadPhaseLayerInterface.cpp" />
     <ClCompile Include="Source\Physic\contactManager.cpp" />
@@ -130,6 +137,7 @@
     <ClInclude Include="Include\Components\meshRenderer.h" />
     <ClInclude Include="Include\Components\Physic\boxCollider.h" />
     <ClInclude Include="Include\Components\Physic\collider.h" />
+    <ClInclude Include="Include\Components\script.h" />
     <ClInclude Include="Include\Physic\bodyActivationManager.h" />
     <ClInclude Include="Include\Physic\broadPhaseLayerInterface.h" />
     <ClInclude Include="Include\Physic\contactManager.h" />

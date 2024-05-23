@@ -5,14 +5,14 @@
 #include "Core/gameobject.h"
 #include "vector3.h"
 
-class GOLEM_ENGINE_API Movement : public Component
+class Movement : public Component
 {
 private:
 	friend refl_impl::metadata::type_info__<Movement>;
 public:
-	Movement();
-	~Movement();
-	void Update() override;
+    GOLEM_ENGINE_API Movement();
+    GOLEM_ENGINE_API ~Movement();
+    GOLEM_ENGINE_API void Update() override;
 
     float moveSpeed = 1.0f;
     float rotateSpeed = 5;
@@ -26,7 +26,7 @@ public:
 
     bool moveMode = false;
 
-    void ToJson(json& j) const
+    GOLEM_ENGINE_API void ToJson(json& j) const
     {
         j = json
         {

@@ -9,6 +9,8 @@
 #include "Resource/sceneManager.h"
 #include "Components/Physic/boxCollider.h"
 #include "Components/Physic/sphereCollider.h"
+#include "Components/Physic/capsuleCollider.h"
+#include "Components/Physic/meshCollider.h"
 
 class ClassesManager
 {
@@ -20,7 +22,6 @@ private:
 		std::function<bool(GameObject*)> createCondition;
 		std::string name;
 		size_t hashCode;
-		std::vector<size_t> m_parentsHash;
 	};
 
 	template <typename T>
@@ -58,7 +59,7 @@ private:
 	{
 		_NODISCARD static bool CanCreate(GameObject* _obj)
 		{
-			return !_obj->HasComponent("SphereCollider");
+			return !(_obj->HasComponent("SphereCollider") || _obj->HasComponent("MeshCollider") || _obj->HasComponent("CapsuleCollider"));
 		}
 	};
 
@@ -67,7 +68,25 @@ private:
 	{
 		_NODISCARD static bool CanCreate(GameObject* _obj)
 		{
-			return !_obj->HasComponent("BoxCollider");
+			return !(_obj->HasComponent("BoxCollider") || _obj->HasComponent("MeshCollider") || _obj->HasComponent("CapsuleCollider"));
+		}
+	};
+
+	template <>
+	struct CreateCondition<MeshCollider>
+	{
+		_NODISCARD static bool CanCreate(GameObject* _obj)
+		{
+			return !(_obj->HasComponent("BoxCollider") || _obj->HasComponent("SphereCollider") || _obj->HasComponent("CapsuleCollider"));
+		}
+	};
+
+	template <>
+	struct CreateCondition<CapsuleCollider>
+	{
+		_NODISCARD static bool CanCreate(GameObject* _obj)
+		{
+			return !(_obj->HasComponent("BoxCollider") || _obj->HasComponent("SphereCollider") || _obj->HasComponent("MeshCollider"));
 		}
 	};
 

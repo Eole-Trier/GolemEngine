@@ -2,9 +2,6 @@
 
 #include "Core/scene.h"
 
-class EditorUi;
-struct GLFWwindow;
-
 class Editor
 {
 private:

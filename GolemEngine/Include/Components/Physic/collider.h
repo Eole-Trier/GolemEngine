@@ -16,15 +16,14 @@ using namespace JPH;
 class Collider : public Component
 {
 private:
-	bool m_isActivated;
-
-	MotionType m_motionType;
 	Model* m_model = nullptr;
 	const char* m_modelPath;
-	float m_gravityFactor;
 
 public:
 	BodyID id;
+	bool isActivated;
+	MotionType motionType;
+	float gravityFactor;
 	ColliderState colliderState;
 	std::function<void (Collider* _collider, Collider* _other)> onCollisionEnter;
 	std::function<void (Collider* _collider, Collider* _other)> onCollisionStay;
@@ -58,7 +57,7 @@ public:
 
 REFL_AUTO(
 	type(Collider, bases<Component>),
-	field(m_isActivated),
-	field(m_motionType),
-	field(m_gravityFactor)
+	field(isActivated),
+	field(motionType),
+	field(gravityFactor)
 )

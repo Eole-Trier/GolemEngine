@@ -29,6 +29,7 @@ class PhysicSystem
 {
 private:
 	static inline std::vector<Collider*> m_colliders;
+	static constexpr int m_cDecentForceFactor = 1000000;
 
 public:
 	// We simulate the physics world in discrete time steps. 60 Hz is a good rate to update the physics system.
@@ -64,6 +65,8 @@ public:
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateBoxCollider(Vector3 _position, Quaternion _rotation, Vector3 _size, 
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
+	static BodyID CreateCapsuleCollider(Vector3 _position, Quaternion _rotation, float _height, float _radius,
+		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 	static BodyID CreateMeshCollider(const std::vector<Vertex>& _vertices, Vector3 _position, Quaternion _rotation,
 		EMotionType _motionType = EMotionType::Static, ObjectLayer _objectLayer = ObjectLayers::NON_MOVING);
 
@@ -81,10 +84,12 @@ public:
 
 	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
 
+	static void AddVelocity(BodyID _bodyId, Vector3 _velocity);
 	static void AddForce(BodyID _bodyId, Vector3 _force, float _power = 1.0f);
 
 	static void SetSphereShape(BodyID _bodyId, float _radius);
 	static void SetBoxShape(BodyID _bodyId, Vector3 _size);
+	static void SetCapsuleShape(BodyID _bodyId, float _height, float _radius);
 	static void SetConvexHullShape(BodyID _bodyId, std::vector<Vertex>& _vertices);
 
 	static void DeleteBody(BodyID _bodyId);

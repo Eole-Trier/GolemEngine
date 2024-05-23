@@ -111,7 +111,7 @@ void Audio::SetLoop(bool _isLooping)
 
 void Audio::SetVolume(int _volume)
 {
-    m_volume = _volume;
+    m_volume = (float)_volume;
 }
 
 void Audio::StopMusic(bool _isPlaying)

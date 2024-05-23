@@ -11,7 +11,7 @@
 #include "Debug/log.h"
 
 
-class GOLEM_ENGINE_API ResourceManager
+class ResourceManager
 {
 private:
 	// Static pointer which points to the only instance of this class
@@ -24,9 +24,7 @@ private:
 	static inline std::string m_terrainUvShader = "default_terrain_uv_shader";    // For selecting terrain
 	static inline std::string m_terrainComputeShader = "default_terrain_compute_shader";
 	static inline std::string m_defaultGridTerrainTexture = "default_grid_terrain_texture";
-	static inline std::string m_sphereColliderShader = "sphere_collider_shader";
-	static inline std::string m_boxColliderShader = "box_collider_shader";
-	static inline std::string m_meshColliderShader = "mesh_collider_shader";
+	static inline std::string m_colliderShader = "collider_shader";
 	static inline std::string m_skyboxShader = "skybox_shader";
 
 	static inline std::string m_dirtTexture = "dirt_texture";
@@ -38,28 +36,24 @@ private:
 	ResourceManager() {}
 
 public:
-	static ResourceManager* GetInstance();
-	static void CreateAndLoadResources();
-	static void DeleteAllResouces();
+	GOLEM_ENGINE_API static ResourceManager* GetInstance();
+	GOLEM_ENGINE_API static void CreateAndLoadResources();
+	GOLEM_ENGINE_API static void DeleteAllResouces();
 
-	static std::string GetDefaultShader();
-	static std::string GetDefaultTexture();
-	static std::string GetDefaultModel();
-	static std::string GetTerrainShader();
-	static std::string GetTerrainUvShader();
-	static std::string GetTerrainComputeShader();
-	static std::string GetGridTerrainTexture();
-	static std::string GetSkyboxShader();
-	static std::string GetBoxColliderShader();
-	static std::string GetSphereColliderShader();
-	static std::string GetMeshColliderShader();
-
-	static std::string GetDirtTexture();
-	static std::string GetGrassTexture();
-	static std::string GetSnowTexture();
-
-	void ProcessFile(const std::filesystem::path& _filePath);
-	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
+	GOLEM_ENGINE_API static std::string GetDefaultShader();
+	GOLEM_ENGINE_API static std::string GetDefaultTexture();
+	GOLEM_ENGINE_API static std::string GetDefaultModel();
+	GOLEM_ENGINE_API static std::string GetTerrainShader();
+	GOLEM_ENGINE_API static std::string GetTerrainUvShader();
+	GOLEM_ENGINE_API static std::string GetTerrainComputeShader();
+	GOLEM_ENGINE_API static std::string GetGridTerrainTexture();
+	GOLEM_ENGINE_API static std::string GetSkyboxShader();
+	GOLEM_ENGINE_API static std::string GetColliderShader();
+	GOLEM_ENGINE_API static std::string GetDirtTexture();
+	GOLEM_ENGINE_API static std::string GetGrassTexture();
+	GOLEM_ENGINE_API static std::string GetSnowTexture();
+	GOLEM_ENGINE_API void ProcessFile(const std::filesystem::path& _filePath);
+	GOLEM_ENGINE_API void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);
 
 	template<class T>
 	T* Create(std::string _name, std::string _path);
@@ -69,7 +63,7 @@ public:
 	T* Get(std::string _name);
 	void Delete(std::string _name);
 
-	std::unordered_map<std::string, Resource*> GetResources();
+	GOLEM_ENGINE_API std::unordered_map<std::string, Resource*> GetResources();
 };
 
 template<class T>
