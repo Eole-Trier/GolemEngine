@@ -52,6 +52,7 @@ void ContactManager::UpdateAllContacts()
 			collisionData.collider2->OnCollisionEnter(collisionData.collider1);
 			break;
 		case ColliderState::ON_COLLISION_STAY:
+			std::cout << "Collider1 " << collisionData.collider1->owner->name << "Collider2 " << collisionData.collider2->owner->name << std::endl;
 			collisionData.collider1->OnCollisionStay(collisionData.collider2);
 			collisionData.collider2->OnCollisionStay(collisionData.collider1);
 			break;

@@ -125,18 +125,25 @@ void Scene::Update(Camera* _camera)
     Shader* defaultShader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
     defaultShader->Use();
 
-    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+
     if (GolemEngine::GetGameMode() && _camera == GolemEngine::GetPlayerCamera())
     {
         PhysicSystem::PreUpdate();
         PhysicSystem::Update();
         PhysicSystem::PostUpdate();
     }
-    
+
+    UpdateGameObjects(_camera);    // Always at least one gameobject (world)
+
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
         UpdateLights(defaultShader);
     }
+    for (int i = 0; i < m_deletedGameObjects.size(); i++)
+    {
+        delete m_deletedGameObjects[i];
+    }
+    m_deletedGameObjects.clear();
 }
 
 void Scene::UpdateGameObjects(Camera* _camera)
@@ -184,11 +191,7 @@ void Scene::UpdateGameObjects(Camera* _camera)
             }
         }
     }
-    for (int i = 0; i < m_deletedGameObjects.size(); i++)
-    {
-        delete m_deletedGameObjects[i];
-    }
-    m_deletedGameObjects.clear();
+   
 }
 
 void Scene::UpdateLights(Shader* _shader)

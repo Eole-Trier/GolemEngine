@@ -9,7 +9,6 @@
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
 #include "Components/GameClasses/movement.h"
-#include "Components/GameClasses/shot.h"
 #include "WorldBuilder/terrain.h"
 #include "Components/Physic/meshCollider.h"
 #include "Components/Physic/capsuleCollider.h"
@@ -31,7 +30,6 @@ void ClassesManager::AddAllClasses()
 	Add<MeshCollider>();
 	Add<CapsuleCollider>();
 	Add<Movement>();
-	Add<Shot>();
 	Add<PlayerMovement>();
 	Add<PlayerCamera>();
 	Add<Spawner>();
