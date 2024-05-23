@@ -40,7 +40,7 @@ protected:
     Shader* m_shader = nullptr;
     Shader* m_shaderTerrainUv = nullptr;
     ComputeShader* m_computeShader = nullptr;
-    Texture* m_texture = nullptr;
+    Texture* m_texture0 = nullptr;
 
     float m_yMin = 0.0f;    // Store the lowest y value of the noise map to pass it to the shader
     float m_yMax = 0.0f;    // Store the heighest y value of the noise map to pass it to the shader

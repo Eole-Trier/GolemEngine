@@ -61,6 +61,7 @@ void ResourceManager::CreateAndLoadResources()
 
     resourceManager->TraverseDirectoryAndLoadFiles(Tools::FindFolder("Assets"));
 
+
     // Set default shader for general stuff
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader);
     VertexShader* defaultVertexShader = new VertexShader(defaultShader, Tools::FindFile("default.vs").c_str());
@@ -110,28 +111,32 @@ void ResourceManager::CreateAndLoadResources()
     
     Texture* defaultTexture = resourceManager->Create<Texture>(m_defaultTexture, Tools::FindFile("default_texture.png"));
     defaultTexture->Load(defaultTexture->path.c_str());
-
+    
     Texture* defaultGridTerrainTexture = resourceManager->Create<Texture>(m_defaultGridTerrainTexture, Tools::FindFile("grid_2.png"));
     defaultGridTerrainTexture->Load(defaultGridTerrainTexture->path.c_str());
-
+    
     Texture* vikingTexture = resourceManager->Create<Texture>("viking_texture", Tools::FindFile("viking_room.jpg"));
     vikingTexture->Load(vikingTexture->path.c_str());
-
+    
     Texture* allBaldTexture = resourceManager->Create<Texture>("all_bald_texture", Tools::FindFile("all_bald.jpg"));
     allBaldTexture->Load(allBaldTexture->path.c_str());
-
+    
     Model* vikingModel = resourceManager->Create<Model>("viking_room", Tools::FindFile("viking_room.obj"));
     vikingModel->Load(vikingModel->path.c_str());
-
+    
     Model* defaultModel = resourceManager->Create<Model>(m_defaultModel, Tools::FindFile("cube.obj"));
     defaultModel->Load(defaultModel->path.c_str());
-
+    
     // Needed to avoid same resource reference problem for colliders
     Model* sphere = resourceManager->Create<Model>("sphereCollider.obj", Tools::FindFile("sphere.obj"));
     sphere->Load(sphere->path.c_str());
-
+    
     Model* cube = resourceManager->Create<Model>("cubeCollider.obj", Tools::FindFile("cube.obj"));
     cube->Load(cube->path.c_str());
+
+
+    Texture* grassTexture = resourceManager->Create<Texture>("grass_texture", Tools::FindFile("grass.jpg"));
+    grassTexture->Load(grassTexture->path.c_str());
 
     // Skybox Init
     //Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
@@ -202,4 +207,9 @@ std::string ResourceManager::GetSphereColliderShader()
 std::string ResourceManager::GetMeshColliderShader()
 {
     return m_meshColliderShader;
+}
+
+std::string ResourceManager::GetGrassTexture()
+{
+    return m_grassTexture;
 }

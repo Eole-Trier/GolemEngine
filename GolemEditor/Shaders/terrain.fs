@@ -39,7 +39,8 @@ struct SpotLight
     float quadratic; 
 };
 
-uniform sampler2D ourTexture;
+uniform sampler2D ourTexture0;
+// uniform sampler2D ourTexture1;
 uniform bool useTexture;
 uniform int nbrDirLights;
 uniform int nbrPointLights;
@@ -81,7 +82,7 @@ void main()
         for (int i = 0; i < nbrSpotLights; i++)
             light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
         
-        FragColor = light * texture(ourTexture, TexCoord *10);
+        FragColor = light * texture(ourTexture0, TexCoord *10);
     }
     else
     {
