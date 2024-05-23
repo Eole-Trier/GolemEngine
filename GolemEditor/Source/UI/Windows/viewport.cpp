@@ -44,8 +44,7 @@ void Viewport::Update()
     auto viewportOffset = ImGui::GetCursorPos();
 
     auto windowSize = ImGui::GetWindowSize();
-    std::cout << windowSize.x << std::endl;
-    std::cout << windowSize.y << std::endl;
+   
 
     /*std::cout << ImGui::GetWindowPos().x << std::endl;
     std::cout << ImGui::GetWindowPos().y << std::endl;*/
