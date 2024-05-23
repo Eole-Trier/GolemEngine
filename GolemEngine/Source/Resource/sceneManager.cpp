@@ -233,6 +233,7 @@ void SceneManager::SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i)
         // Setup meshRenderer component
         if (_jScene["gameObjects"][_i]["components"][j]["name"] == "meshRenderer")
         {
+            // TODO : load specifique model with correct shader texture and model
             ResourceManager* resourceManager = ResourceManager::GetInstance();
             Shader* shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
             Texture* texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());

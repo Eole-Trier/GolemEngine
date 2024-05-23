@@ -61,7 +61,6 @@ void ResourceManager::CreateAndLoadResources()
 
     resourceManager->TraverseDirectoryAndLoadFiles(Tools::FindFolder("Assets"));
 
-
     // Set default shader for general stuff
     Shader* defaultShader = resourceManager->Create<Shader>(m_defaultShader);
     VertexShader* defaultVertexShader = new VertexShader(defaultShader, Tools::FindFile("default.vs").c_str());
