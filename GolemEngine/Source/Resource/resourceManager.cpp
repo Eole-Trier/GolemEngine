@@ -135,8 +135,14 @@ void ResourceManager::CreateAndLoadResources()
     cube->Load(cube->path.c_str());
 
 
+    Texture* dirtTexture = resourceManager->Create<Texture>("dirt_texture", Tools::FindFile("dirt.png"));
+    dirtTexture->Load(dirtTexture->path.c_str());
+
     Texture* grassTexture = resourceManager->Create<Texture>("grass_texture", Tools::FindFile("grass.jpg"));
     grassTexture->Load(grassTexture->path.c_str());
+
+    Texture* snowTexture = resourceManager->Create<Texture>("snow_texture", Tools::FindFile("snow.jpg"));
+    snowTexture->Load(snowTexture->path.c_str());
 
     // Skybox Init
     //Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
@@ -209,7 +215,17 @@ std::string ResourceManager::GetMeshColliderShader()
     return m_meshColliderShader;
 }
 
+std::string ResourceManager::GetDirtTexture()
+{
+    return m_dirtTexture;
+}
+
 std::string ResourceManager::GetGrassTexture()
 {
     return m_grassTexture;
+}
+
+std::string ResourceManager::GetSnowTexture()
+{
+    return m_snowTexture;
 }

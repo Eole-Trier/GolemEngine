@@ -29,7 +29,9 @@ private:
 	static inline std::string m_meshColliderShader = "mesh_collider_shader";
 	static inline std::string m_skyboxShader = "skybox_shader";
 
+	static inline std::string m_dirtTexture = "dirt_texture";
 	static inline std::string m_grassTexture = "grass_texture";
+	static inline std::string m_snowTexture = "snow_texture";
 
 	static inline std::unordered_map<std::string, Resource*> m_resources;
 private:
@@ -52,7 +54,9 @@ public:
 	static std::string GetSphereColliderShader();
 	static std::string GetMeshColliderShader();
 
+	static std::string GetDirtTexture();
 	static std::string GetGrassTexture();
+	static std::string GetSnowTexture();
 
 	void ProcessFile(const std::filesystem::path& _filePath);
 	void TraverseDirectoryAndLoadFiles(const std::filesystem::path& _directoryPath);

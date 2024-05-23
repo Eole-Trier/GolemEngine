@@ -25,7 +25,9 @@ Terrain::Terrain(std::string _name, Transform* _transform)
     m_computeShader = resourceManager->Get<ComputeShader>(ResourceManager::GetTerrainComputeShader());
 
     m_texture0 = resourceManager->Get<Texture>(ResourceManager::GetGridTerrainTexture());
-    // m_texture1 = resourceManager->Get<Texture>(ResourceManager::GetGrassTexture());
+    m_texture1 = resourceManager->Get<Texture>(ResourceManager::GetDirtTexture());
+    m_texture2 = resourceManager->Get<Texture>(ResourceManager::GetGrassTexture());
+    m_texture3 = resourceManager->Get<Texture>(ResourceManager::GetSnowTexture());
 
     isTerrain = true;
 }
@@ -75,13 +77,24 @@ void Terrain::Draw(Camera* _camera)
     {
         m_shader->GetFragmentShader()->SetBool("useTexture", false);
         m_shader->GetFragmentShader()->SetInt("ourTexture0", -1);
+        m_shader->GetFragmentShader()->SetInt("ourTexture1", -1);
     }
     else
     {
         m_shader->GetFragmentShader()->SetBool("useTexture", true);
+        
         glActiveTexture(GL_TEXTURE0);
         m_texture0->Use();
         m_shader->GetFragmentShader()->SetInt("ourTexture0", 0);
+        glActiveTexture(GL_TEXTURE1);
+        m_texture1->Use();
+        m_shader->GetFragmentShader()->SetInt("ourTexture1", 1);
+        glActiveTexture(GL_TEXTURE2);
+        m_texture2->Use();
+        m_shader->GetFragmentShader()->SetInt("ourTexture2", 2);
+        glActiveTexture(GL_TEXTURE3);
+        m_texture3->Use();
+        m_shader->GetFragmentShader()->SetInt("ourTexture3", 3);
     }
 
     if (!SceneManager::GetCurrentScene()->GetDirectionalLights().empty() ||
