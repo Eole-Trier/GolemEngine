@@ -65,11 +65,12 @@ All functionalities are not listed in the README so feel free to discover them y
   
 - ***Terrain Builder :***  
 You can build a terrain in two different ways. The first method is to create a default flat terrain and set its vertices definition. The second method is to load the terrain from a heightmap.
-  
+![terrain1](./Images/screenshots/screenshot2.png)
 - ***Vertex brush :***  
 To edit the terrain vertices allowing to create mountains and valleys. Modify the radius and force to affect the vertices.~~~~
-  
+![terrain2](./Images/screenshots/screenshot3.png)
+![terrain3](./Images/screenshots/screenshot4.png)
 - ***Terrain Texture Layers :***  
 To apply textures on the terrain.
-
+![terrain4](./Images/screenshots/screenshot6.png)
 Particle System
