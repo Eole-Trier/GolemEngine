@@ -160,6 +160,28 @@ void Camera::ProcessMouseScroll(float _yOffset)
     }
 }
 
+void Camera::MouseMovement(float mousePosX, float mousePosY, float mouseLastPosX, float mouseLastPosY, bool _constraintPitch)
+{
+    float xoffset = mouseLastPosX - mousePosX;
+    float yoffset = mouseLastPosY - mousePosY;
+
+    xoffset *= -m_mouseSensitivity;
+    yoffset *= m_mouseSensitivity;
+
+    m_yaw += xoffset;
+    m_pitch += yoffset;
+
+    if (_constraintPitch)
+    {
+        if (m_pitch > 89.0f)
+            m_pitch = 89.0f;
+        if (m_pitch < -89.0f)
+            m_pitch = -89.0f;
+    }
+
+    UpdateVectors();
+}
+
 Matrix4 Camera::GetViewMatrix()
 {
     return Matrix4::LookAt(position, position + m_front, m_up);

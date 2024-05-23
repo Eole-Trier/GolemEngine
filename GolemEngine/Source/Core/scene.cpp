@@ -31,7 +31,6 @@ Scene::Scene(std::string _name, bool _makeSceneEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
-    ResourceManager::CreateAndLoadResources();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     InitLights();
 

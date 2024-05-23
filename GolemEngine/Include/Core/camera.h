@@ -43,6 +43,9 @@ public:
 	// Process changes on mouse scrool
 	void ProcessMouseScroll(float _yOffset);
 
+	void MouseMovement(float mousePosX, float mousePosY, float mouseLastPosX, float mouseLastPosY, bool _constraintPitch = true);
+
+
 	Matrix4 GetViewMatrix();
 	float GetZoom();
 	float GetNear();

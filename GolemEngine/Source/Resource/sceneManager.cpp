@@ -33,7 +33,6 @@ using json = nlohmann::json;
 
 void SceneManager::Init()
 {
-    ResourceManager::CreateAndLoadResources();
     // Create a framebuffer and pass the scene in it to be used in the viewport 
     GraphicWrapper::CreateFramebuffer(1636, 980);
 

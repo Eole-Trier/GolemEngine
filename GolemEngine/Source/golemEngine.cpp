@@ -17,6 +17,7 @@ void GolemEngine::PerformComputShaderComputations()
 void GolemEngine::Init()
 {
     ClassesManager::AddAllClasses();
+    ResourceManager::CreateAndLoadResources();
     m_physicSystem = new PhysicSystem();
     SceneManager::Init();
     InputManager::Init(WindowWrapper::window);
