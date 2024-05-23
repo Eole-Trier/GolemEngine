@@ -35,11 +35,6 @@ void Viewport::Update()
     SetCamera(GolemEngine::GetCamera());
 
     ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);   // To make the window not movable because otherwise mouse position won't work if out of window
-    if (ImGui::Button("Play"))
-    {
-        g_isPlayTesting = true;
-        GolemEngine::StartGameMode();
-    }
 
     auto viewportOffset = ImGui::GetCursorPos();
 
