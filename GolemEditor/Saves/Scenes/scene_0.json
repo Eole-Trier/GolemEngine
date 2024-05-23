@@ -9,7 +9,7 @@
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "42bd6e20-e3af-9734-eea5-9872d13083f5",
+            "guid": "1987ea79-371c-d18e-0000-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -58,7 +58,7 @@
           "name": "directionalLight"
         }
       ],
-      "guid": "0f5b0108-631d-75d6-4547-95c27126068b",
+      "guid": "dad08e95-d6cd-49b7-0000-cccccccccccc",
       "isTerrain": false,
       "name": "World"
     },
@@ -69,9 +69,9 @@
             "globalPosition": {
               "x": 0.0,
               "y": 0.0,
-              "z": 0.0
+              "z": -5.0
             },
-            "guid": "a80b7e8a-31a2-186d-f47d-0d5ea4061040",
+            "guid": "fc08a1d6-935d-379a-0000-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 0.0,
@@ -92,23 +92,25 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Meshes\\viking_room.obj",
+            "modelPath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\viking_room.jpg"
+            "texturePath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
           },
           "name": "meshRenderer"
         },
         {
           "data": {
             "isLooping": false,
-            "isPlaying": false,
-            "musicPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Audio\\music_01.wav",
+            "isPlaying": true,
+            "musicPath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Audio\\music_01.wav",
             "volume": 1.0
           },
           "name": "audio"
-        }
+        },
+        null,
+        null
       ],
-      "guid": "e923dc92-6b14-0ab2-1ffe-ae77eba8e0b3",
+      "guid": "59d0849b-ba7e-ff4b-0000-cccccccccccc",
       "isTerrain": false,
       "name": "viking"
     },
@@ -118,10 +120,10 @@
           "data": {
             "globalPosition": {
               "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "y": -3.0,
+              "z": -5.0
             },
-            "guid": "3ffa6d8f-808b-8661-8fb6-0070d2578d9e",
+            "guid": "4b03be1a-4fd4-7331-0000-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": -3.0,
@@ -142,14 +144,14 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
+            "modelPath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\aoi_todo.jpg"
+            "texturePath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "372599fb-5394-7798-5557-0f005a2b3d59",
+      "guid": "b04f2975-b461-5928-0000-cccccccccccc",
       "isTerrain": false,
       "name": "viking2"
     },
@@ -159,10 +161,10 @@
           "data": {
             "globalPosition": {
               "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
+              "y": 3.0,
+              "z": -5.0
             },
-            "guid": "53b37dc4-dee6-d965-5157-a79c2b1bbf46",
+            "guid": "ded829bf-7ada-fe61-0000-cccccccccccc",
             "localPosition": {
               "x": 0.0,
               "y": 3.0,
@@ -183,15 +185,14 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
+            "modelPath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\aoi_todo.jpg"
+            "texturePath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
           },
           "name": "meshRenderer"
-        },
-        null
+        }
       ],
-      "guid": "24634678-75d0-5577-6b89-0719b5a95d79",
+      "guid": "ccfbf3af-97cb-b95f-0000-cccccccccccc",
       "isTerrain": false,
       "name": "ball_bald"
     },
@@ -200,11 +201,11 @@
         {
           "data": {
             "globalPosition": {
-              "x": 0.0,
+              "x": -3.0,
               "y": 0.0,
               "z": 0.0
             },
-            "guid": "3553477e-952d-ecb4-b870-382979d4c0bb",
+            "guid": "c333bb1b-ed8d-f7e7-0000-cccccccccccc",
             "localPosition": {
               "x": -3.0,
               "y": 0.0,
@@ -225,18 +226,18 @@
         },
         {
           "data": {
-            "modelPath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\sphere.obj",
+            "modelPath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Basics\\cube.obj",
             "shaderPath": "",
-            "texturePath": "C:\\Users\\m.leguevacques\\Documents\\Projects\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\One_For_All\\Textures\\all_bald.jpg"
+            "texturePath": "C:\\dev\\2023_gp_2027_gp_2027_projet_moteur-golem\\GolemEditor\\Assets\\Icons\\default_texture.png"
           },
           "name": "meshRenderer"
         }
       ],
-      "guid": "78603e36-fb6e-2b01-0222-b0857635b1f1",
+      "guid": "a6f3c432-a5ca-10f5-0000-cccccccccccc",
       "isTerrain": false,
       "name": "ball_bald2"
     }
   ],
-  "guid": "354a3c9c-16e8-9d51-c805-d624b33ff38e",
+  "guid": "810de42c-6925-9bf5-1a42-9c4be7348404",
   "name": "scene_0"
 }

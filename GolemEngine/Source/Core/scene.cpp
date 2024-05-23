@@ -31,7 +31,6 @@ Scene::Scene(std::string _name, bool _makeSceneEmpty)
     : name(_name)
 {
     SceneManager::SetCurrentScene(this);
-    ResourceManager::CreateAndLoadResources();
     m_world = new GameObject("World", new Transform(Vector3(0, 0, 0), Vector3(0), Vector3(1), nullptr));
     InitLights();
 
@@ -127,10 +126,12 @@ void Scene::Update(Camera* _camera)
     defaultShader->Use();
 
     UpdateGameObjects(_camera);    // Always at least one gameobject (world)
-
-    PhysicSystem::PreUpdate();
-    PhysicSystem::Update();
-    PhysicSystem::PostUpdate();
+    if (GolemEngine::GetGameMode() && _camera == GolemEngine::GetPlayerCamera())
+    {
+        PhysicSystem::PreUpdate();
+        PhysicSystem::Update();
+        PhysicSystem::PostUpdate();
+    }
     
     if (!m_dirLights.empty() || !m_pointLights.empty() || !m_spotLights.empty())
     {
@@ -161,10 +162,11 @@ void Scene::UpdateGameObjects(Camera* _camera)
             meshRenderer->Draw(_camera);
         }
 
-        Collider* collider = gameObjects[i]->GetComponent<Collider>();
-        if (collider && collider->owner->IsSelected)
+        if (!GolemEngine::GetGameMode())
         {
-            collider->Draw(_camera);
+            Collider* collider = gameObjects[i]->GetComponent<Collider>();
+            if (collider && collider->owner->IsSelected)
+                collider->Draw(_camera);
         }
 
         if (gameObjects[i]->isTerrain)
@@ -182,6 +184,11 @@ void Scene::UpdateGameObjects(Camera* _camera)
             }
         }
     }
+    for (int i = 0; i < m_deletedGameObjects.size(); i++)
+    {
+        delete m_deletedGameObjects[i];
+    }
+    m_deletedGameObjects.clear();
 }
 
 void Scene::UpdateLights(Shader* _shader)
@@ -293,6 +300,12 @@ void Scene::CreateNewModel(std::string _filePath, std::string _resourceName)
     }
 }
 
+void Scene::AddDeletedGameObject(GameObject* _gameObject)
+{
+    m_deletedGameObjects.push_back(_gameObject);
+}
+
+
 void Scene::RemoveGameObject(GameObject* _gameObject)
 {
     bool removed = false;
@@ -307,7 +320,6 @@ void Scene::RemoveGameObject(GameObject* _gameObject)
             gameObjects[i]->SetId(i - 1);
         }
     }
-    
     std::erase(gameObjects, _gameObject);
 }
 

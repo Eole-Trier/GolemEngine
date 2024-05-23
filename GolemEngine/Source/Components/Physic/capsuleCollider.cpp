@@ -12,7 +12,7 @@
 #include "Wrappers/windowWrapper.h"
 
 CapsuleCollider::CapsuleCollider()
-	: m_height(1.0f), m_radius(1.0f)
+	: height(1.0f), radius(1.0f)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("capsuleCollider.obj");
@@ -20,7 +20,7 @@ CapsuleCollider::CapsuleCollider()
 }
 
 CapsuleCollider::CapsuleCollider(float _height, float _radius)
-	: m_height(_height), m_radius(_radius)
+	: height(_height), radius(_radius)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 	SetModelPath("capsuleCollider.obj");
@@ -33,7 +33,7 @@ CapsuleCollider::~CapsuleCollider()
 
 void CapsuleCollider::Begin()
 {
-	id = PhysicSystem::CreateCapsuleCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), m_height, m_radius);
+	id = PhysicSystem::CreateCapsuleCollider(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), height, radius);
 }
 
 void CapsuleCollider::PreUpdate()
@@ -44,7 +44,7 @@ void CapsuleCollider::PreUpdate()
 void CapsuleCollider::Update()
 {
 	Collider::Update();
-	PhysicSystem::SetCapsuleShape(id, m_height, m_radius);
+	PhysicSystem::SetCapsuleShape(id, height, radius);
 }
 
 void CapsuleCollider::PostUpdate()
@@ -56,16 +56,14 @@ void CapsuleCollider::Draw(Camera* _camera)
 {
 	ResourceManager* resourceManager = ResourceManager::GetInstance();
 
-	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetCapsuleColliderShader());
+	Shader* shader = resourceManager->Get<Shader>(resourceManager->GetColliderShader());
 	Model* model = GetModel();
 
 	shader->Use();
 
 	Matrix4 view = _camera->GetViewMatrix();
 	Matrix4 projection = Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar());
-	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(m_radius, m_height, m_radius));
-	shader->GetVertexShader()->SetFloat("height", m_height);
-	shader->GetVertexShader()->SetFloat("radius", m_radius);
+	Matrix4 modelMat = Matrix4::TRS(owner->transform->localPosition, Quaternion::EulerToQuaternion(owner->transform->rotation), Vector3(radius, height, radius));
 	shader->GetVertexShader()->SetMat4("model", modelMat);
 	shader->GetVertexShader()->SetMat4("view", view);
 	shader->GetVertexShader()->SetMat4("projection", projection);

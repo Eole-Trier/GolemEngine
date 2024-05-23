@@ -308,11 +308,16 @@ void PhysicSystem::SetGravityFactor(BodyID _bodyId, float _gravityFactor)
 	bodyInterface.SetGravityFactor(_bodyId, _gravityFactor);
 }
 
+void PhysicSystem::AddVelocity(BodyID _bodyId, Vector3 _velocity)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	bodyInterface.AddLinearVelocity(_bodyId, ToJph(_velocity));
+}
 
 void PhysicSystem::AddForce(BodyID _bodyId, Vector3 _force, float _power)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
-	bodyInterface.AddForce(_bodyId, ToJph(_force * _power));
+	bodyInterface.AddForce(_bodyId, ToJph(_force * _power * m_cDecentForceFactor));
 }
 
 void PhysicSystem::SetSphereShape(BodyID _bodyId, float _radius)
