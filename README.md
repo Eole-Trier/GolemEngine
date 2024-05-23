@@ -63,23 +63,13 @@ All functionalities are not listed in the README so feel free to discover them y
   
 ### World Builder  
   
-Features *(current)* :
 - ***Terrain Builder :***  
 You can build a terrain in two different ways. The first method is to create a default flat terrain and set its vertices definition. The second method is to load the terrain from a heightmap.
+  
+- ***Vertex brush :***  
+To edit the terrain vertices allowing to create mountains and valleys. Modify the radius and force to affect the vertices.~~~~
+  
+- ***Terrain Texture Layers :***  
+To apply textures on the terrain.
 
-> Plan to be implemented
-> > World Builder related
-> > - ***Terrain Vertex Brush :***  
-> > To edit the terrain vertices allowing to create mountains and valleys.
-> > - ***Terrain Texture Brush :***  
-> > To apply textures on the terrain.
-> > - ***Terrain Instancing Brush :***  
-> > To instance any type of object on the terrain, like vegetation, rocks and more.
-> > - ***Weather Tool :***  
-> > To add wind and weather to the terrain which could be shown in game or (for the wind) could impact the orientation of instanced objects.  
-> 
-> > Map Making Tool
-> 
-> > Toon Shading Tool
-> 
-> > Particle System
+Particle System
