@@ -39,7 +39,7 @@ void Spawner::Update()
 	if(GolemEngine::GetGameMode())
 		interval -= GolemEngine::GetDeltaTime();
 
-	if (interval <= 0)
+	if (interval <= 0 && spawnCount <= spawnLimit)
 	{
 		Spawn(name);
 		interval = spawnInterval;
@@ -48,23 +48,6 @@ void Spawner::Update()
 
 void Spawner::Spawn(const std::string& _name)
 {
-	//ResourceManager* resourceManager = ResourceManager::GetInstance();
-	//Transform* transform = new Transform(owner->transform);
-	//GameObject* gameObject = new GameObject(_name, transform);
-	//Texture* texture;
-	//Model* model;
-	//Shader* shader;
-	//Mesh* mesh;
-	//texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
-	//shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-	//model = resourceManager->Get<Model>("sphere.obj");
-	//mesh = new Mesh(model, texture, shader);
-	//gameObject->AddComponent(new MeshRenderer(mesh));
-	//BoxCollider* boxCollider = new BoxCollider();
-	//gameObject->AddComponent(boxCollider);
-	//boxCollider->Begin();
-	//boxCollider->motionType = MotionType::Dynamic;
-	//boxCollider->isActivated = true;
-	//boxCollider->gravityFactor = 0;
 	Enemy* enemy = new Enemy(owner->transform->localPosition, _name);
+	spawnCount += 1;
 }

@@ -18,8 +18,8 @@ public:
 	void Begin() override;
 	void Update() override;
 
-	int spawnRange;
-	int spawnCount = 10;
+	int spawnLimit = 10;
+	int spawnCount = 0;
 	float interval;
 	float spawnInterval = 1.0f;
 
@@ -30,7 +30,7 @@ public:
 
 REFL_AUTO(
 	type(Spawner, bases<Script>),
+	field(spawnLimit),
 	field(spawnCount),
-	field(spawnRange),
 	field(spawnInterval)
 )
