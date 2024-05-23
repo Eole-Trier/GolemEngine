@@ -12,7 +12,6 @@ PlayerCamera::~PlayerCamera()
 
 void PlayerCamera::Begin()
 {
-
 }
 
 void PlayerCamera::Update()

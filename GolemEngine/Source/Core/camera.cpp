@@ -67,11 +67,6 @@ void Camera::ProcessKeyboardInput(float _deltaTime)
     }
 }
 
-void Camera::ProcessMouseInput()
-{
-    // Do stuff
-}
-
 void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch, Vector4 _windowDimension, int _mousePosX, int _mousePosY)
 {
     // Due to imgui docking branched being used, the glfw function to disable the cursor allowing to move the mouse in the viewport in inifite x directions doesn't seem to work
