@@ -100,6 +100,17 @@ void main()
         } else {
             finalTexture = tex3;
         }
+        
+        float normalizedHeight = 0.0;
+        
+        if (maxY > 0.0) {
+            normalizedHeight = FragPos.y / maxY; // Normalize the y-coordinate of the fragment position for positive maxY
+        } else if (minY < 0.0) {
+            normalizedHeight = FragPos.y / minY; // Normalize the y-coordinate of the fragment position for negative maxY
+        }
+
+        vec4 gradientColor = vec4(normalizedHeight, normalizedHeight, normalizedHeight, 1.0);
+        finalTexture *= gradientColor;
 
         FragColor = light * finalTexture;
     }

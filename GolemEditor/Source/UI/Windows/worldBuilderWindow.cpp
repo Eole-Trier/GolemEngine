@@ -60,7 +60,6 @@ void WorldBuilderWindow::Update()
         if (WorldBuilder::brush->isActive)
         {
             ImGui::Text("Tetxure layers");
-            std::cout << "ymax " << selectedTerrain->yMax << std::endl;
             ImGui::SliderFloat("texture1 level", &WorldBuilder::texture1Level, 0.0f, selectedTerrain->yMax);
             ImGui::SliderFloat("texture2 level", &WorldBuilder::texture2Level, 0.0f, selectedTerrain->yMax);
         }

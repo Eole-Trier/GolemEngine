@@ -35,7 +35,7 @@ void main()
         if (distance < brushRadius)
         {
             float influence = 1.0 - (distance / brushRadius);
-            vIn.position.y += influence;
+            vIn.position.y += influence * brushForce;
         }
     }
     
