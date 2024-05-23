@@ -6,7 +6,6 @@
 #include "Components/Light/directionalLight.h"
 #include "Components/audio.h"
 #include "Components/GameClasses/movement.h"
-#include "Components/GameClasses/shot.h"
 
 const char* DisplayType::m_addComponentPopupId = "Components";
 const char* DisplayType::m_addComponentButtonName = "Add Component";

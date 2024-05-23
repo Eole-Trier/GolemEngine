@@ -73,8 +73,6 @@
     <ClCompile Include="Source\WorldBuilder\defaultTerrain.cpp" />
     <ClCompile Include="Source\WorldBuilder\noisemapTerrain.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />
-    <ClCompile Include="Source\Components\GameClasses\shot.cpp" />
-    <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\WorldBuilder\brush.cpp" />
     <ClCompile Include="Source\Components\Physic\capsuleCollider.cpp" />
     <ClCompile Include="Source\Components\GameClasses\playerMovement.cpp" />
@@ -189,8 +187,6 @@
     <ClInclude Include="Include\WorldBuilder\worldBuilder.h" />
     <ClInclude Include="Include\Utils\tools.h" />
     <ClInclude Include="Include\Components\GameClasses\movement.h" />
-    <ClInclude Include="Include\Components\GameClasses\shot.h" />
-    <ClInclude Include="Include\Components\GameClasses\bullet.h" />
     <ClInclude Include="Include\WorldBuilder\brush.h" />
     <ClInclude Include="Include\Components\Physic\capsuleCollider.h" />
     <ClInclude Include="Include\Components\script.h" />
