@@ -120,13 +120,6 @@ void ResourceManager::CreateAndLoadResources()
 
     Model* capsule = resourceManager->Create<Model>("capsuleCollider.obj", Tools::FindFile("capsule.obj"));
     capsule->Load(capsule->path.c_str());
-
-    // Skybox Init
-    //Shader* skyboxShader = resourceManager->Create<Shader>("skybox_shader", Tools::FindFile("skybox.vs"));
-    //skyboxShader->SetVertexAndFragmentShader(skyboxShader->path.c_str(), Tools::FindFile("skybox.fs").c_str());
-    //Skybox::GetInstance().SetTexture();
-    //skyboxShader->Use();
-    //skyboxShader->SetInt("skybox", 0);
 }
 
 void ResourceManager::DeleteAllResouces()

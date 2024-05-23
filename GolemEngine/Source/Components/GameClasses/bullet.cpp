@@ -1,10 +1,12 @@
 #include <string>
 #include <iostream>
+#include <typeinfo>
 #include "Components/GameClasses/bullet.h"
 #include "Components/GameClasses/movement.h"
 #include "Components/meshRenderer.h"
 #include "Components/component.h"
 #include "Components/Physic/sphereCollider.h"
+#include "Components/GameClasses/enemy.h"
 #include "Core/mesh.h"
 #include "Core/scene.h"
 #include "Core/gameobject.h"
@@ -46,6 +48,7 @@ Bullet::Bullet(Vector3 _initPosition, float _lifeTime, float _radius, Vector3 _d
 	AddComponent(m_sphereCollider);
 	m_sphereCollider->Begin();
 	m_sphereCollider->radius = _radius;
+	m_sphereCollider->gravityFactor = 0;
 	m_sphereCollider->motionType = MotionType::Dynamic;
 	m_sphereCollider->isActivated = true;
 	m_sphereCollider->onCollisionEnter = [this](Collider* _collider, Collider* _other) -> void { FunctionThatIGiveToACollider(m_sphereCollider, _other); };
@@ -66,6 +69,14 @@ void Bullet::FunctionThatIGiveToACollider(Collider* _collider, Collider* _other)
 {
 	//_other->owner->~GameObject();
 	//SceneManager::GetCurrentScene()->AddDeletedGameObject(_other->owner);
-	_other->owner->GetComponent<MeshRenderer>()->~MeshRenderer();
-	_other->owner->GetComponent<Collider>()->~Collider();
+	if (dynamic_cast<Enemy*>(_other->owner))
+	{
+		_other->owner->GetComponent<MeshRenderer>()->~MeshRenderer();
+		_other->owner->GetComponent<Collider>()->~Collider();
+		SceneManager::GetCurrentScene()->AddDeletedGameObject(this);
+	}
+	else
+	{
+		SceneManager::GetCurrentScene()->AddDeletedGameObject(this);
+	}
 }

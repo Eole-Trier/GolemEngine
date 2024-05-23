@@ -34,13 +34,17 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="External\imgui\ImSequencer.cpp" />
     <ClCompile Include="glad.c" />
+    <ClInclude Include="Include\Components\GameClasses\enemy.h" />
     <ClInclude Include="Include\Components\GameClasses\playerCamera.h" />
     <ClInclude Include="Include\Components\GameClasses\playerMovement.h" />
+    <ClInclude Include="Include\Components\GameClasses\spawner.h" />
     <ClInclude Include="Include\Components\Physic\capsuleCollider.h" />
     <ClInclude Include="Include\Components\Physic\meshCollider.h" />
     <ClCompile Include="Source\Components\audio.cpp" />
     <ClCompile Include="Source\Components\component.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\enemy.cpp" />
     <ClCompile Include="Source\Components\GameClasses\playerCamera.cpp" />
+    <ClCompile Include="Source\Components\GameClasses\spawner.cpp" />
     <ClCompile Include="Source\Components\Light\directionalLight.cpp" />
     <ClCompile Include="Source\Components\GameClasses\bullet.cpp" />
     <ClCompile Include="Source\Components\GameClasses\movement.cpp" />

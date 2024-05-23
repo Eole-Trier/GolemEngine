@@ -15,6 +15,7 @@
 #include "Components/Physic/capsuleCollider.h"
 #include "Components/GameClasses/playerMovement.h"
 #include "Components/GameClasses/playerCamera.h"
+#include "Components/GameClasses/spawner.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -33,6 +34,7 @@ void ClassesManager::AddAllClasses()
 	Add<Shot>();
 	Add<PlayerMovement>();
 	Add<PlayerCamera>();
+	Add<Spawner>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

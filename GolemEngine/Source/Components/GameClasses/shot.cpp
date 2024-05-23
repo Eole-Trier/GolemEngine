@@ -27,6 +27,7 @@ void Shot::Update()
 		if (InputManager::IsKeyPressed(KEY_SPACE))
 		{
 			instantiateBullet();
+			currentInteval = interval;
 		}
 	}
 }
@@ -34,15 +35,5 @@ void Shot::Update()
 void Shot::instantiateBullet()
 {
 	std::string name = "bullet";
-	// Using the rename functions
-	int suffix = 2; // start at 2 because of two objects having the same name
-	std::string originalName = name;
-	while (SceneManager::GetCurrentScene()->IsNameExists(name))
-	{
-		name = originalName + "_" + std::to_string(suffix++);
-	}
-
 	Bullet* bullet = new Bullet(owner->transform->localPosition, bulletLifetime, radius, owner->transform->GetForward(),"", name);
-
-	currentInteval = interval;
 }
