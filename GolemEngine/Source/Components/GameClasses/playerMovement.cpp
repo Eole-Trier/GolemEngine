@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Core/gameobject.h"
+#include "golemEngine.h"
 
 PlayerMovement::PlayerMovement()
 {
@@ -29,14 +30,27 @@ void PlayerMovement::Update()
 
 void PlayerMovement::MoveArround()
 {
-	if (InputManager::IsKeyPressed(KEY_W))
-		PhysicSystem::AddVelocity(m_capsuleCollider->id, Vector3(0.f, 0.f, -0.1f));
-	if (InputManager::IsKeyPressed(KEY_S))
-		PhysicSystem::AddVelocity(m_capsuleCollider->id, Vector3(0.f, 0.f, 0.1f));
-	if (InputManager::IsKeyPressed(KEY_A))
-		PhysicSystem::AddVelocity(m_capsuleCollider->id, Vector3(-0.1f, 0.f, 0.f));
-	if (InputManager::IsKeyPressed(KEY_D))
-		PhysicSystem::AddVelocity(m_capsuleCollider->id, Vector3(0.1f, 0.f, 0.f));
+    Vector3 frontVector = GolemEngine::GetPlayerCamera()->GetFront();
+    Vector3 rightVector = GolemEngine::GetPlayerCamera()->GetRight();
+
+    if (InputManager::IsKeyPressed(KEY_W))
+        movement += frontVector;
+    if (InputManager::IsKeyPressed(KEY_S))
+        movement += Vector3(0) - frontVector;
+    if (InputManager::IsKeyPressed(KEY_A))
+        movement += Vector3(0) - rightVector;
+    if (InputManager::IsKeyPressed(KEY_D))
+        movement += rightVector;
+
+    movement = movement.Normalize();
+
+    Vector3 current_velocity = PhysicSystem::GetVelocity(m_capsuleCollider->id);
+    Vector3 desired_velocity = movement * moveSpeed;
+    desired_velocity.y = current_velocity.y;
+    Vector3 new_velocity = current_velocity * 0.75f + desired_velocity * 0.25f;
+    PhysicSystem::SetVelocity(m_capsuleCollider->id, new_velocity);
+
+    movement = Vector3(0);
 }
 
 

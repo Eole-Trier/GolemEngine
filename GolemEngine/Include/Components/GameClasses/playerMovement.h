@@ -10,6 +10,8 @@ private:
 	CapsuleCollider* m_capsuleCollider;
 
 public:
+	Vector3 movement;
+	float moveSpeed = 1.0f;
 	float bounceForce = 5.0f;
 public:
 	PlayerMovement();
@@ -26,5 +28,6 @@ public:
 
 REFL_AUTO(
 	type(PlayerMovement, bases<Script>),
+	field(moveSpeed),
 	field(bounceForce)
 )

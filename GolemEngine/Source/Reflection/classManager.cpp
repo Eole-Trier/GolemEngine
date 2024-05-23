@@ -9,12 +9,12 @@
 #include "Components/Physic/sphereCollider.h"
 #include "Components/Physic/boxCollider.h"
 #include "Components/GameClasses/movement.h"
-#include "Components/GameClasses/shot.h"
 #include "WorldBuilder/terrain.h"
 #include "Components/Physic/meshCollider.h"
 #include "Components/Physic/capsuleCollider.h"
 #include "Components/GameClasses/playerMovement.h"
 #include "Components/GameClasses/playerCamera.h"
+#include "Components/GameClasses/spawner.h"
 
 void ClassesManager::AddAllClasses()
 {
@@ -30,9 +30,9 @@ void ClassesManager::AddAllClasses()
 	Add<MeshCollider>();
 	Add<CapsuleCollider>();
 	Add<Movement>();
-	Add<Shot>();
 	Add<PlayerMovement>();
 	Add<PlayerCamera>();
+	Add<Spawner>();
 }
 
 void ClassesManager::Display(size_t _hashCode, void* _object)

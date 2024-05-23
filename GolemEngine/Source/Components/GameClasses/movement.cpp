@@ -1,10 +1,10 @@
 #include "Components/GameClasses/movement.h"
-#include "Components/GameClasses/bullet.h"
 #include <iostream>
 #include "Core/gameobject.h"
 #include "golemEngine.h"
 #include "Inputs/inputManager.h"
 #include "utils.h"
+
 Movement::Movement()
     :front(0.0f, 0.0f, -1.0f),
     worldUp(0.0f, 1.0f, 0.0f)

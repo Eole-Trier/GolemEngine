@@ -6,6 +6,10 @@
 #include "Inputs/inputManager.h"
 #include "utils.h"
 #include "Debug/log.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
+#include "imgui.h"
 
 
 const int SCREEN_SIZE_LEFT_X_BORDER_MARGIN = 20;
@@ -61,11 +65,6 @@ void Camera::ProcessKeyboardInput(float _deltaTime)
     {
         position += m_up * m_movementSpeed * _deltaTime;
     }
-}
-
-void Camera::ProcessMouseInput()
-{
-    // Do stuff
 }
 
 void Camera::ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch, Vector4 _windowDimension, int _mousePosX, int _mousePosY)
@@ -158,28 +157,6 @@ void Camera::ProcessMouseScroll(float _yOffset)
     {
         m_movementSpeed += (float)_yOffset;
     }
-}
-
-void Camera::MouseMovement(float mousePosX, float mousePosY, float mouseLastPosX, float mouseLastPosY, bool _constraintPitch)
-{
-    float xoffset = mouseLastPosX - mousePosX;
-    float yoffset = mouseLastPosY - mousePosY;
-
-    xoffset *= -m_mouseSensitivity;
-    yoffset *= m_mouseSensitivity;
-
-    m_yaw += xoffset;
-    m_pitch += yoffset;
-
-    if (_constraintPitch)
-    {
-        if (m_pitch > 89.0f)
-            m_pitch = 89.0f;
-        if (m_pitch < -89.0f)
-            m_pitch = -89.0f;
-    }
-
-    UpdateVectors();
 }
 
 Matrix4 Camera::GetViewMatrix()

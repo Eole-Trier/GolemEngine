@@ -20,24 +20,31 @@ PlayScene::~PlayScene()
 
 void PlayScene::Update()
 {
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 1, 0, 1));
+
+    ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove);
+       
+    if (ImGui::Button("Play"))
+    {
+        g_isPlayTesting = true;
+        GolemEngine::StartGameMode();
+    }
+    
+    Vector4 windowDimensions(ImGui::GetWindowDockNode()->Pos.x, ImGui::GetWindowDockNode()->Size.x, ImGui::GetWindowDockNode()->Pos.y, ImGui::GetWindowDockNode()->Size.y);
+
+
+    ImGui::Image((ImTextureID)GraphicWrapper::GetPlaySceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
     if (g_isPlayTesting)
     {
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 1, 0, 1));
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
-
-        ImGui::Begin("Playing", nullptr, window_flags);
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-        GolemEngine::GetPlayerCamera()->MouseMovement(ImGui::GetMousePos().x, ImGui::GetMousePos().y, m_lastMousepos.x, m_lastMousepos.y);
+        GolemEngine::GetPlayerCamera()->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, windowDimensions, (int)ImGui::GetMousePos().x, (int)ImGui::GetMousePos().y);
         if (ImGui::SmallButton("X") || InputManager::IsKeyPressed(KEY_ESCAPE))
         {
             g_isPlayTesting = false;
             GolemEngine::StopGameMode();
         }
-
-        ImGui::Image((ImTextureID)GraphicWrapper::GetPlaySceneId(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-
-        ImGui::End();
-        ImGui::PopStyleColor();
     }
+    ImGui::PopStyleColor();
+    ImGui::End();
     m_lastMousepos = Vector2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 }

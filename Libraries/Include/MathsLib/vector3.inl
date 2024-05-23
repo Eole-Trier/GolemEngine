@@ -39,7 +39,6 @@ Vector3 Vector3::Normalize() const
     }
     else
     {
-        std::cout << "ERROR: Divide by 0 is illegal." << std::endl;
         return Vector3(0, 0, 0);
     }
 }

@@ -82,6 +82,9 @@ public:
 	static void SetVelocity(BodyID _bodyId, Vector3 _velocity);
 	static void SetGravityFactor(BodyID _bodyId, float _gravityFactor);
 
+	static Vector3 GetVelocity(BodyID _bodyId);
+
+
 	static void UpdatePosition(BodyID _bodyId, Vector3& _position);
 
 	static void AddVelocity(BodyID _bodyId, Vector3 _velocity);

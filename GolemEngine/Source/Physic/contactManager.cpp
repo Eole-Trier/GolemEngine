@@ -20,7 +20,11 @@ void ContactManager::OnContactAdded(const Body& inBody1, const Body& inBody2, co
 		.collider2 = c2,
 		.colliderState = ColliderState::ON_COLLISION_ENTER
 	};
-	m_collisions.push_back(collisionData);
+	
+	{
+		std::scoped_lock(m_mutex);
+		m_collisions.push_back(collisionData); 
+	}
 }
 
 void ContactManager::OnContactPersisted(const Body& inBody1, const Body& inBody2, const ContactManifold& inManifold, ContactSettings& ioSettings)
@@ -32,7 +36,10 @@ void ContactManager::OnContactPersisted(const Body& inBody1, const Body& inBody2
 		.collider2 = c2,
 		.colliderState = ColliderState::ON_COLLISION_STAY
 	};
-	m_collisions.push_back(collisionData);
+	{
+		std::scoped_lock(m_mutex);
+		m_collisions.push_back(collisionData);
+	}
 }
 
 void ContactManager::OnContactRemoved(const SubShapeIDPair& inSubShapePair)

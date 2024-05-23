@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mutex>
+
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Collision/ContactListener.h>
 
@@ -26,6 +28,7 @@ struct CollisionData
 class ContactManager : public ContactListener
 {
 private:
+	std::mutex m_mutex;
 	std::vector<CollisionData> m_collisions;
 
 public:
