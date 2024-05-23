@@ -60,11 +60,11 @@ public:
     GOLEM_ENGINE_API ~Terrain();
 
     GOLEM_ENGINE_API void SetupMesh();
-    GOLEM_ENGINE_API void UseComputeShader();
+    GOLEM_ENGINE_API void UseComputeShader(Vector2 _mousePos);
     GOLEM_ENGINE_API void Draw(Camera* _camera);
     GOLEM_ENGINE_API void UpdateLights(Shader* _shader);
     GOLEM_ENGINE_API void CalculateNormals();
-    GOLEM_ENGINE_API void RetrieveComputeData();
+    GOLEM_ENGINE_API void RetrieveComputeData(Camera* _camera);
     GOLEM_ENGINE_API void UpdateVertices(Camera* _camera);
     GOLEM_ENGINE_API std::vector<Vertex> GetVertices();
     GOLEM_ENGINE_API std::vector<VertexGpu> GetVerticesGpu();

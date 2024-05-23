@@ -13,6 +13,7 @@
 #include "Wrappers/windowWrapper.h"
 #include "Utils/viewportTools.h"
 #include "Resource/Rendering/Shader/shader.h"
+#include "WorldBuilder/worldBuilder.h"
 
 
 Terrain::Terrain(std::string _name, Transform* _transform)
@@ -46,17 +47,21 @@ void Terrain::SetupMesh()
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
 }
 
-void Terrain::UseComputeShader()
+void Terrain::UseComputeShader(Vector2 _mousePos)
 {
     m_computeShader->Use();
 
-    m_computeShader->SetFloat("brushRadius", 0.5f);
-    m_computeShader->SetFloat("brushForce", 0.0f);
+    m_computeShader->SetVec2("brushPosition", _mousePos);
+    m_computeShader->SetBool("isBrushActive", WorldBuilder::brush->isActive);
+    m_computeShader->SetFloat("brushRadius", WorldBuilder::brush->radius);
+    m_computeShader->SetFloat("brushForce", WorldBuilder::brush->force);
+    m_computeShader->SetVec2("terrainScale", {transform->scaling.x, transform->scaling.z});
     
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_ssbo);
     glDispatchCompute(m_vertices.size(), 1, 1);
     
     glMemoryBarrier(GL_ALL_BARRIER_BITS);
+    m_computeShader->SetBool("isBrushActive", false);
 }
 
 void Terrain::Draw(Camera* _camera)
@@ -116,6 +121,12 @@ void Terrain::Draw(Camera* _camera)
     case WIREFRAME:
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         break;
+    }
+
+    Matrix4 modelMatrix = transform->GetGlobalModel();
+    if (modelMatrix != m_oldModelMatrix)
+    {
+        RetrieveComputeData(_camera);
     }
     
     glUseProgram(m_shader->id);
@@ -193,7 +204,7 @@ void Terrain::CalculateNormals()
     }
 }
 
-void Terrain::RetrieveComputeData()
+void Terrain::RetrieveComputeData(Camera* _camera)
 {
     // Bind the SSBO containing the vertex data
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_ssbo); 
@@ -212,11 +223,12 @@ void Terrain::RetrieveComputeData()
 
     // Copy the data from the temporary buffer to m_vertices
     std::copy(verticesOut.begin(), verticesOut.end(), m_vertices.begin());
+
+    UpdateVertices(_camera);
 }
 
 void Terrain::UpdateVertices(Camera* _camera)
 {
-    
     if (!m_vertices.empty())
     {
         // Get the model matrix to use them for calculation after

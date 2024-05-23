@@ -74,10 +74,13 @@ void Viewport::Update()
         {
             if (WorldBuilder::brush->isActive)
             {
-                Vector2 brushUv = GraphicWrapper::ReadPixelFromUVBuffer(mouseX, mouseY);
-                std::cout << "uv: " << brushUv << std::endl;
-                Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
-                selectedTerrain->GetComputeShader()->SetVec2("brushPosition", brushUv);
+                Vector2 brushUv = GraphicWrapper::ReadPixelFromUVBuffer(mouseX * 1636 / 1210, ((mouseY - 32) * 980 / 700));    // Mouse and framebuffer are not to the size of the viewport
+                if (brushUv.x != 0.0f && brushUv.y != 0.0f)
+                {
+                    Terrain* selectedTerrain = reinterpret_cast<Terrain*>(GolemEngine::selectedGameObject);
+                    selectedTerrain->UseComputeShader(brushUv);
+                    selectedTerrain->RetrieveComputeData(m_camera);
+                }
             }
             else
             {

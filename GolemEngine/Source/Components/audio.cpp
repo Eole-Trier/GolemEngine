@@ -154,12 +154,12 @@ void Audio::Update()
     alGetSourcei(source, AL_SOURCE_STATE, &state);
     alSourcef(source, AL_GAIN, m_volume);
     SetPositon();
-    
-    if (!m_isInit)
-    {
-        Play();
-        m_isInit = true;
-    }
-    if (!m_isPlaying)
-        CleanUp();
+    //
+    // if (!m_isInit)
+    // {
+    //     Play();
+    //     m_isInit = true;
+    // }
+    // if (!m_isPlaying)
+    //     CleanUp();
 }

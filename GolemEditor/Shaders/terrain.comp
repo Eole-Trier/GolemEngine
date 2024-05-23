@@ -19,7 +19,7 @@ uniform bool isBrushActive;
 uniform vec2 brushPosition;
 uniform float brushRadius;
 uniform float brushForce;
-
+uniform vec2 terrainScale;
 
 void main()
 {
@@ -28,15 +28,16 @@ void main()
     if (isBrushActive)
     {
         vec2 vertex2dPosition = vec2(vIn.position.x, vIn.position.z);
-        float distance = length(brushPosition - vertex2dPosition);
+        vec2 pos = brushPosition - vertex2dPosition;
+        pos *= terrainScale;
+        float distance = sqrt(pos.x * pos.x + pos.y * pos.y);
         
         if (distance < brushRadius)
         {
             float influence = 1.0 - (distance / brushRadius);
-            vIn.position.y = 1.0;
+            vIn.position.y += influence;
         }
     }
     
-//    vIn.position.y = (vIn.position.x * vIn.position.x + vIn.position.z * vIn.position.z);
     vertices[currentIndex] = vIn;
 }

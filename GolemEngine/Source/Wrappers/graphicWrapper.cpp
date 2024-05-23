@@ -126,6 +126,9 @@ int GraphicWrapper::ReadPixelFromIndexBuffer(int _x, int _y)
 
 Vector2 GraphicWrapper::ReadPixelFromUVBuffer(int _x, int _y)
 {
+    glFlush();
+    glFinish();
+    BindFramebuffer();
     glReadBuffer(GL_COLOR_ATTACHMENT0 + 2);
     Vector2 pixelData;
     glReadPixels(_x, _y, 1, 1, GL_RG, GL_FLOAT, &pixelData);
