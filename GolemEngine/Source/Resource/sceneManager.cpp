@@ -240,10 +240,6 @@ void SceneManager::SetupGameObjectsFromJson(Scene* _scene, json _jScene, int _i)
             Model* model = resourceManager->Get<Model>(Tools::GetFileNameFromPath(_jScene["gameObjects"][_i]["components"][j]["data"]["modelPath"]));
             Mesh* mesh = new Mesh(model, texture, resourceManager->Get<Shader>(ResourceManager::GetDefaultShader()));
             gameObject->AddComponent(new MeshRenderer(mesh));
-            // Shader* shader = resourceManager->Get<Shader>(ResourceManager::GetDefaultShader());
-            // Texture* texture = resourceManager->Get<Texture>(ResourceManager::GetDefaultTexture());
-            // Model* model = resourceManager->Get<Model>(ResourceManager::GetDefaultModel());
-            // gameObject->AddComponent(new MeshRenderer(new Mesh(model, texture, shader)));
         }
     }
 }
