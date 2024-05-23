@@ -9,6 +9,8 @@ class GOLEM_ENGINE_API WorldBuilder
 {
 public:
     static inline Brush* brush = new Brush();
+    static inline float texture1Level = 0.0f;
+    static inline float texture2Level = 0.0f;
     
 private:
     // Private constructors and destructor to make static class

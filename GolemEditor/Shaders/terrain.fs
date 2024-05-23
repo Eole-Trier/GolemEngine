@@ -43,6 +43,8 @@ uniform sampler2D ourTexture0;
 uniform sampler2D ourTexture1;
 uniform sampler2D ourTexture2;
 uniform sampler2D ourTexture3;
+uniform float texture1Level;
+uniform float texture2Level;
 uniform bool useTexture;
 uniform int nbrDirLights;
 uniform int nbrPointLights;
@@ -84,7 +86,22 @@ void main()
         for (int i = 0; i < nbrSpotLights; i++)
             light += ProcessSpotLight(spotLights[i], Normal, FragPos, viewDir);
         
-        FragColor = light * texture(ourTexture1, TexCoord *10);
+        // Set the texure
+        vec4 tex1 = texture(ourTexture1, TexCoord * 10.0);
+        vec4 tex2 = texture(ourTexture2, TexCoord * 10.0);
+        vec4 tex3 = texture(ourTexture3, TexCoord * 10.0);
+
+        // Determine which texture to use based on height
+        vec4 finalTexture;
+        if (FragPos.y < texture1Level) {
+            finalTexture = tex1;
+        } else if (FragPos.y < texture2Level) {
+            finalTexture = tex2;
+        } else {
+            finalTexture = tex3;
+        }
+
+        FragColor = light * finalTexture;
     }
     else
     {

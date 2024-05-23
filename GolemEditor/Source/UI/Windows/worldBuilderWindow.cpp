@@ -59,6 +59,14 @@ void WorldBuilderWindow::Update()
         ImGui::Checkbox("edit mode", &WorldBuilder::brush->isActive);
         if (WorldBuilder::brush->isActive)
         {
+            ImGui::Text("Tetxure layers");
+            std::cout << "ymax " << selectedTerrain->yMax << std::endl;
+            ImGui::SliderFloat("texture1 level", &WorldBuilder::texture1Level, 0.0f, selectedTerrain->yMax);
+            ImGui::SliderFloat("texture2 level", &WorldBuilder::texture2Level, 0.0f, selectedTerrain->yMax);
+        }
+        
+        if (WorldBuilder::brush->isActive)
+        {
             ImGui::Text("Brush settings");
             ImGui::SliderFloat("Force", &WorldBuilder::brush->force, 0.0f, 1.0f);
             ImGui::SliderFloat("Radius", &WorldBuilder::brush->radius, 0.1f, 1.0f);

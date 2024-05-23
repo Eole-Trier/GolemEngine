@@ -70,8 +70,8 @@ void Terrain::Draw(Camera* _camera)
     m_shader->GetVertexShader()->SetMat4("model", transform->GetGlobalModel());
     m_shader->GetVertexShader()->SetMat4("view", _camera->GetViewMatrix());
     m_shader->GetVertexShader()->SetMat4("projection", Matrix4::Projection(DegToRad(_camera->GetZoom()), WindowWrapper::GetScreenSize().x / WindowWrapper::GetScreenSize().y, _camera->GetNear(), _camera->GetFar()));
-    m_shader->GetVertexShader()->SetFloat("minHeight", m_yMin);
-    m_shader->GetVertexShader()->SetFloat("maxHeight", m_yMax);
+    m_shader->GetVertexShader()->SetFloat("minHeight", yMin);
+    m_shader->GetVertexShader()->SetFloat("maxHeight", yMax);
     
     if (m_texture0 == nullptr)
     {
@@ -94,9 +94,11 @@ void Terrain::Draw(Camera* _camera)
         glActiveTexture(GL_TEXTURE1);
         m_texture1->Use();
         m_shader->GetFragmentShader()->SetInt("ourTexture1", 1);
+        m_shader->GetFragmentShader()->SetFloat("texture1Level", WorldBuilder::texture1Level);
         glActiveTexture(GL_TEXTURE2);
         m_texture2->Use();
         m_shader->GetFragmentShader()->SetInt("ourTexture2", 2);
+        m_shader->GetFragmentShader()->SetFloat("texture2Level", WorldBuilder::texture2Level);
         glActiveTexture(GL_TEXTURE3);
         m_texture3->Use();
         m_shader->GetFragmentShader()->SetInt("ourTexture3", 3);
@@ -234,8 +236,8 @@ void Terrain::UpdateVertices(Camera* _camera)
         // Get the model matrix to use them for calculation after
         Matrix4 modelMatrix = transform->GetGlobalModel();
     
-        float yMin = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
-        float yMax = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
+        float minY = std::numeric_limits<float>::max();    // So that any value found in the loop HAS TO BE SMALLER than this
+        float maxY = std::numeric_limits<float>::lowest();    // So that any value found in the loop HAS TO BE BIGGER than this
     
         if (m_oldModelMatrix != modelMatrix)
         {
@@ -250,11 +252,11 @@ void Terrain::UpdateVertices(Camera* _camera)
                 // Update the vertex position in the CPU buffer
                 m_vertices[i].position = finalPosition;
                 // Set min and max point of the heightmap
-                yMin = std::min(yMin, finalPosition.y);
-                yMax = std::max(yMax, finalPosition.y);
+                minY = std::min(minY, finalPosition.y);
+                maxY = std::max(maxY, finalPosition.y);
             }
-            m_yMin = yMin;
-            m_yMax = yMax;
+            yMin = minY;
+            yMax = maxY;
         }
     
         m_oldModelMatrix = modelMatrix;
