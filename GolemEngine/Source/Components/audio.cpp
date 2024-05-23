@@ -11,6 +11,7 @@
 #include "Utils/tools.h"
 #include "Wrappers/audioWrapper.h"
 #include "Core/gameobject.h"
+#include "golemEngine.h"
 
 Audio::Audio()
     :musicPath(Tools::FindFile("music_01.wav")),
@@ -152,14 +153,27 @@ void Audio::Update()
 {
     ALint state;
     alGetSourcei(source, AL_SOURCE_STATE, &state);
+
     alSourcef(source, AL_GAIN, m_volume);
     SetPositon();
-    
-    if (!m_isInit)
+
+    if (!GolemEngine::GetGameMode())
     {
-        Play();
-        m_isInit = true;
+        if (state == AL_PLAYING)
+        {
+            alSourcePause(source);
+        }
     }
+    else
+    {
+        if (state != AL_PLAYING)
+        {
+            Play();
+        }
+    }
+
     if (!m_isPlaying)
+    {
         CleanUp();
+    }
 }
