@@ -126,4 +126,10 @@ namespace Tools
             }
         }
     }
+
+    std::string GOLEM_ENGINE_API GetFileNameFromPath(const std::string& _path)
+    {
+        std::filesystem::path path(_path);
+        return path.filename().string();
+    }
 }

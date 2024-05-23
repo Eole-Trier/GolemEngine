@@ -27,4 +27,6 @@ namespace Tools
 
 	// Check shader compile errors
 	void GOLEM_ENGINE_API CheckCompileErrors(unsigned int _shader, std::string _type);
+
+	std::string GOLEM_ENGINE_API GetFileNameFromPath(const std::string& _path);
 }

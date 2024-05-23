@@ -46,7 +46,7 @@ void GraphicWrapper::CreateFramebuffer(int _width, int _height)
         {
             textures[0] = std::make_unique<Texture>(_width, _height, GL_RGBA, GL_RGBA);
         }
-        else if (i ==1)
+        else if (i == 1)
         {
             textures[i] = std::make_unique<Texture>(_width, _height, GL_RED_INTEGER, GL_R32I);
         }
