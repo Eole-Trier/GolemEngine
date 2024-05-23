@@ -30,7 +30,7 @@ public:
     GOLEM_ENGINE_API bool SetUpAudio();
     GOLEM_ENGINE_API void SetLoop(bool _isLooping);
     GOLEM_ENGINE_API void SetVolume(int _volume);
-    GOLEM_ENGINE_API void StopMusic(bool _isPlaying);
+    GOLEM_ENGINE_API void StopMusic(bool m_isPlaying);
     GOLEM_ENGINE_API void SetPositon();
     GOLEM_ENGINE_API void CleanUp();
     GOLEM_ENGINE_API void Play();
