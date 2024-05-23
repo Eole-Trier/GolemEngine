@@ -50,14 +50,12 @@ void GolemEngine::Update()
     // Go back to original framebuffer
     GraphicWrapper::UnbindFramebuffer();
     
-    if (m_gameMode)
-    {
-        GraphicWrapper::BindPlaySceneFrambuffer();
-        GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
-        GraphicWrapper::ClearBuffer();
-        SceneManager::GetCurrentScene()->Update(m_playerCamera);
-        GraphicWrapper::UnbindFramebuffer();
-    }
+   
+    GraphicWrapper::BindPlaySceneFrambuffer();
+    GraphicWrapper::SetBackgroundColor(Vector4(0.f, 0.f, 0.f, 1.0f));
+    GraphicWrapper::ClearBuffer();
+    SceneManager::GetCurrentScene()->Update(m_playerCamera);
+    GraphicWrapper::UnbindFramebuffer();
 }
 
 void GolemEngine::Close()

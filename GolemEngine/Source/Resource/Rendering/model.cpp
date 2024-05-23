@@ -74,7 +74,7 @@ void Model::Load(const char* _modelPath)
             vertices.push_back(v3);
         }
     }
-    Log::Print("Succeed to load model: %s", _modelPath);
+    Log::Print("Succeeded to load model: %s", _modelPath);
 }
 
 void Model::Load(std::vector<Vertex> _vertices)

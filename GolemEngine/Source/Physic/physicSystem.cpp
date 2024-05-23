@@ -308,6 +308,13 @@ void PhysicSystem::SetGravityFactor(BodyID _bodyId, float _gravityFactor)
 	bodyInterface.SetGravityFactor(_bodyId, _gravityFactor);
 }
 
+Vector3 PhysicSystem::GetVelocity(BodyID _bodyId)
+{
+	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();
+	return ToVector3(bodyInterface.GetLinearVelocity(_bodyId));
+}
+
+
 void PhysicSystem::AddVelocity(BodyID _bodyId, Vector3 _velocity)
 {
 	BodyInterface& bodyInterface = PhysicSystem::physicsSystem.GetBodyInterface();

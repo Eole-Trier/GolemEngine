@@ -26,6 +26,7 @@ void EditorUi::Init()
 {
     // Add windows to be used in dockspace later
     m_windows.push_back(new Viewport("Viewport"));
+    m_windows.push_back(new PlayScene("Game"));
     m_windows.push_back(new BasicActorsWindow("Basic_Actors"));
     m_windows.push_back(new WorldBuilderWindow("World_Builder"));
     m_windows.push_back(new ViewportToolsWindow("Viewport_Tools"));
@@ -33,7 +34,6 @@ void EditorUi::Init()
     m_windows.push_back(new SceneGraph("Scene_Graph"));
     m_windows.push_back(new DebugWindow("Debug"));
     m_windows.push_back(new Inspector("Inspector"));
-    m_windows.push_back(new PlayScene("Playing"));
 
     // Setup ImGui context
     IMGUI_CHECKVERSION();
@@ -239,6 +239,7 @@ void EditorUi::BeginDockSpace()
             ImGui::DockBuilderDockWindow(GetWindowByName("Viewport_Tools")->name.c_str(), dock_id_topLeft);
             ImGui::DockBuilderDockWindow(GetWindowByName("File_Browser")->name.c_str(), dock_id_bottom);
             ImGui::DockBuilderDockWindow(GetWindowByName("Viewport")->name.c_str(), dock_id_middle);
+            ImGui::DockBuilderDockWindow(GetWindowByName("Game")->name.c_str(), dock_id_middle);
             ImGui::DockBuilderDockWindow(GetWindowByName("Scene_Graph")->name.c_str(), dock_id_topRight);
             ImGui::DockBuilderDockWindow(GetWindowByName("Debug")->name.c_str(), dock_id_topRight);
             ImGui::DockBuilderDockWindow(GetWindowByName("Inspector")->name.c_str(), dock_id_bottomRight);

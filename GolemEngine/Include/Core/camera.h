@@ -35,16 +35,12 @@ public:
 	Camera(Vector3 _position = Vector3(0.0f, 0.0f, 3.0f), Vector3 _up = Vector3(0.0f, 1.0f, 0.0f), float _yaw = -90.0f, float _pitch = 0.0f);
 
 	void ProcessKeyboardInput(float _deltaTime);
-	void ProcessMouseInput();
 	// Process changes on mouse position
 	void ProcessMouseMovement(Vector2 _mouseWindowPos, bool _constrainPitch, Vector4 _windowDimension, int _mousePosX, int _mousePosY);	// _mousePosX and _mousePosY are relative to the screen
 	// When mouse values changes, process these changes to move the mouse
 	void UpdateVectors();
 	// Process changes on mouse scrool
 	void ProcessMouseScroll(float _yOffset);
-
-	void MouseMovement(float mousePosX, float mousePosY, float mouseLastPosX, float mouseLastPosY, bool _constraintPitch = true);
-
 
 	Matrix4 GetViewMatrix();
 	float GetZoom();
