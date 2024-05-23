@@ -26,7 +26,8 @@ void PlayScene::Update()
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
 
         ImGui::Begin("Playing", nullptr, window_flags);
-        GolemEngine::GetCamera()->ProcessMouseMovement(InputManager::GetMouseWindowPos(), true, Vector4(width, height, 0, 0), (int)ImGui::GetMousePos().x, (int)ImGui::GetMousePos().y);
+        ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+        GolemEngine::GetPlayerCamera()->MouseMovement(ImGui::GetMousePos().x, ImGui::GetMousePos().y, m_lastMousepos.x, m_lastMousepos.y);
         if (ImGui::SmallButton("X") || InputManager::IsKeyPressed(KEY_ESCAPE))
         {
             g_isPlayTesting = false;
@@ -38,4 +39,5 @@ void PlayScene::Update()
         ImGui::End();
         ImGui::PopStyleColor();
     }
+    m_lastMousepos = Vector2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 }

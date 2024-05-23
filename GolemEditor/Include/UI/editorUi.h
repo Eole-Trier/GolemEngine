@@ -10,7 +10,6 @@
 
 
 class Window;
-struct GLFWwindow;
 
 class EditorUi
 {

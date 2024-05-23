@@ -43,7 +43,6 @@ public:
 	GOLEM_ENGINE_API Vector3 GetForward() const;
 	_NODISCARD GOLEM_ENGINE_API bool IsAParentOf(Transform* _t);
 
-
 	GOLEM_ENGINE_API Transform* GetParent();
 
 	GOLEM_ENGINE_API Matrix4 GetGlobalModel();
